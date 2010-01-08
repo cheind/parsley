@@ -14,6 +14,7 @@ namespace CaptureFromCamera {
     public Form1() {
       InitializeComponent();
       _capture = Parsley.Core.Capture.FromCamera(0);
+      _property_grid.SelectedObject = _capture.Properties;
       Application.Idle += new EventHandler(Application_Idle);
     }
 
