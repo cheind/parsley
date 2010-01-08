@@ -25,6 +25,7 @@
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
       this._picturebox = new Emgu.CV.UI.ImageBox();
+      this._property_grid = new System.Windows.Forms.PropertyGrid();
       ((System.ComponentModel.ISupportInitialize)(this._picturebox)).BeginInit();
       this.SuspendLayout();
       // 
@@ -34,15 +35,23 @@
       this._picturebox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
       this._picturebox.Location = new System.Drawing.Point(25, 28);
       this._picturebox.Name = "_picturebox";
-      this._picturebox.Size = new System.Drawing.Size(640, 640);
+      this._picturebox.Size = new System.Drawing.Size(640, 480);
       this._picturebox.TabIndex = 2;
       this._picturebox.TabStop = false;
+      // 
+      // _property_grid
+      // 
+      this._property_grid.Location = new System.Drawing.Point(706, 28);
+      this._property_grid.Name = "_property_grid";
+      this._property_grid.Size = new System.Drawing.Size(251, 480);
+      this._property_grid.TabIndex = 3;
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(698, 692);
+      this.ClientSize = new System.Drawing.Size(994, 599);
+      this.Controls.Add(this._property_grid);
       this.Controls.Add(this._picturebox);
       this.Name = "Form1";
       this.Text = "Form1";
@@ -54,6 +63,7 @@
     #endregion
 
     private Emgu.CV.UI.ImageBox _picturebox;
+    private System.Windows.Forms.PropertyGrid _property_grid;
 
   }
 }
