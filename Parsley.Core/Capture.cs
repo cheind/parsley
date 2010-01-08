@@ -44,6 +44,12 @@ namespace Parsley.Core {
       return _capture.QueryFrame();
     }
 
+    /// <summary>
+    /// Access the camera properties
+    /// </summary>
+    public CameraProperties Properties {
+      get { return new CameraProperties(_capture); }
+    }
 
     protected override void DisposeManaged() {
       _capture.Dispose();
