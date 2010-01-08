@@ -16,7 +16,6 @@ namespace FindCheckerboard {
 
     private Parsley.Core.Capture _capture;
     private Parsley.Core.CheckerBoard _cb;
-
     public Form1() {
       InitializeComponent();
       _capture = Parsley.Core.Capture.FromCamera(0);
@@ -33,7 +32,6 @@ namespace FindCheckerboard {
       _cb.Draw(img, 4, 2);
 
       _image_box.Image = img;
-      //.Image = _capture.Frame();
     }
   }
 }
