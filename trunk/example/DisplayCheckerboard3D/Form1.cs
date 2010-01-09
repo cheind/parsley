@@ -10,8 +10,6 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
-using Tao.OpenGl;
-
 namespace DisplayCheckerboard3D {
   public partial class Form1 : Form {
 
@@ -23,7 +21,6 @@ namespace DisplayCheckerboard3D {
 
     public Form1() {
       InitializeComponent();
-      InitializeOpenGL();
       _capture = Parsley.Core.Capture.FromCamera(0);
       _cb = new Parsley.Core.CheckerBoard(9, 6);
       _calib = new Parsley.Core.Calibration(_cb.ObjectCorners(25.0f));
@@ -65,29 +62,6 @@ namespace DisplayCheckerboard3D {
         }
       }
 
-    }
-
-
-    private void InitializeOpenGL() {
-      _ogl.InitializeContexts();
-      _ogl.Paint += new PaintEventHandler(_ogl_Paint);
-      Gl.glClearColor(0.3f, 0.3f, 0.3f, 0.0f);
-      Gl.glMatrixMode(Gl.GL_PROJECTION);
-      Gl.glLoadIdentity();
-      Gl.glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-
-    }
-
-    void _ogl_Paint(object sender, PaintEventArgs e) {
-      Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
-      Gl.glColor3f(0.9f, 0.9f, 0.9f);
-      Gl.glBegin(Gl.GL_QUADS);
-      Gl.glVertex3f(0.1f, 0.1f, 0.0f);
-      Gl.glVertex3f(0.1f, 0.5f, 0.0f);
-      Gl.glVertex3f(0.5f, 0.5f, 0.0f);
-      Gl.glVertex3f(0.5f, 0.1f, 0.0f);
-      Gl.glEnd();
-      Gl.glFlush();
     }
   }
 }
