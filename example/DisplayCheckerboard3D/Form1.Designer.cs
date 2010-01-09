@@ -24,61 +24,69 @@
     /// </summary>
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-      this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-      this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
-      this._picture_box = new Emgu.CV.UI.ImageBox();
-      this.statusStrip1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this._picture_box)).BeginInit();
+      this._button_3d = new Parsley.UI.ParsleyButton();
+      this._button_calibrate = new Parsley.UI.ParsleyButton();
       this.SuspendLayout();
       // 
-      // statusStrip1
+      // _button_3d
       // 
-      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._status_label});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 373);
-      this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(608, 22);
-      this.statusStrip1.TabIndex = 4;
-      this.statusStrip1.Text = "statusStrip1";
+      this._button_3d.BackColor = System.Drawing.Color.White;
+      this._button_3d.Enabled = false;
+      this._button_3d.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._button_3d.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._button_3d.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._button_3d.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._button_3d.Image = ((System.Drawing.Image)(resources.GetObject("_button_3d.Image")));
+      this._button_3d.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._button_3d.Location = new System.Drawing.Point(154, 200);
+      this._button_3d.Name = "_button_3d";
+      this._button_3d.Size = new System.Drawing.Size(300, 60);
+      this._button_3d.TabIndex = 4;
+      this._button_3d.Text = "Locate in 3D";
+      this._button_3d.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._button_3d.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._button_3d.UseVisualStyleBackColor = true;
+      this._button_3d.Click += new System.EventHandler(this._button_3d_Click);
       // 
-      // _status_label
+      // _button_calibrate
       // 
-      this._status_label.Name = "_status_label";
-      this._status_label.Size = new System.Drawing.Size(66, 17);
-      this._status_label.Text = "Set on start";
-      // 
-      // _picture_box
-      // 
-      this._picture_box.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._picture_box.Location = new System.Drawing.Point(0, 0);
-      this._picture_box.Name = "_picture_box";
-      this._picture_box.Size = new System.Drawing.Size(608, 373);
-      this._picture_box.TabIndex = 2;
-      this._picture_box.TabStop = false;
+      this._button_calibrate.BackColor = System.Drawing.Color.White;
+      this._button_calibrate.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._button_calibrate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._button_calibrate.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._button_calibrate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._button_calibrate.Image = ((System.Drawing.Image)(resources.GetObject("_button_calibrate.Image")));
+      this._button_calibrate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._button_calibrate.Location = new System.Drawing.Point(154, 134);
+      this._button_calibrate.Name = "_button_calibrate";
+      this._button_calibrate.Size = new System.Drawing.Size(300, 60);
+      this._button_calibrate.TabIndex = 3;
+      this._button_calibrate.Text = "Calibrate Camera";
+      this._button_calibrate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._button_calibrate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._button_calibrate.UseVisualStyleBackColor = true;
+      this._button_calibrate.Click += new System.EventHandler(this._button_calibrate_Click);
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.White;
       this.ClientSize = new System.Drawing.Size(608, 395);
-      this.Controls.Add(this._picture_box);
-      this.Controls.Add(this.statusStrip1);
+      this.Controls.Add(this._button_3d);
+      this.Controls.Add(this._button_calibrate);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Form1";
       this.Text = "DisplayCheckerboard3D";
-      this.statusStrip1.ResumeLayout(false);
-      this.statusStrip1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this._picture_box)).EndInit();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.StatusStrip statusStrip1;
-    private System.Windows.Forms.ToolStripStatusLabel _status_label;
-    private Emgu.CV.UI.ImageBox _picture_box;
+    private Parsley.UI.ParsleyButton _button_calibrate;
+    private Parsley.UI.ParsleyButton _button_3d;
+
   }
 }
 
