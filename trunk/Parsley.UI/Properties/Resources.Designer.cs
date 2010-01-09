@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DisplayCheckerboard3D.Properties {
+namespace Parsley.UI.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DisplayCheckerboard3D.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DisplayCheckerboard3D.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Parsley.UI.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,13 @@ namespace DisplayCheckerboard3D.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        internal static System.Drawing.Bitmap parsley48 {
+            get {
+                object obj = ResourceManager.GetObject("parsley48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

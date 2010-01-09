@@ -59,5 +59,11 @@ namespace Parsley.Core {
       get { return _camera.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_SATURATION); }
       set { _camera.SetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_SATURATION, value); }
     }
+
+    [Browsable(false)]
+    public System.Drawing.Size ImageSize {
+      get { return new System.Drawing.Size((int)FrameWidth, (int)FrameHeight); }
+    }
+
   }
 }
