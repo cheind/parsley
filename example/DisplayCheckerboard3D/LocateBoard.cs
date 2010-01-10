@@ -79,7 +79,7 @@ namespace DisplayCheckerboard3D {
           _board_transform.Matrix = ecp.ExtrinsicMatrix;
           System.Threading.Monitor.Exit(_viewer);
 
-          bw.ReportProgress(0, String.Format("Distance to Plate: {0}", ecp.TranslationVector[2,0]));
+          bw.ReportProgress(0, String.Format("{0:f}", ecp.TranslationVector.Norm));
         }
         _cb.Draw(img, 4, 2);
         _picture_box.Image = img.Resize(_picture_box.Width, _picture_box.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);        
