@@ -1,5 +1,7 @@
-#include "Viewer.h"
-#include "convert.h"
+
+
+#include <draw3d/viewer.h>
+#include <draw3d/convert.h>
 
 #include <Windows.h>
 
