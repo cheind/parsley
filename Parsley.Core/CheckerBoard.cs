@@ -26,8 +26,8 @@ namespace Parsley.Core {
 
     public MCvPoint3D32f[] ObjectCorners(float field_size) {
       MCvPoint3D32f[] corners = new MCvPoint3D32f[_inner_corners.Width * _inner_corners.Height];
-      for (int x = 0; x < _inner_corners.Width; x++) {
-        for (int y = 0; y < _inner_corners.Height; ++y) {
+      for (int y = 0; y < _inner_corners.Height; ++y) {
+        for (int x = 0; x < _inner_corners.Width; x++) {
           int id = y * _inner_corners.Width + x;
           corners[id].x = x * field_size;
           corners[id].y = y * field_size;
