@@ -52,16 +52,21 @@
     <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.CV.UI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Parsley.Draw3D, Version=1.0.3661.23833, Culture=neutral, processorArchitecture=x86" />
+    <Reference Include="Parsley.Draw3D, Version=1.0.3662.18481, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -127,6 +132,7 @@
     <ProjectReference Include="..\..\Parsley.UI\Parsley.UI.csproj">
       <Project>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</Project>
       <Name>Parsley.UI</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
