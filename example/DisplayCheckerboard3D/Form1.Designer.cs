@@ -31,7 +31,6 @@
       // _button_3d
       // 
       this._button_3d.BackColor = System.Drawing.Color.White;
-      this._button_3d.Enabled = false;
       this._button_3d.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
       this._button_3d.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this._button_3d.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
