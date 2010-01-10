@@ -185,10 +185,32 @@
 			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
+		<AssemblyReference
+			RelativePath="..\bin\Emgu.CV.dll"
+			AssemblyName="Emgu.CV, Version=2.0.1.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
+			MinFrameworkVersion="0"
+		/>
+		<AssemblyReference
+			RelativePath="..\bin\Emgu.Util.dll"
+			AssemblyName="Emgu.Util, Version=2.0.0.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
 	</References>
 	<Files>
 		<File
 			RelativePath=".\AssemblyInfo.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\auto_ptr.h"
+			>
+		</File>
+		<File
+			RelativePath=".\auto_ptr_osg.h"
+			>
+		</File>
+		<File
+			RelativePath=".\convert.h"
 			>
 		</File>
 		<File
