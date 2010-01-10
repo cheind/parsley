@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include <Windows.h>
+using namespace Emgu::CV::Structure;
+
+#include "auto_ptr_osg.h"
 #include <osg/ref_ptr>
 #include <osg/Vec3>
 
@@ -15,23 +17,7 @@ namespace osg {
 }
 
 namespace Parsley {
-  namespace Draw3D {
-    namespace Internal {
-
-      /// Provides access to osgViewer::Viewer
-      class Viewer {
-      public:
-        Viewer(HWND render_target);
-        void frame();
-        void add_capsule(osg::Vec3 center);
-
-      private:
-        void initialize_viewer(HWND render_target);
-
-        osg::ref_ptr<osgViewer::Viewer> _viewer;
-        osg::ref_ptr<osg::Group> _root;
-      };
-    }
+  namespace Draw3D {    
 
     public ref class Viewer
     {
@@ -39,11 +25,16 @@ namespace Parsley {
       Viewer(System::Windows::Forms::Control ^render_target);
       Viewer::~Viewer();
       Viewer::!Viewer();
+
       /// Render entire frame
       void Frame();
-      void AddCapsule(float x, float y, float z);
+      void AddCapsule(MCvPoint3D32f ^center);
+      void LookAt(MCvPoint3D32f ^eye, MCvPoint3D32f ^center, MCvPoint3D32f ^up);
     private:
-      Internal::Viewer *_viewer;
+      void initialize_viewer(void *hwnd_render_target);
+
+      auto_ptr_osg<osgViewer::Viewer> _viewer;
+      auto_ptr_osg<osg::Group> _root;
     };
   }
 }
