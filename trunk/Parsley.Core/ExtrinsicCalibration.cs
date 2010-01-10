@@ -18,6 +18,10 @@ namespace Parsley.Core {
       _intrinsics = intrinsics;
     }
 
+    public Emgu.CV.IntrinsicCameraParameters Intrinsics {
+      get { return _intrinsics; }
+    }
+
     public Emgu.CV.ExtrinsicCameraParameters Calibrate(System.Drawing.PointF[] image_points) {
       return Emgu.CV.CameraCalibration.FindExtrinsicCameraParams2(
        this.ObjectPoints,
