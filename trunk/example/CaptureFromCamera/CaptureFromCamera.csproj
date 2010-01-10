@@ -65,14 +65,17 @@
     <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.CV.UI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.CV.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\bin\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -125,6 +128,7 @@
     <ProjectReference Include="..\..\Parsley.Core\Parsley.Core.csproj">
       <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
       <Name>Parsley.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
