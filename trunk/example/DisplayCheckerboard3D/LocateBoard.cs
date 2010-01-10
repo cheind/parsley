@@ -15,6 +15,10 @@ namespace DisplayCheckerboard3D {
 
     private Parsley.Core.ExtrinsicCalibration _ex;
     private Parsley.Draw3D.Viewer _viewer;
+    private Parsley.Draw3D.Axis _axis;
+    private Parsley.Draw3D.Quad _board;
+    private Parsley.Draw3D.Transform _board_transform;
+
     private Parsley.Core.Capture _capture;
     private Parsley.Core.CheckerBoard _cb;
     private BackgroundWorker _bw_3d;
@@ -24,23 +28,34 @@ namespace DisplayCheckerboard3D {
       InitializeComponent();
 
       _ex = new Parsley.Core.ExtrinsicCalibration(calib.ObjectPoints, intrinsics);
-
-      _viewer = new Parsley.Draw3D.Viewer(_render_target);
       _capture = Parsley.Core.Capture.FromCamera(0);
       _cb = new Parsley.Core.CheckerBoard(9, 6);
-
-      _bw_3d = new BackgroundWorker();
-      _bw_3d.WorkerSupportsCancellation = true;
-      _bw_3d.DoWork += new DoWorkEventHandler(_bw_3d_DoWork);
 
       _bw_cam = new BackgroundWorker();
       _bw_cam.WorkerSupportsCancellation = true;
       _bw_cam.WorkerReportsProgress = true;
       _bw_cam.ProgressChanged += new ProgressChangedEventHandler(_bw_cam_ProgressChanged);
       _bw_cam.DoWork += new DoWorkEventHandler(_bw_cam_DoWork);
-
-      _bw_3d.RunWorkerAsync();
       _bw_cam.RunWorkerAsync();
+
+
+      _viewer = new Parsley.Draw3D.Viewer(_render_target);
+      _viewer.Projection(intrinsics, 1.0, 3000.0, 640, 480);
+      _viewer.LookAt(new MCvPoint3D32f(0,0,0), new MCvPoint3D32f(0, 0, 1), new MCvPoint3D32f(0.0f, 1.0f, 0.0f));
+
+
+      _board_transform = new Parsley.Draw3D.Transform();
+      _board = new Parsley.Draw3D.Quad(200.0, 125.0);
+      _board_transform.Add(_board);
+      _axis = new Parsley.Draw3D.Axis(25);
+      _board_transform.Add(_axis);
+      _viewer.Add(_board_transform);
+
+      _bw_3d = new BackgroundWorker();
+      _bw_3d.WorkerSupportsCancellation = true;
+      _bw_3d.DoWork += new DoWorkEventHandler(_bw_3d_DoWork);
+      _bw_3d.RunWorkerAsync();
+      
     }
 
     void _bw_cam_ProgressChanged(object sender, ProgressChangedEventArgs e) {
@@ -58,7 +73,13 @@ namespace DisplayCheckerboard3D {
         _cb.FindPattern(gray);
         if (_cb.PatternFound) {
           Emgu.CV.ExtrinsicCameraParameters ecp = _ex.Calibrate(_cb.ImageCorners);
-          bw.ReportProgress(0, String.Format("Distance to Plate: {0}", ecp.TranslationVector.Norm));
+          
+          
+          System.Threading.Monitor.Enter(_viewer);
+          _board_transform.Matrix = ecp.ExtrinsicMatrix;
+          System.Threading.Monitor.Exit(_viewer);
+
+          bw.ReportProgress(0, String.Format("Distance to Plate: {0}", ecp.TranslationVector[2,0]));
         }
         _cb.Draw(img, 4, 2);
         _picture_box.Image = img.Resize(_picture_box.Width, _picture_box.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);        

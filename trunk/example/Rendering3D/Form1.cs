@@ -19,6 +19,10 @@ namespace Rendering3D {
       InitializeComponent();
       _viewer = new Parsley.Draw3D.Viewer(_render_target);
       _viewer.LookAt(new MCvPoint3D32f(50.0f, 50.0f, 50.0f), new MCvPoint3D32f(0, 0, 0), new MCvPoint3D32f(0.0f, 1.0f, 0.0f));
+      
+      Parsley.Draw3D.Axis a = new Parsley.Draw3D.Axis(10);
+      _viewer.Add(a);
+
       _rnd = new Random();
       _bw = new BackgroundWorker();
       _bw.WorkerSupportsCancellation = true;
