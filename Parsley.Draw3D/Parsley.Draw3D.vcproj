@@ -212,7 +212,43 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\axis.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\axis.h"
+			>
+		</File>
+		<File
 			RelativePath=".\inc\draw3d\convert.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\group.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\group.h"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\node.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\quad.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\quad.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\transform.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\transform.h"
 			>
 		</File>
 		<File
