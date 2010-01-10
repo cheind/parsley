@@ -1,7 +1,5 @@
 #pragma once
 
-#include <osg/ref_ptr>
-
 namespace Parsley {
   namespace Draw3D {
 

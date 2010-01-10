@@ -4,9 +4,7 @@
 
 using namespace Emgu::CV::Structure;
 
-#include "auto_ptr_osg.h"
-#include <osg/ref_ptr>
-#include <osg/Vec3>
+#include <draw3d/auto_ptr_osg.h>
 
 namespace osgViewer {
   class Viewer;

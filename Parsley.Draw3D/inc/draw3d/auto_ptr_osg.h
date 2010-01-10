@@ -16,8 +16,8 @@ namespace Parsley {
       explicit auto_ptr_osg(T *native) : _ptr(new osg_ptr(native)) {}
       auto_ptr_osg(self_type %o) : _ptr(new osg_ptr(o.osg())) {}
       template<class S> auto_ptr_osg(auto_ptr_osg<S> %o) : _ptr(new osg_ptr(o.osg())) {}
-      ~auto_ptr_osg() { System::Console::WriteLine("dispose!");delete _ptr; }
-      !auto_ptr_osg() { System::Console::WriteLine("finalize!");delete _ptr; }
+      ~auto_ptr_osg() { delete _ptr; }
+      !auto_ptr_osg() { delete _ptr; }
 
       self_type %operator=(self_type %rhs) {
         (*_ptr) = rhs.osg();

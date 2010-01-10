@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\osg\include"
+				AdditionalIncludeDirectories="..\osg\include;.\inc"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\osg\include"
+				AdditionalIncludeDirectories="..\osg\include;.\inc"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -188,6 +188,8 @@
 		<AssemblyReference
 			RelativePath="..\bin\Emgu.CV.dll"
 			AssemblyName="Emgu.CV, Version=2.0.1.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
+			CopyLocal="false"
+			CopyLocalDependencies="false"
 			MinFrameworkVersion="0"
 		/>
 		<AssemblyReference
@@ -198,27 +200,27 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\AssemblyInfo.cpp"
+			RelativePath=".\src\AssemblyInfo.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\auto_ptr.h"
+			RelativePath=".\inc\draw3d\auto_ptr.h"
 			>
 		</File>
 		<File
-			RelativePath=".\auto_ptr_osg.h"
+			RelativePath=".\inc\draw3d\auto_ptr_osg.h"
 			>
 		</File>
 		<File
-			RelativePath=".\convert.h"
+			RelativePath=".\inc\draw3d\convert.h"
 			>
 		</File>
 		<File
-			RelativePath=".\Viewer.cpp"
+			RelativePath=".\src\viewer.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\Viewer.h"
+			RelativePath=".\inc\draw3d\viewer.h"
 			>
 		</File>
 	</Files>
