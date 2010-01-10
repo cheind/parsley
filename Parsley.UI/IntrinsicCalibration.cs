@@ -61,18 +61,21 @@ namespace Parsley.UI {
       if (e.Cancelled) {
         _calib.ClearViews();
         _progress_label.Text = "Calibration Cancelled";
+        _button_start.Text = "Restart Calibration";
       } else {
         _progress_label.Text = "Calibration Completed";
+        _button_start.Text = "Done!";
       }
       _progress_bar.Value = _progress_bar.Minimum;
-      _button_start.Text = "Start Calibration";
+      
     }
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
       DateTime last = DateTime.Now;
+      Image<Bgr, Byte> img = null;
       while (!bw.CancellationPending && (_calib.Views.Count < _nr_frames)) {
-        Image<Bgr, Byte> img = _camera.Frame();
+        img = _camera.Frame();
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
         gray._EqualizeHist();
 
@@ -92,14 +95,32 @@ namespace Parsley.UI {
         e.Cancel = true;
       } else {
         _intrinsics = _calib.Calibrate();
+        Parsley.Core.ExtrinsicCalibration ex = new Parsley.Core.ExtrinsicCalibration(_calib.ObjectPoints, _intrinsics);
+        Emgu.CV.ExtrinsicCameraParameters ecp = ex.Calibrate(_cb.ImageCorners);
+
+        System.Drawing.PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
+            new MCvPoint3D32f[] { 
+              new MCvPoint3D32f(0, 0, 0),
+              new MCvPoint3D32f(50, 0, 0),
+              new MCvPoint3D32f(0, 50, 0)
+            },
+            ecp, _intrinsics);
+
+        img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 3);
+        img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 3);
+        _picture_box.Image = img.Resize(_picture_box.Width, _picture_box.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
       }
     }
 
     private void _button_start_Click(object sender, EventArgs e) {
       if (!_bw.IsBusy) {
-        _calib.ClearViews();
-        _bw.RunWorkerAsync();
-        _button_start.Text = "Cancel Calibration";
+        if (_intrinsics != null) {
+          this.Close();
+        } else {
+          _calib.ClearViews();
+          _bw.RunWorkerAsync();
+          _button_start.Text = "Cancel Calibration";
+        }
       } else {
         _bw.CancelAsync();
         _button_start.Text = "Cancelling...";
