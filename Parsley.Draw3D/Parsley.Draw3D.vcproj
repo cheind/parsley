@@ -195,6 +195,7 @@
 		<AssemblyReference
 			RelativePath="..\bin\Emgu.Util.dll"
 			AssemblyName="Emgu.Util, Version=2.0.0.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
+			CopyLocal="false"
 			MinFrameworkVersion="131072"
 		/>
 	</References>
