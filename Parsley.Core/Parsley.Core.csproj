@@ -72,10 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calibration.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="Capture.cs" />
     <Compile Include="CameraProperties.cs" />
     <Compile Include="CheckerBoard.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
+    <Compile Include="FrameGrabber.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
