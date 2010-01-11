@@ -23,47 +23,33 @@
     /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
     /// </summary>
     private void InitializeComponent() {
-      this.components = new System.ComponentModel.Container();
-      this._picturebox = new Emgu.CV.UI.ImageBox();
-      this._property_grid = new System.Windows.Forms.PropertyGrid();
-      ((System.ComponentModel.ISupportInitialize)(this._picturebox)).BeginInit();
+      this._display = new Parsley.UI.Concrete.FrameGrabber();
       this.SuspendLayout();
       // 
-      // _picturebox
+      // _display
       // 
-      this._picturebox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-      this._picturebox.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
-      this._picturebox.Location = new System.Drawing.Point(25, 28);
-      this._picturebox.Name = "_picturebox";
-      this._picturebox.Size = new System.Drawing.Size(640, 480);
-      this._picturebox.TabIndex = 2;
-      this._picturebox.TabStop = false;
-      // 
-      // _property_grid
-      // 
-      this._property_grid.Location = new System.Drawing.Point(706, 28);
-      this._property_grid.Name = "_property_grid";
-      this._property_grid.Size = new System.Drawing.Size(251, 480);
-      this._property_grid.TabIndex = 3;
+      this._display.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._display.Location = new System.Drawing.Point(0, 0);
+      this._display.Name = "_display";
+      this._display.Size = new System.Drawing.Size(994, 599);
+      this._display.TabIndex = 0;
       // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(994, 599);
-      this.Controls.Add(this._property_grid);
-      this.Controls.Add(this._picturebox);
+      this.Controls.Add(this._display);
       this.Name = "Form1";
       this.Text = "Form1";
-      ((System.ComponentModel.ISupportInitialize)(this._picturebox)).EndInit();
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private Emgu.CV.UI.ImageBox _picturebox;
-    private System.Windows.Forms.PropertyGrid _property_grid;
+    private Parsley.UI.Concrete.FrameGrabber _display;
+
 
   }
 }

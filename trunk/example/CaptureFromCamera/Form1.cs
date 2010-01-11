@@ -9,17 +9,21 @@ using System.Windows.Forms;
 
 namespace CaptureFromCamera {
   public partial class Form1 : Form {
-    Parsley.Core.Capture _capture;
+    Parsley.Core.Camera _camera;
+    Parsley.Core.FrameGrabber _fg;
+    
 
     public Form1() {
       InitializeComponent();
-      _capture = Parsley.Core.Capture.FromCamera(0);
-      _property_grid.SelectedObject = _capture.Properties;
-      Application.Idle += new EventHandler(Application_Idle);
+      _camera = new Parsley.Core.Camera(0);
+      _fg = new Parsley.Core.FrameGrabber(_camera);
+      _display.GrabFrom(_fg);
+      _fg.Start();
     }
 
-    void Application_Idle(object sender, EventArgs e) {
-      _picturebox.Image = _capture.Frame();
+    protected override void OnFormClosing(FormClosingEventArgs e) {
+      _fg.Stop();
+      base.OnFormClosing(e);
     }
   }
 }
