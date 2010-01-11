@@ -75,6 +75,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\FrameGrabber.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Concrete\FrameGrabber.Designer.cs">
+      <DependentUpon>FrameGrabber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Concrete\IntrinsicCalibration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Concrete\IntrinsicCalibration.Designer.cs">
+      <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
+    </Compile>
     <Compile Include="IntrinsicCalibration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,11 +111,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Slide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Slide.Designer.cs">
+      <DependentUpon>Slide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SlideControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SlideControl.Designer.cs">
+      <DependentUpon>SlideControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WrapLabel.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Concrete\FrameGrabber.resx">
+      <DependentUpon>FrameGrabber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Concrete\IntrinsicCalibration.resx">
+      <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IntrinsicCalibration.resx">
       <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,6 +146,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Slide.resx">
+      <DependentUpon>Slide.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
