@@ -22,7 +22,8 @@ namespace CaptureFromCamera {
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e) {
-      _fg.Stop();
+      _fg.Dispose();
+      _camera.Dispose();
       base.OnFormClosing(e);
     }
   }

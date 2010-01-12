@@ -23,7 +23,7 @@
     /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
     /// </summary>
     private void InitializeComponent() {
-      this._display = new Parsley.UI.Concrete.FrameGrabber();
+      this._display = new Parsley.UI.Concrete.EmbeddableStream();
       this.SuspendLayout();
       // 
       // _display
@@ -48,7 +48,7 @@
 
     #endregion
 
-    private Parsley.UI.Concrete.FrameGrabber _display;
+    private Parsley.UI.Concrete.EmbeddableStream _display;
 
 
   }
