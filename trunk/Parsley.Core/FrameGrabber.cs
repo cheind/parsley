@@ -13,47 +13,65 @@ namespace Parsley.Core {
   /// <summary>
   /// Grabs continously frames from camera
   /// </summary>
-  public class FrameGrabber {
-    private BackgroundWorker _worker;
+  /// <remarks>The public OnFire event is not explicitely guarded by a lock,
+  /// because field-like events are generated with a lock(this). However, I'm not
+  /// sure if that holds for firing events as well.
+  /// http://msdn.microsoft.com/en-us/library/aa664455(VS.71).aspx
+  /// </remarks>
+  public class FrameGrabber : Resource {
+    private BackgroundWorker _bw;
+    private ManualResetEvent _stopped;
     private Camera _camera;
 
 
     public FrameGrabber(Camera camera) {
       _camera = camera;
-      _worker = new BackgroundWorker();
-      _worker.WorkerReportsProgress = true;
-      _worker.WorkerSupportsCancellation = true;
-      _worker.DoWork +=new DoWorkEventHandler(_worker_DoWork);
-    }
-
-    void _worker_DoWork(object sender, DoWorkEventArgs e)
-    {
-      BackgroundWorker bw = sender as BackgroundWorker;
-      while (!bw.CancellationPending) {
-        Image<Bgr, Byte> img = _camera.Frame();
-        // Assumes at least one listener
-        OnFrame(this, img);
-      }
-      e.Cancel = true;
+      _bw = new BackgroundWorker();
+      _bw.WorkerSupportsCancellation = true;
+      _stopped = new ManualResetEvent(false);
+      _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
     }
 
     public delegate void OnFrameHandler(FrameGrabber fg, Image<Bgr, Byte> img);
     public event OnFrameHandler OnFrame;
 
-    public void Start() {
-      if (OnFrame != null && !_worker.IsBusy) {
-        _worker.RunWorkerAsync();
+    public void Start()
+    {
+      if (!_bw.IsBusy) {
+        _stopped.Reset();
+        _bw.RunWorkerAsync();
       }
     }
 
-    public void Stop() {
-      if (_worker.IsBusy) {
-        _worker.CancelAsync();
-      }
+    public void RequestStop() {
+      _bw.CancelAsync();
     }
 
-    public Camera Camera {
+    public void Stop()
+    {
+      RequestStop();
+      _stopped.WaitOne();
+    }
+
+    public Camera Camera
+    {
       get { return _camera; }
+    }
+
+    protected override void DisposeManaged() {
+      this.Stop(); // Stop producing
+    }
+
+    void _bw_DoWork(object sender, DoWorkEventArgs e) {
+      BackgroundWorker bw = sender as BackgroundWorker;
+      while (!bw.CancellationPending) {
+        Image<Bgr, Byte> img = _camera.Frame();
+        if (OnFrame != null) {
+          OnFrame(this, img); // synchronize this?
+        }
+      }
+      e.Cancel = true;
+      _stopped.Set();
     }
   }
 }
