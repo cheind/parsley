@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -75,11 +75,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Concrete\FrameGrabber.cs">
+    <Compile Include="Concrete\EmbeddableStream.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Concrete\FrameGrabber.Designer.cs">
-      <DependentUpon>FrameGrabber.cs</DependentUpon>
+    <Compile Include="Concrete\EmbeddableStream.Designer.cs">
+      <DependentUpon>EmbeddableStream.cs</DependentUpon>
     </Compile>
     <Compile Include="Concrete\IntrinsicCalibration.cs">
       <SubType>UserControl</SubType>
@@ -128,8 +128,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Concrete\FrameGrabber.resx">
-      <DependentUpon>FrameGrabber.cs</DependentUpon>
+    <EmbeddedResource Include="Concrete\EmbeddableStream.resx">
+      <DependentUpon>EmbeddableStream.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Concrete\IntrinsicCalibration.resx">
       <DependentUpon>IntrinsicCalibration.cs</DependentUpon>

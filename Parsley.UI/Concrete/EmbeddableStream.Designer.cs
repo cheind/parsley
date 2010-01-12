@@ -1,5 +1,5 @@
 ﻿namespace Parsley.UI.Concrete {
-  partial class FrameGrabber {
+  partial class EmbeddableStream {
     /// <summary> 
     /// Erforderliche Designervariable.
     /// </summary>

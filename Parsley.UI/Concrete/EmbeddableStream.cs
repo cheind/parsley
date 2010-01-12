@@ -8,10 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley.UI.Concrete {
-  public partial class FrameGrabber : UserControl {
+  public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
 
-    public FrameGrabber() {
+    public EmbeddableStream() {
       InitializeComponent();
     }
 
@@ -21,7 +21,10 @@ namespace Parsley.UI.Concrete {
     }
 
     void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      _picture_box.Image = img;
+      MethodInvoker update = delegate {
+        _picture_box.Image = img;
+      };
+      this.BeginInvoke(update); // Invoke Asnyc
     }
   }
 }
