@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrightestPixelLLE.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="Camera.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="FrameGrabber.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
+    <Compile Include="LaserLineExtraction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="SharedResource.cs" />
