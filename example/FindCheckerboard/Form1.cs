@@ -21,7 +21,7 @@ namespace FindCheckerboard {
       InitializeComponent();
       try {
         _camera = new Parsley.Core.Camera(0);
-        _cb = new Parsley.Core.CheckerBoard(9, 6);
+        _cb = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
         _grabber = new Parsley.Core.FrameGrabber(_camera);
         // OnFrame requests are processed in the order they are registered.
         _grabber.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
@@ -46,7 +46,7 @@ namespace FindCheckerboard {
       gray._EqualizeHist();
 
       _cb.FindPattern(gray);
-      _cb.Draw(img, 4, 2);
+      _cb.DrawPattern(img, _cb.ImagePoints, _cb.PatternFound);
     }
   }
 }

@@ -29,7 +29,7 @@ namespace DisplayCheckerboard3D {
 
       _ex = new Parsley.Core.ExtrinsicCalibration(calib.ObjectPoints, intrinsics);
       _capture = Parsley.Core.Capture.FromCamera(0);
-      _cb = new Parsley.Core.CheckerBoard(9, 6);
+      _cb = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
 
       _bw_cam = new BackgroundWorker();
       _bw_cam.WorkerSupportsCancellation = true;
@@ -72,7 +72,7 @@ namespace DisplayCheckerboard3D {
 
         _cb.FindPattern(gray);
         if (_cb.PatternFound) {
-          Emgu.CV.ExtrinsicCameraParameters ecp = _ex.Calibrate(_cb.ImageCorners);
+          Emgu.CV.ExtrinsicCameraParameters ecp = _ex.Calibrate(_cb.ImagePoints);
           
           
           System.Threading.Monitor.Enter(_viewer);
@@ -81,7 +81,7 @@ namespace DisplayCheckerboard3D {
 
           bw.ReportProgress(0, String.Format("{0:f}", ecp.TranslationVector.Norm));
         }
-        _cb.Draw(img, 4, 2);
+        _cb.DrawPattern(img, _cb.ImagePoints, _cb.PatternFound);
         _picture_box.Image = img.Resize(_picture_box.Width, _picture_box.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);        
       }
       if (bw.CancellationPending) {
