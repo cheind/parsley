@@ -19,8 +19,10 @@ namespace CaptureFromCamera {
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e) {
-      _fg.Dispose();
-      _camera.Dispose();
+      if (_fg != null) {
+        _fg.Dispose(); // First dispose the framegrabber.
+        _camera.Dispose();
+      }
       base.OnFormClosing(e);
     }
 
@@ -34,9 +36,11 @@ namespace CaptureFromCamera {
           Parsley.UI.ParsleyMessage.Show("Cannot find Camera", "Cannot connect to camera. Is there a camera pluged in?");
         }
       }
-      Parsley.UI.Concrete.StreamViewer sv = new Parsley.UI.Concrete.StreamViewer();
-      sv.FrameGrabber = _fg;
-      sv.Show();
+      if (_camera != null) {
+        Parsley.UI.Concrete.StreamViewer sv = new Parsley.UI.Concrete.StreamViewer();
+        sv.FrameGrabber = _fg;
+        sv.Show();
+      }
     }
   }
 }
