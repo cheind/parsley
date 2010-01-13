@@ -18,7 +18,11 @@ namespace Parsley.Core {
     private Emgu.CV.ExtrinsicCameraParameters _extrinsics;
 
     public Camera(int device_index) {
-      _device = new Emgu.CV.Capture(device_index);
+      try {
+        _device = new Emgu.CV.Capture(device_index);
+      } catch (NullReferenceException) {
+        throw new ArgumentException(String.Format("No camera device found at slot {0}.", device_index));
+      }
       _intrinsics = null;
       _extrinsics = null;
     }
