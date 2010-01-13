@@ -8,72 +8,52 @@ using Emgu.CV.Structure;
 namespace Parsley.Core {
 
   /// <summary>
-  /// Represents a checkerboard used for calibration
+  /// Represents a checker board used for calibration.
   /// </summary>
-  public class CheckerBoard {
+  /// <remarks>
+  /// A checkerboard as implemented by this class is a rectangular pattern of 
+  /// square fields which alternate in color (black/white). It's best to use
+  /// a non-square pattern to avoid symmetries in detection. 
+  /// 
+  /// CheckerBoard is parametrized by the number of inner corner points per
+  /// checkerboard row and column. Additionally a field size is specified that
+  /// is used to generate object reference points in 3d.
+  /// 
+  /// </remarks>
+  public class CheckerBoard : CalibrationPattern {
     private System.Drawing.Size _inner_corners;
-    private System.Drawing.PointF[] _corners;
-    private bool _pattern_found;
+    private float _field_size;
 
-    /// <summary>
-    /// Construct checkboard from the number of inner corners per row/column
-    /// and size of check-field.
-    /// </summary>
-    public CheckerBoard(int corner_row, int corner_column) {
-      _inner_corners = new System.Drawing.Size(corner_row, corner_column);
-      _pattern_found = false;
+    public CheckerBoard(int inner_corner_row, int inner_corner_col, float field_size) {
+      _inner_corners = new System.Drawing.Size(inner_corner_row, inner_corner_col);
+      _field_size = field_size;
+      this.ObjectPoints = GenerateObjectCorners();
     }
 
-    public MCvPoint3D32f[] ObjectCorners(float field_size) {
+    MCvPoint3D32f[] GenerateObjectCorners() {
       MCvPoint3D32f[] corners = new MCvPoint3D32f[_inner_corners.Width * _inner_corners.Height];
       for (int y = 0; y < _inner_corners.Height; ++y) {
         for (int x = 0; x < _inner_corners.Width; x++) {
           int id = y * _inner_corners.Width + x;
-          corners[id].x = x * field_size;
-          corners[id].y = y * field_size;
+          corners[id].x = x * _field_size;
+          corners[id].y = y * _field_size;
           corners[id].z = 0.0f;
         }
       }
       return corners;
     }
 
-    public System.Drawing.PointF[] ImageCorners {
-      get { return _corners; }
-    }
-
-    /// <summary>
-    /// Locate the checkerboard pattern in the provided image.
-    /// </summary>
-    /// <param name="img"></param>
-    /// <returns>True if pattern was found</returns>
-    public void FindPattern(Emgu.CV.Image<Gray, Byte> img) {
-      _pattern_found = Emgu.CV.CameraCalibration.FindChessboardCorners(
-        img, 
-        _inner_corners, 
-        Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH,
-        out _corners);
-    }
-
-    public bool PatternFound {
-      get { return _pattern_found; }
-    }
-
-    /// <summary>
-    /// Draw found pattern to image.
-    /// </summary>
-    /// <param name="img"></param>
-    /// <param name="size"></param>
-    /// <param name="thickness"></param>
-    public void Draw(Emgu.CV.Image<Bgr, Byte> img, int size, int thickness) {
-      System.Drawing.Color color = _pattern_found ? System.Drawing.Color.Green : System.Drawing.Color.Red;
-      Bgr bgr = new Bgr(color);
-      MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 0.8, 0.8); //Create the font
-      int count = 1;
-      foreach (System.Drawing.PointF corner in _corners) {
-        img.Draw(new CircleF(corner, size), bgr, thickness);
-        img.Draw(count.ToString(), ref f, new System.Drawing.Point((int)corner.X + 5,(int)corner.Y - 5), bgr);
-        count++;
+    public override bool FindPattern(Emgu.CV.IImage img, out System.Drawing.PointF[] image_points) {
+      Emgu.CV.Image<Gray, Byte> gray = img as Emgu.CV.Image<Gray, Byte>;
+      if (gray == null) {
+        throw new ArgumentException("Given image is not of type Image<Gray, Byte>");
       }
+      return Emgu.CV.CameraCalibration.FindChessboardCorners(
+        gray,
+        _inner_corners,
+        Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH,
+        out image_points
+      );
     }
   }
 }
