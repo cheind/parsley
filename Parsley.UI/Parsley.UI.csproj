@@ -81,12 +81,6 @@
     <Compile Include="Concrete\EmbeddableStream.Designer.cs">
       <DependentUpon>EmbeddableStream.cs</DependentUpon>
     </Compile>
-    <Compile Include="Concrete\IntrinsicCalibration.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Concrete\IntrinsicCalibration.Designer.cs">
-      <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
-    </Compile>
     <Compile Include="Concrete\StreamViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +131,6 @@
     <EmbeddedResource Include="Concrete\EmbeddableStream.resx">
       <DependentUpon>EmbeddableStream.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Concrete\IntrinsicCalibration.resx">
-      <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Concrete\StreamViewer.resx">
       <DependentUpon>StreamViewer.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -169,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\parsley48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
