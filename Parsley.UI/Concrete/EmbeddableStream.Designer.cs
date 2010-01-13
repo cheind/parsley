@@ -10,6 +10,7 @@
     /// </summary>
     /// <param name="disposing">True, wenn verwaltete Ressourcen gelöscht werden sollen; andernfalls False.</param>
     protected override void Dispose(bool disposing) {
+      this.ReleaseGrab(_grabber);
       if (disposing && (components != null)) {
         components.Dispose();
       }
@@ -31,19 +32,20 @@
       // _picture_box
       // 
       this._picture_box.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._picture_box.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
       this._picture_box.Location = new System.Drawing.Point(0, 0);
       this._picture_box.Name = "_picture_box";
-      this._picture_box.Size = new System.Drawing.Size(544, 381);
+      this._picture_box.Size = new System.Drawing.Size(320, 200);
       this._picture_box.TabIndex = 2;
       this._picture_box.TabStop = false;
       // 
-      // FrameGrabber
+      // EmbeddableStream
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this._picture_box);
-      this.Name = "FrameGrabber";
-      this.Size = new System.Drawing.Size(544, 381);
+      this.Name = "EmbeddableStream";
+      this.Size = new System.Drawing.Size(320, 200);
       ((System.ComponentModel.ISupportInitialize)(this._picture_box)).EndInit();
       this.ResumeLayout(false);
 
