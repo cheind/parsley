@@ -47,7 +47,7 @@ namespace Parsley.Core {
     /// the garbage collector. If called by the user, disposing will be true.
     /// If called by the garbage collector, disposing will be set to false.
     /// </remarks>
-    private void Dispose(bool disposing) {
+    protected virtual void Dispose(bool disposing) {
       // If not yet disposed
       if (!_disposed) {
         // If disposing equals true, dispose all managed
@@ -61,6 +61,13 @@ namespace Parsley.Core {
 
         _disposed = true;
       }
+    }
+
+    /// <summary>
+    /// Check if resource is disposed.
+    /// </summary>
+    public virtual bool Disposed {
+      get { return _disposed; }
     }
 
     /// <summary>
