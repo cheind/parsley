@@ -11,13 +11,8 @@ using System.Threading;
 namespace Parsley.Core {
 
   /// <summary>
-  /// Grabs continously frames from camera
+  /// Grabs continously frames from camera asynchronously.
   /// </summary>
-  /// <remarks>The public OnFire event is not explicitely guarded by a lock,
-  /// because field-like events are generated with a lock(this). However, I'm not
-  /// sure if that holds for firing events as well.
-  /// http://msdn.microsoft.com/en-us/library/aa664455(VS.71).aspx
-  /// </remarks>
   public class FrameGrabber : Resource {
     private BackgroundWorker _bw;
     private Camera _camera;
@@ -32,7 +27,6 @@ namespace Parsley.Core {
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
       _lock_fh = new object();
     }
-
 
     public event OnFrameHandler OnFrame {
       add {
@@ -68,6 +62,9 @@ namespace Parsley.Core {
       using (SharedResource.Breath b = _camera.KeepAlive()) {
         while (!bw.CancellationPending) {
           Image<Bgr, Byte> img = _camera.Frame();
+          // Note: the image is disposed once the camera gets disposed.
+          // Therefore you should copy the image if needed in another
+          // thread or make sure the camera is not disposed.
           lock (_lock_fh) {
             if (_fh != null) {
               _fh(this, img);
