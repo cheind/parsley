@@ -16,7 +16,7 @@ namespace Parsley.Core {
   public class FrameGrabber : Resource {
     private BackgroundWorker _bw;
     private Camera _camera;
-    public delegate void OnFrameHandler(FrameGrabber fg, Image<Bgr, Byte> img);
+    public delegate IImage OnFrameHandler(FrameGrabber fg, IImage img);
     private OnFrameHandler _fh;  // Holds the delegate
     private object _lock_fh;
 
@@ -54,20 +54,30 @@ namespace Parsley.Core {
     }
 
     protected override void DisposeManaged() {
-      this.RequestStop(); // Stop or request stop?
+      this.RequestStop();
     }
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
       using (SharedResource.Breath b = _camera.KeepAlive()) {
         while (!bw.CancellationPending) {
-          Image<Bgr, Byte> img = _camera.Frame();
+          IImage img = _camera.Frame();
           // Note: the image is disposed once the camera gets disposed.
           // Therefore you should copy the image if needed in another
           // thread or make sure the camera is not disposed.
           lock (_lock_fh) {
             if (_fh != null) {
-              _fh(this, img);
+              // Get the delegates currently registered
+              Delegate[] delegates = _fh.GetInvocationList();
+              foreach (Delegate d in delegates) {
+                // Invoke delegate catch return value.
+                IImage ret = (IImage)d.DynamicInvoke(this, img);
+                // Dispose old if image returned by delegate is different.
+                if (ret != img) {
+                  img.Dispose();
+                  img = ret;
+                }
+              }
             }
           }
         }
