@@ -24,8 +24,8 @@ namespace Parsley.UI {
       InitializeComponent();
       _nr_frames = nr_frames;
       _camera = camera;
-      _cb = new Parsley.Core.CheckerBoard(9, 6);
-      _calib = new Parsley.Core.IntrinsicCalibration(_cb.ObjectCorners(25.0f), _camera.Properties.ImageSize);
+      _cb = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
+      _calib = new Parsley.Core.IntrinsicCalibration(_cb.ObjectPoints, _camera.Properties.ImageSize);
       _bw = new BackgroundWorker();
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
       _bw.WorkerReportsProgress = true;
@@ -84,11 +84,11 @@ namespace Parsley.UI {
         if ((now - last).Seconds > 3) {
           last = now;
           if (_cb.PatternFound) {
-            _calib.AddView(_cb.ImageCorners);
+            _calib.AddView(_cb.ImagePoints);
             bw.ReportProgress(_calib.Views.Count);
           }
         }
-        _cb.Draw(img, 4, 2);
+        _cb.DrawPattern(img, _cb.ImagePoints, _cb.PatternFound);
         _picture_box.Image = img.Resize(_picture_box.Width, _picture_box.Height, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
       }
       if (bw.CancellationPending) {
@@ -96,7 +96,7 @@ namespace Parsley.UI {
       } else {
         _intrinsics = _calib.Calibrate();
         Parsley.Core.ExtrinsicCalibration ex = new Parsley.Core.ExtrinsicCalibration(_calib.ObjectPoints, _intrinsics);
-        Emgu.CV.ExtrinsicCameraParameters ecp = ex.Calibrate(_cb.ImageCorners);
+        Emgu.CV.ExtrinsicCameraParameters ecp = ex.Calibrate(_cb.ImagePoints);
 
         System.Drawing.PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
             new MCvPoint3D32f[] { 
