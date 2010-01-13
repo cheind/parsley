@@ -12,7 +12,7 @@ namespace Parsley.Core {
   /// <summary>
   /// High level access to a camera
   /// </summary>
-  public class Camera : Resource {
+  public class Camera : SharedResource {
     private Emgu.CV.Capture _device;
     private Emgu.CV.IntrinsicCameraParameters _intrinsics;
     private Emgu.CV.ExtrinsicCameraParameters _extrinsics;
@@ -57,6 +57,11 @@ namespace Parsley.Core {
     [Description("Frame Height")]
     public int FrameHeight {
       get { return (int)_device.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT); }
+    }
+
+    [Description("Frame Aspect Ratio of Width/Height")]
+    public double FrameAspectRatio {
+      get { return ((double)FrameWidth) / FrameHeight; }
     }
 
     public Image<Bgr, Byte> Frame() {
