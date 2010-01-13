@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace CaptureFromCamera {
   public partial class Form1 : Form {
@@ -15,16 +16,27 @@ namespace CaptureFromCamera {
 
     public Form1() {
       InitializeComponent();
-      _camera = new Parsley.Core.Camera(0);
-      _fg = new Parsley.Core.FrameGrabber(_camera);
-      _display.GrabFrom(_fg);
-      _fg.Start();
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e) {
       _fg.Dispose();
       _camera.Dispose();
       base.OnFormClosing(e);
+    }
+
+    private void _button_show_Click(object sender, EventArgs e) {
+      if (_camera == null) {
+        try {
+          _camera = new Parsley.Core.Camera(0);
+          _fg = new Parsley.Core.FrameGrabber(_camera);
+          _fg.Start();
+        } catch (ArgumentException) {
+          Parsley.UI.ParsleyMessage.Show("Cannot find Camera", "Cannot connect to camera. Is there a camera pluged in?");
+        }
+      }
+      Parsley.UI.Concrete.StreamViewer sv = new Parsley.UI.Concrete.StreamViewer();
+      sv.FrameGrabber = _fg;
+      sv.Show();
     }
   }
 }
