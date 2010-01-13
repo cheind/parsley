@@ -34,6 +34,7 @@
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_CUBIC;
       this.Name = "Form1";
+      this.ShowInTaskbar = true;
       this.Text = "Find Checkerboard";
       this.ResumeLayout(false);
 

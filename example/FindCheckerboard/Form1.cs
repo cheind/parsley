@@ -19,17 +19,26 @@ namespace FindCheckerboard {
 
     public Form1() {
       InitializeComponent();
-      _camera = new Parsley.Core.Camera(0);
-      _cb = new Parsley.Core.CheckerBoard(9, 6);
-      _grabber = new Parsley.Core.FrameGrabber(_camera);
-      _grabber.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
-      this.FrameGrabber = _grabber;
-      _grabber.Start();
+      try {
+        _camera = new Parsley.Core.Camera(0);
+        _cb = new Parsley.Core.CheckerBoard(9, 6);
+        _grabber = new Parsley.Core.FrameGrabber(_camera);
+        // OnFrame requests are processed in the order they are registered.
+        _grabber.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
+        this.FrameGrabber = _grabber;
+        _grabber.Start();
+      } catch (ArgumentException) {
+        Parsley.UI.ParsleyMessage.Show("No Camera", "No camera connected");
+        this.Close();
+      }
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e) {
-      _grabber.RequestStop();
-      _camera.Dispose();
+      if (_grabber != null) {
+        _grabber.OnFrame -= new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
+        _grabber.RequestStop();
+        _camera.Dispose();
+      }
     }
 
     void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Image<Bgr, byte> img) {
