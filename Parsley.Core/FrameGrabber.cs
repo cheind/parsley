@@ -20,25 +20,32 @@ namespace Parsley.Core {
   /// </remarks>
   public class FrameGrabber : Resource {
     private BackgroundWorker _bw;
-    private ManualResetEvent _stopped;
     private Camera _camera;
-
+    public delegate void OnFrameHandler(FrameGrabber fg, Image<Bgr, Byte> img);
+    private OnFrameHandler _fh;  // Holds the delegate
+    private object _lock_fh;
 
     public FrameGrabber(Camera camera) {
       _camera = camera;
       _bw = new BackgroundWorker();
       _bw.WorkerSupportsCancellation = true;
-      _stopped = new ManualResetEvent(false);
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
+      _lock_fh = new object();
     }
 
-    public delegate void OnFrameHandler(FrameGrabber fg, Image<Bgr, Byte> img);
-    public event OnFrameHandler OnFrame;
+
+    public event OnFrameHandler OnFrame {
+      add {
+        lock (_lock_fh) { _fh = _fh + value; }
+      }
+      remove {
+        lock (_lock_fh) { _fh = _fh - value; }
+      }
+    }
 
     public void Start()
     {
       if (!_bw.IsBusy) {
-        _stopped.Reset();
         _bw.RunWorkerAsync();
       }
     }
@@ -47,31 +54,28 @@ namespace Parsley.Core {
       _bw.CancelAsync();
     }
 
-    public void Stop()
-    {
-      RequestStop();
-      _stopped.WaitOne();
-    }
-
     public Camera Camera
     {
       get { return _camera; }
     }
 
     protected override void DisposeManaged() {
-      this.Stop(); // Stop producing
+      this.RequestStop(); // Stop or request stop?
     }
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
-      while (!bw.CancellationPending) {
-        Image<Bgr, Byte> img = _camera.Frame();
-        if (OnFrame != null) {
-          OnFrame(this, img); // synchronize this?
+      using (SharedResource.Breath b = _camera.KeepAlive()) {
+        while (!bw.CancellationPending) {
+          Image<Bgr, Byte> img = _camera.Frame();
+          lock (_lock_fh) {
+            if (_fh != null) {
+              _fh(this, img);
+            }
+          }
         }
       }
       e.Cancel = true;
-      _stopped.Set();
     }
   }
 }
