@@ -12,27 +12,32 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 
 namespace FindCheckerboard {
-  public partial class Form1 : Form {
-
-    private Parsley.Core.Capture _capture;
+  public partial class Form1 : Parsley.UI.Concrete.StreamViewer {
+    private Parsley.Core.Camera _camera;
+    private Parsley.Core.FrameGrabber _grabber;
     private Parsley.Core.CheckerBoard _cb;
 
     public Form1() {
       InitializeComponent();
-      _capture = Parsley.Core.Capture.FromCamera(0);
+      _camera = new Parsley.Core.Camera(0);
       _cb = new Parsley.Core.CheckerBoard(9, 6);
-      Application.Idle += new EventHandler(Application_Idle);
+      _grabber = new Parsley.Core.FrameGrabber(_camera);
+      _grabber.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
+      this.FrameGrabber = _grabber;
+      _grabber.Start();
     }
 
-    void Application_Idle(object sender, EventArgs e) {
-      Image<Bgr, Byte> img = _capture.Frame();
+    protected override void OnFormClosing(FormClosingEventArgs e) {
+      _grabber.RequestStop();
+      _camera.Dispose();
+    }
+
+    void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Image<Bgr, byte> img) {
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
 
       _cb.FindPattern(gray);
       _cb.Draw(img, 4, 2);
-
-      _image_box.Image = img;
     }
   }
 }
