@@ -7,6 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Emgu.CV.Structure;
+
+// Shortcuts for this file
+using SingleChannelImage = Emgu.CV.Image<Emgu.CV.Structure.Gray, byte>;
+using RGBImage = Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte>;
+
 namespace Parsley.UI.Concrete {
   public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
@@ -61,7 +67,7 @@ namespace Parsley.UI.Concrete {
       }
     }
 
-    void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    Emgu.CV.IImage _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.IImage img) {
       // Note: This method is called from the frame-grabber's thread loop. 
       // The framegrabber holds a Breath on the camera to ensure that the camera object remains
       // alive during this callback. The camera object is a SharedResource, meaning that any
@@ -70,7 +76,7 @@ namespace Parsley.UI.Concrete {
       // and invoke is used. Invoke executes the delegate on thread that owns this control, which is the one
       // that is already blocked. This leads to a deadlock. That is why we use BeginInvoke, which executes
       // the delegate on the GUI thread associated with this control.
-      Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img_copy = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
+      Emgu.CV.IImage img_copy = this.ResizeImage(img, _picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height);
       if (this.InvokeRequired) {
         this.BeginInvoke(new MethodInvoker(delegate {
           Emgu.CV.IImage prev = _picture_box.Image;
@@ -79,7 +85,27 @@ namespace Parsley.UI.Concrete {
             prev.Dispose();
           }
         }));
-      }  
+      }
+      return img;
+    }
+
+    Emgu.CV.IImage ResizeImage(Emgu.CV.IImage img, int w, int h) {
+      // Make a guess based on the number of channels
+      Emgu.CV.IImage ret;
+      
+      switch (img.NumberOfChannels) {
+        case 1:
+          SingleChannelImage casted = img as SingleChannelImage;
+          ret = casted.Resize(w, h, _interpolation);          
+          break;
+        case 3:
+          RGBImage rgb = img as RGBImage;
+          ret = rgb.Resize(w, h, _interpolation);
+          break;
+        default:
+          throw new ArgumentException("Image type not supported");
+      }
+      return ret;
     }
   }
 }
