@@ -50,20 +50,25 @@ namespace Parsley.Core {
     public override void FindLaserLine(Emgu.CV.Image<Gray, byte> channel, out System.Drawing.PointF[] laser_points) {
       laser_points = new System.Drawing.PointF[channel.Width];
       // Search rows
+      int max_i = 0;
+      int max_pos = 0;
       for (int c = 0; c < channel.Width; ++c) {
-        int max = this.FindMax(channel, c);
+        this.FindMax(channel, c, ref max_pos, ref max_i);
         laser_points[c].X = c;
-        laser_points[c].Y = (max >= _threshold) ? max : -1;
+        laser_points[c].Y = (max_i >= _threshold) ? max_pos : -1;
       }
     }
 
-    int FindMax(Emgu.CV.Image<Gray, byte> channel, int column) {
-      int max = 0;
+    void FindMax(Emgu.CV.Image<Gray, byte> channel, int column, ref int max_pos, ref int max_i) {
+      max_i = 0;
+      max_pos = -1;
       for (int k = 0; k < channel.Height; ++k) {
         int i = (int)channel[k, column].Intensity;
-        if (i > max) max = k;
+        if (i > max_i) {
+          max_i = i;
+          max_pos = k;
+        }
       }
-      return max;
     }
 
   }
