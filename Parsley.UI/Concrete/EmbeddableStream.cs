@@ -33,6 +33,11 @@ namespace Parsley.UI.Concrete {
       set { _interpolation = value; }
     }
 
+    public Emgu.CV.UI.ImageBox.FunctionalModeOption FunctionalMode {
+      get { return _picture_box.FunctionalMode; }
+      set { _picture_box.FunctionalMode = value; }
+    }
+
     public Core.FrameGrabber FrameGrabber {
       set {
         this.ReleaseGrab(_grabber);
