@@ -25,6 +25,12 @@ namespace Parsley.UI.Concrete {
       set { _display.Interpolation = value; }
     }
 
+    public Emgu.CV.UI.ImageBox.FunctionalModeOption FunctionalMode {
+      get { return _display.FunctionalMode; }
+      set { _display.FunctionalMode = value; }
+    }
+
+
     public void Pause() {
       _display.Pause();
     }
