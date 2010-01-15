@@ -39,6 +39,7 @@ namespace CaptureFromCamera {
       if (_camera != null) {
         Parsley.UI.Concrete.StreamViewer sv = new Parsley.UI.Concrete.StreamViewer();
         sv.FrameGrabber = _fg;
+        sv.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
         sv.Show();
       }
     }
