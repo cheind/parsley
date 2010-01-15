@@ -17,12 +17,12 @@ namespace Parsley.Core {
   /// zero are observed, the laser line was found for that x-pixel.
   /// </remarks>
   public abstract class LaserLineExtraction {
-    private System.Drawing.PointF[] _laser_points;
+    private float[] _laser_points;
 
     /// <summary>
     /// Get or set the laser pixels.
     /// </summary>
-    public System.Drawing.PointF[] LaserPoints {
+    public float[] LaserPoints {
       get { return _laser_points; }
       set { _laser_points = value; }
     }
@@ -40,6 +40,6 @@ namespace Parsley.Core {
     /// Find laser line in channel image.
     /// </summary>
     /// <param name="channel">Image to search in.</param>
-    public abstract void FindLaserLine(Emgu.CV.Image<Gray, byte> channel, out System.Drawing.PointF[] laser_points);
+    public abstract void FindLaserLine(Emgu.CV.Image<Gray, byte> channel, out float[] laser_pos);
   }
 }
