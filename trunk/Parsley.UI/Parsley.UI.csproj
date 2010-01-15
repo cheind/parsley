@@ -111,6 +111,12 @@
     <Compile Include="ParsleyButton.Designer.cs">
       <DependentUpon>ParsleyButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParsleySlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParsleySlide.Designer.cs">
+      <DependentUpon>ParsleySlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -152,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ParsleyButton.resx">
       <DependentUpon>ParsleyButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParsleySlide.resx">
+      <DependentUpon>ParsleySlide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
