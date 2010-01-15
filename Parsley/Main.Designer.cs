@@ -28,8 +28,8 @@
       this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mnu_live_feed = new System.Windows.Forms.ToolStripMenuItem();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this._slide_control = new Parsley.UI.SlideControl();
       this._btn_back = new Parsley.UI.ParsleyButtonSmall();
+      this._slide_control = new Parsley.UI.SlideControl();
       this.menuStrip1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -75,18 +75,10 @@
       this.tableLayoutPanel1.Size = new System.Drawing.Size(598, 387);
       this.tableLayoutPanel1.TabIndex = 2;
       // 
-      // _slide_control
-      // 
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(3, 3);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(592, 340);
-      this._slide_control.TabIndex = 1;
-      // 
       // _btn_back
       // 
       this._btn_back.BackColor = System.Drawing.Color.White;
+      this._btn_back.Enabled = false;
       this._btn_back.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
       this._btn_back.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this._btn_back.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -102,6 +94,15 @@
       this._btn_back.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
       this._btn_back.UseVisualStyleBackColor = true;
       this._btn_back.Click += new System.EventHandler(this._btn_back_Click);
+      // 
+      // _slide_control
+      // 
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(3, 3);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(592, 340);
+      this._slide_control.TabIndex = 1;
       // 
       // Main
       // 

@@ -16,5 +16,9 @@ namespace Parsley {
     private void _btn_example_Click(object sender, EventArgs e) {
       this.SlideControl.ForwardTo<ExamplesSlide>();
     }
+
+    private void btn_intrinsic_calibration_Click(object sender, EventArgs e) {
+      this.SlideControl.ForwardTo<IntrinsicCalibrationSlide>();
+    }
   }
 }

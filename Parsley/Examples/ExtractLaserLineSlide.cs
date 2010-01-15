@@ -21,18 +21,7 @@ namespace Parsley.Examples {
       _reference = null;
     }
 
-    public override void OnSlideShowing() {
-      this.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameProducer.OnFrameHandler(fg_OnFramePrepend);
-      this.FrameGrabber.Start();
-      base.OnSlideShowing();
-    }
-
-    public override void OnSlideHiding(CancelEventArgs args) {
-      this.FrameGrabber.OnFramePrepend -= new Parsley.Core.FrameProducer.OnFrameHandler(fg_OnFramePrepend);
-      base.OnSlideHiding(args);
-    }
-
-    void fg_OnFramePrepend(Parsley.Core.FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    override protected void OnFrame(Parsley.Core.FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte> my_ref = _reference;
       int my_channel = _channel;
       if (my_ref != null) {

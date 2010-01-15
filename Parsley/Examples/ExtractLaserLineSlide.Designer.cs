@@ -44,11 +44,12 @@
       this.tableLayoutPanel1.Controls.Add(this._btn_take_reference, 0, 0);
       this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+      this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 2;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(509, 457);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(398, 347);
       this.tableLayoutPanel1.TabIndex = 0;
       // 
       // tableLayoutPanel2
@@ -61,12 +62,13 @@
       this.tableLayoutPanel2.Controls.Add(this._num_threshold, 1, 0);
       this.tableLayoutPanel2.Controls.Add(this._cmb_channel, 1, 1);
       this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 231);
+      this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 177);
+      this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.tableLayoutPanel2.Name = "tableLayoutPanel2";
       this.tableLayoutPanel2.RowCount = 2;
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(503, 223);
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(390, 166);
       this.tableLayoutPanel2.TabIndex = 2;
       // 
       // growLabel2
@@ -75,7 +77,8 @@
       this.growLabel2.AutoSize = true;
       this.growLabel2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.growLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.growLabel2.Location = new System.Drawing.Point(91, 157);
+      this.growLabel2.Location = new System.Drawing.Point(34, 115);
+      this.growLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.growLabel2.Name = "growLabel2";
       this.growLabel2.Size = new System.Drawing.Size(157, 19);
       this.growLabel2.TabIndex = 4;
@@ -87,7 +90,8 @@
       this.growLabel1.AutoSize = true;
       this.growLabel1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.growLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this.growLabel1.Location = new System.Drawing.Point(118, 46);
+      this.growLabel1.Location = new System.Drawing.Point(61, 32);
+      this.growLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.growLabel1.Name = "growLabel1";
       this.growLabel1.Size = new System.Drawing.Size(130, 19);
       this.growLabel1.TabIndex = 2;
@@ -98,9 +102,10 @@
       this._num_threshold.Anchor = System.Windows.Forms.AnchorStyles.Left;
       this._num_threshold.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this._num_threshold.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this._num_threshold.Location = new System.Drawing.Point(254, 42);
+      this._num_threshold.Location = new System.Drawing.Point(199, 28);
+      this._num_threshold.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this._num_threshold.Name = "_num_threshold";
-      this._num_threshold.Size = new System.Drawing.Size(47, 27);
+      this._num_threshold.Size = new System.Drawing.Size(63, 27);
       this._num_threshold.TabIndex = 3;
       this._num_threshold.Value = new decimal(new int[] {
             20,
@@ -118,9 +123,10 @@
             "Blue",
             "Green",
             "Red"});
-      this._cmb_channel.Location = new System.Drawing.Point(254, 153);
+      this._cmb_channel.Location = new System.Drawing.Point(199, 111);
+      this._cmb_channel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this._cmb_channel.Name = "_cmb_channel";
-      this._cmb_channel.Size = new System.Drawing.Size(121, 27);
+      this._cmb_channel.Size = new System.Drawing.Size(160, 27);
       this._cmb_channel.TabIndex = 5;
       this._cmb_channel.Text = "Select Channel";
       this._cmb_channel.SelectedIndexChanged += new System.EventHandler(this._cmb_channel_SelectedIndexChanged);
@@ -135,9 +141,10 @@
       this._btn_take_reference.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this._btn_take_reference.Image = ((System.Drawing.Image)(resources.GetObject("_btn_take_reference.Image")));
       this._btn_take_reference.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_take_reference.Location = new System.Drawing.Point(79, 84);
+      this._btn_take_reference.Location = new System.Drawing.Point(29, 56);
+      this._btn_take_reference.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this._btn_take_reference.Name = "_btn_take_reference";
-      this._btn_take_reference.Size = new System.Drawing.Size(350, 60);
+      this._btn_take_reference.Size = new System.Drawing.Size(339, 60);
       this._btn_take_reference.TabIndex = 0;
       this._btn_take_reference.Text = "Take Reference Image";
       this._btn_take_reference.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,11 +154,12 @@
       // 
       // ExtractLaserLineSlide
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.tableLayoutPanel1);
+      this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
       this.Name = "ExtractLaserLineSlide";
-      this.Size = new System.Drawing.Size(509, 457);
+      this.Size = new System.Drawing.Size(398, 347);
       this.tableLayoutPanel1.ResumeLayout(false);
       this.tableLayoutPanel2.ResumeLayout(false);
       this.tableLayoutPanel2.PerformLayout();
