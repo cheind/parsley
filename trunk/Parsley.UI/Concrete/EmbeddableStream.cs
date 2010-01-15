@@ -16,14 +16,10 @@ using RGBImage = Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte>;
 namespace Parsley.UI.Concrete {
   public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
-    private bool _is_paused;
-    private bool _is_disposing;
     private Emgu.CV.CvEnum.INTER _interpolation;
 
     public EmbeddableStream() {
       InitializeComponent();
-      _is_disposing = false;
-      _is_paused = false;
       _grabber = null;
       _interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_NN;
     }
@@ -47,13 +43,6 @@ namespace Parsley.UI.Concrete {
       get { return _grabber; }
     }
 
-    public void Pause() {
-      _is_paused = true;
-    }
-
-    public void Resume() {
-      _is_paused = false;
-    }
 
     void GrabFrom(Core.FrameGrabber fg) {
       if (fg != null) {
@@ -81,7 +70,7 @@ namespace Parsley.UI.Concrete {
       // and invoke is used. Invoke executes the delegate on thread that owns this control, which is the one
       // that is already blocked. This leads to a deadlock. That is why we use BeginInvoke, which executes
       // the delegate on the GUI thread associated with this control.
-      Emgu.CV.IImage img_copy = this.ResizeImage(img, _picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height);
+      Emgu.CV.IImage img_copy = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
       if (this.InvokeRequired) {
         this.BeginInvoke(new MethodInvoker(delegate {
           Emgu.CV.IImage prev = _picture_box.Image;
@@ -91,26 +80,6 @@ namespace Parsley.UI.Concrete {
           }
         }));
       }
-      //return img;
-    }
-
-    Emgu.CV.IImage ResizeImage(Emgu.CV.IImage img, int w, int h) {
-      // Make a guess based on the number of channels
-      Emgu.CV.IImage ret;
-      
-      switch (img.NumberOfChannels) {
-        case 1:
-          SingleChannelImage casted = img as SingleChannelImage;
-          ret = casted.Resize(w, h, _interpolation);          
-          break;
-        case 3:
-          RGBImage rgb = img as RGBImage;
-          ret = rgb.Resize(w, h, _interpolation);
-          break;
-        default:
-          throw new ArgumentException("Image type not supported");
-      }
-      return ret;
     }
   }
 }
