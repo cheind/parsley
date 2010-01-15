@@ -98,6 +98,13 @@ namespace Parsley.Core {
     }
 
     /// <summary>
+    /// Frame size of device
+    /// </summary>
+    public System.Drawing.Size FrameSize {
+      get { return new System.Drawing.Size(this.FrameWidth, this.FrameHeight); }
+    }
+
+    /// <summary>
     /// Retrieve the current frame.
     /// </summary>
     /// <returns></returns>
