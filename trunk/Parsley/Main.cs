@@ -12,11 +12,13 @@ namespace Parsley {
 
     private Core.FrameGrabber _fg;
     private Core.Camera _camera;
+    private Core.CheckerBoard _calibration_pattern;
     private UI.Concrete.StreamViewer _live_feed;
 
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
+    private IntrinsicCalibrationSlide _slide_intrinsic_calib;
 
     public Main() {
       InitializeComponent();
@@ -24,7 +26,10 @@ namespace Parsley {
       try {
         _camera = new Parsley.Core.Camera(0);
         _fg = new Parsley.Core.FrameGrabber(_camera);
+        _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
         _live_feed = new Parsley.UI.Concrete.StreamViewer();
+        _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
+        _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
         _live_feed.FrameGrabber = _fg;
         _live_feed.ShowInTaskbar = true;
         _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
@@ -36,15 +41,21 @@ namespace Parsley {
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_fg);
+      _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_fg, _calibration_pattern);
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_extract_laser_line);
-      
+      _slide_control.AddSlide(_slide_intrinsic_calib);
 
+      _slide_control.SlideChanged += new EventHandler<Parsley.UI.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;
 
       
+    }
+
+    void _slide_control_SlideChanged(object sender, Parsley.UI.SlideChangedArgs e) {
+      _btn_back.Enabled = e.Now != _slide_main;
     }
 
     void _live_feed_Shown(object sender, EventArgs e) {

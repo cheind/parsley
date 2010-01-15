@@ -98,6 +98,12 @@
     <Compile Include="FrameGrabberSlide.Designer.cs">
       <DependentUpon>FrameGrabberSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="IntrinsicCalibrationSlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IntrinsicCalibrationSlide.Designer.cs">
+      <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Examples\ExtractLaserLineSlide.resx">
       <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntrinsicCalibrationSlide.resx">
+      <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

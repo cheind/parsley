@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley {
-  public partial class FrameGrabberSlide : UI.Slide {
+  public partial class FrameGrabberSlide : UI.ParsleySlide {
     private Core.FrameGrabber _fg;
 
     public FrameGrabberSlide() {
@@ -20,9 +20,25 @@ namespace Parsley {
       InitializeComponent();
     }
 
+    /// <summary>
+    /// Access the framegrabber
+    /// </summary>
     public Core.FrameGrabber FrameGrabber {
       get { return _fg; }
       set { _fg = value; }
     }
+
+    public override void OnSlideShowing() {
+      this.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
+      this.FrameGrabber.Start();
+      base.OnSlideShowing();
+    }
+
+    public override void OnSlideHiding(CancelEventArgs args) {
+      this.FrameGrabber.OnFramePrepend -= new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
+      base.OnSlideHiding(args);
+    }
+
+    protected virtual void OnFrame(Parsley.Core.FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) { }
   }
 }
