@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -32,14 +32,14 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <OutputPath>bin\x86\Release\</OutputPath>
+    <OutputPath>..\..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -93,6 +93,12 @@
     <Compile Include="IntrinsicCalibration.Designer.cs">
       <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParsleyButtonSmall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ParsleyButtonSmall.Designer.cs">
+      <DependentUpon>ParsleyButtonSmall.cs</DependentUpon>
+    </Compile>
     <Compile Include="ParsleyMessage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     <EmbeddedResource Include="IntrinsicCalibration.resx">
       <DependentUpon>IntrinsicCalibration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ParsleyButtonSmall.resx">
+      <DependentUpon>ParsleyButtonSmall.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ParsleyMessage.resx">
       <DependentUpon>ParsleyMessage.cs</DependentUpon>
     </EmbeddedResource>
@@ -150,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Slide.resx">
       <DependentUpon>Slide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WrapLabel.resx">
+      <DependentUpon>WrapLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +176,12 @@
   <ItemGroup>
     <None Include="Resources\parsley32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -173,6 +191,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)\bin"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
