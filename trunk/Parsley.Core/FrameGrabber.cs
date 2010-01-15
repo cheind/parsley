@@ -13,28 +13,15 @@ namespace Parsley.Core {
   /// <summary>
   /// Grabs continously frames from camera asynchronously.
   /// </summary>
-  public class FrameGrabber : Resource {
+  public class FrameGrabber : FrameProducer {
     private BackgroundWorker _bw;
     private Camera _camera;
-    public delegate IImage OnFrameHandler(FrameGrabber fg, IImage img);
-    private OnFrameHandler _fh;  // Holds the delegate
-    private object _lock_fh;
 
     public FrameGrabber(Camera camera) {
       _camera = camera;
       _bw = new BackgroundWorker();
       _bw.WorkerSupportsCancellation = true;
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
-      _lock_fh = new object();
-    }
-
-    public event OnFrameHandler OnFrame {
-      add {
-        lock (_lock_fh) { _fh = _fh + value; }
-      }
-      remove {
-        lock (_lock_fh) { _fh = _fh - value; }
-      }
     }
 
     public void Start()
@@ -61,25 +48,12 @@ namespace Parsley.Core {
       BackgroundWorker bw = sender as BackgroundWorker;
       using (SharedResource.Breath b = _camera.KeepAlive()) {
         while (!bw.CancellationPending) {
-          IImage img = _camera.Frame();
           // Note: the image is disposed once the camera gets disposed.
           // Therefore you should copy the image if needed in another
           // thread or make sure the camera is not disposed.
-          lock (_lock_fh) {
-            if (_fh != null) {
-              // Get the delegates currently registered
-              Delegate[] delegates = _fh.GetInvocationList();
-              foreach (Delegate d in delegates) {
-                // Invoke delegate catch return value.
-                IImage ret = (IImage)d.DynamicInvoke(this, img);
-                // Dispose old if image returned by delegate is different.
-                if (ret != img) {
-                  img.Dispose();
-                  img = ret;
-                }
-              }
-            }
-          }
+          Image<Bgr, byte> img = _camera.Frame();
+          this.FireOnFrame(img);
+          img.Dispose();
         }
       }
       e.Cancel = true;
