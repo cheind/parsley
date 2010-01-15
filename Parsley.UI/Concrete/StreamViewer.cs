@@ -31,22 +31,13 @@ namespace Parsley.UI.Concrete {
     }
 
 
-    public void Pause() {
-      _display.Pause();
-    }
-
-    public void Resume() {
-      _display.Resume();
-    }
 
     protected override void OnResizeBegin(EventArgs e) {
-      _display.Pause();
-      base.OnResizeBegin(e);
+       base.OnResizeBegin(e);
     }
 
     protected override void OnResizeEnd(EventArgs e) {
       this.MaintainAspectRatio();
-      _display.Resume();
       base.OnResizeEnd(e);
     }
 
