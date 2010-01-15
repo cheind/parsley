@@ -10,32 +10,47 @@ using System.Runtime.InteropServices;
 
 namespace Parsley.UI {
 
-  public struct AnimationProperties {
-    public enum Direction {
-      Left = 0x00000002,
-      Right = 0x00000001
-    };
-    public enum Action {
-      Activate = 0x20000,
-      Hide = 0x10000
-    };
+  /// <summary>
+  /// Arguments for a SlideChanged event
+  /// </summary>
+  public class SlideChangedArgs : EventArgs {
+    private Slide _from;
+    private Slide _to;
 
-    public AnimationProperties(Control c, Direction d, Action a, int msecs) {
-      control = c;
-      direction = d;
-      action = a;
-      duration = msecs;
+    /// <summary>
+    /// Construct from two slides
+    /// </summary>
+    /// <param name="from">Previous slide</param>
+    /// <param name="to">Current slide</param>
+    public SlideChangedArgs(Slide from, Slide to) {
+      _from = from;
+      _to = to;
     }
 
-    public int duration;
-    public Control control;
-    public Direction direction;
-    public Action action;
-  };
+    /// <summary>
+    /// Get the previous slide
+    /// </summary>
+    public Slide Previous {
+      get { return _from; }
+    }
+
+    /// <summary>
+    /// Get the current slide
+    /// </summary>
+    public Slide Now {
+      get { return _to; }
+    }
+
+  }
 
   public partial class SlideControl : Panel {
     private Stack<Slide> _undo;
     private Slide _selected;
+
+    /// <summary>
+    /// Triggered when a slide change occurred.
+    /// </summary>
+    public event EventHandler<SlideChangedArgs> SlideChanged;
 
     public SlideControl() {
       InitializeComponent();
@@ -91,11 +106,7 @@ namespace Parsley.UI {
           250
         ));
         _undo.Push(_selected);
-        _selected.Visible = false;
-        _selected = s;
-        _selected.BringToFront();
-        _selected.OnSlideShowing();
-        _selected.Visible = true;
+        this.ChangeSlide(s);
       }
     }
 
@@ -133,11 +144,17 @@ namespace Parsley.UI {
         AnimationProperties.Action.Hide,
         250
       ));
+      this.ChangeSlide(s);
+    }
+
+    void ChangeSlide(Slide next) {
       _selected.Visible = false;
-      _selected = s;
+      SlideChangedArgs sch = new SlideChangedArgs(_selected, next);
+      _selected = next;
       _selected.BringToFront();
       _selected.OnSlideShowing();
       _selected.Visible = true;
+      SlideChanged(this, sch);
     }
 
     public Slide FindByName(string name) {
@@ -161,6 +178,32 @@ namespace Parsley.UI {
         slide | (int)props.direction | (int)props.action
       );
     }
+
+    /// <summary>
+    /// Describes the type of slide effect.
+    /// </summary>
+    struct AnimationProperties {
+      public enum Direction {
+        Left = 0x00000002,
+        Right = 0x00000001
+      };
+      public enum Action {
+        Activate = 0x20000,
+        Hide = 0x10000
+      };
+
+      public AnimationProperties(Control c, Direction d, Action a, int msecs) {
+        control = c;
+        direction = d;
+        action = a;
+        duration = msecs;
+      }
+
+      public int duration;
+      public Control control;
+      public Direction direction;
+      public Action action;
+    };
 
     [DllImport("User32.dll")]
     private static extern int AnimateWindow(IntPtr hwnd, int dwTime, int dwFlags);
