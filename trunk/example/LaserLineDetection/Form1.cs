@@ -16,7 +16,9 @@ namespace LaserLineDetection {
     DateTime _start;
 
     public Form1() {
+      this.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
       _camera = new Parsley.Core.Camera(0);
+
       _grabber = new Parsley.Core.FrameGrabber(_camera);
       _grabber.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
       _lle = new Parsley.Core.BrightestPixelLLE();
@@ -34,23 +36,23 @@ namespace LaserLineDetection {
 
     Emgu.CV.IImage _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.IImage img) {
       Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte> casted = img as Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte>;
-      //Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte>[] channel = casted.Split();
-      Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte> gray = casted.Convert<Emgu.CV.Structure.Gray, Byte>();
+      Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte>[] channel = casted.Split();
+      //Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte> gray = casted.Convert<Emgu.CV.Structure.Gray, Byte>();
       if (_reference == null) {
         if ((DateTime.Now - _start).Seconds > 5) {
-          //_reference = channel[1];
-          _reference = gray;
+          _reference = channel[2];
         }
       } else {
-        Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte> result = new Emgu.CV.Image<Emgu.CV.Structure.Gray, byte>(img.Size);
-        //_lle.FindLaserLine(channel[1].Sub(_reference));
-        _lle.FindLaserLine(gray);
-        foreach (PointF p in _lle.LaserPoints) {
-          if (p.Y >= 0.0f) {
-            result[(int)p.Y,(int)p.X] = new Emgu.CV.Structure.Gray(100);
+        //Emgu.CV.Image<Emgu.CV.Structure.Gray, Byte> result = new Emgu.CV.Image<Emgu.CV.Structure.Gray, byte>(img.Size);
+        //_lle.FindLaserLine(channel[2].Sub(_reference));
+        _lle.FindLaserLine(channel[2].Sub(_reference));
+        for (int c = 0; c < _lle.LaserPoints.Length; c++) {
+          if (_lle.LaserPoints[c] > 0.0f) {
+            casted[(int)_lle.LaserPoints[c], c] = new Emgu.CV.Structure.Bgr(255, 0, 0);
           }
         }
-        img = result;
+        
+        //img = result;
       }
       return img;
     }
