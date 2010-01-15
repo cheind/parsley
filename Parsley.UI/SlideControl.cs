@@ -108,8 +108,10 @@ namespace Parsley.UI {
     }
 
     public void Backward() {
-      Slide dest = _undo.Pop();
-      this.BackwardTo(dest);
+      if (_undo.Count > 0) {
+        Slide dest = _undo.Pop();
+        this.BackwardTo(dest);
+      }
     }
 
     public void BackwardTo(string name) {

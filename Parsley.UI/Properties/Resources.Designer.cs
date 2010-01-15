@@ -60,6 +60,20 @@ namespace Parsley.UI.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap parsley16 {
+            get {
+                object obj = ResourceManager.GetObject("parsley16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap parsley24 {
+            get {
+                object obj = ResourceManager.GetObject("parsley24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap parsley32 {
             get {
                 object obj = ResourceManager.GetObject("parsley32", resourceCulture);

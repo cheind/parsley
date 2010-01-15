@@ -72,7 +72,7 @@ namespace Parsley.UI.Concrete {
       }
     }
 
-    Emgu.CV.IImage _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.IImage img) {
+    void _grabber_OnFrame(Parsley.Core.FrameProducer fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       // Note: This method is called from the frame-grabber's thread loop. 
       // The framegrabber holds a Breath on the camera to ensure that the camera object remains
       // alive during this callback. The camera object is a SharedResource, meaning that any
@@ -91,7 +91,7 @@ namespace Parsley.UI.Concrete {
           }
         }));
       }
-      return img;
+      //return img;
     }
 
     Emgu.CV.IImage ResizeImage(Emgu.CV.IImage img, int w, int h) {
