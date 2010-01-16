@@ -157,6 +157,10 @@
       <Project>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</Project>
       <Name>Parsley.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SlickInterface\SlickInterface.csproj">
+      <Project>{9708F1BC-959D-4539-82DB-0FB96B879AD4}</Project>
+      <Name>SlickInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

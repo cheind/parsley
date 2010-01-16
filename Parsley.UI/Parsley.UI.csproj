@@ -123,18 +123,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Slide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Slide.Designer.cs">
-      <DependentUpon>Slide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SlideControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SlideControl.Designer.cs">
-      <DependentUpon>SlideControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="WrapLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -166,9 +154,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Slide.resx">
-      <DependentUpon>Slide.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WrapLabel.resx">
       <DependentUpon>WrapLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -177,6 +162,10 @@
     <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
       <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
       <Name>Parsley.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SlickInterface\SlickInterface.csproj">
+      <Project>{9708F1BC-959D-4539-82DB-0FB96B879AD4}</Project>
+      <Name>SlickInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
