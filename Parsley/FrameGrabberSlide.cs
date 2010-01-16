@@ -28,13 +28,13 @@ namespace Parsley {
       set { _fg = value; }
     }
 
-    public override void OnSlidingIn() {
+    protected override void OnSlidingIn() {
       this.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
       this.FrameGrabber.Start();
       base.OnSlidingIn();
     }
 
-    public override void OnSlidingOut(CancelEventArgs args) {
+    protected override void OnSlidingOut(CancelEventArgs args) {
       this.FrameGrabber.OnFramePrepend -= new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
       base.OnSlidingOut(args);
     }
