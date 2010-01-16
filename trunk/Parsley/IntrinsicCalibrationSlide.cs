@@ -36,7 +36,7 @@ namespace Parsley {
     }
 
 
-    public override void OnSlidingIn() {
+    protected override void OnSlidingIn() {
       base.OnSlidingIn();
       _timer_auto.Enabled = false;
       _cb_auto_take.Checked = false;
@@ -51,7 +51,7 @@ namespace Parsley {
       _ic.ClearViews();
     }
 
-    public override void OnSlidingOut(CancelEventArgs args) {
+    protected override void OnSlidingOut(CancelEventArgs args) {
       if (_bw_calibrator.IsBusy) {
         args.Cancel = true;
       } else {
