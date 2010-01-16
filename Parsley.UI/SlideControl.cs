@@ -43,7 +43,7 @@ namespace Parsley.UI {
 
   }
 
-  public partial class SlideControl : Panel {
+  public partial class SlideControl : UserControl {
     private Stack<Slide> _undo;
     private Slide _selected;
 
@@ -72,13 +72,13 @@ namespace Parsley.UI {
       set {
         CancelEventArgs e = new CancelEventArgs();
         if (_selected != null) {
-          _selected.OnSlideHiding(e);
+          _selected.OnSlidingOut(e);
         }
         if (!e.Cancel) {
           _selected = value;
           if (_selected != null) {
             _selected.BringToFront();
-            _selected.OnSlideShowing();
+            _selected.OnSlidingIn();
             _selected.Visible = true;
           }
         }
@@ -96,7 +96,7 @@ namespace Parsley.UI {
     public void ForwardTo(Slide s) {
       CancelEventArgs e = new CancelEventArgs();
       if (_selected != null) {
-        _selected.OnSlideHiding(e);
+        _selected.OnSlidingOut(e);
       }
       if (!e.Cancel) {
         AnimateControl(new AnimationProperties(
@@ -136,7 +136,7 @@ namespace Parsley.UI {
     public void BackwardTo(Slide s) {
       CancelEventArgs e = new CancelEventArgs();
       if (_selected != null) {
-        _selected.OnSlideHiding(e);
+        _selected.OnSlidingOut(e);
       }
       AnimateControl(new AnimationProperties(
         _selected,
@@ -152,7 +152,7 @@ namespace Parsley.UI {
       SlideChangedArgs sch = new SlideChangedArgs(_selected, next);
       _selected = next;
       _selected.BringToFront();
-      _selected.OnSlideShowing();
+      _selected.OnSlidingIn();
       _selected.Visible = true;
       SlideChanged(this, sch);
     }
