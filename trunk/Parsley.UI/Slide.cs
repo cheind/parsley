@@ -20,7 +20,7 @@ namespace Parsley.UI {
       set { _control = value; }
     }
 
-    public virtual void OnSlideShowing() {}
-    public virtual void OnSlideHiding(CancelEventArgs args) {}
+    public virtual void OnSlidingIn() {}
+    public virtual void OnSlidingOut(CancelEventArgs args) {}
   }
 }

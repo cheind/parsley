@@ -130,7 +130,7 @@
       <DependentUpon>Slide.cs</DependentUpon>
     </Compile>
     <Compile Include="SlideControl.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="SlideControl.Designer.cs">
       <DependentUpon>SlideControl.cs</DependentUpon>
