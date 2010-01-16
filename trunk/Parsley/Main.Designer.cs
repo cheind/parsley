@@ -29,7 +29,7 @@
       this.mnu_live_feed = new System.Windows.Forms.ToolStripMenuItem();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this._btn_back = new Parsley.UI.ParsleyButtonSmall();
-      this._slide_control = new Parsley.UI.SlideControl();
+      this._slide_control = new SlickInterface.SlideControl();
       this.menuStrip1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -129,7 +129,7 @@
     private System.Windows.Forms.MenuStrip menuStrip1;
     private System.Windows.Forms.ToolStripMenuItem windowsToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem mnu_live_feed;
-    private Parsley.UI.SlideControl _slide_control;
+    private SlickInterface.SlideControl _slide_control;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private Parsley.UI.ParsleyButtonSmall _btn_back;
   }

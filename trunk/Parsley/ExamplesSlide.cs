@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley {
-  public partial class ExamplesSlide : UI.Slide {
+  public partial class ExamplesSlide : SlickInterface.Slide {
     public ExamplesSlide() {
       InitializeComponent();
     }
