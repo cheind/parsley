@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Emgu.CV.Structure;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Parsley.Core {
 
@@ -12,17 +13,23 @@ namespace Parsley.Core {
   /// </summary>
   public class IntrinsicCalibration : CalibrationBase {
     private List<System.Drawing.PointF[]> _image_points;
+    private MCvPoint3D32f[] _converted_object_points;
     private System.Drawing.Size _img_size;
 
     /// <summary>
     /// Construct from reference object points
     /// </summary>
     /// <param name="object_points"></param>
-    public IntrinsicCalibration(MCvPoint3D32f[] object_points, System.Drawing.Size image_size) 
+    public IntrinsicCalibration(Vector[] object_points, System.Drawing.Size image_size) 
       : base(object_points)
     {
       _img_size = image_size;
       _image_points = new List<System.Drawing.PointF[]>();
+      // Since object points remain constant, we can apply their conversion right here
+      _converted_object_points = Array.ConvertAll<Vector, MCvPoint3D32f>(
+        this.ObjectPoints,
+        new Converter<Vector, MCvPoint3D32f>(Extensions.ConvertToEmgu.ToEmguF)
+      );
     }
 
     /// <summary>
@@ -52,11 +59,12 @@ namespace Parsley.Core {
 
     public Emgu.CV.IntrinsicCameraParameters Calibrate() {
       if (_image_points.Count == 0) {
-        throw new Exception("Number of image points and object points do not match");
+        throw new InvalidOperationException("No image points present.");
       }
+
       List<MCvPoint3D32f[]> points = new List<MCvPoint3D32f[]>();
       for (int i = 0; i < _image_points.Count; ++i) {
-        points.Add(this.ObjectPoints);
+        points.Add(this._converted_object_points);
       }
       Emgu.CV.ExtrinsicCameraParameters[] ecp;
 

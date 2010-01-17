@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Emgu.CV.Structure;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Parsley.Core {
 
@@ -11,20 +11,20 @@ namespace Parsley.Core {
   /// Base class for intrinsic/extrinsic calibration
   /// </summary>
   public class CalibrationBase {
-    private MCvPoint3D32f[] _object_points;
+    private Vector[] _object_points;
 
     /// <summary>
-    /// Initialize with reference points on object
+    /// Initialize with reference points on object in 3D
     /// </summary>
-    /// <param name="object_points"></param>
-    public CalibrationBase(MCvPoint3D32f[] object_points) {
+    /// <param name="object_points">object points</param>
+    public CalibrationBase(Vector[] object_points) {
       _object_points = object_points;
     }
 
     /// <summary>
-    /// Access the object points
+    /// Access the reference object points
     /// </summary>
-    public MCvPoint3D32f[] ObjectPoints {
+    public Vector[] ObjectPoints {
       get { return _object_points; }
     }
   }

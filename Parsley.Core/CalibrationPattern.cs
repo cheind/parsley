@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
+using MathNet.Numerics.LinearAlgebra;
 using Emgu.CV.Structure;
 
 namespace Parsley.Core {
@@ -12,7 +13,7 @@ namespace Parsley.Core {
   /// A Calibration pattern
   /// </summary>
   public abstract class CalibrationPattern {
-    private MCvPoint3D32f[] _object_points;
+    private Vector[] _object_points;
     private PointF[] _image_points;
     private bool _pattern_found;
 
@@ -21,7 +22,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Get or set the object points
     /// </summary>
-    public MCvPoint3D32f[] ObjectPoints {
+    public Vector[] ObjectPoints {
       get { return _object_points; }
       set { _object_points = value; }
     }
