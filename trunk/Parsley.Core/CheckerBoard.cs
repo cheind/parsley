@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Emgu.CV.Structure;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Parsley.Core {
 
@@ -30,14 +31,15 @@ namespace Parsley.Core {
       this.ObjectPoints = GenerateObjectCorners();
     }
 
-    MCvPoint3D32f[] GenerateObjectCorners() {
-      MCvPoint3D32f[] corners = new MCvPoint3D32f[_inner_corners.Width * _inner_corners.Height];
+    Vector[] GenerateObjectCorners() {
+      Vector[] corners = new Vector[_inner_corners.Width * _inner_corners.Height];
       for (int y = 0; y < _inner_corners.Height; ++y) {
         for (int x = 0; x < _inner_corners.Width; x++) {
           int id = y * _inner_corners.Width + x;
-          corners[id].x = x * _field_size;
-          corners[id].y = y * _field_size;
-          corners[id].z = 0.0f;
+          Vector v = corners[id];
+          v[0] = x * _field_size;
+          v[1] = y * _field_size;
+          v[2] = 0.0f;
         }
       }
       return corners;
