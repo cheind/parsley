@@ -11,6 +11,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 
 namespace Parsley.UI {
+  [Obsolete("Use the slide based approach from Parsley App instead.")]
   public partial class IntrinsicCalibration : Form {
     Core.Capture _camera;
     Core.CheckerBoard _cb;
