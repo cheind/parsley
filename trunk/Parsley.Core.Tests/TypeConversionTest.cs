@@ -58,8 +58,31 @@ namespace Parsley.Core.Tests {
 
       double[,] data = new double[2, 3] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } };
 
-      Emgu.CV.Matrix<double> m = new Emgu.CV.Matrix<double>(data);
-      MathNet.Numerics.LinearAlgebra.Matrix m2 = m.ToParsley();
+      MathNet.Numerics.LinearAlgebra.Matrix m = MathNet.Numerics.LinearAlgebra.Matrix.Create(data);
+      Emgu.CV.Matrix<double> m2 = m.ToEmgu();
+
+      Assert.AreEqual(data[0, 0], m2[0, 0]);
+      Assert.AreEqual(data[0, 1], m2[0, 1]);
+      Assert.AreEqual(data[0, 2], m2[0, 2]);
+      Assert.AreEqual(data[1, 0], m2[1, 0]);
+      Assert.AreEqual(data[1, 1], m2[1, 1]);
+      Assert.AreEqual(data[1, 2], m2[1, 2]);
+    }
+
+    [Test]
+    public void TestConvertParsleyToInterop() {
+      MathNet.Numerics.LinearAlgebra.Vector v = new MathNet.Numerics.LinearAlgebra.Vector(new double[] { 1.0, 2.0, 3.0 });
+      double[] i = v.ToInterop();
+
+      Assert.AreEqual(1.0, i[0]);
+      Assert.AreEqual(2.0, i[1]);
+      Assert.AreEqual(3.0, i[2]);
+
+      double[,] data = new double[2, 3] { { 1.0, 2.0, 3.0 }, { 4.0, 5.0, 6.0 } };
+
+      MathNet.Numerics.LinearAlgebra.Matrix m = MathNet.Numerics.LinearAlgebra.Matrix.Create(data);
+      double[,] m2 = m.ToInterop();
+
 
       Assert.AreEqual(data[0, 0], m2[0, 0]);
       Assert.AreEqual(data[0, 1], m2[0, 1]);
