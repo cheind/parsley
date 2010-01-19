@@ -28,7 +28,7 @@ namespace Parsley.Core {
       // Since object points remain constant, we can apply their conversion right here
       _converted_object_points = Array.ConvertAll<Vector, MCvPoint3D32f>(
         this.ObjectPoints,
-        new Converter<Vector, MCvPoint3D32f>(Extensions.ConvertToEmgu.ToEmguF)
+        new Converter<Vector, MCvPoint3D32f>(Extensions.ConvertFromParsley.ToEmguF)
       );
     }
 

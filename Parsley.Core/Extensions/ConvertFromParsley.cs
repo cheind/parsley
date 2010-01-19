@@ -6,10 +6,9 @@ using System.Text;
 namespace Parsley.Core.Extensions {
 
   /// <summary>
-  /// Extensions to convert from Parsley default numerical types
-  /// to Emgu types
+  /// Extensions to convert from Parsley to other datatypes.
   /// </summary>
-  public static class ConvertToEmgu {
+  public static class ConvertFromParsley {
 
     /// <summary>
     /// Convert MathNet.Numerics.LinearAlgebra.Vector to Emgu.CV.Structure.MCvPoint3D32f
@@ -44,6 +43,24 @@ namespace Parsley.Core.Extensions {
         }
       }
       return res;
+    }
+
+    /// <summary>
+    /// Convert MathNet.Numerics.LinearAlgebra.Vector to double[]
+    /// </summary>
+    /// <param name="v">MathNet.Numerics.LinearAlgebra.Vector</param>
+    /// <returns>double[]</returns>
+    public static double[] ToInterop(this MathNet.Numerics.LinearAlgebra.Vector v) {
+      return v.CopyToArray();
+    }
+
+    /// <summary>
+    /// Convert MathNet.Numerics.LinearAlgebra.Matrix to double[,]
+    /// </summary>
+    /// <param name="v">MathNet.Numerics.LinearAlgebra.Matrix</param>
+    /// <returns>double[,]</returns>
+    public static double[,] ToInterop(this MathNet.Numerics.LinearAlgebra.Matrix m) {
+      return m.CopyToArray();
     }
 
 

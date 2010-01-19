@@ -83,7 +83,7 @@
     <Compile Include="Capture.cs" />
     <Compile Include="CameraProperties.cs" />
     <Compile Include="CheckerBoard.cs" />
-    <Compile Include="Extensions\ConvertToEmgu.cs" />
+    <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="FrameGrabber.cs" />
