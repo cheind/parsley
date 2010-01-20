@@ -29,9 +29,6 @@ namespace Parsley {
       _viewer->setSceneData(_root->osg().get());
     }
 
-    Viewer::~Viewer() {}
-    Viewer::!Viewer() {}
-
     void 
       Viewer::Frame() { _viewer->frame(); }
 
@@ -125,6 +122,18 @@ namespace Parsley {
       return _root->Add(node);
     } 
 
+    void
+    Viewer::DisposeManaged()
+    {
+    }
+
+    void
+      Viewer::DisposeUnmanaged()
+    {
+      System::Console::WriteLine("Viewer-Dispose called!");
+      _viewer.reset();
+      _context.reset();
+    }
     
 
     void 
