@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core", "Parsley.Core\Parsley.Core.csproj", "{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureFromCamera", "example\CaptureFromCamera\CaptureFromCamera.csproj", "{F5DEB9A4-B4AE-4C7D-86B2-79265B0BDB17}"
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickInterface", "SlickInterface\SlickInterface.csproj", "{9708F1BC-959D-4539-82DB-0FB96B879AD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.Tests", "Parsley.Core.Tests\Parsley.Core.Tests.csproj", "{71064BE5-80B2-4E95-AF9B-E09FF7403B50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.Resource", "Parsley.Core.Resource\Parsley.Core.Resource.csproj", "{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,12 +125,14 @@ Global
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Debug|Win32.Build.0 = Debug|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Debug|x86.ActiveCfg = Debug|Win32
+		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Debug|x86.Build.0 = Debug|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|Any CPU.ActiveCfg = Release|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|Win32.ActiveCfg = Release|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|Win32.Build.0 = Release|Win32
 		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|x86.ActiveCfg = Release|Win32
+		{6B03DE61-527A-441C-A7E6-8C1CB433EA63}.Release|x86.Build.0 = Release|Win32
 		{4C98E003-741C-4C11-9030-3CCAAB7CAA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C98E003-741C-4C11-9030-3CCAAB7CAA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C98E003-741C-4C11-9030-3CCAAB7CAA66}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
@@ -171,6 +175,20 @@ Global
 		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Win32.ActiveCfg = Release|Any CPU
 		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|x86.ActiveCfg = Release|x86
 		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|x86.Build.0 = Release|x86
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|x86.ActiveCfg = Debug|x86
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Debug|x86.Build.0 = Debug|x86
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|Win32.ActiveCfg = Release|Any CPU
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|x86.ActiveCfg = Release|x86
+		{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
