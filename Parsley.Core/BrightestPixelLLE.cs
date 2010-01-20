@@ -45,16 +45,16 @@ namespace Parsley.Core {
     }
 
     public override void FindLaserLine(Emgu.CV.Image<Gray, byte> channel, out float[] laser_pos) {
-      
-      
+           
       int[] max_intensities = new int[channel.Width];
       laser_pos = new float[channel.Width];
       // Note that default float is zero.
 
       // Search per row
+      byte[,,] data = channel.Data;
       for (int r = 0; r < channel.Height; ++r) {
         for (int c = 0; c < channel.Width; ++c) {
-          int i = (int)channel[r, c].Intensity;
+          int i = (int)data[r, c, 0];
           if (i > max_intensities[c]) {
             max_intensities[c] = i;
             laser_pos[c] = r;
