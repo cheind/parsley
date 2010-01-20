@@ -22,19 +22,23 @@ namespace Parsley.Examples {
     }
 
     override protected void OnFrame(Parsley.Core.FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte> my_ref = _reference;
-      int my_channel = _channel;
-      if (my_ref != null) {
-        _lle.FindLaserLine(img[my_channel].Sub(my_ref[my_channel]));
-      } else {
-        _lle.FindLaserLine(img[my_channel]);
-      }
+      using (Parsley.Core.Profile p = new Parsley.Core.Profile("Extract LaserLine")) {
+        Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte> my_ref = _reference;
+        int my_channel = _channel;
 
-      for (int c = 0; c < _lle.LaserPoints.Length; c++) {
-        if (_lle.LaserPoints[c] > 0.0f) {
-          img[(int)_lle.LaserPoints[c], c] = new Emgu.CV.Structure.Bgr(255, 0, 0);
+        if (my_ref != null) {
+          _lle.FindLaserLine(img[my_channel].Sub(my_ref[my_channel]));
+        } else {
+          _lle.FindLaserLine(img[my_channel]);
+        }
+
+        for (int c = 0; c < _lle.LaserPoints.Length; c++) {
+          if (_lle.LaserPoints[c] > 0.0f) {
+            img[(int)_lle.LaserPoints[c], c] = new Emgu.CV.Structure.Bgr(255, 0, 0);
+          }
         }
       }
+      
     }
 
     private void _btn_take_reference_Click(object sender, EventArgs e) {

@@ -8,16 +8,25 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley.UI.Concrete {
-  public partial class StreamViewer : Form {
+  public partial class StreamViewer : UI.AspectRatioForm {
 
     public StreamViewer() {
       InitializeComponent();
-      this.MaintainAspectRatio();
+      this.IsMaintainingAspectRatio = false;
     }
 
     public Parsley.Core.FrameGrabber FrameGrabber {
       get { return _display.FrameGrabber; }
-      set { _display.FrameGrabber = value; }
+      set { 
+        _display.FrameGrabber = value;
+        if (_display.FrameGrabber != null &&
+            _display.FrameGrabber.Camera != null) {
+          this.AspectRatio = _display.FrameGrabber.Camera.FrameAspectRatio;
+          this.IsMaintainingAspectRatio = true;
+        } else {
+          this.IsMaintainingAspectRatio = false;
+        }
+      }
     }
 
     public Emgu.CV.CvEnum.INTER Interpolation {
@@ -28,27 +37,6 @@ namespace Parsley.UI.Concrete {
     public Emgu.CV.UI.ImageBox.FunctionalModeOption FunctionalMode {
       get { return _display.FunctionalMode; }
       set { _display.FunctionalMode = value; }
-    }
-
-
-
-    protected override void OnResizeBegin(EventArgs e) {
-       base.OnResizeBegin(e);
-    }
-
-    protected override void OnResizeEnd(EventArgs e) {
-      this.MaintainAspectRatio();
-      base.OnResizeEnd(e);
-    }
-
-    private void MaintainAspectRatio() {
-      if (this.FrameGrabber != null) {
-        Parsley.Core.Camera cam = this.FrameGrabber.Camera;
-        if (cam != null && !cam.Disposed) {
-          double ar = cam.FrameAspectRatio;
-          this.Height = (int)Math.Ceiling(this.Width / ar);
-        }
-      }
     }
   }
 }
