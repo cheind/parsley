@@ -36,10 +36,7 @@ namespace Parsley.Core {
       for (int y = 0; y < _inner_corners.Height; ++y) {
         for (int x = 0; x < _inner_corners.Width; x++) {
           int id = y * _inner_corners.Width + x;
-          Vector v = corners[id];
-          v[0] = x * _field_size;
-          v[1] = y * _field_size;
-          v[2] = 0.0f;
+          corners[id] = new Vector(new double[]{x * _field_size, y * _field_size, 0});
         }
       }
       return corners;
