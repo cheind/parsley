@@ -38,6 +38,7 @@
       this._picture_box.Size = new System.Drawing.Size(320, 200);
       this._picture_box.TabIndex = 2;
       this._picture_box.TabStop = false;
+      this._picture_box.Paint += new System.Windows.Forms.PaintEventHandler(this._picture_box_Paint);
       // 
       // EmbeddableStream
       // 

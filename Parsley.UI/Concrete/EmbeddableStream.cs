@@ -17,6 +17,7 @@ namespace Parsley.UI.Concrete {
   public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
     private Emgu.CV.CvEnum.INTER _interpolation;
+    private Emgu.CV.IImage _last_image;
 
     public EmbeddableStream() {
       InitializeComponent();
@@ -70,6 +71,9 @@ namespace Parsley.UI.Concrete {
       // and invoke is used. Invoke executes the delegate on thread that owns this control, which is the one
       // that is already blocked. This leads to a deadlock. That is why we use BeginInvoke, which executes
       // the delegate on the GUI thread associated with this control.
+      _last_image = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
+      _picture_box.Invalidate();
+      /*
       Emgu.CV.IImage img_copy = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
       if (this.InvokeRequired) {
         this.BeginInvoke(new MethodInvoker(delegate {
@@ -79,7 +83,12 @@ namespace Parsley.UI.Concrete {
             prev.Dispose();
           }
         }));
-      }
+      }*/
+    }
+
+    private void _picture_box_Paint(object sender, PaintEventArgs e) {
+      _picture_box.Image = _last_image;
+      //Emgu.CV.IImage
     }
   }
 }
