@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Parsley.Core {
+namespace Parsley.Core.Resource {
 
   /// <summary>
   /// A resource is a disposable object. 

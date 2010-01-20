@@ -115,6 +115,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
+      <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
+      <Name>Parsley.Core.Resource</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Parsley.UI\Parsley.UI.csproj">
       <Project>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</Project>
       <Name>Parsley.UI</Name>

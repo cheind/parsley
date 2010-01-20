@@ -61,11 +61,13 @@
       <HintPath>..\bin\MathNet.Iridium.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Parsley.Draw3D, Version=1.0.3672.16717, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -92,8 +94,12 @@
     <Compile Include="LaserLineExtraction.cs" />
     <Compile Include="Perspective.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.cs" />
-    <Compile Include="SharedResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
+      <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
+      <Name>Parsley.Core.Resource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

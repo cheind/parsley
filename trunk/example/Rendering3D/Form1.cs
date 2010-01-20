@@ -59,7 +59,7 @@ namespace Rendering3D {
 
     private void _button_add_capsule_Click(object sender, EventArgs e) {
       System.Threading.Monitor.Enter(_viewer);
-      _viewer.AddCapsule(new MCvPoint3D32f(_rnd.Next(-10, 10), _rnd.Next(-10, 10), _rnd.Next(-10, 10)));
+      _viewer.AddCapsule(new double[]{_rnd.Next(-10, 10), _rnd.Next(-10, 10), _rnd.Next(-10, 10)});
       System.Threading.Monitor.Exit(_viewer);
     }
   }
