@@ -69,6 +69,7 @@ namespace Parsley {
       osg::Camera *camera = _viewer->getCamera();
       // http://opencv.willowgarage.com/wiki/Posit 
       // http://opencv.willowgarage.com/documentation/camera_calibration_and_3d_reconstruction.html
+      // http://cvlab.epfl.ch/~fua/courses/vision/math/notes/Cameras.pdf
       double fx = icp->IntrinsicMatrix->Data[0,0];
       double fy = icp->IntrinsicMatrix->Data[1,1];
       double px = icp->IntrinsicMatrix->Data[0,2];
@@ -91,10 +92,27 @@ namespace Parsley {
       camera->setProjectionMatrix(lens2);
     }
 
+    void Viewer::SetupPerspectiveProjection(array<double,2> ^matrix) {
+      osg::Camera *camera = _viewer->getCamera();
+      camera->setProjectionMatrix(convert(matrix, transposed()));
+    }
+
     void
     Viewer::LookAt(MCvPoint3D32f ^eye, MCvPoint3D32f ^center, MCvPoint3D32f ^up) {
       osgGA::MatrixManipulator *manip =  _viewer->getCameraManipulator();
       manip->setHomePosition(C::c(eye), C::c(center), C::c(up));
+      manip->home(0);
+
+      osg::Matrixd m = manip->getMatrix();
+      m(0,0) = m(1,1) = -1;
+      manip->setByMatrix(m);
+    }
+
+    void 
+    Viewer::LookAt(array<double> ^eye, array<double> ^center, array<double> ^up)
+    {
+      osgGA::MatrixManipulator *manip =  _viewer->getCameraManipulator();
+      manip->setHomePosition(convert(eye), convert(center), convert(up));
       manip->home(0);
 
       osg::Matrixd m = manip->getMatrix();
@@ -110,12 +128,12 @@ namespace Parsley {
     
 
     void 
-      Viewer::AddCapsule(MCvPoint3D32f ^center) {
-        osg::ref_ptr<osg::Geode> geode(new osg::Geode());
-        osg::ref_ptr<osg::Capsule> capsule(new osg::Capsule(C::c(center), 2, 1));
-        osg::ref_ptr<osg::ShapeDrawable> drawable( new osg::ShapeDrawable(capsule.get()) );
-        geode->addDrawable(drawable.get());
-        _root->osg()->addChild(geode.get()); 
+    Viewer::AddCapsule(array<double> ^center) {
+      osg::ref_ptr<osg::Geode> geode(new osg::Geode());
+      osg::ref_ptr<osg::Capsule> capsule(new osg::Capsule(convert(center), 2, 1));
+      osg::ref_ptr<osg::ShapeDrawable> drawable( new osg::ShapeDrawable(capsule.get()) );
+      geode->addDrawable(drawable.get());
+      _root->osg()->addChild(geode.get()); 
     }
   }
 }

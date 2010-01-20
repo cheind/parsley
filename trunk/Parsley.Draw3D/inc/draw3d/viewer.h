@@ -28,10 +28,13 @@ namespace Parsley {
 
       /// Render entire frame
       void Frame();
-      void AddCapsule(MCvPoint3D32f ^center);
+      void AddCapsule(array<double> ^center);
       bool Add(Node ^node);
       void LookAt(MCvPoint3D32f ^eye, MCvPoint3D32f ^center, MCvPoint3D32f ^up);
       void Projection(Emgu::CV::IntrinsicCameraParameters ^icp, double near_p, double far_p, double w, double h);
+
+      void SetupPerspectiveProjection(array<double,2> ^matrix);
+      void LookAt(array<double> ^eye, array<double> ^center, array<double> ^up);
 
     private:
       void initialize_viewer(void *hwnd_render_target);

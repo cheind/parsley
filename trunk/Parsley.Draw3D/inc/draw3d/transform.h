@@ -17,9 +17,9 @@ namespace Parsley {
     public ref class Transform : public NodeT<osg::MatrixTransform> {
     public:
       bool Add(Node ^node);
-      property Emgu::CV::Matrix<double> ^Matrix {
-        Emgu::CV::Matrix<double> ^get();
-        void set(Emgu::CV::Matrix<double> ^value);
+      property array<double,2>^ Matrix {
+        array<double,2>^ get();
+        void set(array<double,2>^ value);
       }
     };
     
