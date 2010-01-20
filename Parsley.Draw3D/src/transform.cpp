@@ -1,6 +1,7 @@
 
 
 #include <draw3d/transform.h>
+#include <draw3d/convert.h>
 #include <osg/MatrixTransform>
 
 namespace Parsley {
@@ -11,29 +12,12 @@ namespace Parsley {
       return osg()->addChild(node->node().get());
     }
 
-    Emgu::CV::Matrix<double> ^Transform::Matrix::get() {
-      Emgu::CV::Matrix<double> ^ret = gcnew Emgu::CV::Matrix<double>(3,4);
-      const osg::Matrixd &m = this->osg()->getMatrix();
-
-      // http://www.openscenegraph.org/projects/osg/wiki/Support/Maths/MatrixTransformations
-
-      for (unsigned r = 0; r < 3; ++r) {
-        for (unsigned c = 0; c < 4; ++c) {
-          ret->Data[r,c] = m(c,r);
-        }
-      }
-      return ret;
+    array<double,2>^ Transform::Matrix::get() {
+      return convert(this->osg()->getMatrix(), transposed());
     }
 
-    void Transform::Matrix::set(Emgu::CV::Matrix<double> ^value) {
-      osg::Matrixd m = osg::Matrix::identity();
-      // http://www.openscenegraph.org/projects/osg/wiki/Support/Maths/MatrixTransformations
-      for (unsigned r = 0; r < 3; ++r) {
-        for (unsigned c = 0; c < 4; ++c) {
-          m(c, r) = value->Data[r,c];
-        }
-      }
-      this->osg()->setMatrix(m);
+    void Transform::Matrix::set(array<double,2>^ data) {
+      this->osg()->setMatrix(convert(data, transposed()));
     }
 
   }
