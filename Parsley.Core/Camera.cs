@@ -12,7 +12,7 @@ namespace Parsley.Core {
   /// <summary>
   /// Represents a camera.
   /// </summary>
-  public class Camera : SharedResource {
+  public class Camera : Resource.SharedResource {
     private Emgu.CV.Capture _device;
     private Emgu.CV.IntrinsicCameraParameters _intrinsics;
     private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;

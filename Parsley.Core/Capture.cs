@@ -11,7 +11,7 @@ namespace Parsley.Core {
   /// <summary>
   /// Capture from camera
   /// </summary>
-  public class Capture : Resource {
+  public class Capture : Resource.SharedResource {
 
     private Emgu.CV.Capture _capture;
 

@@ -16,7 +16,7 @@ namespace Parsley.Core {
   /// This bears the risk of deadlocks since arbitrary code is called when firing an event.
   /// For a discussion see http://bit.ly/6Qi8jS
   /// </remarks>
-  public class FrameProducer : SharedResource {
+  public class FrameProducer : Resource.SharedResource {
     public delegate void OnFrameHandler(FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img);
     private OnFrameHandler _fh;
     private object _lock_fh;

@@ -46,7 +46,7 @@ namespace Parsley.Core {
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
-      using (SharedResource.Breath b = _camera.KeepAlive()) {
+      using (Resource.SharedResource.Breath b = _camera.KeepAlive()) {
         while (!bw.CancellationPending) {
           // Note: the image is disposed once the camera gets disposed.
           // Therefore you should copy the image if needed in another

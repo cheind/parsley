@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C98E003-741C-4C11-9030-3CCAAB7CAA66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -60,10 +60,6 @@
       <HintPath>..\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL" />
-    <Reference Include="Parsley.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Parsley.Core\bin\x86\Release\Parsley.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -92,6 +88,12 @@
     </Compile>
     <Compile Include="Examples\ExtractLaserLineSlide.Designer.cs">
       <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\TrackCheckerboard3D.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Examples\TrackCheckerboard3D.Designer.cs">
+      <DependentUpon>TrackCheckerboard3D.cs</DependentUpon>
     </Compile>
     <Compile Include="FrameGrabberSlide.cs">
       <SubType>UserControl</SubType>
@@ -125,6 +127,10 @@
     <EmbeddedResource Include="Examples\ExtractLaserLineSlide.resx">
       <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Examples\TrackCheckerboard3D.resx">
+      <DependentUpon>TrackCheckerboard3D.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="IntrinsicCalibrationSlide.resx">
       <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +160,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
+      <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
+      <Name>Parsley.Core.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
+      <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
+      <Name>Parsley.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parsley.UI\Parsley.UI.csproj">
       <Project>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</Project>
       <Name>Parsley.UI</Name>

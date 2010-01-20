@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Parsley.Core {
+namespace Parsley.Core.Resource {
 
   /// <summary>
   /// A shared resource behaves just like a Resource with additional

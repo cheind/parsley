@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
+using Parsley.Core.Extensions;
+using MathNet.Numerics.LinearAlgebra;
+
 namespace DisplayCheckerboard3D {
   public partial class LocateBoard : Form {
 
@@ -76,7 +79,10 @@ namespace DisplayCheckerboard3D {
           
           
           System.Threading.Monitor.Enter(_viewer);
-          _board_transform.Matrix = ecp.ExtrinsicMatrix;
+          // Extrinsic matrix is 3x4 => convert to 4x4
+          Matrix m = Matrix.Identity(4,4);
+          m.SetMatrix(0, 2, 0, 3,  ecp.ExtrinsicMatrix.ToParsley());
+          _board_transform.Matrix = m.ToInterop();
           System.Threading.Monitor.Exit(_viewer);
 
           bw.ReportProgress(0, String.Format("{0:f}", ecp.TranslationVector.Norm));
