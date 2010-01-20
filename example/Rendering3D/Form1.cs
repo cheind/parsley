@@ -42,9 +42,9 @@ namespace Rendering3D {
     void Render(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
       while (!bw.CancellationPending) {
-        System.Threading.Monitor.Enter(_viewer);
-        _viewer.Frame();
-        System.Threading.Monitor.Exit(_viewer);
+        lock (_viewer) {
+          _viewer.Frame();
+        }
       }
       e.Cancel = true;
     }
@@ -58,9 +58,9 @@ namespace Rendering3D {
     }
 
     private void _button_add_capsule_Click(object sender, EventArgs e) {
-      System.Threading.Monitor.Enter(_viewer);
-      _viewer.AddCapsule(new double[]{_rnd.Next(-10, 10), _rnd.Next(-10, 10), _rnd.Next(-10, 10)});
-      System.Threading.Monitor.Exit(_viewer);
+      lock (_viewer) {
+        _viewer.AddCapsule(new double[] { _rnd.Next(-10, 10), _rnd.Next(-10, 10), _rnd.Next(-10, 10) });
+      }
     }
   }
 }
