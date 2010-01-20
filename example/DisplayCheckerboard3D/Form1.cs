@@ -20,7 +20,7 @@ namespace DisplayCheckerboard3D {
     
     private void _button_calibrate_Click(object sender, EventArgs e) {
       Parsley.Core.Capture c = Parsley.Core.Capture.FromCamera(0);
-      Parsley.UI.IntrinsicCalibration ic = new Parsley.UI.IntrinsicCalibration(c, 5);
+      Parsley.UI.IntrinsicCalibration ic = new Parsley.UI.IntrinsicCalibration(c, 2);
       ic.ShowDialog();
       c.Dispose();
       _calib = ic.Calibration;

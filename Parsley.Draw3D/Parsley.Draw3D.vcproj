@@ -198,6 +198,11 @@
 			CopyLocal="false"
 			MinFrameworkVersion="131072"
 		/>
+		<AssemblyReference
+			RelativePath="..\bin\Parsley.Core.Resource.dll"
+			AssemblyName="Parsley.Core.Resource, Version=1.0.0.0, processorArchitecture=IA64"
+			MinFrameworkVersion="131072"
+		/>
 	</References>
 	<Files>
 		<File

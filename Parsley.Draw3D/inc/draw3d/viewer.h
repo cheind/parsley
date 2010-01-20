@@ -19,12 +19,10 @@ namespace osg {
 namespace Parsley {
   namespace Draw3D {    
 
-    public ref class Viewer
+    public ref class Viewer : public Core::Resource::SharedResource
     {
     public:
       Viewer(System::Windows::Forms::Control ^render_target);
-      Viewer::~Viewer();
-      Viewer::!Viewer();
 
       /// Render entire frame
       void Frame();
@@ -35,6 +33,10 @@ namespace Parsley {
 
       void SetupPerspectiveProjection(array<double,2> ^matrix);
       void LookAt(array<double> ^eye, array<double> ^center, array<double> ^up);
+
+    protected:
+      virtual void DisposeUnmanaged() override;
+      virtual void DisposeManaged() override;
 
     private:
       void initialize_viewer(void *hwnd_render_target);
