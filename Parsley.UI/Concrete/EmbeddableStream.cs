@@ -17,11 +17,23 @@ namespace Parsley.UI.Concrete {
   public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
     private Emgu.CV.CvEnum.INTER _interpolation;
+    private bool _can_invoke;
 
     public EmbeddableStream() {
       InitializeComponent();
       _grabber = null;
       _interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_NN;
+      _can_invoke = false;
+      this.HandleCreated += new EventHandler(EmbeddableStream_HandleCreated);
+      this.HandleDestroyed += new EventHandler(EmbeddableStream_HandleDestroyed);
+    }
+
+    void EmbeddableStream_HandleDestroyed(object sender, EventArgs e) {
+      _can_invoke = false;
+    }
+
+    void EmbeddableStream_HandleCreated(object sender, EventArgs e) {
+      _can_invoke = true;
     }
 
     public Emgu.CV.CvEnum.INTER Interpolation {
@@ -70,15 +82,16 @@ namespace Parsley.UI.Concrete {
       // and invoke is used. Invoke executes the delegate on thread that owns this control, which is the one
       // that is already blocked. This leads to a deadlock. That is why we use BeginInvoke, which executes
       // the delegate on the GUI thread associated with this control.
-      
-      Emgu.CV.IImage img_copy = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
-      this.BeginInvoke(new MethodInvoker(delegate {
-        Emgu.CV.IImage prev = _picture_box.Image;
-        _picture_box.Image = img_copy;
-        if (prev != null) {
-          prev.Dispose();
-        }
-      }));
+      if (_can_invoke) {
+        Emgu.CV.IImage img_copy = img.Resize(_picture_box.ClientRectangle.Width, _picture_box.ClientRectangle.Height, _interpolation);
+        this.BeginInvoke(new MethodInvoker(delegate {
+          Emgu.CV.IImage prev = _picture_box.Image;
+          _picture_box.Image = img_copy;
+          if (prev != null) {
+            prev.Dispose();
+          }
+        }));
+      }
     }
   }
 }
