@@ -51,21 +51,27 @@ namespace Parsley.Core {
       // Note that default float is zero.
 
       // Search per row
-      byte[,,] data = channel.Data;
-      for (int r = 0; r < channel.Height; ++r) {
-        for (int c = 0; c < channel.Width; ++c) {
-          int i = (int)data[r, c, 0];
-          if (i > max_intensities[c]) {
-            max_intensities[c] = i;
-            laser_pos[c] = r;
+      byte[] d = channel.Bytes;
+      int stride = channel.Width;
+      int h = channel.Height; // This one here is a huge, HUGE timesaver!
+      int w = channel.Width; // This one here is a huge, HUGE timesaver!
+      
+      unchecked {
+        for (int r = 0; r < h; ++r) {
+          int offset = stride * r;
+          for (int c = 0; c < w; ++c) {
+            byte i = d[offset + c];
+            if (i > max_intensities[c]) {
+              max_intensities[c] = i;
+              laser_pos[c] = r;
+            }
           }
         }
-      }
-
-      // Update output: set -1 for invalid laser line poses
-      for (int i = 0; i < channel.Width; ++i) {
-        if (max_intensities[i] < _threshold) {
-          laser_pos[i] = -1.0f;
+        // Update output: set -1 for invalid laser line poses
+        for (int i = 0; i < w; ++i) {
+          if (max_intensities[i] < _threshold) {
+            laser_pos[i] = -1.0f;
+          }
         }
       }
     }
