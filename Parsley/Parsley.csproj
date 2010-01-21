@@ -133,9 +133,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ExamplesSlide.resx">
       <DependentUpon>ExamplesSlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Examples\ExtractLaserLineSlide.resx">
       <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Examples\TrackCheckerboard3D.resx">
       <DependentUpon>TrackCheckerboard3D.cs</DependentUpon>
@@ -143,12 +145,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IntrinsicCalibrationSlide.resx">
       <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainSlide.resx">
       <DependentUpon>MainSlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

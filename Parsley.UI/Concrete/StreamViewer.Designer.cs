@@ -31,6 +31,8 @@
       // 
       this._display.Dock = System.Windows.Forms.DockStyle.Fill;
       this._display.FrameGrabber = null;
+      this._display.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+      this._display.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_NN;
       this._display.Location = new System.Drawing.Point(0, 0);
       this._display.Name = "_display";
       this._display.Size = new System.Drawing.Size(304, 202);
@@ -43,10 +45,7 @@
       this.ClientSize = new System.Drawing.Size(304, 202);
       this.Controls.Add(this._display);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MaximizeBox = false;
-      this.MinimizeBox = false;
       this.Name = "StreamViewer";
-      this.ShowInTaskbar = false;
       this.Text = "Displaying Live Feed";
       this.ResumeLayout(false);
 

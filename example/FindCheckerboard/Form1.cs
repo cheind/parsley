@@ -41,7 +41,7 @@ namespace FindCheckerboard {
       }
     }
 
-    void _grabber_OnFrame(Parsley.Core.FrameProducer fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
 

@@ -36,7 +36,7 @@ namespace Parsley {
         _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
         _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
         _live_feed.FrameGrabber = _fg;
-        _live_feed.ShowInTaskbar = true;
+        _live_feed.FrameGrabber.FPS = 30;
         _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
         _live_feed.Shown += new EventHandler(_live_feed_Shown);
 

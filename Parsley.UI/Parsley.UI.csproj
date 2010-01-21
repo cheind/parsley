@@ -152,6 +152,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Concrete\EmbeddableStream.resx">
       <DependentUpon>EmbeddableStream.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Concrete\StreamViewer.resx">
       <DependentUpon>StreamViewer.cs</DependentUpon>
@@ -159,22 +160,28 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ParsleyButtonSmall.resx">
       <DependentUpon>ParsleyButtonSmall.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ParsleyMessage.resx">
       <DependentUpon>ParsleyMessage.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ParsleyButton.resx">
       <DependentUpon>ParsleyButton.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ParsleySlide.resx">
       <DependentUpon>ParsleySlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WrapLabel.resx">
       <DependentUpon>WrapLabel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

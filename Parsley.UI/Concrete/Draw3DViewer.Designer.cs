@@ -31,17 +31,17 @@
       this._render_target.Dock = System.Windows.Forms.DockStyle.Fill;
       this._render_target.Location = new System.Drawing.Point(0, 0);
       this._render_target.Name = "_render_target";
-      this._render_target.Size = new System.Drawing.Size(462, 298);
+      this._render_target.Size = new System.Drawing.Size(304, 202);
       this._render_target.TabIndex = 0;
       // 
       // Draw3DViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(462, 298);
+      this.ClientSize = new System.Drawing.Size(304, 202);
       this.Controls.Add(this._render_target);
       this.Name = "Draw3DViewer";
-      this.Text = "Draw3DViewer";
+      this.Text = "Displaying 3D Scene";
       this.ResumeLayout(false);
 
     }
