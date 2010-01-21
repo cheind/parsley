@@ -92,7 +92,6 @@
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
-    <Compile Include="FrameProducer.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
     <Compile Include="LaserLineExtraction.cs" />
     <Compile Include="Perspective.cs" />

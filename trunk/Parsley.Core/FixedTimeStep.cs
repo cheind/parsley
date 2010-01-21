@@ -20,9 +20,15 @@ namespace Parsley.Core {
     /// <summary>
     /// Construct new fixed time-step helper
     /// </summary>
-    public FixedTimeStep() {
+    public FixedTimeStep(double fps) {
       _sw = new Stopwatch();
-      this.FPS = Double.MaxValue;
+      this.FPS = fps;
+    }
+
+    /// <summary>
+    /// Construct new fixed time-step helper
+    /// </summary>
+    public FixedTimeStep() : this(Double.MaxValue) {
     }
 
     /// <summary>
