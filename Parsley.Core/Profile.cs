@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Parsley.Core {
 
@@ -10,11 +11,13 @@ namespace Parsley.Core {
   /// </summary>
   public class Profile : IDisposable {
     private string _name;
-    private DateTime _start;
+    private Stopwatch _sw;
+    
 
     public Profile(string name) {
       _name = name;
-      _start = DateTime.Now;
+      _sw = new Stopwatch();
+      _sw.Start();
     }
 
     public void Dispose() {
@@ -23,8 +26,9 @@ namespace Parsley.Core {
     }
 
     protected virtual void Dispose(bool disposing) {
+      _sw.Stop();
       if (disposing) {
-        Console.WriteLine("Profile {0} took {1} seconds.", _name, (DateTime.Now - _start).TotalSeconds);
+        Console.WriteLine("Profile {0} took {1} seconds.", _name, _sw.Elapsed.TotalSeconds);
       }
     }
   }
