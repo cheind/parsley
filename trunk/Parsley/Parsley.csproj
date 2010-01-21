@@ -60,6 +60,7 @@
       <HintPath>..\bin\Emgu.Util.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL" />
+    <Reference Include="Parsley.Draw3D, Version=1.0.3673.13486, Culture=neutral, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -77,6 +78,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context.cs" />
+    <Compile Include="ContextSlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ContextSlide.Designer.cs">
+      <DependentUpon>ContextSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExamplesSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
