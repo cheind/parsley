@@ -11,10 +11,12 @@ namespace Parsley {
   public class Context {
     private Core.FrameGrabber _fg;
     private Core.RenderLoop _rl;
+    private Core.CalibrationPattern _pattern;
 
-    public Context(Core.FrameGrabber fg, Core.RenderLoop rl) {
+    public Context(Core.FrameGrabber fg, Core.RenderLoop rl, Core.CalibrationPattern pattern) {
       _fg = fg;
       _rl = rl;
+      _pattern = pattern;
     }
 
     /// <summary>
@@ -29,6 +31,13 @@ namespace Parsley {
     /// </summary>
     public Core.Camera Camera {
       get { return _fg.Camera; }
+    }
+
+    /// <summary>
+    /// Access calibration pattern
+    /// </summary>
+    public Core.CalibrationPattern CalibrationPattern {
+      get { return _pattern; }
     }
 
     /// <summary>
