@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rendering3D", "example\Rendering3D\Rendering3D.csproj", "{C105A9C5-0C02-4149-AFE0-2696EB91B515}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.UI", "Parsley.UI\Parsley.UI.csproj", "{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B03DE61-527A-441C-A7E6-8C1CB433EA63} = {6B03DE61-527A-441C-A7E6-8C1CB433EA63}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parsley.Draw3D", "Parsley.Draw3D\Parsley.Draw3D.vcproj", "{6B03DE61-527A-441C-A7E6-8C1CB433EA63}"
 EndProject
