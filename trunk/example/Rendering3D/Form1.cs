@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using Emgu.CV.Structure;
-
 namespace Rendering3D {
   public partial class Form1 : Form {
     private Parsley.Draw3D.Viewer _viewer;
@@ -18,7 +16,7 @@ namespace Rendering3D {
     public Form1() {
       InitializeComponent();
       _viewer = new Parsley.Draw3D.Viewer(_render_target);
-      _viewer.LookAt(new MCvPoint3D32f(50.0f, 50.0f, 50.0f), new MCvPoint3D32f(0, 0, 0), new MCvPoint3D32f(0.0f, 1.0f, 0.0f));
+      _viewer.LookAt(new double[]{50.0f, 50.0f, 50.0f}, new double[]{0, 0, 0}, new double[]{0.0f, 1.0f, 0.0f});
       
       Parsley.Draw3D.Axis a = new Parsley.Draw3D.Axis(10);
       _viewer.Add(a);
