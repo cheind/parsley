@@ -12,8 +12,10 @@ namespace Parsley {
 
     private Core.FrameGrabber _fg;
     private Core.Camera _camera;
+    private Context _context;
     private Core.CheckerBoard _calibration_pattern;
     private UI.Concrete.StreamViewer _live_feed;
+    private UI.Concrete.Draw3DViewer _3d_viewer;
 
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
@@ -34,14 +36,22 @@ namespace Parsley {
         _live_feed.ShowInTaskbar = true;
         _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
         _live_feed.Shown += new EventHandler(_live_feed_Shown);
+
+        _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
+        _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
+        _3d_viewer.Shown += new EventHandler(_3d_viewer_Shown);
+        _3d_viewer.RenderLoop.FPS = 30;
+        _context = new Context(_fg, _3d_viewer.RenderLoop);
+
+
       } catch (ArgumentException) {
         UI.ParsleyMessage.Show("No Camera found!", "Could not connect to camera. Make sure a camera is attached.");
       }
 
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
-      _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_fg);
-      _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_fg, _calibration_pattern);
+      _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
+      _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context, _calibration_pattern);
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_examples);
@@ -52,6 +62,16 @@ namespace Parsley {
       _slide_control.Selected = _slide_main;
 
       
+    }
+
+    void _3d_viewer_Shown(object sender, EventArgs e) {
+      this.mnu_3d_viewer.Checked = true;
+    }
+
+    void _3d_viewer_FormClosing(object sender, FormClosingEventArgs e) {
+      this.mnu_3d_viewer.Checked = false;
+      e.Cancel = true;
+      _3d_viewer.Hide();
     }
 
     void _slide_control_SlideChanged(object sender, SlickInterface.SlideChangedArgs e) {
@@ -77,9 +97,20 @@ namespace Parsley {
       }
     }
 
+    private void mnu_3d_viewer_Click(object sender, EventArgs e) {
+      if (this.mnu_3d_viewer.Checked) {
+        _context.RenderLoop.Start();
+        _3d_viewer.Show();
+      } else {
+        _3d_viewer.Hide();
+      }
+    }
+
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
-      _fg.Dispose();
-      _camera.Dispose();
+      _context.FrameGrabber.Dispose();
+      _context.Camera.Dispose();
+      _context.RenderLoop.Dispose();
+      _context.Viewer.Dispose();
     }
 
     private void _btn_back_Click(object sender, EventArgs e) {

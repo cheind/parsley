@@ -8,34 +8,20 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley {
-  public partial class FrameGrabberSlide : UI.ParsleySlide {
-    private Core.FrameGrabber _fg;
-
-    public FrameGrabberSlide() {
+  public partial class FrameGrabberSlide : ContextSlide {
+    
+    public FrameGrabberSlide(Context c) : base(c) {
       InitializeComponent();
-    }
-
-    public FrameGrabberSlide(Core.FrameGrabber fg) {
-      _fg = fg;
-      InitializeComponent();
-    }
-
-    /// <summary>
-    /// Access the framegrabber
-    /// </summary>
-    public Core.FrameGrabber FrameGrabber {
-      get { return _fg; }
-      set { _fg = value; }
     }
 
     protected override void OnSlidingIn() {
-      this.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
-      this.FrameGrabber.Start();
+      this.Context.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
+      this.Context.FrameGrabber.Start();
       base.OnSlidingIn();
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
-      this.FrameGrabber.OnFramePrepend -= new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
+      this.Context.FrameGrabber.OnFramePrepend -= new Parsley.Core.FrameProducer.OnFrameHandler(this.OnFrame);
       base.OnSlidingOut(args);
     }
 

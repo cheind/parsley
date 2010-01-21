@@ -13,7 +13,7 @@ namespace Parsley.Examples {
     private Parsley.Core.BrightestPixelLLE _lle;
     private int _channel;
 
-    public ExtractLaserLineSlide(Core.FrameGrabber fg) : base(fg) {
+    public ExtractLaserLineSlide(Context c) : base(c) {
       InitializeComponent();
       _lle = new Parsley.Core.BrightestPixelLLE();
       _channel = 2;
@@ -40,7 +40,7 @@ namespace Parsley.Examples {
     }
 
     private void _btn_take_reference_Click(object sender, EventArgs e) {
-      _reference = this.FrameGrabber.Camera.Frame().Copy();
+      _reference = Context.Camera.Frame().Copy();
     }
 
     private void _cmb_channel_SelectedIndexChanged(object sender, EventArgs e) {

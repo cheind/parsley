@@ -20,10 +20,10 @@ namespace Parsley {
     private Timer _timer_auto;
 
 
-    public IntrinsicCalibrationSlide(Core.FrameGrabber fg, Core.CalibrationPattern pattern) : base(fg) {
+    public IntrinsicCalibrationSlide(Context c, Core.CalibrationPattern pattern) : base(c) {
       InitializeComponent();
       _pattern = pattern;
-      _ic = new Parsley.Core.IntrinsicCalibration(pattern.ObjectPoints, fg.Camera.FrameSize);
+      _ic = new Parsley.Core.IntrinsicCalibration(pattern.ObjectPoints, Context.Camera.FrameSize);
       
 
       _timer_auto = new Timer();
@@ -42,7 +42,7 @@ namespace Parsley {
       _cb_auto_take.Checked = false;
       _btn_calibrate.Enabled = false;
       _btn_take_image.Enabled = true;
-      if (FrameGrabber.Camera.HasIntrinsics) {
+      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {
         _lbl_info.Text = "The camera already has a calibration. You can restart the calibration process by taking images. You need at least 3 images to proceed.";
       } else {
         _lbl_info.Text = "You can restart the calibration process by taking images. You need at least 3 images to proceed.";
@@ -74,8 +74,8 @@ namespace Parsley {
     }
 
     void _bw_calibrator_DoWork(object sender, DoWorkEventArgs e) {
-      this.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-      _ec = new Parsley.Core.ExtrinsicCalibration(_pattern.ObjectPoints, FrameGrabber.Camera.Intrinsics);
+      this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
+      _ec = new Parsley.Core.ExtrinsicCalibration(_pattern.ObjectPoints, Context.Camera.Intrinsics);
     }
 
     /// <summary>
@@ -105,7 +105,7 @@ namespace Parsley {
               new MCvPoint3D32f(50, 0, 0),
               new MCvPoint3D32f(0, 50, 0)
             },
-            ecp, FrameGrabber.Camera.Intrinsics);
+            ecp, Context.Camera.Intrinsics);
 
         img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 2);
         img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 2);
