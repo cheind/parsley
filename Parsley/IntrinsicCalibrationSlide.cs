@@ -12,19 +12,21 @@ using Emgu.CV.Structure;
 
 namespace Parsley {
   public partial class IntrinsicCalibrationSlide : FrameGrabberSlide {
-    private Core.CalibrationPattern _pattern;
     private Core.IntrinsicCalibration _ic;
     private Core.ExtrinsicCalibration _ec; // used for illustration of coordinate frame only.
     private bool _take_image_request;
     private BackgroundWorker _bw_calibrator;
     private Timer _timer_auto;
 
+    /// <summary>
+    /// Invoked whenever a calibration succeeds
+    /// </summary>
+    public event EventHandler<EventArgs> OnCalibrationSucceeded;
 
-    public IntrinsicCalibrationSlide(Context c, Core.CalibrationPattern pattern) : base(c) {
+
+    public IntrinsicCalibrationSlide(Context c) : base(c) {
       InitializeComponent();
-      _pattern = pattern;
-      _ic = new Parsley.Core.IntrinsicCalibration(pattern.ObjectPoints, Context.Camera.FrameSize);
-      
+      _ic = new Parsley.Core.IntrinsicCalibration(c.CalibrationPattern.ObjectPoints, Context.Camera.FrameSize);
 
       _timer_auto = new Timer();
       _timer_auto.Interval = 3000;
@@ -71,33 +73,28 @@ namespace Parsley {
       _cb_auto_take.Enabled = true;
       _cb_auto_take.Checked = false;
       _lbl_info.Text = "Calibration succeeded!";
+      EventHandler<EventArgs> d = OnCalibrationSucceeded;
+      d(this, new EventArgs());
     }
 
     void _bw_calibrator_DoWork(object sender, DoWorkEventArgs e) {
       this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-      _ec = new Parsley.Core.ExtrinsicCalibration(_pattern.ObjectPoints, Context.Camera.Intrinsics);
-    }
-
-    /// <summary>
-    /// Get and set the calibration pattern
-    /// </summary>
-    public Core.CalibrationPattern CalibrationPattern {
-      get { return _pattern; }
-      set { _pattern = value; }
+      _ec = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
     }
 
     protected override void OnFrame(Parsley.Core.FrameProducer fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+      Core.CalibrationPattern pattern = this.Context.CalibrationPattern;
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
-      _pattern.FindPattern(gray);
+      pattern.FindPattern(gray);
       this.HandleTakeImageRequest();
       this.DrawCoordinateFrame(img);
-      _pattern.DrawPattern(img, _pattern.ImagePoints, _pattern.PatternFound);
+      pattern.DrawPattern(img, pattern.ImagePoints, pattern.PatternFound);
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && _pattern.PatternFound) {
-        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(_pattern.ImagePoints);
+      if (_ec != null && Context.CalibrationPattern.PatternFound) {
+        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.CalibrationPattern.ImagePoints);
 
         System.Drawing.PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
             new MCvPoint3D32f[] { 
@@ -114,8 +111,8 @@ namespace Parsley {
 
     void HandleTakeImageRequest() {
       if (_take_image_request) {
-        if (_pattern.PatternFound) {
-          _ic.AddView(_pattern.ImagePoints);
+        if (Context.CalibrationPattern.PatternFound) {
+          _ic.AddView(Context.CalibrationPattern.ImagePoints);
           this.Invoke((MethodInvoker)delegate {
             _lbl_info.Text = String.Format("You have successfully acquired {0} calibration image(s)", _ic.Views.Count);
             _btn_calibrate.Enabled = _ic.Views.Count > 2 && !_cb_auto_take.Checked;
