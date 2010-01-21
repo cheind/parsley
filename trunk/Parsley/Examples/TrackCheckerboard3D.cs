@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Parsley.Examples {
   public partial class TrackCheckerboard3D : FrameGrabberSlide {
-    public TrackCheckerboard3D(Core.FrameGrabber fg) : base(fg) {
+    public TrackCheckerboard3D(Context c) : base(c) {
       InitializeComponent();
     }
   }

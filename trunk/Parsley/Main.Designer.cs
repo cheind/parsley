@@ -30,6 +30,7 @@
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this._btn_back = new Parsley.UI.ParsleyButtonSmall();
       this._slide_control = new SlickInterface.SlideControl();
+      this.mnu_3d_viewer = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -47,7 +48,8 @@
       // windowsToolStripMenuItem
       // 
       this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnu_live_feed});
+            this.mnu_live_feed,
+            this.mnu_3d_viewer});
       this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
       this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
       this.windowsToolStripMenuItem.Text = "Windows";
@@ -56,7 +58,7 @@
       // 
       this.mnu_live_feed.CheckOnClick = true;
       this.mnu_live_feed.Name = "mnu_live_feed";
-      this.mnu_live_feed.Size = new System.Drawing.Size(155, 22);
+      this.mnu_live_feed.Size = new System.Drawing.Size(158, 22);
       this.mnu_live_feed.Text = "Show Live Feed";
       this.mnu_live_feed.Click += new System.EventHandler(this.mnu_live_feed_Click);
       // 
@@ -102,7 +104,16 @@
       this._slide_control.Name = "_slide_control";
       this._slide_control.Selected = null;
       this._slide_control.Size = new System.Drawing.Size(592, 340);
+      this._slide_control.SlideSpeed = 250;
       this._slide_control.TabIndex = 1;
+      // 
+      // mnu_3d_viewer
+      // 
+      this.mnu_3d_viewer.CheckOnClick = true;
+      this.mnu_3d_viewer.Name = "mnu_3d_viewer";
+      this.mnu_3d_viewer.Size = new System.Drawing.Size(158, 22);
+      this.mnu_3d_viewer.Text = "Show 3D Viewer";
+      this.mnu_3d_viewer.Click += new System.EventHandler(this.mnu_3d_viewer_Click);
       // 
       // Main
       // 
@@ -132,6 +143,7 @@
     private SlickInterface.SlideControl _slide_control;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private Parsley.UI.ParsleyButtonSmall _btn_back;
+    private System.Windows.Forms.ToolStripMenuItem mnu_3d_viewer;
   }
 }
 
