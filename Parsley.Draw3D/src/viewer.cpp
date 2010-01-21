@@ -60,49 +60,9 @@ namespace Parsley {
       _viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     }
 
-    void 
-    Viewer::Projection(Emgu::CV::IntrinsicCameraParameters ^icp, double near_p, double far_p, double w, double h)
-    {
-      osg::Camera *camera = _viewer->getCamera();
-      // http://opencv.willowgarage.com/wiki/Posit 
-      // http://opencv.willowgarage.com/documentation/camera_calibration_and_3d_reconstruction.html
-      // http://cvlab.epfl.ch/~fua/courses/vision/math/notes/Cameras.pdf
-      double fx = icp->IntrinsicMatrix->Data[0,0];
-      double fy = icp->IntrinsicMatrix->Data[1,1];
-      double px = icp->IntrinsicMatrix->Data[0,2];
-      double py = icp->IntrinsicMatrix->Data[1,2];
-
-      osg::Matrixd lens = osg::Matrixd::identity();
-      lens(0,0) = 2.0 * (fx / w); lens(0,1) =            0.0; lens(0,2) =         2.0 * (px / w) - 1.0; lens(0,3) =                              0.0;
-      lens(1,0) =            0.0; lens(1,1) = 2.0 * (fy / h); lens(1,2) =         2.0 * (py / h) - 1.0; lens(1,3) =                              0.0;      
-      lens(2,0) =            0.0; lens(2,1) =            0.0; lens(2,2) = -( far_p+near_p ) / ( far_p-near_p ); lens(2,3) = -2.0 * far_p * near_p / ( far_p-near_p );
-      lens(3,0) =            0.0; lens(3,1) =            0.0; lens(3,2) =                         -1.0; lens(3,3) =                              0.0;
-
-      osg::Matrixd lens2;
-      for (int i  =0; i < 4; ++i) {
-        for (int j = 0; j<4; ++j) {
-          lens2(i,j) = lens(j,i);
-        }
-      }
-
-      // http://www.mail-archive.com/osg-users@lists.openscenegraph.org/msg19124.html
-      camera->setProjectionMatrix(lens2);
-    }
-
     void Viewer::SetupPerspectiveProjection(array<double,2> ^matrix) {
       osg::Camera *camera = _viewer->getCamera();
       camera->setProjectionMatrix(convert(matrix, transposed()));
-    }
-
-    void
-    Viewer::LookAt(MCvPoint3D32f ^eye, MCvPoint3D32f ^center, MCvPoint3D32f ^up) {
-      osgGA::MatrixManipulator *manip =  _viewer->getCameraManipulator();
-      manip->setHomePosition(C::c(eye), C::c(center), C::c(up));
-      manip->home(0);
-
-      osg::Matrixd m = manip->getMatrix();
-      m(0,0) = m(1,1) = -1;
-      manip->setByMatrix(m);
     }
 
     void 
