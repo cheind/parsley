@@ -20,7 +20,7 @@ namespace Parsley.Core {
     /// <param name="camera">Camera with intrinsic parameters</param>
     /// <returns>Perspective matrix in column-major</returns>
     public static Matrix FromCamera(Camera camera, double near, double far) {
-      if (!camera.HasExtrinsics) {
+      if (!camera.HasIntrinsics) {
         throw new ArgumentException("Camera has no intrinsic calibration");
       }
       // see
