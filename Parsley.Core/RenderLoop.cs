@@ -12,18 +12,21 @@ namespace Parsley.Core {
   public class RenderLoop : Resource.SharedResource {
     private Parsley.Draw3D.Viewer _v;
     private BackgroundWorker _bw;
+    private FixedTimeStep _fts;
     public delegate void BeforeRenderHandler(RenderLoop r);
     public delegate void AfterRenderHandler(RenderLoop r);
     private BeforeRenderHandler _before_render;
     private AfterRenderHandler _after_render;
     private object _event_lock;
 
+
     /// <summary>
     /// Initialize from pre-existing viewer
     /// </summary>
     /// <param name="v">viewer</param>
-    RenderLoop(Parsley.Draw3D.Viewer v) {
+    public RenderLoop(Parsley.Draw3D.Viewer v) {
       _v = v;
+      _fts = new FixedTimeStep();
       _bw = new BackgroundWorker();
       _bw.WorkerSupportsCancellation = true;
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
@@ -34,9 +37,17 @@ namespace Parsley.Core {
     /// Initialize with render target
     /// </summary>
     /// <param name="render_target">Target control to render to</param>
-    RenderLoop(System.Windows.Forms.Control render_target) 
+    public RenderLoop(System.Windows.Forms.Control render_target) 
       : this(new Parsley.Draw3D.Viewer(render_target)) 
     {}
+
+    /// <summary>
+    /// Control the time-step
+    /// </summary>
+    public double FPS {
+      set { _fts.FPS = value; }
+      get { return _fts.FPS; }
+    }
 
     /// <summary>
     /// Register callback.
@@ -97,9 +108,12 @@ namespace Parsley.Core {
       using (Resource.SharedResource.Breath b = _v.KeepAlive()) {
         if (b.IsBreathing) {
           while (!bw.CancellationPending) {
-            lock (_event_lock) { if (_before_render != null) _before_render(this); }
-            lock (_v) { _v.Frame(); }
-            lock (_event_lock) { if (_after_render != null) _after_render(this); }
+            using (Profile p = new Profile("render-loop")) {
+              lock (_event_lock) { if (_before_render != null) _before_render(this); }
+              lock (_v) { _v.Frame(); }
+              lock (_event_lock) { if (_after_render != null) _after_render(this); }
+              _fts.UpdateAndWait();
+            }
           }
         }
       }
