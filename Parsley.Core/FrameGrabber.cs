@@ -51,11 +51,9 @@ namespace Parsley.Core {
           // Note: the image is disposed once the camera gets disposed.
           // Therefore you should copy the image if needed in another
           // thread or make sure the camera is not disposed.
-          DateTime dt = DateTime.Now;
           Image<Bgr, byte> img = _camera.Frame();
           this.FireOnFrame(img);
           img.Dispose();
-          Console.WriteLine("Framegrabber {0}", (DateTime.Now - dt).TotalSeconds);
         }
       }
       e.Cancel = true;
