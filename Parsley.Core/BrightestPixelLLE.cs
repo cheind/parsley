@@ -52,7 +52,7 @@ namespace Parsley.Core {
 
       // Search per row
       byte[] d = channel.Bytes;
-      int stride = channel.Width;
+      int stride = d.Length / channel.Height;
       int h = channel.Height; // This one here is a huge, HUGE timesaver!
       int w = channel.Width; // This one here is a huge, HUGE timesaver!
       
