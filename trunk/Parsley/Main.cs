@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Parsley.Core.Extensions;
+
 namespace Parsley {
   public partial class Main : Form {
 
@@ -20,6 +22,7 @@ namespace Parsley {
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
+    private Examples.TrackCheckerboard3D _slide_track_checkerboard;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
 
     public Main() {
@@ -41,7 +44,9 @@ namespace Parsley {
         _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
         _3d_viewer.Shown += new EventHandler(_3d_viewer_Shown);
         _3d_viewer.RenderLoop.FPS = 30;
-        _context = new Context(_fg, _3d_viewer.RenderLoop);
+        _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
+        _3d_viewer.IsMaintainingAspectRatio = true;
+        _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern);
 
 
       } catch (ArgumentException) {
@@ -51,17 +56,27 @@ namespace Parsley {
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
-      _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context, _calibration_pattern);
+      _slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
+      _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
+      _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
+            
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_extract_laser_line);
+      _slide_control.AddSlide(_slide_track_checkerboard);
       _slide_control.AddSlide(_slide_intrinsic_calib);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;
+    }
 
-      
+    void _slide_intrinsic_calib_OnCalibrationSucceeded(object sender, EventArgs e) {
+      lock (_context.Viewer) {
+        _context.Viewer.SetupPerspectiveProjection(
+          Core.Perspective.FromCamera(_context.Camera, 1.0, 5000).ToInterop()
+        );
+      }
     }
 
     void _3d_viewer_Shown(object sender, EventArgs e) {
