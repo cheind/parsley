@@ -2,10 +2,7 @@
 
 #pragma once
 
-using namespace Emgu::CV::Structure;
-
 #include <draw3d/node.h>
-
 
 namespace osg {
   class MatrixTransform;

@@ -186,19 +186,6 @@
 			MinFrameworkVersion="131072"
 		/>
 		<AssemblyReference
-			RelativePath="..\bin\Emgu.CV.dll"
-			AssemblyName="Emgu.CV, Version=2.0.1.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
-			CopyLocal="false"
-			CopyLocalDependencies="false"
-			MinFrameworkVersion="0"
-		/>
-		<AssemblyReference
-			RelativePath="..\bin\Emgu.Util.dll"
-			AssemblyName="Emgu.Util, Version=2.0.0.0, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL"
-			CopyLocal="false"
-			MinFrameworkVersion="131072"
-		/>
-		<AssemblyReference
 			RelativePath="..\bin\Parsley.Core.Resource.dll"
 			AssemblyName="Parsley.Core.Resource, Version=1.0.0.0, processorArchitecture=IA64"
 			MinFrameworkVersion="131072"
