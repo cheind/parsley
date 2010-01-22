@@ -115,15 +115,18 @@ namespace Parsley.Core {
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
       using (Resource.SharedResource.Breath b = _camera.KeepAlive()) {
+        // Note: the image is disposed once the camera gets disposed.
+        // Therefore you should copy the image if needed in another
+        // thread or make sure the camera is not disposed.
+        Image<Bgr, byte> img;
         while (!bw.CancellationPending) {
-          // Note: the image is disposed once the camera gets disposed.
-          // Therefore you should copy the image if needed in another
-          // thread or make sure the camera is not disposed.
-          Image<Bgr, byte> img = _camera.Frame();
-          lock (_lock_event) {
-            if (_on_frame != null) _on_frame(this, img); 
+          img = _camera.Frame();
+          if (img != null) {
+            lock (_lock_event) {
+              if (_on_frame != null) _on_frame(this, img);
+            }
+            img.Dispose();
           }
-          img.Dispose();
           _fts.UpdateAndWait();
         }
       }

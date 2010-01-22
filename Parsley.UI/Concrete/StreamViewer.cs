@@ -20,7 +20,9 @@ namespace Parsley.UI.Concrete {
       set { 
         _display.FrameGrabber = value;
         if (_display.FrameGrabber != null &&
-            _display.FrameGrabber.Camera != null) {
+            _display.FrameGrabber.Camera != null &&
+            _display.FrameGrabber.Camera.IsConnected) 
+        {
           this.AspectRatio = _display.FrameGrabber.Camera.FrameAspectRatio;
           this.IsMaintainingAspectRatio = true;
         } else {

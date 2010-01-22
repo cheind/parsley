@@ -24,48 +24,45 @@ namespace Parsley {
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
     private Examples.TrackCheckerboard3D _slide_track_checkerboard;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
+    private CameraParameterSlide _slide_cam_parameters;
 
     public Main() {
       InitializeComponent();
 
-      try {
-        _camera = new Parsley.Core.Camera(0);
-        _fg = new Parsley.Core.FrameGrabber(_camera);
-        _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
-        _live_feed = new Parsley.UI.Concrete.StreamViewer();
-        _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
-        _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
-        _live_feed.FrameGrabber = _fg;
-        _live_feed.FrameGrabber.FPS = 30;
-        _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
-        _live_feed.Shown += new EventHandler(_live_feed_Shown);
+      // Try connect to default cam
+      _camera = new Parsley.Core.Camera(0);
+      _fg = new Parsley.Core.FrameGrabber(_camera);
+      _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
+      _live_feed = new Parsley.UI.Concrete.StreamViewer();
+      _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
+      _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
+      _live_feed.FrameGrabber = _fg;
+      _live_feed.FrameGrabber.FPS = 30;
+      _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
+      _live_feed.Shown += new EventHandler(_live_feed_Shown);
 
-        _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
-        _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
-        _3d_viewer.Shown += new EventHandler(_3d_viewer_Shown);
-        _3d_viewer.RenderLoop.FPS = 30;
-        _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
-        _3d_viewer.IsMaintainingAspectRatio = true;
-        _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern);
-
-
-      } catch (ArgumentException) {
-        UI.ParsleyMessage.Show("No Camera found!", "Could not connect to camera. Make sure a camera is attached.");
-      }
+      _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
+      _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
+      _3d_viewer.Shown += new EventHandler(_3d_viewer_Shown);
+      _3d_viewer.RenderLoop.FPS = 30;
+      _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
+      _3d_viewer.IsMaintainingAspectRatio = true;
+      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern);
 
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
+      _slide_cam_parameters = new CameraParameterSlide(_context);
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
       _slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
-            
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_extract_laser_line);
       _slide_control.AddSlide(_slide_track_checkerboard);
       _slide_control.AddSlide(_slide_intrinsic_calib);
+      _slide_control.AddSlide(_slide_cam_parameters);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;
@@ -130,6 +127,10 @@ namespace Parsley {
 
     private void _btn_back_Click(object sender, EventArgs e) {
       _slide_control.Backward();
+    }
+
+    private void _mnu_show_camera_properties_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<CameraParameterSlide>();
     }
   }
 }

@@ -80,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraParameterSlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CameraParameterSlide.Designer.cs">
+      <DependentUpon>CameraParameterSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="ContextSlide.cs">
       <SubType>UserControl</SubType>
@@ -131,6 +137,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CameraParameterSlide.resx">
+      <DependentUpon>CameraParameterSlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExamplesSlide.resx">
       <DependentUpon>ExamplesSlide.cs</DependentUpon>
       <SubType>Designer</SubType>
