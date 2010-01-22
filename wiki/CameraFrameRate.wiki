@@ -1,8 +1,8 @@
 #summary Camera Frame Rate
 
 = Improve Frame Rate =
-
- * Lower exposure time
+The following settings can be adjusted by using a free tool such as [http://www.noeld.com/programs.asp?cat=video#AMCap AMCap]
  * Deactivate automatic control of
-  * automatic exposure time
+  * exposure time
   * low-light compensation
+ * Lower exposure time
