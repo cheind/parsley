@@ -1,4 +1,4 @@
-#summary Camera Frame Rate
+#summary Improve your FPS
 
 = Improve Frame Rate =
 The following settings can be adjusted by using a free tool such as [http://www.noeld.com/programs.asp?cat=video#AMCap AMCap]
