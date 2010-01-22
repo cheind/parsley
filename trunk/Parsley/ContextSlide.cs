@@ -16,6 +16,13 @@ namespace Parsley {
     private Context _c;
 
     /// <summary>
+    /// Empty constructor for designer
+    /// </summary>
+    public ContextSlide() {
+      InitializeComponent();
+    }
+
+    /// <summary>
     /// Initialize with context
     /// </summary>
     /// <param name="context">context</param>
@@ -29,6 +36,7 @@ namespace Parsley {
     /// </summary>
     public Context Context {
       get { return _c; }
+      set { _c = value; }
     }
   }
 }

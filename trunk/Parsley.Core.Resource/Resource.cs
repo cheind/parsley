@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace Parsley.Core.Resource {
 
@@ -66,6 +67,7 @@ namespace Parsley.Core.Resource {
     /// <summary>
     /// Check if resource is disposed.
     /// </summary>
+    [Browsable(false)]
     public virtual bool Disposed {
       get { return _disposed; }
     }

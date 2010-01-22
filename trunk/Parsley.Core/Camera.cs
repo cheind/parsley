@@ -13,6 +13,7 @@ namespace Parsley.Core {
   /// Represents a camera.
   /// </summary>
   public class Camera : Resource.SharedResource {
+    private int _device_index;
     private Emgu.CV.Capture _device;
     private Emgu.CV.IntrinsicCameraParameters _intrinsics;
     private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;
@@ -22,22 +23,15 @@ namespace Parsley.Core {
     /// </summary>
     /// <param name="device_index">Device index starting at zero.</param>
     public Camera(int device_index) {
-      try {
-        _device = new Emgu.CV.Capture(device_index);
-      } catch (NullReferenceException) {
-        throw new ArgumentException(String.Format("No camera device found at slot {0}.", device_index));
-      }
       _intrinsics = null;
       _extrinsics = new List<ExtrinsicCameraParameters>();
+      this.DeviceIndex = device_index;
     }
 
     /// <summary>
-    /// Initialize with pre-existing device
+    /// Initialize camera with no connection
     /// </summary>
-    /// <remarks>Device is disposed when camera is disposed.</remarks>
-    /// <param name="device">Device to initialize from</param>
-    public Camera(Emgu.CV.Capture device) {
-      _device = device;
+    public Camera() : this(-1) {
     }
 
     /// <summary>
@@ -54,6 +48,42 @@ namespace Parsley.Core {
     [Description("Determines if camera has an extrinsic calibration")]
     public bool HasExtrinsics {
       get { return _extrinsics.Count > 0; }
+    }
+
+    /// <summary>
+    /// Test if camera has a connection
+    /// </summary>
+    [Browsable(false)]
+    public bool IsConnected {
+      get { return _device != null; }
+    }
+
+    /// <summary>
+    /// Connect to camera at given device index
+    /// </summary>
+    public int DeviceIndex {
+      get { lock (this) { return _device_index; } }
+      set {
+        lock(this) {
+          if (IsConnected) {
+            _device.Dispose();
+            _device = null;
+          }
+          try {
+            if (value >= 0) {
+              _device = new Emgu.CV.Capture(value);
+              _device_index = value;
+            } else {
+              _device_index = -1;
+              _device = null;
+            }
+          } catch (NullReferenceException) {
+            _device_index = -1;
+            _device = null;
+            //throw new ArgumentException(String.Format("No camera device found at slot {0}.", value));
+          }
+        }
+      }
     }
 
     /// <summary>
@@ -78,7 +108,7 @@ namespace Parsley.Core {
     /// </summary>
     [Description("Frame Width")]
     public int FrameWidth {
-      get { return (int)_device.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH); }
+      get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 0);}
     }
 
     /// <summary>
@@ -86,13 +116,13 @@ namespace Parsley.Core {
     /// </summary>
     [Description("Frame Height")]
     public int FrameHeight {
-      get { return (int)_device.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT); }
+      get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 0); }
     }
 
     /// <summary>
     /// Aspect ratio of FrameWidth / FrameHeight
     /// </summary>
-    [Description("Frame Aspect Ratio of Width/Height")]
+    [Browsable(false)]
     public double FrameAspectRatio {
       get { return ((double)FrameWidth) / FrameHeight; }
     }
@@ -100,6 +130,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Frame size of device
     /// </summary>
+    [Description("Frame Size")]
     public System.Drawing.Size FrameSize {
       get { return new System.Drawing.Size(this.FrameWidth, this.FrameHeight); }
     }
@@ -109,7 +140,28 @@ namespace Parsley.Core {
     /// </summary>
     /// <returns></returns>
     public Image<Bgr, Byte> Frame() {
-      return _device.QueryFrame();
+      lock (this) {
+        if (this.IsConnected)
+          return _device.QueryFrame();
+        else
+          return null;
+      }
+    }
+
+    /// <summary>
+    /// Access device property or use default value
+    /// </summary>
+    /// <param name="prop"> property name</param>
+    /// <param name="def">default to use if not connected</param>
+    /// <returns>value or default</returns>
+    double PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP prop, double def) {
+      double value = def;
+      lock (this) {
+        if (IsConnected) {
+          value = _device.GetCaptureProperty(prop);
+        } 
+      }
+      return value;
     }
 
     protected override void DisposeManaged() {

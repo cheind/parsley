@@ -26,11 +26,13 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
       this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.mnu_live_feed = new System.Windows.Forms.ToolStripMenuItem();
-      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this._btn_back = new Parsley.UI.ParsleyButtonSmall();
-      this._slide_control = new SlickInterface.SlideControl();
       this.mnu_3d_viewer = new System.Windows.Forms.ToolStripMenuItem();
+      this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+      this._slide_control = new SlickInterface.SlideControl();
+      this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.mnu_live_feed = new System.Windows.Forms.ToolStripMenuItem();
+      this._mnu_show_camera_properties = new System.Windows.Forms.ToolStripMenuItem();
+      this._btn_back = new Parsley.UI.ParsleyButtonSmall();
       this.menuStrip1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -38,7 +40,8 @@
       // menuStrip1
       // 
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.windowsToolStripMenuItem});
+            this.windowsToolStripMenuItem,
+            this.cameraToolStripMenuItem});
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
       this.menuStrip1.Size = new System.Drawing.Size(598, 24);
@@ -48,19 +51,18 @@
       // windowsToolStripMenuItem
       // 
       this.windowsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnu_live_feed,
             this.mnu_3d_viewer});
       this.windowsToolStripMenuItem.Name = "windowsToolStripMenuItem";
       this.windowsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
       this.windowsToolStripMenuItem.Text = "Windows";
       // 
-      // mnu_live_feed
+      // mnu_3d_viewer
       // 
-      this.mnu_live_feed.CheckOnClick = true;
-      this.mnu_live_feed.Name = "mnu_live_feed";
-      this.mnu_live_feed.Size = new System.Drawing.Size(158, 22);
-      this.mnu_live_feed.Text = "Show Live Feed";
-      this.mnu_live_feed.Click += new System.EventHandler(this.mnu_live_feed_Click);
+      this.mnu_3d_viewer.CheckOnClick = true;
+      this.mnu_3d_viewer.Name = "mnu_3d_viewer";
+      this.mnu_3d_viewer.Size = new System.Drawing.Size(158, 22);
+      this.mnu_3d_viewer.Text = "Show 3D Viewer";
+      this.mnu_3d_viewer.Click += new System.EventHandler(this.mnu_3d_viewer_Click);
       // 
       // tableLayoutPanel1
       // 
@@ -76,6 +78,40 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.Size = new System.Drawing.Size(598, 387);
       this.tableLayoutPanel1.TabIndex = 2;
+      // 
+      // _slide_control
+      // 
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(3, 3);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(592, 340);
+      this._slide_control.SlideSpeed = 250;
+      this._slide_control.TabIndex = 1;
+      // 
+      // cameraToolStripMenuItem
+      // 
+      this.cameraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnu_live_feed,
+            this._mnu_show_camera_properties});
+      this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
+      this.cameraToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+      this.cameraToolStripMenuItem.Text = "Camera";
+      // 
+      // mnu_live_feed
+      // 
+      this.mnu_live_feed.CheckOnClick = true;
+      this.mnu_live_feed.Name = "mnu_live_feed";
+      this.mnu_live_feed.Size = new System.Drawing.Size(159, 22);
+      this.mnu_live_feed.Text = "Show Live Feed";
+      this.mnu_live_feed.Click += new System.EventHandler(this.mnu_live_feed_Click);
+      // 
+      // _mnu_show_camera_properties
+      // 
+      this._mnu_show_camera_properties.Name = "_mnu_show_camera_properties";
+      this._mnu_show_camera_properties.Size = new System.Drawing.Size(159, 22);
+      this._mnu_show_camera_properties.Text = "Show Properties";
+      this._mnu_show_camera_properties.Click += new System.EventHandler(this._mnu_show_camera_properties_Click);
       // 
       // _btn_back
       // 
@@ -96,24 +132,6 @@
       this._btn_back.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
       this._btn_back.UseVisualStyleBackColor = true;
       this._btn_back.Click += new System.EventHandler(this._btn_back_Click);
-      // 
-      // _slide_control
-      // 
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(3, 3);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(592, 340);
-      this._slide_control.SlideSpeed = 250;
-      this._slide_control.TabIndex = 1;
-      // 
-      // mnu_3d_viewer
-      // 
-      this.mnu_3d_viewer.CheckOnClick = true;
-      this.mnu_3d_viewer.Name = "mnu_3d_viewer";
-      this.mnu_3d_viewer.Size = new System.Drawing.Size(158, 22);
-      this.mnu_3d_viewer.Text = "Show 3D Viewer";
-      this.mnu_3d_viewer.Click += new System.EventHandler(this.mnu_3d_viewer_Click);
       // 
       // Main
       // 
@@ -139,11 +157,13 @@
 
     private System.Windows.Forms.MenuStrip menuStrip1;
     private System.Windows.Forms.ToolStripMenuItem windowsToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem mnu_live_feed;
     private SlickInterface.SlideControl _slide_control;
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     private Parsley.UI.ParsleyButtonSmall _btn_back;
     private System.Windows.Forms.ToolStripMenuItem mnu_3d_viewer;
+    private System.Windows.Forms.ToolStripMenuItem cameraToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem mnu_live_feed;
+    private System.Windows.Forms.ToolStripMenuItem _mnu_show_camera_properties;
   }
 }
 
