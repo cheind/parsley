@@ -1,0 +1,8 @@
+#summary Camera Frame Rate
+
+= Improve Frame Rate =
+
+ * Lower exposure time
+ * Deactivate automatic control of
+  * automatic exposure time
+  * low-light compensation
