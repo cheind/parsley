@@ -165,7 +165,9 @@ namespace Parsley.Core {
     }
 
     protected override void DisposeManaged() {
-      _device.Dispose();
+      if (_device != null) {
+        _device.Dispose();
+      }
     }
   }
 }
