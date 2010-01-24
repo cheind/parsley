@@ -12,23 +12,18 @@ namespace Parsley {
     private Core.FrameGrabber _fg;
     private Core.RenderLoop _rl;
     private Core.CalibrationPattern _pattern;
-    private System.Drawing.Rectangle _roi;
+    private UI.Concrete.ROIHandler _roi_handler;
 
     public Context(
       Core.FrameGrabber fg, 
       Core.RenderLoop rl, 
       Core.CalibrationPattern pattern,
-      UI.Concrete.EmbeddableStream live_feed) 
+      UI.Concrete.ROIHandler roi_handler) 
     {
       _fg = fg;
       _rl = rl;
       _pattern = pattern;
-      _roi = new System.Drawing.Rectangle();
-      live_feed.OnROISelected += new EventHandler<Parsley.UI.Concrete.ROISelectedArgs>(live_feed_OnROISelected);
-    }
-
-    void live_feed_OnROISelected(object sender, Parsley.UI.Concrete.ROISelectedArgs e) {
-      _roi = e.ROI;
+      _roi_handler = roi_handler;
     }
 
     /// <summary>
@@ -67,10 +62,10 @@ namespace Parsley {
     }
 
     /// <summary>
-    /// Access the last selected ROI
+    /// Access the entity that manages ROIs
     /// </summary>
-    public System.Drawing.Rectangle ROI {
-      get { return _roi; }
+    public UI.Concrete.ROIHandler ROIHandler {
+      get { return _roi_handler; }
     }
   }
 }
