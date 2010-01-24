@@ -23,9 +23,10 @@ namespace Parsley {
     private ExamplesSlide _slide_examples;
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
     private Examples.TrackCheckerboard3D _slide_track_checkerboard;
+    private Examples.ROISlide _slide_roi;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private CameraParameterSlide _slide_cam_parameters;
-
+    
     public Main() {
       InitializeComponent();
 
@@ -47,13 +48,14 @@ namespace Parsley {
       _3d_viewer.RenderLoop.FPS = 30;
       _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
-      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern);
+      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _live_feed.EmbeddableStream);
 
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
       _slide_cam_parameters = new CameraParameterSlide(_context);
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
       _slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
+      _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
 
@@ -61,6 +63,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_extract_laser_line);
       _slide_control.AddSlide(_slide_track_checkerboard);
+      _slide_control.AddSlide(_slide_roi);
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_cam_parameters);
 

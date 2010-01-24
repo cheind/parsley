@@ -93,19 +93,9 @@ namespace Parsley {
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && Context.CalibrationPattern.PatternFound) {
+      if (_ec != null && Context.CalibrationPattern.PatternFound && Context.Camera.HasIntrinsics) {
         Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.CalibrationPattern.ImagePoints);
-
-        System.Drawing.PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
-            new MCvPoint3D32f[] { 
-              new MCvPoint3D32f(0, 0, 0),
-              new MCvPoint3D32f(50, 0, 0),
-              new MCvPoint3D32f(0, 50, 0)
-            },
-            ecp, Context.Camera.Intrinsics);
-
-        img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 2);
-        img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 2);
+        Context.CalibrationPattern.DrawCoordinateFrame(img, ecp, Context.Camera.Intrinsics);
       }
     }
 
