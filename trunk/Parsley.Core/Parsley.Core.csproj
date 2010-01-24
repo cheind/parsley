@@ -84,8 +84,6 @@
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="Capture.cs" />
-    <Compile Include="CameraProperties.cs" />
     <Compile Include="CheckerBoard.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
