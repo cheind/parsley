@@ -27,10 +27,11 @@
       // 
       // ExtrinsicCalibrationSlide
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
       this.Name = "ExtrinsicCalibrationSlide";
-      this.Size = new System.Drawing.Size(507, 352);
+      this.Size = new System.Drawing.Size(387, 278);
       this.ResumeLayout(false);
 
     }

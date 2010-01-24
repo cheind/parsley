@@ -47,7 +47,7 @@ namespace Parsley {
       if (this.Context.FrameGrabber.Camera.HasIntrinsics) {
         _lbl_info.Text = "The camera already has a calibration. You can restart the calibration process by taking images. You need at least 3 images to proceed.";
       } else {
-        _lbl_info.Text = "You can restart the calibration process by taking images. You need at least 3 images to proceed.";
+        _lbl_info.Text = "Start the calibration process by taking images of your chessboard. You need at least 3 images to complete the calibration.";
       }
       
       _ic.ClearViews();

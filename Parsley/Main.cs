@@ -75,6 +75,7 @@ namespace Parsley {
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;
+      _slide_control.ForwardTo<SetupSlide>();
     }
 
     void _slide_intrinsic_calib_OnCalibrationSucceeded(object sender, EventArgs e) {

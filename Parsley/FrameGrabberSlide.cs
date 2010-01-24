@@ -14,6 +14,10 @@ namespace Parsley {
       InitializeComponent();
     }
 
+    private FrameGrabberSlide() : base(null) {
+      InitializeComponent();
+    }
+
     protected override void OnSlidingIn() {
       this.Context.FrameGrabber.OnFramePrepend += new Parsley.Core.FrameGrabber.OnFrameHandler(this.OnFrame);
       this.Context.FrameGrabber.Start();
