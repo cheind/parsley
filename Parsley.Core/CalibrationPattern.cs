@@ -52,6 +52,17 @@ namespace Parsley.Core {
     }
 
     /// <summary>
+    /// Find pattern in image region  and make it accessible through local properties.
+    /// </summary>
+    /// <param name="img">Image to find pattern in.</param>
+    /// <param name="roi">Region of interest</param>
+    /// <returns>True if pattern was found in image, false otherwise</returns>
+    public bool FindPattern(Emgu.CV.Image<Gray, byte> img, Rectangle roi) {
+      _pattern_found = this.FindPattern(img, roi, out _image_points);
+      return _pattern_found;
+    }
+
+    /// <summary>
     /// Find pattern in image region
     /// </summary>
     /// <param name="img">Image to find pattern in</param>
