@@ -68,6 +68,8 @@ namespace Parsley.Core {
           if (IsConnected) {
             _device.Dispose();
             _device = null;
+            _intrinsics = null;
+            _extrinsics = new List<ExtrinsicCameraParameters>();
           }
           try {
             if (value >= 0) {
