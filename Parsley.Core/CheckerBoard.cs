@@ -31,6 +31,10 @@ namespace Parsley.Core {
       this.ObjectPoints = GenerateObjectCorners();
     }
 
+    /// <summary>
+    /// Generate reference points
+    /// </summary>
+    /// <returns>Reference points in z-plane.</returns>
     Vector[] GenerateObjectCorners() {
       Vector[] corners = new Vector[_inner_corners.Width * _inner_corners.Height];
       for (int y = 0; y < _inner_corners.Height; ++y) {
@@ -42,17 +46,22 @@ namespace Parsley.Core {
       return corners;
     }
 
-    public override bool FindPattern(Emgu.CV.IImage img, out System.Drawing.PointF[] image_points) {
-      Emgu.CV.Image<Gray, Byte> gray = img as Emgu.CV.Image<Gray, Byte>;
-      if (gray == null) {
-        throw new ArgumentException("Given image is not of type Image<Gray, Byte>");
-      }
+    /// <summary>
+    /// Find checkerboard in image
+    /// </summary>
+    /// <param name="img">Image to search pattern for</param>
+    /// <param name="image_points">Detected checkerboard image points</param>
+    /// <returns>True if pattern was found, false otherwise</returns>
+    public override bool FindPattern(Emgu.CV.Image<Gray, byte> img, out System.Drawing.PointF[] image_points)
+     {
       return Emgu.CV.CameraCalibration.FindChessboardCorners(
-        gray,
+        img,
         _inner_corners,
-        Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH,
+        Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH | 
+        Emgu.CV.CvEnum.CALIB_CB_TYPE.FILTER_QUADS | 
+        Emgu.CV.CvEnum.CALIB_CB_TYPE.NORMALIZE_IMAGE,
         out image_points
       );
-    }
+     }
   }
 }
