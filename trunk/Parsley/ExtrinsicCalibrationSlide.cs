@@ -23,7 +23,7 @@ namespace Parsley {
       _on_roi = false;
     }
 
-    public ExtrinsicCalibrationSlide() : base(null) 
+    private ExtrinsicCalibrationSlide() : base(null) 
     {
       this.InitializeComponent();
     }
