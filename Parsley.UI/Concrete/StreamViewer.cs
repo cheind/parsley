@@ -15,10 +15,6 @@ namespace Parsley.UI.Concrete {
       this.IsMaintainingAspectRatio = false;
     }
 
-    public EmbeddableStream EmbeddableStream {
-      get { return _display; }
-    }
-
     public Parsley.Core.FrameGrabber FrameGrabber {
       get { return _display.FrameGrabber; }
       set { 
@@ -43,6 +39,10 @@ namespace Parsley.UI.Concrete {
     public Emgu.CV.UI.ImageBox.FunctionalModeOption FunctionalMode {
       get { return _display.FunctionalMode; }
       set { _display.FunctionalMode = value; }
+    }
+
+    public ROIHandler ROIHandler {
+      get { return _display.ROIHandler; }
     }
   }
 }

@@ -38,9 +38,6 @@
       this._picture_box.Size = new System.Drawing.Size(320, 200);
       this._picture_box.TabIndex = 2;
       this._picture_box.TabStop = false;
-      this._picture_box.MouseMove += new System.Windows.Forms.MouseEventHandler(this._picture_box_MouseMove);
-      this._picture_box.MouseDown += new System.Windows.Forms.MouseEventHandler(this._picture_box_MouseDown);
-      this._picture_box.MouseUp += new System.Windows.Forms.MouseEventHandler(this._picture_box_MouseUp);
       // 
       // EmbeddableStream
       // 
