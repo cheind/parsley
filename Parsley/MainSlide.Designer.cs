@@ -26,6 +26,7 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainSlide));
       this._btn_example = new Parsley.UI.ParsleyButton();
       this._btn_intrinsic_calibration = new Parsley.UI.ParsleyButton();
+      this._btn_extrinsic_calibration = new Parsley.UI.ParsleyButton();
       this.SuspendLayout();
       // 
       // _btn_example
@@ -38,9 +39,9 @@
       this._btn_example.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this._btn_example.Image = ((System.Drawing.Image)(resources.GetObject("_btn_example.Image")));
       this._btn_example.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_example.Location = new System.Drawing.Point(83, 63);
+      this._btn_example.Location = new System.Drawing.Point(76, 79);
       this._btn_example.Name = "_btn_example";
-      this._btn_example.Size = new System.Drawing.Size(310, 60);
+      this._btn_example.Size = new System.Drawing.Size(325, 60);
       this._btn_example.TabIndex = 2;
       this._btn_example.Text = "Run Examples";
       this._btn_example.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -58,9 +59,9 @@
       this._btn_intrinsic_calibration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this._btn_intrinsic_calibration.Image = ((System.Drawing.Image)(resources.GetObject("_btn_intrinsic_calibration.Image")));
       this._btn_intrinsic_calibration.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_intrinsic_calibration.Location = new System.Drawing.Point(83, 129);
+      this._btn_intrinsic_calibration.Location = new System.Drawing.Point(76, 145);
       this._btn_intrinsic_calibration.Name = "_btn_intrinsic_calibration";
-      this._btn_intrinsic_calibration.Size = new System.Drawing.Size(310, 60);
+      this._btn_intrinsic_calibration.Size = new System.Drawing.Size(325, 60);
       this._btn_intrinsic_calibration.TabIndex = 3;
       this._btn_intrinsic_calibration.Text = "Intrinsic Calibration";
       this._btn_intrinsic_calibration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -68,14 +69,35 @@
       this._btn_intrinsic_calibration.UseVisualStyleBackColor = true;
       this._btn_intrinsic_calibration.Click += new System.EventHandler(this._btn_intrinsic_calibration_Click);
       // 
+      // _btn_extrinsic_calibration
+      // 
+      this._btn_extrinsic_calibration.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this._btn_extrinsic_calibration.BackColor = System.Drawing.Color.White;
+      this._btn_extrinsic_calibration.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_extrinsic_calibration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_extrinsic_calibration.Font = new System.Drawing.Font("Calibri", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_extrinsic_calibration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._btn_extrinsic_calibration.Image = ((System.Drawing.Image)(resources.GetObject("_btn_extrinsic_calibration.Image")));
+      this._btn_extrinsic_calibration.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_extrinsic_calibration.Location = new System.Drawing.Point(76, 211);
+      this._btn_extrinsic_calibration.Name = "_btn_extrinsic_calibration";
+      this._btn_extrinsic_calibration.Size = new System.Drawing.Size(325, 60);
+      this._btn_extrinsic_calibration.TabIndex = 4;
+      this._btn_extrinsic_calibration.Text = "Extrinsic Calibration";
+      this._btn_extrinsic_calibration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_extrinsic_calibration.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_extrinsic_calibration.UseVisualStyleBackColor = true;
+      this._btn_extrinsic_calibration.Click += new System.EventHandler(this._btn_extrinsic_calibration_Click);
+      // 
       // MainSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_extrinsic_calibration);
       this.Controls.Add(this._btn_intrinsic_calibration);
       this.Controls.Add(this._btn_example);
       this.Name = "MainSlide";
-      this.Size = new System.Drawing.Size(477, 252);
+      this.Size = new System.Drawing.Size(477, 350);
       this.ResumeLayout(false);
 
     }
@@ -84,6 +106,7 @@
 
     private Parsley.UI.ParsleyButton _btn_example;
     private Parsley.UI.ParsleyButton _btn_intrinsic_calibration;
+    private Parsley.UI.ParsleyButton _btn_extrinsic_calibration;
 
   }
 }
