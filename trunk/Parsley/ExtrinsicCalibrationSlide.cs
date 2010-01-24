@@ -29,7 +29,6 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      Context.Camera.Extrinsics.Clear();
       _ec = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       base.OnSlidingIn();
