@@ -46,18 +46,63 @@ namespace Parsley.Core {
     /// </summary>
     /// <param name="img">Image to find pattern in.</param>
     /// <returns>True if pattern was found in image, false otherwise</returns>
-    public bool FindPattern(Emgu.CV.IImage img) {
+    public bool FindPattern(Emgu.CV.Image<Gray, byte> img){
       _pattern_found =  this.FindPattern(img, out _image_points);
       return _pattern_found;
     }
 
+    /// <summary>
+    /// Find pattern in image region
+    /// </summary>
+    /// <param name="img">Image to find pattern in</param>
+    /// <param name="roi">Region of interest</param>
+    /// <param name="image_points">Image points relative to original image</param>
+    /// <returns></returns>
+    public bool FindPattern(Emgu.CV.Image<Gray, byte> img, Rectangle roi, out PointF[] image_points) {
+      Emgu.CV.Image<Gray, byte> selected = img.GetSubRect(roi); // Shares memory with original image
+      bool found = this.FindPattern(selected, out image_points);
+      // Transform points back to original image coordinates
+      PointF origin = roi.Location;
+      for (int i = 0; i < image_points.Length; i++) {
+        image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
+      }
+      return found;
+    }
+
+    
     /// <summary>
     /// Find pattern in image.
     /// </summary>
     /// <param name="img">Image to find pattern in.</param>
     /// <param name="image_points">Pattern points in image.</param>
     /// <returns>True if pattern was found in image, false otherwise.</returns>
-    abstract public bool FindPattern(Emgu.CV.IImage img, out PointF[] image_points);
+    abstract public bool FindPattern(Emgu.CV.Image<Gray, byte> img, out PointF[] image_points);
+
+    /// <summary>
+    /// Draw a visual indication of the pattern coordinate frame
+    /// </summary>
+    /// <param name="img">Image to draw to</param>
+    /// <param name="ecp">Extrinsic calibration</param>
+    /// <param name="icp">Intrinsic calibration</param>
+    public virtual void DrawCoordinateFrame(
+      Emgu.CV.Image<Bgr, Byte> img,
+      Emgu.CV.ExtrinsicCameraParameters ecp,
+      Emgu.CV.IntrinsicCameraParameters icp) 
+    {
+      float extension = img.Width / 10;
+      PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
+        new MCvPoint3D32f[] { 
+          new MCvPoint3D32f(0, 0, 0),
+          new MCvPoint3D32f(extension, 0, 0),
+          new MCvPoint3D32f(0, extension, 0),
+          new MCvPoint3D32f(0, 0, extension),
+        },
+        ecp, icp);
+
+      img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 2);
+      img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 2);
+      img.Draw(new LineSegment2DF(coords[0], coords[3]), new Bgr(System.Drawing.Color.Blue), 2);
+    }
 
     /// <summary>
     /// Draw pattern to image.
