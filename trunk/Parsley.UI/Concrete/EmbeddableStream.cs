@@ -15,38 +15,18 @@ using RGBImage = Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte>;
 
 namespace Parsley.UI.Concrete {
 
-  public class ROISelectedArgs : EventArgs {
-    private Rectangle _rect;
-    public ROISelectedArgs(Rectangle r) {
-      _rect = r;
-    }
-
-    public Rectangle ROI {
-      get { return _rect; }
-    }
-  }
-
   public partial class EmbeddableStream : UserControl {
     private Core.FrameGrabber _grabber;
     private Emgu.CV.CvEnum.INTER _interpolation;
     private bool _can_invoke;
-
-    private bool _roi_drag;
-    private double _roi_scale_x;
-    private double _roi_scale_y;
-    private Rectangle _roi;
-
-    /// <summary>
-    /// When a new ROI has been selected
-    /// </summary>
-    public event EventHandler<ROISelectedArgs> OnROISelected;
+    private ROIHandler _roi_handler;
 
     public EmbeddableStream() {
       InitializeComponent();
       _grabber = null;
       _interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_NN;
       _can_invoke = false;
-      _roi_drag = false;
+      _roi_handler = new ROIHandler(_picture_box);
       this.HandleCreated += new EventHandler(EmbeddableStream_HandleCreated);
       this.HandleDestroyed += new EventHandler(EmbeddableStream_HandleDestroyed);
     }
@@ -76,6 +56,10 @@ namespace Parsley.UI.Concrete {
         this.GrabFrom(_grabber);
       }
       get { return _grabber; }
+    }
+
+    public ROIHandler ROIHandler {
+      get { return _roi_handler; }
     }
 
 
@@ -108,18 +92,16 @@ namespace Parsley.UI.Concrete {
       if (_can_invoke) {
         Rectangle c = _picture_box.ClientRectangle;
         Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img_copy = img.Resize(c.Width, c.Height, _interpolation);
-        double w = img.Width;
-        double h = img.Height;
+        int w = img.Width;
+        int h = img.Height;
         this.BeginInvoke(new MethodInvoker(delegate {
           // Update scaling info for back-converting ROI to original image dimensions
-          _roi_scale_x = (double)w / c.Width;
-          _roi_scale_y = (double)h / c.Height;
+          _roi_handler.Scale = new SizeF((float)c.Width / w, (float)c.Height / h);
 
-          // Update ROI rectangle
-          if (_roi_drag) {
-            img_copy.Draw(_roi, new Bgr(Color.Red), 1);
+          if (_roi_handler.IsDragging) {
+            img_copy.Draw(_roi_handler.Current, new Bgr(Color.Red), 1);
           }
-
+          
           // Update image
           Emgu.CV.IImage prev = _picture_box.Image;
           _picture_box.Image = img_copy;
@@ -127,45 +109,6 @@ namespace Parsley.UI.Concrete {
             prev.Dispose();
           }
         }));
-      }
-    }
-
-    private void _picture_box_MouseDown(object sender, MouseEventArgs e) {
-      if (e.Button == MouseButtons.Left && !_roi_drag) {
-        // Restrict cursor to image
-        Cursor.Clip = _picture_box.RectangleToScreen(_picture_box.ClientRectangle);
-        _roi = new Rectangle(e.Location, new Size(0, 0));
-        _roi_drag = true;
-      }
-    }
-
-    private void _picture_box_MouseMove(object sender, MouseEventArgs e) {
-      if (_roi_drag) {
-        _roi.Width = e.X - _roi.X;
-        _roi.Height = e.Y - _roi.Y;
-      }
-    }
-
-    private void _picture_box_MouseUp(object sender, MouseEventArgs e) {
-      if (e.Button == MouseButtons.Left && _roi_drag) {
-        Cursor.Clip = new Rectangle(); // Reset cursor clip
-        _roi_drag = false;
-        // Correct rectangle to have a positive width and height
-        Rectangle final = new Rectangle();
-        final.X = _roi.Width > 0 ? _roi.X : _roi.X + _roi.Width;
-        final.Y = _roi.Height > 0 ? _roi.Y : _roi.Y + _roi.Height;
-        final.Width = Math.Abs(_roi.Width);
-        final.Height = Math.Abs(_roi.Height);
-        // Apply reverse-scaling
-        final.X = (int)Math.Floor(final.X * _roi_scale_x);
-        final.Y = (int)Math.Floor(final.Y * _roi_scale_y);
-        final.Width = (int)Math.Floor(final.Width * _roi_scale_x);
-        final.Height = (int)Math.Floor(final.Height * _roi_scale_y);
-
-        EventHandler<ROISelectedArgs> ev = OnROISelected;
-        if (ev != null) {
-          ev(this, new ROISelectedArgs(final));
-        }
       }
     }
   }

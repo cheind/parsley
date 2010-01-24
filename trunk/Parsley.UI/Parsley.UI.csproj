@@ -101,6 +101,7 @@
     <Compile Include="Concrete\EmbeddableStream.Designer.cs">
       <DependentUpon>EmbeddableStream.cs</DependentUpon>
     </Compile>
+    <Compile Include="Concrete\ROIHandler.cs" />
     <Compile Include="Concrete\StreamViewer.cs">
       <SubType>Form</SubType>
     </Compile>
