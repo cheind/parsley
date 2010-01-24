@@ -25,6 +25,7 @@ namespace Parsley {
     private Examples.TrackCheckerboard3D _slide_track_checkerboard;
     private Examples.ROISlide _slide_roi;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
+    private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private CameraParameterSlide _slide_cam_parameters;
     
     public Main() {
@@ -48,7 +49,7 @@ namespace Parsley {
       _3d_viewer.RenderLoop.FPS = 30;
       _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
-      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _live_feed.EmbeddableStream);
+      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _live_feed.ROIHandler);
 
       _slide_main = new MainSlide();
       _slide_examples = new ExamplesSlide();
@@ -58,6 +59,7 @@ namespace Parsley {
       _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
+      _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_examples);
@@ -65,6 +67,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_track_checkerboard);
       _slide_control.AddSlide(_slide_roi);
       _slide_control.AddSlide(_slide_intrinsic_calib);
+      _slide_control.AddSlide(_slide_extrinsic_calib);
       _slide_control.AddSlide(_slide_cam_parameters);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
