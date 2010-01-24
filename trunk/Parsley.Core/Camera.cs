@@ -6,6 +6,8 @@ using System.ComponentModel;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace Parsley.Core {
   
@@ -13,18 +15,49 @@ namespace Parsley.Core {
   /// Represents a camera.
   /// </summary>
   public class Camera : Resource.SharedResource {
+    [XmlRoot("parsley_calibration")]
+    public class Calibration {
+      private Emgu.CV.IntrinsicCameraParameters _intrinsics;
+      private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;
+
+      public Calibration() {
+        _intrinsics = null;
+        _extrinsics = new List<ExtrinsicCameraParameters>();
+      }
+
+      /// <summary>
+      /// Access intrinsic calibration
+      /// </summary>
+      [XmlElement("intrinsics")]
+      public Emgu.CV.IntrinsicCameraParameters Intrinsics {
+        get { return _intrinsics; }
+        set { _intrinsics = value; }
+      }
+
+      /// <summary>
+      /// Access associated extrinsic calibrations
+      /// </summary>
+      [XmlElement("extrinsics")]
+      public List<Emgu.CV.ExtrinsicCameraParameters> Extrinsics {
+        get { return _extrinsics; }
+      }
+
+      public void Reset() {
+        _intrinsics = null;
+        _extrinsics.Clear();
+      }
+    }
+
     private int _device_index;
     private Emgu.CV.Capture _device;
-    private Emgu.CV.IntrinsicCameraParameters _intrinsics;
-    private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;
-
+    private Calibration _calibration;
+    
     /// <summary>
     /// Initialize camera from device index
     /// </summary>
     /// <param name="device_index">Device index starting at zero.</param>
     public Camera(int device_index) {
-      _intrinsics = null;
-      _extrinsics = new List<ExtrinsicCameraParameters>();
+      _calibration = new Calibration();
       this.DeviceIndex = device_index;
     }
 
@@ -39,7 +72,7 @@ namespace Parsley.Core {
     /// </summary>
     [Description("Determines if camera has an instrinsic calibration")]
     public bool HasIntrinsics {
-      get { return _intrinsics != null; }
+      get { return _calibration.Intrinsics != null; }
     }
 
     /// <summary>
@@ -47,7 +80,7 @@ namespace Parsley.Core {
     /// </summary>
     [Description("Determines if camera has an extrinsic calibration")]
     public bool HasExtrinsics {
-      get { return _extrinsics.Count > 0; }
+      get { return _calibration.Extrinsics.Count > 0; }
     }
 
     /// <summary>
@@ -68,8 +101,7 @@ namespace Parsley.Core {
           if (IsConnected) {
             _device.Dispose();
             _device = null;
-            _intrinsics = null;
-            _extrinsics = new List<ExtrinsicCameraParameters>();
+            _calibration.Reset();
           }
           try {
             if (value >= 0) {
@@ -93,8 +125,8 @@ namespace Parsley.Core {
     /// </summary>
     [Browsable(false)]
     public Emgu.CV.IntrinsicCameraParameters Intrinsics {
-      get { return _intrinsics; }
-      set { _intrinsics = value; }
+      get { return _calibration.Intrinsics; }
+      set { _calibration.Intrinsics = value; }
     }
 
     /// <summary>
@@ -102,7 +134,7 @@ namespace Parsley.Core {
     /// </summary>
     [Browsable(false)]
     public List<Emgu.CV.ExtrinsicCameraParameters> Extrinsics {
-      get { return _extrinsics; }
+      get { return _calibration.Extrinsics; }
     }
 
     /// <summary>
@@ -148,6 +180,19 @@ namespace Parsley.Core {
         else
           return null;
       }
+    }
+
+    public void SaveCalibration(string path) {
+      XmlSerializer s = new XmlSerializer(typeof(Calibration));
+      TextWriter w = new StreamWriter(path);
+      s.Serialize(w, _calibration);
+      w.Close();
+    }
+
+    public void LoadCalibration(string path) {
+      TextReader r = new StreamReader(path);
+      XmlSerializer s = new XmlSerializer(typeof(Calibration));
+      _calibration = s.Deserialize(r) as Calibration;
     }
 
     /// <summary>
