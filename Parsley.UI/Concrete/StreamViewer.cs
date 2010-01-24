@@ -15,6 +15,10 @@ namespace Parsley.UI.Concrete {
       this.IsMaintainingAspectRatio = false;
     }
 
+    public EmbeddableStream EmbeddableStream {
+      get { return _display; }
+    }
+
     public Parsley.Core.FrameGrabber FrameGrabber {
       get { return _display.FrameGrabber; }
       set { 
