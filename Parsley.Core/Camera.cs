@@ -183,6 +183,7 @@ namespace Parsley.Core {
     }
 
     public void SaveCalibration(string path) {
+      // Note when debugging this might throw exceptions handled inside XmlSerializer.
       XmlSerializer s = new XmlSerializer(typeof(Calibration));
       TextWriter w = new StreamWriter(path);
       s.Serialize(w, _calibration);
