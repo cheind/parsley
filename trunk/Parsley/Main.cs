@@ -43,6 +43,8 @@ namespace Parsley {
       _live_feed.FrameGrabber.FPS = 30;
       _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
       _live_feed.Shown += new EventHandler(_live_feed_Shown);
+      _live_feed.Show();
+      _fg.Start();
 
       _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
       _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
@@ -112,7 +114,6 @@ namespace Parsley {
 
     private void mnu_live_feed_Click(object sender, EventArgs e) {
       if (this.mnu_live_feed.Checked) {
-        _fg.Start();
         _live_feed.Show();
       } else {
         _live_feed.Hide();
