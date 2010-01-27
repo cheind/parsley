@@ -10,7 +10,27 @@ using Parsley.Core.LaserPlane;
 namespace Parsley.Core.Tests {
 
   [TestFixture]
-  class PlaneTest {
+  public class PlaneTest {
+
+    public static Vector[] RandomPointsOnPlane(Plane p, int count) {
+      // 2 free variables, last one is calculated
+      Vector[] vecs = new Vector[count];
+
+      Vector n = p.Normal;
+      int i = n[0] > 0 ? 0 : (n[1] > 0 ? 1 : 2);
+      int j = i + 1 % 3;
+      int k = i + 2 % 3;
+
+      Random _r = new Random();
+      for (int x = 0; x < count; ++x) {
+        Vector v = new Vector(3);
+        v[j] = -100.0 + _r.NextDouble() * 200;
+        v[k] = -100.0 + _r.NextDouble() * 200;
+        v[i] = (- p.D - p.Normal[j] * v[j] - p.Normal[k] * v[k]) / p.Normal[i];
+        vecs[x] = v;
+      }
+      return vecs;
+    }
 
     Vector MakeVector(double x, double y, double z) {
       return new Vector(new double[] { x, y, z });
@@ -47,9 +67,38 @@ namespace Parsley.Core.Tests {
     }
 
     [Test]
-    public void FitThrough() {
+    public void FitByAveraging() {
+      Plane p = new Plane(MakeVector(1, 1, 1), MakeVector(1, 1, 1).Normalize());
+
+      Vector[] v = PlaneTest.RandomPointsOnPlane(p, 1000);
+      Profile prof = new Profile("average-fit");
+      
+      Plane r = Plane.FitByAveraging(v);
+      prof.Dispose();
+
+      Assert.AreEqual(1.0, Math.Abs(Vector.ScalarProduct(r.Normal, p.Normal)), 0.00001);
+      Assert.AreEqual(Math.Abs(r.D) - Math.Abs(p.D), 0, 0.00001);
+
       Assert.Throws<ArgumentException>(delegate {
-        Plane.FitThrough(new Vector[] { MakeVector(0, 0, 0) });
+        Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) });
+      });
+    }
+
+    [Test]
+    public void FitByPCA() {
+      Plane p = new Plane(MakeVector(1, 1, 1), MakeVector(1, 1, 1).Normalize());
+
+      Vector[] v = PlaneTest.RandomPointsOnPlane(p, 1000);
+      Profile prof = new Profile("pca-fit");
+
+      Plane r = Plane.FitByPCA(v);
+      prof.Dispose();
+
+      Assert.AreEqual(1.0, Math.Abs(Vector.ScalarProduct(r.Normal, p.Normal)), 0.00001);
+      Assert.AreEqual(Math.Abs(r.D) - Math.Abs(p.D), 0, 0.00001);
+
+      Assert.Throws<ArgumentException>(delegate {
+        Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) });
       });
     }
 
