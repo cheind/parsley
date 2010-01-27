@@ -73,33 +73,88 @@ namespace Parsley.Core.LaserPlane {
     /// <summary>
     /// Fit plane through points by linear orthogonal regression.
     /// </summary>
+    /// <remarks>http://www.lsr.ei.tum.de/fileadmin/publications/K._Klasing/KlasingAlthoff-ComparisonOfSurfaceNormalEstimationMethodsForRangeSensingApplications_ICRA09.pdf</remarks>
     /// <param name="points">Points to fit by plane</param>
     /// <returns>Best-fit plane in terms of orthogonal least square regression.</returns>
-    public static Plane FitThrough(IEnumerable<Vector> points) {
+    public static Plane FitByPCA(IEnumerable<Vector> points) {
       // Perform orth lin regression by PCA which requires the estimation
       // of the covariance matrix of the samples
       // http://en.wikipedia.org/wiki/Estimation_of_covariance_matrices
-
       int count = 0;
-      Vector mean = new Vector(3, 0);
+      Vector mean = new Vector(3, 0.0);
       foreach (Vector p in points) {
-        mean += p; count++;
+        mean.AddInplace(p); count++;
       }
       if (count < 3)
         throw new ArgumentException("Three points are needed at least to fit a plane");
-      mean /= count;
+      mean /= (double)count;
 
-      Matrix cov = new Matrix(3, 3, 0);
+      Matrix cov = new Matrix(3, 3, 0.0);
       foreach (Vector p in points) {
         Vector v = p - mean;
-        cov += v.ToColumnMatrix() * v.ToRowMatrix();
-      }
-      cov.Multiply(count - 1);
+        //code below is equivalent to
+        //cov += v.ToColumnMatrix() * v.ToRowMatrix();
+        //optimized
+        double v00 = v[0] * v[0];
+        double v01 = v[0] * v[1];
+        double v02 = v[0] * v[2];
+        double v11 = v[1] * v[1];
+        double v12 = v[1] * v[2];
+        double v22 = v[2] * v[2];
 
-      // Need to test for input/output
+        cov[0, 0] += v00;
+        cov[0, 1] += v01;
+        cov[0, 2] += v02;
+        cov[1, 0] += v01;
+        cov[1, 1] += v11;
+        cov[1, 2] += v12;
+        cov[2, 0] += v02;
+        cov[2, 1] += v12;
+        cov[2, 2] += v22;
+      }
+      // Skip normalization of matrix
       
       EigenvalueDecomposition decomp = cov.EigenvalueDecomposition;
       return new Plane(mean, decomp.EigenVectors.GetColumnVector(0));
+    }
+
+    /// <summary>
+    /// Fit by averaging using newell's method
+    /// "Real-Time Collision Detection" page 494
+    /// </summary>
+    /// <remarks>Faster by a factor of 5 compared to PCA method above</remarks>
+    /// <param name="points">Points to fit plane through</param>
+    /// <returns>Fitted Plane</returns>
+    public static Plane FitByAveraging(IEnumerable<Vector> points) {
+      // Assume at least three points
+
+      IEnumerator<Vector> a = points.GetEnumerator();
+      IEnumerator<Vector> b = points.GetEnumerator();
+
+      Vector centroid = new Vector(3, 0.0);
+      Vector normal = new Vector(3, 0.0);
+      
+      b.MoveNext();
+      int count = 0;
+      while (a.MoveNext()) {
+        if (!b.MoveNext()) {
+          b.Reset();
+          b.MoveNext();
+        }
+        Vector i = a.Current;
+        Vector j = b.Current;
+        
+        normal[0] += (i[1] - j[1]) * (i[2] + j[2]); // Project on yz
+        normal[1] += (i[2] - j[2]) * (i[0] + j[0]); // Project on xz
+        normal[2] += (i[0] - j[0]) * (i[1] + j[1]); // Project on xy
+        centroid += j;
+        count++;
+      }
+      if (count < 3)
+        throw new ArgumentException("Three points are needed at least to fit a plane");
+
+      centroid /= (double)count;
+      return new Plane(centroid, normal.Normalize());
     }
 
   }
