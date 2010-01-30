@@ -138,7 +138,8 @@ namespace Parsley.Core.LaserPlane {
       int count = 0;
       while (a.MoveNext()) {
         if (!b.MoveNext()) {
-          b.Reset();
+          b = points.GetEnumerator();
+          // b.Reset(); Reset is not supported when using yield
           b.MoveNext();
         }
         Vector i = a.Current;

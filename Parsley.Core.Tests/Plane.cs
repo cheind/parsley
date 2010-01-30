@@ -18,8 +18,8 @@ namespace Parsley.Core.Tests {
 
       Vector n = p.Normal;
       int i = n[0] > 0 ? 0 : (n[1] > 0 ? 1 : 2);
-      int j = i + 1 % 3;
-      int k = i + 2 % 3;
+      int j = (i + 1) % 3;
+      int k = (i + 2) % 3;
 
       Random _r = new Random();
       for (int x = 0; x < count; ++x) {
