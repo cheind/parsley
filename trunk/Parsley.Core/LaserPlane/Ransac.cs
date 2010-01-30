@@ -23,7 +23,7 @@ namespace Parsley.Core.LaserPlane {
     bool Build(IEnumerable<Vector> initial);
 
     /// <summary>
-    /// Determine distance of query point to model.
+    /// Determine unsigned distance of query point to model.
     /// </summary>
     /// <param name="x">Query point.</param>
     /// <returns>Distance to query point</returns>
@@ -97,6 +97,13 @@ namespace Parsley.Core.LaserPlane {
     }
 
     /// <summary>
+    /// Access the hypothesis found
+    /// </summary>
+    public List<Hypothesis> Hypotheses {
+      get { return _hyps; }
+    }
+
+    /// <summary>
     /// Run Ransac
     /// </summary>
     /// <param name="max_hyps">Maximum number of hypotheses to generate</param>
@@ -105,7 +112,7 @@ namespace Parsley.Core.LaserPlane {
       _hyps.Clear();
       for (int i = 0; i < max_hyps; ++i) {
         Hypothesis h = new Ransac<T>.Hypothesis(_samples);
-        this.Run(h, max_distance);
+        this.BuildHypothesis(h, max_distance);
         if (h.ConsensusIds.Count >= min_consensus_size) {
           _hyps.Add(h);
         }
@@ -118,7 +125,7 @@ namespace Parsley.Core.LaserPlane {
     /// </summary>
     /// <param name="h">Hypothesis</param>
     /// <param name="max_distance">Maximum distance threshold to qualify sample as inlier</param>
-    private void Run(Ransac<T>.Hypothesis h, double max_distance) {
+    private void BuildHypothesis(Ransac<T>.Hypothesis h, double max_distance) {
       // Initial fit
       T model = h.Model;
       

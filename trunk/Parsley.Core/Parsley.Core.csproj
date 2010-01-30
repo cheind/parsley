@@ -92,8 +92,11 @@
     <Compile Include="FrameGrabber.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
     <Compile Include="LaserLineExtraction.cs" />
+    <Compile Include="LaserPlane\Intersection.cs" />
     <Compile Include="LaserPlane\Plane.cs" />
+    <Compile Include="LaserPlane\PlaneModel.cs" />
     <Compile Include="LaserPlane\Ransac.cs" />
+    <Compile Include="LaserPlane\Ray.cs" />
     <Compile Include="Perspective.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
