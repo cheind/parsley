@@ -31,3 +31,5 @@ The chessboard coordinate system is a three-dimensional coordinate system. The u
 When viewed from the top, so that the top-left field is black, then the x-axis points to the right, the y-axis points downwards and the z-axis points into the pattern.  The origin lies in the plane defined by the chessboard pattern and is fixed to the first inner corner measured along the described axes.
 
 http://parsley.googlecode.com/svn/trunk/doc/frames/ChessboardCS.png
+
+The chessboard coordinate system can be found by estimating a transformation that aligns the corner points express in the chessboard coordinate system with corner points detected in the image coordinate system. This calibration is called extrinsic calibration.
