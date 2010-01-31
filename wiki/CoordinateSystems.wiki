@@ -19,4 +19,8 @@ http://parsley.googlecode.com/svn/trunk/doc/frames/ImageCS.png
 
 When accessing images in _System.Drawing_|_Emgu_ using the `[]` operator, the access pattern is `[row,column]` which corresponds to coordinates `[y,x]` in the image coordinate system.
 
+= Camera Coordinate System = 
+The camera coordinate system is a three-dimensional coordinate system. The units are millimeters. Its origin lies in the projection-center of the pinhole camera model. The x-axis and y-axis run parallel to the x-axis and y-axis of the [CoordinateSystems#Image_Coordinate_System image coordinate system]. The view direction corresponds to the positive z-axis. _!OpenSceneGraph_ uses the negative z-axis as view direction, which requires a rotation to fix.
+
+http://parsley.googlecode.com/svn/trunk/doc/frames/CameraCS.png
 
