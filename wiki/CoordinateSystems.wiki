@@ -12,8 +12,10 @@ The following coordinate systems will apply to all components, unless otherwise 
 Parsley uses [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, _Parsley.Core_|_Emgu_|_OpenCV_ store basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column. _!OpenSceneGraph_ stores basis vectors in rows, which requires a matrix transposition to convert to matrices expressed in the components _Parsley.Core_|_Emgu_|_OpenCV_.
 
 = Image Coordinate System =
-The image coordinate system is a two-dimensional coordinate system. The units are in pixels.
+The image coordinate system is a two-dimensional coordinate system. The units are in pixels. The origin is in the top-left corner, positive x-axis points to the right and the positive y-axis points downward.
 
 http://parsley.googlecode.com/svn/trunk/doc/frames/ImageCS.png
+
+When accessing images in _System.Drawing_|_Emgu_ using the `[]` operator, the access pattern is `[row,column]` which corresponds to coordinates `[y,x]` in the image coordinate system.
 
 
