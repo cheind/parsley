@@ -111,6 +111,12 @@
     <Compile Include="Examples\ROISlide.Designer.cs">
       <DependentUpon>ROISlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="Examples\ScanningAttempt.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Examples\ScanningAttempt.Designer.cs">
+      <DependentUpon>ScanningAttempt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Examples\TrackCheckerboard3D.cs">
       <SubType>UserControl</SubType>
     </Compile>
