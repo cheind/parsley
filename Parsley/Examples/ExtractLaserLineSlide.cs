@@ -21,7 +21,7 @@ namespace Parsley.Examples {
       _reference = null;
     }
 
-    override protected void OnFrame(Parsley.Core.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    override protected void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Emgu.CV.Image<Emgu.CV.Structure.Bgr, Byte> my_ref = _reference;
       int my_channel = _channel;
 

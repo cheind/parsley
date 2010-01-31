@@ -15,7 +15,7 @@ namespace Parsley.UI.Concrete {
       this.IsMaintainingAspectRatio = false;
     }
 
-    public Parsley.Core.FrameGrabber FrameGrabber {
+    public Parsley.Core.BuildingBlocks.FrameGrabber FrameGrabber {
       get { return _display.FrameGrabber; }
       set { 
         _display.FrameGrabber = value;

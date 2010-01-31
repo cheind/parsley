@@ -82,7 +82,7 @@ namespace Parsley {
       _ec = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
     }
 
-    protected override void OnFrame(Parsley.Core.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Core.CalibrationPattern pattern = this.Context.CalibrationPattern;
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();

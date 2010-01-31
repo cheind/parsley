@@ -12,8 +12,8 @@ using Parsley.Core.Extensions;
 namespace Parsley {
   public partial class Main : Form {
 
-    private Core.FrameGrabber _fg;
-    private Core.Camera _camera;
+    private Core.BuildingBlocks.FrameGrabber _fg;
+    private Core.BuildingBlocks.Camera _camera;
     private Context _context;
     private Core.CheckerBoard _calibration_pattern;
     private UI.Concrete.StreamViewer _live_feed;
@@ -33,8 +33,8 @@ namespace Parsley {
       InitializeComponent();
 
       // Try connect to default cam
-      _camera = new Parsley.Core.Camera(0);
-      _fg = new Parsley.Core.FrameGrabber(_camera);
+      _camera = new Parsley.Core.BuildingBlocks.Camera(0);
+      _fg = new Parsley.Core.BuildingBlocks.FrameGrabber(_camera);
       _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
@@ -83,7 +83,7 @@ namespace Parsley {
     void _slide_intrinsic_calib_OnCalibrationSucceeded(object sender, EventArgs e) {
       lock (_context.Viewer) {
         _context.Viewer.SetupPerspectiveProjection(
-          Core.Perspective.FromCamera(_context.Camera, 1.0, 5000).ToInterop()
+          Core.BuildingBlocks.Perspective.FromCamera(_context.Camera, 1.0, 5000).ToInterop()
         );
       }
     }

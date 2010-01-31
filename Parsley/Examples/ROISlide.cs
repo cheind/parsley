@@ -16,7 +16,7 @@ namespace Parsley.Examples {
       InitializeComponent();
     }
 
-    override protected void OnFrame(Parsley.Core.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    override protected void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       if (Context.ROIHandler.Last != Rectangle.Empty) {
         img.Draw(Context.ROIHandler.Last, new Emgu.CV.Structure.Bgr(Color.Green), 1);
       }

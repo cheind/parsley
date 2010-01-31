@@ -5,7 +5,7 @@ using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
 
-namespace Parsley.Core {
+namespace Parsley.Core.BuildingBlocks {
 
   /// <summary>
   /// Provides creation of perspective matrices used for 3D rendering.

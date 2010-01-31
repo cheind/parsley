@@ -8,7 +8,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.Threading;
 
-namespace Parsley.Core {
+namespace Parsley.Core.BuildingBlocks {
 
   /// <summary>
   /// Grabs continously frames from camera asynchronously.

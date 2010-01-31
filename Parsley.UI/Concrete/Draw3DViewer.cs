@@ -9,17 +9,17 @@ using System.Windows.Forms;
 
 namespace Parsley.UI.Concrete {
   public partial class Draw3DViewer : AspectRatioForm {
-    private Core.RenderLoop _rl;
+    private Core.BuildingBlocks.RenderLoop _rl;
 
     public Draw3DViewer() {
       InitializeComponent();
-      _rl = new Parsley.Core.RenderLoop(_render_target);
+      _rl = new Core.BuildingBlocks.RenderLoop(_render_target);
     }
 
     /// <summary>
     /// Access the Core.RenderLoop
     /// </summary>
-    public Core.RenderLoop RenderLoop {
+    public Core.BuildingBlocks.RenderLoop RenderLoop {
       get { return _rl; }
     }
 

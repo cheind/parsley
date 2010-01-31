@@ -43,7 +43,7 @@ namespace Parsley.Examples {
       base.OnSlidingOut(args);
     }
 
-    override protected void OnFrame(Parsley.Core.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    override protected void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Core.CalibrationPattern pattern = this.Context.CalibrationPattern;
       Emgu.CV.Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();

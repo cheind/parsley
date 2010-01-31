@@ -16,7 +16,7 @@ using RGBImage = Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte>;
 namespace Parsley.UI.Concrete {
 
   public partial class EmbeddableStream : UserControl {
-    private Core.FrameGrabber _grabber;
+    private Core.BuildingBlocks.FrameGrabber _grabber;
     private Emgu.CV.CvEnum.INTER _interpolation;
     private bool _can_invoke;
     private ROIHandler _roi_handler;
@@ -49,7 +49,7 @@ namespace Parsley.UI.Concrete {
       set { _picture_box.FunctionalMode = value; }
     }
 
-    public Core.FrameGrabber FrameGrabber {
+    public Core.BuildingBlocks.FrameGrabber FrameGrabber {
       set {
         this.ReleaseGrab(_grabber);
         _grabber = value;
@@ -63,9 +63,9 @@ namespace Parsley.UI.Concrete {
     }
 
 
-    void GrabFrom(Core.FrameGrabber fg) {
+    void GrabFrom(Core.BuildingBlocks.FrameGrabber fg) {
       if (fg != null) {
-        fg.OnFrame += new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
+        fg.OnFrame += new Parsley.Core.BuildingBlocks.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
       }
     }
 
@@ -74,13 +74,13 @@ namespace Parsley.UI.Concrete {
     /// </summary>
     /// <remarks>Automatically called from Dispose.</remarks>
     /// <param name="fg"></param>
-    void ReleaseGrab(Core.FrameGrabber fg) {
+    void ReleaseGrab(Core.BuildingBlocks.FrameGrabber fg) {
       if (fg != null) {
-        fg.OnFrame -= new Parsley.Core.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
+        fg.OnFrame -= new Parsley.Core.BuildingBlocks.FrameGrabber.OnFrameHandler(_grabber_OnFrame);
       }
     }
 
-    void _grabber_OnFrame(Parsley.Core.FrameGrabber fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+    void _grabber_OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fg, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       // Note: This method is called from the frame-grabber's thread loop. 
       // The framegrabber holds a Breath on the camera to ensure that the camera object remains
       // alive during this callback. The camera object is a SharedResource, meaning that any
