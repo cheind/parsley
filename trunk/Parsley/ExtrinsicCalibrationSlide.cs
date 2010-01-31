@@ -46,12 +46,12 @@ namespace Parsley {
         pattern.FindPattern(gray, Context.ROIHandler.Last);
         if (pattern.PatternFound) {
           ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
-          Context.Camera.Extrinsics.Add(ecp);
+          Context.ReferencePlanes.Add(new Parsley.Core.BuildingBlocks.ReferencePlane(ecp, Context.ROIHandler.Last));
         }
         _on_roi = false;
       }
-      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.Camera.Extrinsics) {
-        Context.CalibrationPattern.DrawCoordinateFrame(img, ecp, Context.Camera.Intrinsics);
+      foreach (Core.BuildingBlocks.ReferencePlane p in Context.ReferencePlanes) {
+        Context.CalibrationPattern.DrawCoordinateFrame(img, p.Extrinsic, Context.Camera.Intrinsics);
       }
     }
 

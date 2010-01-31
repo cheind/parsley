@@ -24,6 +24,7 @@ namespace Parsley {
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
     private Examples.TrackCheckerboard3D _slide_track_checkerboard;
     private Examples.ROISlide _slide_roi;
+    private Examples.ScanningAttempt _slide_scanning;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private CameraParameterSlide _slide_cam_parameters;
@@ -60,6 +61,7 @@ namespace Parsley {
       _slide_cam_parameters = new CameraParameterSlide(_context);
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
       _slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
+      _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
       _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
@@ -71,6 +73,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_extract_laser_line);
       _slide_control.AddSlide(_slide_track_checkerboard);
       _slide_control.AddSlide(_slide_roi);
+      _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
       _slide_control.AddSlide(_slide_cam_parameters);

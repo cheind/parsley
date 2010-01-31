@@ -24,5 +24,9 @@ namespace Parsley {
     private void _btn_display_roi_Click(object sender, EventArgs e) {
       this.SlideControl.ForwardTo<Examples.ROISlide>();
     }
+
+    private void _btn_scanning_Click(object sender, EventArgs e) {
+      this.SlideControl.ForwardTo<Examples.ScanningAttempt>();
+    }
   }
 }

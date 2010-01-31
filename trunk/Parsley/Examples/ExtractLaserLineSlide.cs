@@ -31,12 +31,9 @@ namespace Parsley.Examples {
         _lle.FindLaserLine(img[my_channel]);
       }
 
-      for (int c = 0; c < _lle.LaserPoints.Length; c++) {
-        if (_lle.LaserPoints[c] > 0.0f) {
-          img[(int)_lle.LaserPoints[c], c] = new Emgu.CV.Structure.Bgr(255, 0, 0);
-        }
+      foreach (System.Drawing.PointF p in _lle.ValidLaserPoints) {
+        img[(int)p.X, (int)p.Y] = new Emgu.CV.Structure.Bgr(255, 0, 0);
       }
-      
     }
 
     private void _btn_take_reference_Click(object sender, EventArgs e) {

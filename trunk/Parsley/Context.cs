@@ -13,6 +13,7 @@ namespace Parsley {
     private Core.BuildingBlocks.RenderLoop _rl;
     private Core.CalibrationPattern _pattern;
     private UI.Concrete.ROIHandler _roi_handler;
+    private List<Core.BuildingBlocks.ReferencePlane> _references;
 
     public Context(
       Core.BuildingBlocks.FrameGrabber fg,
@@ -24,6 +25,7 @@ namespace Parsley {
       _rl = rl;
       _pattern = pattern;
       _roi_handler = roi_handler;
+      _references = new List<Parsley.Core.BuildingBlocks.ReferencePlane>();
     }
 
     /// <summary>
@@ -52,6 +54,13 @@ namespace Parsley {
     /// </summary>
     public Core.BuildingBlocks.RenderLoop RenderLoop {
       get { return _rl; }
+    }
+
+    /// <summary>
+    /// Access the reference planes
+    /// </summary>
+    public List<Core.BuildingBlocks.ReferencePlane> ReferencePlanes {
+      get { return _references; }
     }
 
     /// <summary>
