@@ -5,7 +5,7 @@ using System.Text;
 
 using NUnit.Framework;
 using MathNet.Numerics.LinearAlgebra;
-using Parsley.Core.LaserPlane;
+using Parsley.Core;
 
 namespace Parsley.Core.Tests {
 
