@@ -233,6 +233,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\pointcloud.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\pointcloud.h"
+			>
+		</File>
+		<File
 			RelativePath=".\src\quad.cpp"
 			>
 		</File>
