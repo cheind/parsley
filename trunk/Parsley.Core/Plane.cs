@@ -5,7 +5,7 @@ using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
 
-namespace Parsley.Core.LaserPlane {
+namespace Parsley.Core {
 
   /// <summary>
   /// A plane in three dimensions represented in 
