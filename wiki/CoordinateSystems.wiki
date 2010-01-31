@@ -24,3 +24,5 @@ The camera coordinate system is a three-dimensional coordinate system. The units
 
 http://parsley.googlecode.com/svn/trunk/doc/frames/CameraCS.png
 
+The principal axis is a straight line through the projection center and orthogonal to the image plane. The principal point is the intersection of the principal axis and the image plane. the units of the principal point are pixels. The focal length is the distance of the center of projection to the principal point measured along the principal axis. In _OpenCV_ the units are pixels and given for the x-direction and y-direction (since pixels need not to be square). Focal length and principal points are stored in the [http://opencv.willowgarage.com/documentation/camera_calibration_and_3d_reconstruction.html intrinsic calibration matrix].
+
