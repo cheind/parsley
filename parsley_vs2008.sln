@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+# Visual C# Express 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core", "Parsley.Core\Parsley.Core.csproj", "{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureFromCamera", "example\CaptureFromCamera\CaptureFromCamera.csproj", "{F5DEB9A4-B4AE-4C7D-86B2-79265B0BDB17}"
@@ -25,6 +25,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.Resource", "Parsley.Core.Resource\Parsley.Core.Resource.csproj", "{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsleyTester", "ParsleyTester\ParsleyTester.csproj", "{AADCE85C-8492-41F4-80DC-977C3EDE1347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.BuildingBlocks", "Parsley.Core.BuildingBlocks\Parsley.Core.BuildingBlocks.csproj", "{65C11622-0F30-4E58-A81F-E47F750933EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40FFE772-05B1-4D6A-B3D6-52FACD51BB03} = {40FFE772-05B1-4D6A-B3D6-52FACD51BB03}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -192,6 +197,20 @@ Global
 		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Win32.ActiveCfg = Release|Any CPU
 		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|x86.ActiveCfg = Release|x86
 		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|x86.Build.0 = Release|x86
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|x86.ActiveCfg = Debug|x86
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|x86.Build.0 = Debug|x86
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|Win32.ActiveCfg = Release|Any CPU
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|x86.ActiveCfg = Release|x86
+		{65C11622-0F30-4E58-A81F-E47F750933EE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
