@@ -2,12 +2,11 @@
 
 = Introduction =
 Parsley and it's third-party libraries need to operate on different coordinate frames. Therefore, coordination and mapping between those coordinate frames is crucial. The following components in Parsley manipulate coordinate frames
- * *Parsley* 
- * *OpenCV/Emgu* is library/wrapper of programming functions for real time computer vision.
- * *System.Drawing* provides access to GDI+ basic graphics functionality. 
- * *OpenSceneGraph* is a high performance 3D graphics toolkit used for 3D visualization.
+ * _Parsley_ 
+ * _Emgu_
+ * _OpenCV_
+ * _System.Drawing_
+ * _OpenSceneGraph_
 
-
-
-Parsley uses [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, Parsley stores basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column.
+_Parsley_/_Emgu_/_OpenCV_/_OpenSceneGraph_ use [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, _Parsley_/_Emgu_/_OpenCV_ stores basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column. _OpenSceneGraph_ stores basis vectors in rows, which requires a matrix transposition to convert to matrices expressed in the components _Parsley_/_Emgu_/_OpenCV_
 
