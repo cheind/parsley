@@ -16,7 +16,9 @@ namespace Parsley.Examples {
     Core.BuildingBlocks.ReferencePlane _left;
     Core.BuildingBlocks.ReferencePlane _right;
     Parsley.Core.BrightestPixelLLE _lle;
+    Core.NotParallelPlaneConstraint _constraint;
     int _channel;
+    private Parsley.Draw3D.PointCloud _pointcloud;
 
 
     public ScanningAttempt(Context c)
@@ -27,6 +29,11 @@ namespace Parsley.Examples {
       _lle.IntensityThreshold = 180;
       _channel = 2;
 
+      _pointcloud = new Parsley.Draw3D.PointCloud();
+      lock (Context.Viewer) {
+        Context.Viewer.Add(_pointcloud);
+      }
+
     }
 
     public ScanningAttempt() :base(null) {
@@ -36,6 +43,14 @@ namespace Parsley.Examples {
     protected override void OnSlidingIn() {
       _left = Context.ReferencePlanes[0];
       _right = Context.ReferencePlanes[1];
+      _constraint = new Parsley.Core.NotParallelPlaneConstraint(new Core.Plane[] { _left.Plane, _right.Plane });
+      lock (Context.Viewer) {
+       /* Context.Viewer.SetupPerspectiveProjection(
+          Core.BuildingBlocks.Perspective.FromCamera(Context.Camera, 1.0, 5000).ToInterop()
+        );
+        */
+        Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 1 }, new double[] { 0, 1, 0 });
+      }
       base.OnSlidingIn();
     }
 
@@ -44,6 +59,7 @@ namespace Parsley.Examples {
       _lle.FindLaserLine(img[_channel]);
       PointF[] laser_points = _lle.ValidLaserPoints.ToArray();
       Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.Camera.Intrinsics, laser_points);
+      bool[] in_left = new bool[eye_rays.Length];
       Vector[] eye_ray_isects = new Vector[eye_rays.Length];
 
       for (int i = 0; i < eye_rays.Length; ++i) {
@@ -53,50 +69,43 @@ namespace Parsley.Examples {
         Core.Intersection.RayPlane(r, _right.Plane, out t_right);
         double min_t = Math.Min(t_left, t_right);
         eye_ray_isects[i] = r.At(min_t);
-        
-        //
-
- 
-        
-        
         Color color;
         PointF projected;
         if (t_left < t_right) {
+          in_left[i] = true;
           color = Color.Green;
           projected = Backproject(eye_ray_isects[i], _left.Extrinsic);
         }else {
+          in_left[i] = false;
           color = Color.Blue;
           projected = Backproject(eye_ray_isects[i], _right.Extrinsic);
           
         }
+        /*
         if (projected.X >= 0 && projected.X < img.Width && projected.Y >= 0 && projected.Y < img.Height)
           img[(int)projected.Y, (int)projected.X] = new Emgu.CV.Structure.Bgr(color);
-
-        /*
-        img.Draw(new LineSegment2D(new Point(0, 0), new Point(100, 0)), new Emgu.CV.Structure.Bgr(Color.Red), 2);
-        img.Draw(new LineSegment2D(new Point(0, 0), new Point(0, 100)), new Emgu.CV.Structure.Bgr(Color.Green), 2);
          */
-
-        img[100, 0] = new Bgr(Color.Red);
-        img[0, 100] = new Bgr(Color.Green);
-
-
-      
       }
-
-
-      // 2.
-
-
-      /*for (int i = 0; i < _lle.LaserPoints.Length; ++i) {
-        float y = _lle.LaserPoints[i];
-        if (y > 0) {
-          lls.Add(new PointF(i, y));
+      if (eye_ray_isects.Length > 3) {
+        Core.Ransac<Core.PlaneModel> ransac = new Parsley.Core.Ransac<Parsley.Core.PlaneModel>(eye_ray_isects);
+        Core.Ransac<Core.PlaneModel>.Hypothesis h = ransac.Run(30, 1.0, (int)(img.Width*0.4), _constraint);
+        if (h != null) {
+          lock (Context.Viewer) {
+            foreach (int id in h.ConsensusIds) {
+              PointF projected;
+              if (in_left[id]) {
+                projected = Backproject(eye_ray_isects[id], _left.Extrinsic);
+              } else {
+                projected = Backproject(eye_ray_isects[id], _right.Extrinsic);
+              }
+              if (projected.X >= 0 && projected.X < img.Width && projected.Y >= 0 && projected.Y < img.Height)
+                img[(int)projected.Y, (int)projected.X] = new Emgu.CV.Structure.Bgr(Color.Green);
+              _pointcloud.AddPoint(eye_ray_isects[id].ToInterop());
+            }
+            
+          }
         }
-      }*/
-      
-
-
+      }
     }
 
     PointF Backproject(Vector p, Emgu.CV.ExtrinsicCameraParameters ecp) {

@@ -60,7 +60,7 @@ namespace Parsley {
       _slide_examples = new ExamplesSlide();
       _slide_cam_parameters = new CameraParameterSlide(_context);
       _slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
-      _slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
+      //_slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
       _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
       _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
@@ -71,7 +71,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_setup);
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_extract_laser_line);
-      _slide_control.AddSlide(_slide_track_checkerboard);
+      //_slide_control.AddSlide(_slide_track_checkerboard);
       _slide_control.AddSlide(_slide_roi);
       _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
