@@ -49,13 +49,12 @@ namespace Parsley.Core.Tests {
 
     [Test]
     public void ConstructorPoints() {
-      Plane p = new Plane(MakeVector(0, 0, 0), MakeVector(1, 0, 0), MakeVector(0, 1, 0));
+      Plane p;
+      Assert.True(Plane.FromPoints(MakeVector(0, 0, 0), MakeVector(1, 0, 0), MakeVector(0, 1, 0), out p));
       Assert.AreEqual(0, p.D);
       Assert.AreEqual(0, (MakeVector(0, 0, 1) - p.Normal).Norm(), 0.00001);
 
-      Assert.Throws<ArgumentException>(delegate {
-        new Plane(MakeVector(1, 1, 1), MakeVector(2, 2, 2), MakeVector(3, 3, 3));
-      });
+      Assert.False(Plane.FromPoints(MakeVector(1, 1, 1), MakeVector(2, 2, 2), MakeVector(3, 3, 3), out p));
     }
 
     [Test]

@@ -37,6 +37,14 @@ namespace Parsley.Core {
   }
 
   /// <summary>
+  /// Additional ransac model construction constraints interface
+  /// </summary>
+  /// <typeparam name="T">Model to apply constraint to</typeparam>
+  public interface IRansacModelConstraint {
+    bool Test(IRansacModel model);
+  }
+
+  /// <summary>
   /// Implements "Random Sample Consensus" Algorithm to estimate parameters of
   /// a given model from samples with outliers.
   /// </summary>
@@ -97,27 +105,22 @@ namespace Parsley.Core {
     }
 
     /// <summary>
-    /// Access the hypothesis found
-    /// </summary>
-    public List<Hypothesis> Hypotheses {
-      get { return _hyps; }
-    }
-
-    /// <summary>
     /// Run Ransac
     /// </summary>
-    /// <param name="max_hyps">Maximum number of hypotheses to generate</param>
+    /// <param name="max_iter">Maximum number of iterations to generate hypothesis</param>
     /// <param name="max_distance">Maximum distance threshold to qualify sample as inlier</param>
-    public void Run(int max_hyps, double max_distance, int min_consensus_size) {
-      _hyps.Clear();
-      for (int i = 0; i < max_hyps; ++i) {
+    public Hypothesis Run(int max_iter, double max_distance, int min_consensus_size, IRansacModelConstraint constraints) {
+      Hypothesis final = null;
+      int i = 0;
+      while (i < max_iter && final == null) {
         Hypothesis h = new Ransac<T>.Hypothesis(_samples);
-        this.BuildHypothesis(h, max_distance);
+        this.BuildHypothesis(h, max_distance, constraints);
         if (h.ConsensusIds.Count >= min_consensus_size) {
-          _hyps.Add(h);
+          final = h;
         }
+        ++i;
       }
-      // Apply sorting
+      return final;
     }
 
     /// <summary>
@@ -125,11 +128,16 @@ namespace Parsley.Core {
     /// </summary>
     /// <param name="h">Hypothesis</param>
     /// <param name="max_distance">Maximum distance threshold to qualify sample as inlier</param>
-    private void BuildHypothesis(Ransac<T>.Hypothesis h, double max_distance) {
+    /// <param name="constraints">Additional constraints</param>
+    private void BuildHypothesis(Ransac<T>.Hypothesis h, double max_distance, IRansacModelConstraint constraints) {
       // Initial fit
       T model = h.Model;
       
       if (!model.Build(this.ChooseRandom(model.RequiredSamples))) {
+        return;
+      }
+
+      if (constraints != null && !constraints.Test(model)) {
         return;
       }
 

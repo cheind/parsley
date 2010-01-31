@@ -29,25 +29,23 @@ namespace Parsley.Core.Tests {
       noise_points.CopyTo(points, 100);
 
       Ransac<PlaneModel> r = new Ransac<PlaneModel>(points);
-      r.Run(100, 0.01, 80);
-
-      Assert.Greater(r.Hypotheses.Count, 20);
       int count_xy = 0;
-
-      foreach (Ransac<PlaneModel>.Hypothesis hyp in r.Hypotheses) {
-        Assert.GreaterOrEqual(hyp.ConsensusIds.Count, 80);
-        Plane p = hyp.Model.Plane;
-        double d_xy = p.Normal.ScalarMultiply(MakeVector(0, 0, 1));
-        if ((Math.Abs(d_xy) - 1) < 1e-5) {
-          count_xy++;
-        } else {
-          Assert.Fail("Wrong plane found by Ransac");
-        }
-        foreach (Vector v in hyp.ConsensusSet) {
-          Assert.AreEqual(0, p.DistanceTo(v), 0.001);
+      for (int i = 0; i < 100; ++i) {
+        Ransac<PlaneModel>.Hypothesis h = r.Run(100, 0.01, 80, null);
+        if (h != null) {
+          Assert.GreaterOrEqual(h.ConsensusIds.Count, 80);
+          Plane p = h.Model.Plane;
+          double d_xy = p.Normal.ScalarMultiply(MakeVector(0, 0, 1));
+          if ((Math.Abs(d_xy) - 1) < 1e-5) {
+            count_xy++;
+          } else {
+            Assert.Fail("Wrong plane found by Ransac");
+          }
+          foreach (Vector v in h.ConsensusSet) {
+            Assert.AreEqual(0, p.DistanceTo(v), 0.001);
+          }
         }
       }
-
       Assert.GreaterOrEqual(count_xy, 10);
     }
   }
