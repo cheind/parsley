@@ -108,12 +108,10 @@ namespace Parsley.Core.BuildingBlocks {
       using (Resource.SharedResource.Breath b = _v.KeepAlive()) {
         if (b.IsBreathing) {
           while (!bw.CancellationPending) {
-            using (Profile p = new Profile("render-loop")) {
-              lock (_event_lock) { if (_before_render != null) _before_render(this); }
-              lock (_v) { _v.Frame(); }
-              lock (_event_lock) { if (_after_render != null) _after_render(this); }
-              _fts.UpdateAndWait();
-            }
+            lock (_event_lock) { if (_before_render != null) _before_render(this); }
+            lock (_v) { _v.Frame(); }
+            lock (_event_lock) { if (_after_render != null) _after_render(this); }
+            _fts.UpdateAndWait();
           }
         }
       }
