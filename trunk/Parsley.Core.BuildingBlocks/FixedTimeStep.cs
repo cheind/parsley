@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace Parsley.Core {
+namespace Parsley.Core.BuildingBlocks {
 
   /// <summary>
   /// Provides methods to control the cylce time.

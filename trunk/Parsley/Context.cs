@@ -9,14 +9,14 @@ namespace Parsley {
   /// Provides access to Parsley objects
   /// </summary>
   public class Context {
-    private Core.FrameGrabber _fg;
-    private Core.RenderLoop _rl;
+    private Core.BuildingBlocks.FrameGrabber _fg;
+    private Core.BuildingBlocks.RenderLoop _rl;
     private Core.CalibrationPattern _pattern;
     private UI.Concrete.ROIHandler _roi_handler;
 
     public Context(
-      Core.FrameGrabber fg, 
-      Core.RenderLoop rl, 
+      Core.BuildingBlocks.FrameGrabber fg,
+      Core.BuildingBlocks.RenderLoop rl, 
       Core.CalibrationPattern pattern,
       UI.Concrete.ROIHandler roi_handler) 
     {
@@ -29,14 +29,14 @@ namespace Parsley {
     /// <summary>
     /// Access the frame grabber
     /// </summary>
-    public Core.FrameGrabber FrameGrabber{
+    public Core.BuildingBlocks.FrameGrabber FrameGrabber {
       get { return _fg; }
     }
 
     /// <summary>
     /// Access the camera
     /// </summary>
-    public Core.Camera Camera {
+    public Core.BuildingBlocks.Camera Camera {
       get { return _fg.Camera; }
     }
 
@@ -50,7 +50,7 @@ namespace Parsley {
     /// <summary>
     /// Access the render-loop
     /// </summary>
-    public Core.RenderLoop RenderLoop {
+    public Core.BuildingBlocks.RenderLoop RenderLoop {
       get { return _rl; }
     }
 

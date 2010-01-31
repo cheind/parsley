@@ -9,7 +9,7 @@ using Emgu.CV.Structure;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Parsley.Core {
+namespace Parsley.Core.BuildingBlocks {
   
   /// <summary>
   /// Represents a camera.

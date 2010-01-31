@@ -209,6 +209,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core.BuildingBlocks\Parsley.Core.BuildingBlocks.csproj">
+      <Project>{65C11622-0F30-4E58-A81F-E47F750933EE}</Project>
+      <Name>Parsley.Core.BuildingBlocks</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
       <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
       <Name>Parsley.Core.Resource</Name>
