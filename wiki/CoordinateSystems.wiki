@@ -6,7 +6,7 @@ Parsley and it's third-party libraries need to operate on different coordinate f
  * _Emgu_
  * _OpenCV_
  * _System.Drawing_
- * _OpenSceneGraph_
+ * _!OpenSceneGraph_
 
-_Parsley_/_Emgu_/_OpenCV_/_OpenSceneGraph_ use [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, _Parsley_/_Emgu_/_OpenCV_ stores basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column. _OpenSceneGraph_ stores basis vectors in rows, which requires a matrix transposition to convert to matrices expressed in the components _Parsley_/_Emgu_/_OpenCV_
+_Parsley_|_Emgu_|_OpenCV_|_!OpenSceneGraph_ use [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, _Parsley_|_Emgu_|_OpenCV_ stores basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column. _!OpenSceneGraph_ stores basis vectors in rows, which requires a matrix transposition to convert to matrices expressed in the components _Parsley_|_Emgu_|_OpenCV_.
 
