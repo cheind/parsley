@@ -32,7 +32,7 @@ namespace Parsley.Examples {
       }
 
       foreach (System.Drawing.PointF p in _lle.ValidLaserPoints) {
-        img[(int)p.X, (int)p.Y] = new Emgu.CV.Structure.Bgr(255, 0, 0);
+        img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(255, 0, 0);
       }
     }
 

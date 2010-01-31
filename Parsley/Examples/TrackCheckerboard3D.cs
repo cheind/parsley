@@ -18,6 +18,8 @@ namespace Parsley.Examples {
     private Parsley.Draw3D.Quad _board;
     private Parsley.Draw3D.Transform _board_transform;
 
+    private Parsley.Draw3D.PointCloud _pointcloud;
+
     public TrackCheckerboard3D(Context c) : base(c) {
       InitializeComponent();
       _board_transform = new Parsley.Draw3D.Transform();
@@ -34,7 +36,7 @@ namespace Parsley.Examples {
     protected override void OnSlidingIn() {
       _ex = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
       lock (Context.Viewer) {
-        Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 1 }, new double[] { 0, 1, 0 });
+        //Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 1 }, new double[] { 0, 1, 0 });
       }
       base.OnSlidingIn();
     }
