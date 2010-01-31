@@ -1,0 +1,4 @@
+#summary Coordinate systems found in Parsley
+
+= Introduction =
+Parsley uses [http://en.wikipedia.org/wiki/Right-handed_coordinate_system right-handed] coordinate systems. When expressed as matrix, Parsley stores basis vectors in columns. In the case of homogeneous coordinates, the translation is therefore found in the fourth column.
