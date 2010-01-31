@@ -23,13 +23,7 @@ namespace Parsley.Core {
       Vector b = e.Current; e.MoveNext();
       Vector c = e.Current;
 
-      try {
-        _plane = new Plane(a, b, c);
-        return true;
-      } catch (ArgumentException) {
-        // In case points are co-planar
-        return false;
-      }
+      return Plane.FromPoints(a, b, c, out _plane);
     }
 
     public double DistanceTo(MathNet.Numerics.LinearAlgebra.Vector x) {
@@ -46,5 +40,27 @@ namespace Parsley.Core {
     public Plane Plane {
       get { return _plane; }
     } 
+  }
+
+  public class NotParallelPlaneConstraint : IRansacModelConstraint {
+    private Plane[] _planes;
+
+    public NotParallelPlaneConstraint(Plane[] planes) {
+      _planes = planes;
+    }
+
+
+    public bool Test(IRansacModel model) {
+      PlaneModel r = model as PlaneModel;
+      bool no_parallel_found = true;
+      foreach (Plane p in _planes) {
+        double d = Vector.ScalarProduct(r.Plane.Normal, p.Normal);
+        if ((1.0 - Math.Abs(d)) < 1e-5) {
+          no_parallel_found = false;
+          break;
+        }
+      }
+      return no_parallel_found;
+    }
   }
 }

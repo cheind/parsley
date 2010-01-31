@@ -26,21 +26,36 @@ namespace Parsley.Core {
     }
 
     /// <summary>
-    /// Construct plane from three non colinear points
+    /// Construct plane from parametric parameters
+    /// </summary>
+    /// <param name="normal">Normal of plane</param>
+    /// <param name="d">Distance from origin</param>
+    public Plane(Vector normal, double d) {
+      _normal = normal;
+      _d = d;
+    }
+
+    /// <summary>
+    /// Construct plane from three points
     /// </summary>
     /// <param name="a">First point</param>
     /// <param name="b">Second point</param>
     /// <param name="c">Third point</param>
-    /// <exception cref="ArgumentException">When points are colinear</exception>
-    public Plane(Vector a, Vector b, Vector c) {
+    /// <param name="plane">Created plane</param>
+    /// <returns>True points are not colinear, false otherwise</returns>
+    public static bool FromPoints(Vector a, Vector b, Vector c, out Plane plane) {
+      bool not_colinear = false;
       Vector n = Vector.CrossProduct(b - a, c - a);
       double norm = n.Norm();
       if (norm > 0) {
-        _normal = n / norm;
-        _d = -Vector.ScalarProduct(a, _normal);
+        n.ScaleInplace(1.0 / norm);
+        double d = -Vector.ScalarProduct(a, n);
+        plane = new Plane(n, d);
+        not_colinear = true;
       } else {
-        throw new ArgumentException("Cannot create plane from co-linear points");
+        plane = null;
       }
+      return not_colinear;
     }
 
     /// <summary>
