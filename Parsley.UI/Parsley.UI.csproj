@@ -66,6 +66,7 @@
     <Reference Include="Parsley.Draw3D, Version=1.0.3672.23790, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Parsley.Draw3D.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
