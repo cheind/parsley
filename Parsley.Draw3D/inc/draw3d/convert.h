@@ -3,6 +3,7 @@
 #pragma once
 
 #include <osg/vec3>
+#include <osg/vec4>
 #include <osg/matrixd>
 
 namespace Parsley {
@@ -26,6 +27,9 @@ namespace Parsley {
     array<double,2> ^convert(const osg::Matrixd &m, transposed t);
 
     /// Creates a three-dimensional vector from data
-    osg::Vec3 convert(array<double> ^data);
+    osg::Vec3 convert3(array<double> ^data);
+
+    /// Creates a four-dimensional vector from data
+    osg::Vec4 convert4(array<double> ^data);
   }
 }
