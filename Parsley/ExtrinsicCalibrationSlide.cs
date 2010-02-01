@@ -15,12 +15,14 @@ namespace Parsley {
 
     private bool _on_roi;
     private Core.ExtrinsicCalibration _ec;
+    private Core.CalibrationPattern _pattern;
 
     public ExtrinsicCalibrationSlide(Context c)
       : base(c) 
     {
       this.InitializeComponent();
       _on_roi = false;
+      _pattern = new Core.CheckerBoard(9, 6, 12.5f);
     }
 
     private ExtrinsicCalibrationSlide() : base(null) 
@@ -41,7 +43,7 @@ namespace Parsley {
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       if (_on_roi) {
-        Core.CalibrationPattern pattern = this.Context.CalibrationPattern;
+        Core.CalibrationPattern pattern = _pattern;
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
         pattern.FindPattern(gray, Context.ROIHandler.Last);
         if (pattern.PatternFound) {
