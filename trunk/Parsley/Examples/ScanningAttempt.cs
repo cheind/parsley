@@ -26,7 +26,7 @@ namespace Parsley.Examples {
     {
       InitializeComponent();
       _lle = new Parsley.Core.BrightestPixelLLE();
-      _lle.IntensityThreshold = 180;
+      _lle.IntensityThreshold = 20;
       _channel = 2;
 
       _pointcloud = new Parsley.Draw3D.PointCloud();
@@ -45,11 +45,10 @@ namespace Parsley.Examples {
       _right = Context.ReferencePlanes[1];
       _constraint = new Parsley.Core.NotParallelPlaneConstraint(new Core.Plane[] { _left.Plane, _right.Plane });
       lock (Context.Viewer) {
-       /* Context.Viewer.SetupPerspectiveProjection(
+        Context.Viewer.SetupPerspectiveProjection(
           Core.BuildingBlocks.Perspective.FromCamera(Context.Camera, 1.0, 5000).ToInterop()
         );
-        */
-        Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 1 }, new double[] { 0, 1, 0 });
+        Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 400 }, new double[] { 0, 1, 0 });
       }
       base.OnSlidingIn();
     }
@@ -88,7 +87,7 @@ namespace Parsley.Examples {
       }
       if (eye_ray_isects.Length > 3) {
         Core.Ransac<Core.PlaneModel> ransac = new Parsley.Core.Ransac<Parsley.Core.PlaneModel>(eye_ray_isects);
-        Core.Ransac<Core.PlaneModel>.Hypothesis h = ransac.Run(30, 1.0, (int)(img.Width*0.4), _constraint);
+        Core.Ransac<Core.PlaneModel>.Hypothesis h = ransac.Run(30, (double)_nrc_distance.Value, (int)(img.Width*0.4), _constraint);
         if (h != null) {
           lock (Context.Viewer) {
             foreach (int id in h.ConsensusIds) {
@@ -122,6 +121,14 @@ namespace Parsley.Examples {
         Context.Camera.Intrinsics);
       return coords[0];
 
+    }
+
+    private void _nrc_distance_ValueChanged(object sender, EventArgs e) {
+
+    }
+
+    private void _nrc_threshold_ValueChanged(object sender, EventArgs e) {
+      _lle.IntensityThreshold = (int)_nrc_threshold.Value;
     }
   }
 }

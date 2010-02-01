@@ -36,7 +36,7 @@ namespace Parsley {
       // Try connect to default cam
       _camera = new Parsley.Core.BuildingBlocks.Camera(0);
       _fg = new Parsley.Core.BuildingBlocks.FrameGrabber(_camera);
-      _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 25.0f);
+      _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 15.0f);
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
       _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
