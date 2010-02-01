@@ -18,10 +18,11 @@ namespace Parsley {
       PointCloud();
 
       /// Add point to point-cloud
-      void AddPoint(array<double>^ x);
+      void AddPoint(array<double>^ x, array<double>^ color);
     private:
       auto_ptr_osg<osg::Geometry> _geometry;
       auto_ptr_osg<osg::Vec3Array> _vertices;
+      auto_ptr_osg<osg::Vec4Array> _colors;
       auto_ptr_osg<osg::DrawElementsUInt> _primitives;
     };
   }

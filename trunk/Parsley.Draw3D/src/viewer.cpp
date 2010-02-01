@@ -69,7 +69,7 @@ namespace Parsley {
     Viewer::LookAt(array<double> ^eye, array<double> ^center, array<double> ^up)
     {
       osgGA::MatrixManipulator *manip =  _viewer->getCameraManipulator();
-      manip->setHomePosition(convert(eye), convert(center), convert(up));
+      manip->setHomePosition(convert3(eye), convert3(center), convert3(up));
       manip->home(0);
 
       osg::Matrixd m = manip->getMatrix();
@@ -93,16 +93,6 @@ namespace Parsley {
       System::Console::WriteLine("Viewer-Dispose called!");
       _viewer.reset();
       _context.reset();
-    }
-    
-
-    void 
-    Viewer::AddCapsule(array<double> ^center) {
-      osg::ref_ptr<osg::Geode> geode(new osg::Geode());
-      osg::ref_ptr<osg::Capsule> capsule(new osg::Capsule(convert(center), 2, 1));
-      osg::ref_ptr<osg::ShapeDrawable> drawable( new osg::ShapeDrawable(capsule.get()) );
-      geode->addDrawable(drawable.get());
-      _root->osg()->addChild(geode.get()); 
     }
   }
 }

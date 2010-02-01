@@ -49,8 +49,12 @@ namespace Parsley {
       return data;
     }
 
-    osg::Vec3 convert(array<double, 1> ^data) {
+    osg::Vec3 convert3(array<double, 1> ^data) {
       return osg::Vec3(data[0], data[1], data[2]);
+    }
+
+    osg::Vec4 convert4(array<double, 1> ^data) {
+      return osg::Vec4(data[0], data[1], data[2], data[3]);
     }
   }
 }

@@ -17,10 +17,9 @@ namespace Parsley {
       _geometry->setVertexArray(_vertices.get());
       _geometry->addPrimitiveSet(_primitives.get());
 
-      osg::ref_ptr<osg::Vec4Array> colors(new osg::Vec4Array);
-      colors->push_back(osg::Vec4(0.7f, 0.7f, 0.7f, 1.0f));
-      _geometry->setColorArray(colors.get());
-      _geometry->setColorBinding(osg::Geometry::BIND_PER_PRIMITIVE_SET);
+      _colors = new osg::Vec4Array();
+      _geometry->setColorArray(_colors.get());
+      _geometry->setColorBinding(osg::Geometry::BIND_PER_PRIMITIVE);
 
       _geometry->setUseDisplayList(false);
       geode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
@@ -29,8 +28,10 @@ namespace Parsley {
     }
 
     void 
-    PointCloud::AddPoint(cli::array<double,1> ^x) {
-      _vertices->push_back(convert(x));
+      PointCloud::AddPoint(cli::array<double,1> ^x, cli::array<double,1> ^color) 
+    {
+      _colors->push_back(convert4(color));
+      _vertices->push_back(convert3(x));
       _primitives->push_back(_primitives->size());
     }
   }
