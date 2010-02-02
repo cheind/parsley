@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Emgu.CV.Structure;
+using System.ComponentModel;
 
 namespace Parsley.Core {
   /// <summary>
@@ -39,6 +40,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Get and set the intensity threshold.
     /// </summary>
+    [Description("Set minimum intensity value for valid laser point")]
     public int IntensityThreshold {
       get { return _threshold; }
       set { _threshold = value; }

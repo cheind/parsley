@@ -31,7 +31,10 @@ namespace Parsley.Core {
     }
 
     public void Fit(IEnumerable<MathNet.Numerics.LinearAlgebra.Vector> consensus_set) {
-      _plane = Plane.FitByAveraging(consensus_set);
+      Plane p;
+      if (Plane.FitByPCA(consensus_set, out p)) {
+        _plane = p;
+      }
     }
 
     /// <summary>
@@ -55,7 +58,7 @@ namespace Parsley.Core {
       bool no_parallel_found = true;
       foreach (Plane p in _planes) {
         double d = Vector.ScalarProduct(r.Plane.Normal, p.Normal);
-        if ((1.0 - Math.Abs(d)) < 1e-5) {
+        if ((1.0 - Math.Abs(d)) < 1e-2) {
           no_parallel_found = false;
           break;
         }

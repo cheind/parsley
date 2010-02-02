@@ -23,29 +23,31 @@
     /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
     /// </summary>
     private void InitializeComponent() {
-      this._nrc_threshold = new System.Windows.Forms.NumericUpDown();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanningAttempt));
+      this._nrc_consensus = new System.Windows.Forms.NumericUpDown();
       this._nrc_distance = new System.Windows.Forms.NumericUpDown();
-      ((System.ComponentModel.ISupportInitialize)(this._nrc_threshold)).BeginInit();
+      this._btn_take_ref_image = new Parsley.UI.ParsleyButtonSmall();
+      ((System.ComponentModel.ISupportInitialize)(this._nrc_consensus)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_distance)).BeginInit();
       this.SuspendLayout();
       // 
-      // _nrc_threshold
+      // _nrc_consensus
       // 
-      this._nrc_threshold.Location = new System.Drawing.Point(89, 55);
-      this._nrc_threshold.Maximum = new decimal(new int[] {
-            255,
+      this._nrc_consensus.DecimalPlaces = 1;
+      this._nrc_consensus.Location = new System.Drawing.Point(89, 55);
+      this._nrc_consensus.Maximum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-      this._nrc_threshold.Name = "_nrc_threshold";
-      this._nrc_threshold.Size = new System.Drawing.Size(120, 27);
-      this._nrc_threshold.TabIndex = 0;
-      this._nrc_threshold.Value = new decimal(new int[] {
-            120,
+      this._nrc_consensus.Name = "_nrc_consensus";
+      this._nrc_consensus.Size = new System.Drawing.Size(120, 27);
+      this._nrc_consensus.TabIndex = 0;
+      this._nrc_consensus.Value = new decimal(new int[] {
+            3,
             0,
             0,
-            0});
-      this._nrc_threshold.ValueChanged += new System.EventHandler(this._nrc_threshold_ValueChanged);
+            65536});
       // 
       // _nrc_distance
       // 
@@ -69,17 +71,36 @@
             0,
             0,
             0});
-      this._nrc_distance.ValueChanged += new System.EventHandler(this._nrc_distance_ValueChanged);
+      // 
+      // _btn_take_ref_image
+      // 
+      this._btn_take_ref_image.BackColor = System.Drawing.Color.White;
+      this._btn_take_ref_image.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_take_ref_image.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_take_ref_image.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_take_ref_image.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._btn_take_ref_image.Image = ((System.Drawing.Image)(resources.GetObject("_btn_take_ref_image.Image")));
+      this._btn_take_ref_image.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_take_ref_image.Location = new System.Drawing.Point(89, 121);
+      this._btn_take_ref_image.Name = "_btn_take_ref_image";
+      this._btn_take_ref_image.Size = new System.Drawing.Size(190, 35);
+      this._btn_take_ref_image.TabIndex = 2;
+      this._btn_take_ref_image.Text = "Take reference image";
+      this._btn_take_ref_image.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_take_ref_image.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_take_ref_image.UseVisualStyleBackColor = true;
+      this._btn_take_ref_image.Click += new System.EventHandler(this._btn_take_ref_image_Click);
       // 
       // ScanningAttempt
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_take_ref_image);
       this.Controls.Add(this._nrc_distance);
-      this.Controls.Add(this._nrc_threshold);
+      this.Controls.Add(this._nrc_consensus);
       this.Name = "ScanningAttempt";
       this.Size = new System.Drawing.Size(485, 315);
-      ((System.ComponentModel.ISupportInitialize)(this._nrc_threshold)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this._nrc_consensus)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_distance)).EndInit();
       this.ResumeLayout(false);
 
@@ -87,7 +108,8 @@
 
     #endregion
 
-    private System.Windows.Forms.NumericUpDown _nrc_threshold;
+    private System.Windows.Forms.NumericUpDown _nrc_consensus;
     private System.Windows.Forms.NumericUpDown _nrc_distance;
+    private Parsley.UI.ParsleyButtonSmall _btn_take_ref_image;
   }
 }

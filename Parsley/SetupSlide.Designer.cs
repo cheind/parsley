@@ -39,10 +39,13 @@
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
+      this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this._btn_laser_setup = new Parsley.UI.ParsleyButtonSmall();
       ((System.ComponentModel.ISupportInitialize)(this._error_provider)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._numeric_device_id)).BeginInit();
       this.groupBox1.SuspendLayout();
       this.groupBox2.SuspendLayout();
+      this.groupBox3.SuspendLayout();
       this.SuspendLayout();
       // 
       // _error_provider
@@ -147,7 +150,7 @@
       this.groupBox1.Controls.Add(this.label2);
       this.groupBox1.Controls.Add(this._btn_intrinsic_calibration);
       this.groupBox1.Controls.Add(this._btn_load_calibration);
-      this.groupBox1.Location = new System.Drawing.Point(101, 140);
+      this.groupBox1.Location = new System.Drawing.Point(101, 143);
       this.groupBox1.Name = "groupBox1";
       this.groupBox1.Size = new System.Drawing.Size(395, 315);
       this.groupBox1.TabIndex = 5;
@@ -205,7 +208,7 @@
       this.groupBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
       this.groupBox2.Controls.Add(this.label1);
       this.groupBox2.Controls.Add(this._numeric_device_id);
-      this.groupBox2.Location = new System.Drawing.Point(101, 45);
+      this.groupBox2.Location = new System.Drawing.Point(101, 48);
       this.groupBox2.Name = "groupBox2";
       this.groupBox2.Size = new System.Drawing.Size(395, 75);
       this.groupBox2.TabIndex = 6;
@@ -220,20 +223,52 @@
       // 
       this._save_dialog.FileName = "Calibration.xml";
       // 
+      // groupBox3
+      // 
+      this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.groupBox3.Controls.Add(this._btn_laser_setup);
+      this.groupBox3.Location = new System.Drawing.Point(101, 464);
+      this.groupBox3.Name = "groupBox3";
+      this.groupBox3.Size = new System.Drawing.Size(395, 105);
+      this.groupBox3.TabIndex = 7;
+      this.groupBox3.TabStop = false;
+      this.groupBox3.Text = "Laser";
+      // 
+      // _btn_laser_setup
+      // 
+      this._btn_laser_setup.BackColor = System.Drawing.Color.White;
+      this._btn_laser_setup.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_laser_setup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_laser_setup.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_laser_setup.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._btn_laser_setup.Image = ((System.Drawing.Image)(resources.GetObject("_btn_laser_setup.Image")));
+      this._btn_laser_setup.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_laser_setup.Location = new System.Drawing.Point(102, 35);
+      this._btn_laser_setup.Name = "_btn_laser_setup";
+      this._btn_laser_setup.Size = new System.Drawing.Size(190, 35);
+      this._btn_laser_setup.TabIndex = 2;
+      this._btn_laser_setup.Text = "Setup Laser";
+      this._btn_laser_setup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_laser_setup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_laser_setup.UseVisualStyleBackColor = true;
+      this._btn_laser_setup.Click += new System.EventHandler(this._btn_laser_setup_Click);
+      // 
       // SetupSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.groupBox3);
       this.Controls.Add(this.groupBox2);
       this.Controls.Add(this.groupBox1);
       this.Name = "SetupSlide";
-      this.Size = new System.Drawing.Size(597, 501);
+      this.Size = new System.Drawing.Size(597, 617);
       ((System.ComponentModel.ISupportInitialize)(this._error_provider)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this._numeric_device_id)).EndInit();
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
       this.groupBox2.ResumeLayout(false);
       this.groupBox2.PerformLayout();
+      this.groupBox3.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -254,5 +289,7 @@
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.OpenFileDialog _open_dlg;
     private System.Windows.Forms.SaveFileDialog _save_dialog;
+    private System.Windows.Forms.GroupBox groupBox3;
+    private Parsley.UI.ParsleyButtonSmall _btn_laser_setup;
   }
 }
