@@ -39,6 +39,7 @@ namespace Parsley.Core {
     struct IncWeightedAverage {
       public double iwa;     // incremental weighted average
       public double weights; // sum of weights
+      public bool stop;
 
       public void Update(double v, double w) {
         weights += w;
@@ -62,8 +63,12 @@ namespace Parsley.Core {
           int offset = stride * r;
           for (int c = 0; c < w; ++c) {
             byte i = d[offset + c];
-            if (i > _threshold)
-              iwas[c].Update(r, i);
+            if (i < _threshold) {
+              iwas[c].stop |= iwas[c].weights > 0;
+            } else {
+              if (!iwas[c].stop)
+                iwas[c].Update(r, i);
+            }
           }
         }
       }

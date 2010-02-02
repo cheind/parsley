@@ -10,18 +10,19 @@ namespace Parsley.Core.BuildingBlocks {
   
   public class ReferencePlane {
     private Plane _plane;
-    private System.Drawing.RectangleF _roi;
     private Emgu.CV.ExtrinsicCameraParameters _ecp;
+    private Vector[] _deviation_points;
+    private double[] _deviations;
 
     /// <summary>
     /// Construct reference plane from extrinsic calibration
     /// </summary>
     /// <param name="ecp">Extrinsic calibration</param>
-    public ReferencePlane(Emgu.CV.ExtrinsicCameraParameters ecp, System.Drawing.Rectangle roi) {
-      Matrix m = ecp.ExtrinsicMatrix.ToParsley();
+    public ReferencePlane(Emgu.CV.ExtrinsicCameraParameters ecp, Vector[] deviation_points, double[] deviations) {
       _ecp = ecp;
-      _plane = new Plane(m.GetColumnVector(3), m.GetColumnVector(2).Normalize());
-      _roi = new System.Drawing.RectangleF(roi.Location, roi.Size);
+      _plane = new Plane(ecp);
+      _deviation_points = deviation_points;
+      _deviations = deviations;
     }
 
     /// <summary>
@@ -31,15 +32,17 @@ namespace Parsley.Core.BuildingBlocks {
       get { return _plane; }
     }
 
-    /// <summary>
-    /// Access the ROI
-    /// </summary>
-    public System.Drawing.RectangleF ROI {
-      get { return _roi; }
-    }
-
     public Emgu.CV.ExtrinsicCameraParameters Extrinsic {
       get { return _ecp; }
+    }
+
+    public Vector[] DeviationPoints {
+      get { return _deviation_points; }
+    }
+
+    public double[] Deviations {
+      get { return _deviations; }
+
     }
   }
 }

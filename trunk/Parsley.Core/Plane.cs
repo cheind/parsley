@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
+using Parsley.Core.Extensions;
 
 namespace Parsley.Core {
 
@@ -33,6 +34,17 @@ namespace Parsley.Core {
     public Plane(Vector normal, double d) {
       _normal = normal;
       _d = d;
+    }
+
+    /// <summary>
+    /// Construct plane from extrinsic coordinate system
+    /// </summary>
+    /// <remarks>Z-vector is used as normal and translation offset is used to calculate D.</remarks>
+    /// <param name="ecp"></param>
+    public Plane(Emgu.CV.ExtrinsicCameraParameters ecp) {
+      Matrix m = ecp.ExtrinsicMatrix.ToParsley();
+      _normal =  m.GetColumnVector(2).Normalize();
+      _d = -Vector.ScalarProduct(m.GetColumnVector(3), _normal);
     }
 
     /// <summary>
