@@ -14,10 +14,12 @@ namespace Parsley {
 
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.Camera _camera;
+    private Core.BuildingBlocks.Laser _laser;
     private Context _context;
     private Core.CheckerBoard _calibration_pattern;
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
+    
 
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
@@ -28,6 +30,7 @@ namespace Parsley {
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private CameraParameterSlide _slide_cam_parameters;
+    private LaserSetupSlide _slide_laser_setup;
     private SetupSlide _slide_setup;
     
     public Main() {
@@ -53,7 +56,10 @@ namespace Parsley {
       _3d_viewer.RenderLoop.FPS = 30;
       _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
-      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _live_feed.ROIHandler);
+
+
+      _laser = new Parsley.Core.BuildingBlocks.Laser();
+      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _laser, _live_feed.ROIHandler);
 
       _slide_main = new MainSlide();
       _slide_setup = new SetupSlide(_context);
@@ -65,7 +71,8 @@ namespace Parsley {
       _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
-      _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);     
+      _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
+      _slide_laser_setup = new LaserSetupSlide(_context);
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_setup);
@@ -77,6 +84,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
       _slide_control.AddSlide(_slide_cam_parameters);
+      _slide_control.AddSlide(_slide_laser_setup);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;

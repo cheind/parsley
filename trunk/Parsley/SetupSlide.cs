@@ -69,5 +69,9 @@ namespace Parsley {
         Context.Camera.LoadCalibration(_open_dlg.FileName);
       }
     }
+
+    private void _btn_laser_setup_Click(object sender, EventArgs e) {
+      this.SlideControl.ForwardTo<LaserSetupSlide>();
+    }
   }
 }

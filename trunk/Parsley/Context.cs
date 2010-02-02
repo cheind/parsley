@@ -11,6 +11,7 @@ namespace Parsley {
   public class Context {
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
+    Core.BuildingBlocks.Laser _laser;
     private Core.CalibrationPattern _pattern;
     private UI.Concrete.ROIHandler _roi_handler;
     private List<Core.BuildingBlocks.ReferencePlane> _references;
@@ -19,8 +20,10 @@ namespace Parsley {
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
       Core.CalibrationPattern pattern,
+      Core.BuildingBlocks.Laser laser,
       UI.Concrete.ROIHandler roi_handler) 
     {
+      _laser = laser;
       _fg = fg;
       _rl = rl;
       _pattern = pattern;
@@ -61,6 +64,13 @@ namespace Parsley {
     /// </summary>
     public List<Core.BuildingBlocks.ReferencePlane> ReferencePlanes {
       get { return _references; }
+    }
+
+    /// <summary>
+    /// Access the laser settings
+    /// </summary>
+    public Core.BuildingBlocks.Laser Laser {
+      get { return _laser; }
     }
 
     /// <summary>

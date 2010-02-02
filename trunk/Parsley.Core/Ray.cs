@@ -49,7 +49,7 @@ namespace Parsley.Core {
       Ray[] rays = new Ray[pixels.Length];
       if (pixels.Length > 0) {
         // 1. Undistort pixels
-        PointF[] undistorted_pixels = icp.Undistort(pixels, null, null);
+        PointF[] undistorted_pixels = icp.Undistort(pixels, null, icp.IntrinsicMatrix);
         // 2. Create rays
         // Use inverse intrinsic calibration and depth = 1
         double cx = icp.IntrinsicMatrix.Data[0, 2];
@@ -59,8 +59,8 @@ namespace Parsley.Core {
 
 
         Vector direction = new Vector(3);
-        for (int i = 0; i < pixels.Length; ++i) {
-          PointF pixel = pixels[i];
+        for (int i = 0; i < undistorted_pixels.Length; ++i) {
+          PointF pixel = undistorted_pixels[i];
           direction[0] = (pixel.X - cx) / fx;
           direction[1] = (pixel.Y - cy) / fy;
           direction[2] = 1;

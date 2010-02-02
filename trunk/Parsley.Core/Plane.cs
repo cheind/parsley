@@ -91,17 +91,18 @@ namespace Parsley.Core {
     /// <remarks>http://www.lsr.ei.tum.de/fileadmin/publications/K._Klasing/KlasingAlthoff-ComparisonOfSurfaceNormalEstimationMethodsForRangeSensingApplications_ICRA09.pdf</remarks>
     /// <param name="points">Points to fit by plane</param>
     /// <returns>Best-fit plane in terms of orthogonal least square regression.</returns>
-    public static Plane FitByPCA(IEnumerable<Vector> points) {
+    public static bool FitByPCA(IEnumerable<Vector> points, out Plane plane) {
       // Perform orth lin regression by PCA which requires the estimation
       // of the covariance matrix of the samples
       // http://en.wikipedia.org/wiki/Estimation_of_covariance_matrices
+      plane = null;
       int count = 0;
       Vector mean = new Vector(3, 0.0);
       foreach (Vector p in points) {
         mean.AddInplace(p); count++;
       }
       if (count < 3)
-        throw new ArgumentException("Three points are needed at least to fit a plane");
+        return false;
       mean /= (double)count;
 
       Matrix cov = new Matrix(3, 3, 0.0);
@@ -128,9 +129,14 @@ namespace Parsley.Core {
         cov[2, 2] += v22;
       }
       // Skip normalization of matrix
+      try {
+        EigenvalueDecomposition decomp = cov.EigenvalueDecomposition;
+        plane = new Plane(mean, decomp.EigenVectors.GetColumnVector(0));
+        return true;
+      } catch (IndexOutOfRangeException) {
+        return false;
+      }
       
-      EigenvalueDecomposition decomp = cov.EigenvalueDecomposition;
-      return new Plane(mean, decomp.EigenVectors.GetColumnVector(0));
     }
 
     /// <summary>
@@ -140,8 +146,9 @@ namespace Parsley.Core {
     /// <remarks>Faster by a factor of 5 compared to PCA method above</remarks>
     /// <param name="points">Points to fit plane through</param>
     /// <returns>Fitted Plane</returns>
-    public static Plane FitByAveraging(IEnumerable<Vector> points) {
+    public static bool FitByAveraging(IEnumerable<Vector> points, out Plane plane) {
       // Assume at least three points
+      plane = null;
 
       IEnumerator<Vector> a = points.GetEnumerator();
       IEnumerator<Vector> b = points.GetEnumerator();
@@ -167,10 +174,11 @@ namespace Parsley.Core {
         count++;
       }
       if (count < 3)
-        throw new ArgumentException("Three points are needed at least to fit a plane");
+        return false;
 
       centroid /= (double)count;
-      return new Plane(centroid, normal.Normalize());
+      plane = new Plane(centroid, normal.Normalize());
+      return true;
     }
 
   }
