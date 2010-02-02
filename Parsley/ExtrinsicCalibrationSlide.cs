@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 using Emgu.CV;
 using Emgu.CV.Structure;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Parsley {
   public partial class ExtrinsicCalibrationSlide : FrameGrabberSlide {
@@ -22,7 +23,7 @@ namespace Parsley {
     {
       this.InitializeComponent();
       _on_roi = false;
-      _pattern = new Core.CheckerBoard(9, 6, 12.5f);
+      _pattern = new Core.CheckerBoard(9, 6, 10.0f);
     }
 
     private ExtrinsicCalibrationSlide() : base(null) 
@@ -31,7 +32,7 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _ec = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
+      _ec = new Parsley.Core.ExtrinsicCalibration(_pattern.ObjectPoints, Context.Camera.Intrinsics);
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       base.OnSlidingIn();
     }
@@ -45,15 +46,28 @@ namespace Parsley {
       if (_on_roi) {
         Core.CalibrationPattern pattern = _pattern;
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
+        gray._EqualizeHist();
         pattern.FindPattern(gray, Context.ROIHandler.Last);
         if (pattern.PatternFound) {
           ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
-          Context.ReferencePlanes.Add(new Parsley.Core.BuildingBlocks.ReferencePlane(ecp, Context.ROIHandler.Last));
+          double[] deviations;
+          Vector[] points;
+
+          Core.ExtrinsicCalibration.CalibrationError(
+            ecp,
+            Context.Camera.Intrinsics,
+            pattern.ImagePoints,
+            pattern.ObjectPoints,
+            out deviations,
+            out points);
+          Console.WriteLine("Max error: {0}", deviations.Max());
+          Context.ReferencePlanes.Add(new Parsley.Core.BuildingBlocks.ReferencePlane(ecp, points, deviations));
         }
         _on_roi = false;
       }
       foreach (Core.BuildingBlocks.ReferencePlane p in Context.ReferencePlanes) {
         Context.CalibrationPattern.DrawCoordinateFrame(img, p.Extrinsic, Context.Camera.Intrinsics);
+        Core.ExtrinsicCalibration.VisualizeError(img, p.Extrinsic, Context.Camera.Intrinsics, p.Deviations, p.DeviationPoints);
       }
     }
 
