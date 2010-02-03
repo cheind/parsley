@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Emgu.CV.Structure;
+using System.ComponentModel;
 
 namespace Parsley.Core {
 
@@ -22,6 +23,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Get or set the laser pixels.
     /// </summary>
+    [Browsable(false)]
     public float[] LaserPositions {
       get { return _laser_positions; }
       set { _laser_positions = value; }
