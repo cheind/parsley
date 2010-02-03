@@ -27,13 +27,19 @@
       this._nrc_consensus = new System.Windows.Forms.NumericUpDown();
       this._nrc_distance = new System.Windows.Forms.NumericUpDown();
       this._btn_take_ref_image = new Parsley.UI.ParsleyButtonSmall();
+      this._btn_restart = new Parsley.UI.ParsleyButtonSmall();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_consensus)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_distance)).BeginInit();
       this.SuspendLayout();
       // 
       // _nrc_consensus
       // 
-      this._nrc_consensus.DecimalPlaces = 1;
+      this._nrc_consensus.DecimalPlaces = 2;
+      this._nrc_consensus.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
       this._nrc_consensus.Location = new System.Drawing.Point(89, 55);
       this._nrc_consensus.Maximum = new decimal(new int[] {
             1,
@@ -53,10 +59,10 @@
       // 
       this._nrc_distance.DecimalPlaces = 2;
       this._nrc_distance.Increment = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
-            65536});
+            131072});
       this._nrc_distance.Location = new System.Drawing.Point(89, 88);
       this._nrc_distance.Maximum = new decimal(new int[] {
             255,
@@ -91,10 +97,30 @@
       this._btn_take_ref_image.UseVisualStyleBackColor = true;
       this._btn_take_ref_image.Click += new System.EventHandler(this._btn_take_ref_image_Click);
       // 
+      // _btn_restart
+      // 
+      this._btn_restart.BackColor = System.Drawing.Color.White;
+      this._btn_restart.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_restart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_restart.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_restart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._btn_restart.Image = ((System.Drawing.Image)(resources.GetObject("_btn_restart.Image")));
+      this._btn_restart.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_restart.Location = new System.Drawing.Point(89, 162);
+      this._btn_restart.Name = "_btn_restart";
+      this._btn_restart.Size = new System.Drawing.Size(190, 35);
+      this._btn_restart.TabIndex = 3;
+      this._btn_restart.Text = "Restart";
+      this._btn_restart.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_restart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_restart.UseVisualStyleBackColor = true;
+      this._btn_restart.Click += new System.EventHandler(this._btn_restart_Click);
+      // 
       // ScanningAttempt
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_restart);
       this.Controls.Add(this._btn_take_ref_image);
       this.Controls.Add(this._nrc_distance);
       this.Controls.Add(this._nrc_consensus);
@@ -111,5 +137,6 @@
     private System.Windows.Forms.NumericUpDown _nrc_consensus;
     private System.Windows.Forms.NumericUpDown _nrc_distance;
     private Parsley.UI.ParsleyButtonSmall _btn_take_ref_image;
+    private Parsley.UI.ParsleyButtonSmall _btn_restart;
   }
 }
