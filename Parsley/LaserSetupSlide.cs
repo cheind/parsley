@@ -6,11 +6,13 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Parsley {
   public partial class LaserSetupSlide : FrameGrabberSlide {
 
     private bool _filter_enabled;
+    private bool _save_laser_data;
 
     public LaserSetupSlide(Context c) : base(c) 
     {
@@ -22,7 +24,7 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _pg_algorithm_settings.SelectedObject = Context.Laser.LaserLineAlgorithm;
+      _pg_algorithm_settings.SelectedObject = Context.Laser;
       _cmb_laser_color.SelectedIndex = Context.Laser.Channel;
       base.OnSlidingIn();
     }
@@ -33,6 +35,15 @@ namespace Parsley {
         Context.Laser.AddThresholdImage(img);
       } else {
         Context.Laser.FindLaserLine(img);
+        if (_save_laser_data) {
+          _save_laser_data = false;
+          using (TextWriter tw = new StreamWriter(string.Format("laser_{0}.txt", Guid.NewGuid()))) {
+            foreach (System.Drawing.PointF p in Context.Laser.ValidLaserPoints) {
+              tw.WriteLine(String.Format("{0};{1}",p.X, p.Y));
+            }
+          }
+        }
+
         foreach (System.Drawing.PointF p in Context.Laser.ValidLaserPoints) {
           img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
         }
@@ -53,6 +64,10 @@ namespace Parsley {
       _btn_filter_noise.Enabled = false;
       _filter_enabled = true;
       _timer_take_image.Enabled = true;
+    }
+
+    private void parsleyButtonSmall1_Click(object sender, EventArgs e) {
+      _save_laser_data = true;
     }
   }
 }

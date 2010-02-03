@@ -30,6 +30,7 @@
       this._pg_algorithm_settings = new System.Windows.Forms.PropertyGrid();
       this._btn_filter_noise = new Parsley.UI.ParsleyButtonSmall();
       this._timer_take_image = new System.Windows.Forms.Timer(this.components);
+      this.parsleyButtonSmall1 = new Parsley.UI.ParsleyButtonSmall();
       this.SuspendLayout();
       // 
       // _cmb_laser_color
@@ -90,10 +91,31 @@
       this._timer_take_image.Interval = 3000;
       this._timer_take_image.Tick += new System.EventHandler(this._timer_take_image_Tick);
       // 
+      // parsleyButtonSmall1
+      // 
+      this.parsleyButtonSmall1.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.parsleyButtonSmall1.BackColor = System.Drawing.Color.White;
+      this.parsleyButtonSmall1.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this.parsleyButtonSmall1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.parsleyButtonSmall1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.parsleyButtonSmall1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this.parsleyButtonSmall1.Image = ((System.Drawing.Image)(resources.GetObject("parsleyButtonSmall1.Image")));
+      this.parsleyButtonSmall1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.parsleyButtonSmall1.Location = new System.Drawing.Point(195, 410);
+      this.parsleyButtonSmall1.Name = "parsleyButtonSmall1";
+      this.parsleyButtonSmall1.Size = new System.Drawing.Size(190, 35);
+      this.parsleyButtonSmall1.TabIndex = 6;
+      this.parsleyButtonSmall1.Text = "Save Laser Data";
+      this.parsleyButtonSmall1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.parsleyButtonSmall1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this.parsleyButtonSmall1.UseVisualStyleBackColor = true;
+      this.parsleyButtonSmall1.Click += new System.EventHandler(this.parsleyButtonSmall1_Click);
+      // 
       // LaserSetupSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.parsleyButtonSmall1);
       this.Controls.Add(this._pg_algorithm_settings);
       this.Controls.Add(this._btn_filter_noise);
       this.Controls.Add(this.label1);
@@ -112,5 +134,6 @@
     private System.Windows.Forms.PropertyGrid _pg_algorithm_settings;
     private Parsley.UI.ParsleyButtonSmall _btn_filter_noise;
     private System.Windows.Forms.Timer _timer_take_image;
+    private Parsley.UI.ParsleyButtonSmall parsleyButtonSmall1;
   }
 }
