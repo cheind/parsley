@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace Parsley.Core.BuildingBlocks {
 
@@ -37,6 +38,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Get/set the algorithm that performs laser line extraction
     /// </summary>
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public LaserLineExtraction LaserLineAlgorithm {
       get { return _algorithm; }
       set { _algorithm = value; }
