@@ -46,7 +46,6 @@ namespace Parsley {
       if (_on_roi) {
         Core.CalibrationPattern pattern = _pattern;
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        gray._EqualizeHist();
         pattern.FindPattern(gray, Context.ROIHandler.Last);
         if (pattern.PatternFound) {
           ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
