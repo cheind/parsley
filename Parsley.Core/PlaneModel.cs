@@ -27,7 +27,7 @@ namespace Parsley.Core {
     }
 
     public double DistanceTo(MathNet.Numerics.LinearAlgebra.Vector x) {
-      return Math.Abs(_plane.DistanceTo(x));
+      return Math.Abs(_plane.SignedDistanceTo(x));
     }
 
     public void Fit(IEnumerable<MathNet.Numerics.LinearAlgebra.Vector> consensus_set) {
