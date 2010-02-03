@@ -93,7 +93,7 @@ namespace Parsley.Core {
     /// <returns>Signed distance of x to plane, which is positive
     /// when x lies on the same side of the plane as the plane's normal,
     /// negative otherwise.</returns>
-    public double DistanceTo(Vector x) {
+    public double SignedDistanceTo(Vector x) {
       return Vector.ScalarProduct(x, _normal) + _d;
     }
 
