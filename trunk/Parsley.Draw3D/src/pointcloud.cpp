@@ -21,7 +21,12 @@ namespace Parsley {
       _geometry->setColorArray(_colors.get());
       _geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
 
+      // Note: using _geometry->dirtyDisplayList on vertex modifications leads
+      // to flickering. In the future we should switch to display lists when scanning
+      // is complete, or no points have been added for a while.
       _geometry->setUseDisplayList(false);
+
+      
       geode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
       geode->addDrawable(_geometry.get());
       
@@ -42,6 +47,14 @@ namespace Parsley {
     {
       _colors->at(id) = convert4(color);
       _vertices->at(id) = convert3(x);
+    }
+
+    void
+      PointCloud::ClearPoints() 
+    {
+      _vertices->clear();
+      _colors->clear();
+      _primitives->clear();
     }
   }
 }

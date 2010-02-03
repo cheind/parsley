@@ -21,6 +21,8 @@ namespace Parsley {
       unsigned AddPoint(array<double>^ x, array<double>^ color);
       /// Update point that is already in point-cloud
       void UpdatePoint(unsigned id, array<double>^ x, array<double>^ color);
+      /// Clear points
+      void ClearPoints();
     private:
       auto_ptr_osg<osg::Geometry> _geometry;
       auto_ptr_osg<osg::Vec3Array> _vertices;
