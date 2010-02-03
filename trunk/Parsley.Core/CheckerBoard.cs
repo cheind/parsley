@@ -53,15 +53,24 @@ namespace Parsley.Core {
     /// <param name="image_points">Detected checkerboard image points</param>
     /// <returns>True if pattern was found, false otherwise</returns>
     public override bool FindPattern(Emgu.CV.Image<Gray, byte> img, out System.Drawing.PointF[] image_points)
-     {
-      return Emgu.CV.CameraCalibration.FindChessboardCorners(
+    {
+      bool found = Emgu.CV.CameraCalibration.FindChessboardCorners(
         img,
         _inner_corners,
         Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH | 
-        Emgu.CV.CvEnum.CALIB_CB_TYPE.FILTER_QUADS | 
+        Emgu.CV.CvEnum.CALIB_CB_TYPE.FILTER_QUADS |
         Emgu.CV.CvEnum.CALIB_CB_TYPE.NORMALIZE_IMAGE,
         out image_points
       );
-     }
+
+      if (found) {
+        img.FindCornerSubPix(
+          new System.Drawing.PointF[][] { image_points },
+          new System.Drawing.Size(5, 5),
+          new System.Drawing.Size(-1, -1),
+          new MCvTermCriteria(0.001));
+      }
+      return found;
+    }
   }
 }
