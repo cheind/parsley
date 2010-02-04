@@ -38,7 +38,8 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Get/set the algorithm that performs laser line extraction
     /// </summary>
-    [TypeConverter(typeof(ExpandableObjectConverter))]
+    [TypeConverter(typeof(Core.ReflectionTypeConverter))]
+    [RefreshProperties(RefreshProperties.All)]
     public LaserLineExtraction LaserLineAlgorithm {
       get { return _algorithm; }
       set { _algorithm = value; }
@@ -47,13 +48,16 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Access the set of valid laser-points from the last extraction
     /// </summary>
+    [Browsable(false)]
     public IEnumerable<System.Drawing.PointF> ValidLaserPoints {
       get {
         float[] positions = _algorithm.LaserPositions;
-        for (int x = 0; x < positions.Length; ++x) {
-          float y = positions[x];
-          if (y > 0.0f)
-            yield return new System.Drawing.PointF(x, y);
+        if (positions != null) {
+          for (int x = 0; x < positions.Length; ++x) {
+            float y = positions[x];
+            if (y > 0.0f)
+              yield return new System.Drawing.PointF(x, y);
+          }
         }
       }
     }
