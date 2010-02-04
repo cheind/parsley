@@ -42,7 +42,7 @@ namespace Parsley.Core.Tests {
             Assert.Fail("Wrong plane found by Ransac");
           }
           foreach (Vector v in h.ConsensusSet) {
-            Assert.AreEqual(0, p.DistanceTo(v), 0.001);
+            Assert.AreEqual(0, p.SignedDistanceTo(v), 0.001);
           }
         }
       }

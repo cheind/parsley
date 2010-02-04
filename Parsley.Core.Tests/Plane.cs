@@ -60,9 +60,9 @@ namespace Parsley.Core.Tests {
     [Test]
     public void DistanceTo() {
       Plane p = new Plane(MakeVector(2, 2, 2), MakeVector(0, 0, 1));
-      Assert.AreEqual(-2, p.DistanceTo(MakeVector(0, 0, 0)), 0.00001);
-      Assert.AreEqual(0, p.DistanceTo(MakeVector(0, 0, 2)), 0.00001);
-      Assert.AreEqual(1, p.DistanceTo(MakeVector(3, 2, 3)), 0.00001);
+      Assert.AreEqual(-2, p.SignedDistanceTo(MakeVector(0, 0, 0)), 0.00001);
+      Assert.AreEqual(0, p.SignedDistanceTo(MakeVector(0, 0, 2)), 0.00001);
+      Assert.AreEqual(1, p.SignedDistanceTo(MakeVector(3, 2, 3)), 0.00001);
     }
 
     [Test]
@@ -71,16 +71,16 @@ namespace Parsley.Core.Tests {
 
       Vector[] v = PlaneTest.RandomPointsOnPlane(p, 1000);
       Profile prof = new Profile("average-fit");
-      
-      Plane r = Plane.FitByAveraging(v);
+
+      Plane r;
+      Assert.True(Plane.FitByAveraging(v, out r));
       prof.Dispose();
 
       Assert.AreEqual(1.0, Math.Abs(Vector.ScalarProduct(r.Normal, p.Normal)), 0.00001);
       Assert.AreEqual(Math.Abs(r.D) - Math.Abs(p.D), 0, 0.00001);
 
-      Assert.Throws<ArgumentException>(delegate {
-        Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) });
-      });
+
+      Assert.False(Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) }, out r));
     }
 
     [Test]
@@ -90,15 +90,14 @@ namespace Parsley.Core.Tests {
       Vector[] v = PlaneTest.RandomPointsOnPlane(p, 1000);
       Profile prof = new Profile("pca-fit");
 
-      Plane r = Plane.FitByPCA(v);
+      Plane r;
+      Assert.True(Plane.FitByPCA(v, out r));
       prof.Dispose();
 
       Assert.AreEqual(1.0, Math.Abs(Vector.ScalarProduct(r.Normal, p.Normal)), 0.00001);
       Assert.AreEqual(Math.Abs(r.D) - Math.Abs(p.D), 0, 0.00001);
 
-      Assert.Throws<ArgumentException>(delegate {
-        Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) });
-      });
+      Assert.False(Plane.FitByPCA(new Vector[] { MakeVector(0, 0, 0) }, out r));
     }
 
 
