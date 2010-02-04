@@ -32,6 +32,7 @@ namespace Parsley {
     private CameraParameterSlide _slide_cam_parameters;
     private LaserSetupSlide _slide_laser_setup;
     private SetupSlide _slide_setup;
+    private WorldSetupSlide _slide_world_setup;
     
     public Main() {
       InitializeComponent();
@@ -73,6 +74,7 @@ namespace Parsley {
       _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
+      _slide_world_setup = new WorldSetupSlide();
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_setup);
@@ -85,10 +87,12 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_extrinsic_calib);
       _slide_control.AddSlide(_slide_cam_parameters);
       _slide_control.AddSlide(_slide_laser_setup);
+      _slide_control.AddSlide(_slide_world_setup);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_main;
       _slide_control.ForwardTo<SetupSlide>();
+      _slide_control.ForwardTo<WorldSetupSlide>();
     }
 
     void _slide_intrinsic_calib_OnCalibrationSucceeded(object sender, EventArgs e) {
