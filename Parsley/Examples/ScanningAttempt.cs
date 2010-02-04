@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MathNet.Numerics.LinearAlgebra;
 using Emgu.CV.Structure;
 using Parsley.Core.Extensions;
+using System.IO;
 
 namespace Parsley.Examples {
   public partial class ScanningAttempt : FrameGrabberSlide {
@@ -116,16 +117,31 @@ namespace Parsley.Examples {
           return;
         }
 
+        /*
+        using (TextWriter tw = new StreamWriter(String.Format("distances{0}.txt", Guid.NewGuid()))) {
+          for (int i = 0; i < laser_points.Length; ++i) {
+            if (h.ConsensusIds.Contains(i)) {
+              double t;
+              Core.Intersection.RayPlane(eye_rays[i], laser_plane, out t);
+              tw.WriteLine(String.Format("{0} {1} {2}", laser_points[i].X, (eye_rays[i].At(t) - eye_ray_isects[i]).Norm(), Math.Abs(t-min_ts[i])));
+            }
+          }
+        }
+         */
+
+
+
+
+
         lock (Context.Viewer) {
           for (int i = 0; i < laser_points.Length; ++i) {
             Point lp = new Point((int)laser_points[i].X, (int)laser_points[i].Y);
-            
+
             if (_acc.ROI.Contains(lp)) {
-              
+
               double t;
-              Core.Intersection.RayPlane(eye_rays[i], laser_plane, out t);               
-              
-              Vector final = eye_rays[i].At(t);
+              Core.Intersection.RayPlane(eye_rays[i], laser_plane, out t);
+
               img[lp.Y, lp.X] = new Bgr(Color.Red);
               Bgr bgr = _ref_image[lp.Y, lp.X];
               Vector color = new Vector(new double[] { bgr.Red / 255.0, bgr.Green / 255.0, bgr.Blue / 255.0, 1.0 });
@@ -133,7 +149,7 @@ namespace Parsley.Examples {
               //_pointcloud.AddPoint(final.ToInterop(), color.ToInterop());
               Point p_in_roi = _acc.MakeRelativeToROI(lp);
               bool first;
-              _acc.Accumulate(p_in_roi, final, out first);
+              _acc.Accumulate(p_in_roi, eye_rays[i], t, out first);
               if (first) {
                 _acc.SetId(p_in_roi, _pointcloud.AddPoint(_acc.Extract(p_in_roi).ToInterop(), color.ToInterop()));
               } else {
@@ -171,6 +187,14 @@ namespace Parsley.Examples {
       lock (Context.Viewer) {
         _acc = null;
         _pointcloud.ClearPoints();
+      }
+    }
+
+    private void _btn_save_pointcloud_Click(object sender, EventArgs e) {
+      using (TextWriter tw = new StreamWriter("points.csv")) {
+        foreach (Vector v in _acc.Points) {
+          tw.WriteLine(String.Format("{0} {1} {2}", v[0], v[1], v[2]));
+        }
       }
     }
   }
