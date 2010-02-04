@@ -11,39 +11,29 @@ namespace Parsley.Core {
     /// Defines the entity stored per pixel
     /// </summary>
     class PerPixel {
-      public List<double> x;
-      public List<double> y;
-      public List<double> z;
-
+      private List<double> _ts;
+      private Ray _r;
+      
       /// <summary>
       /// Construct from capacity and first entry
       /// </summary>
       /// <param name="capacity"></param>
       /// <param name="first"></param>
-      public PerPixel(int capacity, Vector first) {
-        x = new List<double>(capacity);
-        y = new List<double>(capacity);
-        z = new List<double>(capacity);
-        x.Add(first[0]);
-        y.Add(first[1]);
-        z.Add(first[2]);
+      public PerPixel(int capacity, Ray r, double t) {
+        _ts = new List<double>(capacity);
+        _ts.Add(t);
+        _r = r;
       }
 
-      public void Add(Vector v) {
-        if (x.Count < x.Capacity) {
-          x.Insert(~x.BinarySearch(v[0]), v[0]);
-          y.Insert(~y.BinarySearch(v[1]), v[1]);
-          z.Insert(~z.BinarySearch(v[2]), v[2]);
+      public void Add(double t) {
+        if (_ts.Count < _ts.Capacity) {
+          _ts.Insert(~_ts.BinarySearch(t), t);
         }
       }
 
       public Vector Median() {
-        Vector v = new Vector(3);
-        int count = x.Count;
-        v[0] = x[count / 2];
-        v[1] = y[count / 2];
-        v[2] = z[count / 2];
-        return v;
+        double t = _ts[_ts.Count / 2];
+        return _r.At(t);
       }
     }
 
@@ -62,16 +52,26 @@ namespace Parsley.Core {
       _entries = new PerPixel[roi.Width * roi.Height];
     }
 
-    public override void Accumulate(System.Drawing.Point pixel, Vector point, out bool first_point) {
+    public override void Accumulate(System.Drawing.Point pixel, Ray eye_ray, double t, out bool first_point) {
       int id = this.ArrayIndexFromPixel(pixel);
       PerPixel pp = _entries[id];
       if (pp == null) {
         first_point = true;
-        pp = new PerPixel(_max_entries, point);
+        pp = new PerPixel(_max_entries, eye_ray, t);
         _entries[id] = pp;
       } else {
         first_point = false;
-        pp.Add(point);
+        pp.Add(t);
+      }
+    }
+
+    public override IEnumerable<Vector> Points {
+      get {
+        foreach (PerPixel pp in _entries) {
+          if (pp != null) {
+            yield return pp.Median();
+          }
+        }
       }
     }
 
