@@ -18,33 +18,23 @@ namespace Parsley.Core.BuildingBlocks {
     [XmlRoot("parsley_calibration")]
     public class Calibration {
       private Emgu.CV.IntrinsicCameraParameters _intrinsics;
-      private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;
 
       public Calibration() {
-        _intrinsics = null;
-        _extrinsics = new List<ExtrinsicCameraParameters>();
+        _intrinsics = new IntrinsicCameraParameters();
       }
 
       /// <summary>
       /// Access intrinsic calibration
       /// </summary>
       [XmlElement("intrinsics")]
+      [Browsable(false)]
       public Emgu.CV.IntrinsicCameraParameters Intrinsics {
         get { return _intrinsics; }
         set { _intrinsics = value; }
       }
 
-      /// <summary>
-      /// Access associated extrinsic calibrations
-      /// </summary>
-      [XmlElement("extrinsics")]
-      public List<Emgu.CV.ExtrinsicCameraParameters> Extrinsics {
-        get { return _extrinsics; }
-      }
-
       public void Reset() {
-        _intrinsics = null;
-        _extrinsics.Clear();
+        _intrinsics = new IntrinsicCameraParameters();
       }
     }
 
@@ -70,17 +60,9 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// True if camera has an intrinsic calibration associated.
     /// </summary>
-    [Description("Determines if camera has an instrinsic calibration")]
+    [Browsable(false)]
     public bool HasIntrinsics {
       get { return _calibration.Intrinsics != null; }
-    }
-
-    /// <summary>
-    /// True if camera has at least one extrinsic calibration associated.
-    /// </summary>
-    [Description("Determines if camera has an extrinsic calibration")]
-    public bool HasExtrinsics {
-      get { return _calibration.Extrinsics.Count > 0; }
     }
 
     /// <summary>
@@ -94,6 +76,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Connect to camera at given device index
     /// </summary>
+    [Description("Specifies the camera device index to use. A device index less than zero indicates no connection. Default is zero.")]
     public int DeviceIndex {
       get { lock (this) { return _device_index; } }
       set {
@@ -130,17 +113,9 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
-    /// Access associated extrinsic calibrations
-    /// </summary>
-    [Browsable(false)]
-    public List<Emgu.CV.ExtrinsicCameraParameters> Extrinsics {
-      get { return _calibration.Extrinsics; }
-    }
-
-    /// <summary>
     /// Frame width of device
     /// </summary>
-    [Description("Frame Width")]
+    [Description("The width of the camera frame in pixels.")]
     public int FrameWidth {
       get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 0);}
     }
@@ -148,7 +123,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Frame height of device
     /// </summary>
-    [Description("Frame Height")]
+    [Description("The height of the camera frame in pixels.")]
     public int FrameHeight {
       get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 0); }
     }
@@ -164,7 +139,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Frame size of device
     /// </summary>
-    [Description("Frame Size")]
+    [Browsable(false)]
     public System.Drawing.Size FrameSize {
       get { return new System.Drawing.Size(this.FrameWidth, this.FrameHeight); }
     }
