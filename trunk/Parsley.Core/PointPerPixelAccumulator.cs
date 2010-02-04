@@ -34,9 +34,10 @@ namespace Parsley.Core {
     /// Accumulate a new point
     /// </summary>
     /// <param name="pixel">Pixel the point belongs. Relative to roi coordinate frame</param>
-    /// <param name="point">Coordinates of point</param>
+    /// <param name="r">Eye-ray</param>
+    /// <param name="t">parametric ray intersection</param>
     /// <param name="first_point">True if given point was first point in pixel</param>
-    public abstract void Accumulate(System.Drawing.Point pixel, Vector point, out bool first_point);
+    public abstract void Accumulate(System.Drawing.Point pixel, Ray r, double t, out bool first_point);
 
     /// <summary>
     /// Access the current accumulation state of the given pixel.
@@ -70,6 +71,13 @@ namespace Parsley.Core {
     /// <returns></returns>
     public System.Drawing.Point MakeRelativeToROI(System.Drawing.Point pixel) {
       return new System.Drawing.Point(pixel.X - _roi.X, pixel.Y - _roi.Y);
+    }
+
+    /// <summary>
+    /// Access all points
+    /// </summary>
+    public abstract IEnumerable<Vector> Points {
+      get;
     }
 
     /// <summary>
