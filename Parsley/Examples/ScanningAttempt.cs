@@ -112,7 +112,7 @@ namespace Parsley.Examples {
       if (h != null) {
         Core.Plane laser_plane = h.Model.Plane;
 
-        if (Math.Abs(laser_plane.Normal.ScalarMultiply(z)) < 0.20) {
+        if (Math.Abs(laser_plane.Normal.ScalarMultiply(z)) < 0.3) {
           Console.WriteLine(laser_plane.Normal);
           return;
         }
