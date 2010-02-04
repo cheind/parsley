@@ -28,6 +28,7 @@
       this._nrc_distance = new System.Windows.Forms.NumericUpDown();
       this._btn_take_ref_image = new Parsley.UI.ParsleyButtonSmall();
       this._btn_restart = new Parsley.UI.ParsleyButtonSmall();
+      this._btn_save_pointcloud = new Parsley.UI.ParsleyButtonSmall();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_consensus)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this._nrc_distance)).BeginInit();
       this.SuspendLayout();
@@ -116,10 +117,30 @@
       this._btn_restart.UseVisualStyleBackColor = true;
       this._btn_restart.Click += new System.EventHandler(this._btn_restart_Click);
       // 
+      // _btn_save_pointcloud
+      // 
+      this._btn_save_pointcloud.BackColor = System.Drawing.Color.White;
+      this._btn_save_pointcloud.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_save_pointcloud.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_save_pointcloud.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_save_pointcloud.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+      this._btn_save_pointcloud.Image = ((System.Drawing.Image)(resources.GetObject("_btn_save_pointcloud.Image")));
+      this._btn_save_pointcloud.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_pointcloud.Location = new System.Drawing.Point(89, 203);
+      this._btn_save_pointcloud.Name = "_btn_save_pointcloud";
+      this._btn_save_pointcloud.Size = new System.Drawing.Size(190, 35);
+      this._btn_save_pointcloud.TabIndex = 4;
+      this._btn_save_pointcloud.Text = "Save Pointcloud";
+      this._btn_save_pointcloud.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_pointcloud.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_save_pointcloud.UseVisualStyleBackColor = true;
+      this._btn_save_pointcloud.Click += new System.EventHandler(this._btn_save_pointcloud_Click);
+      // 
       // ScanningAttempt
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_save_pointcloud);
       this.Controls.Add(this._btn_restart);
       this.Controls.Add(this._btn_take_ref_image);
       this.Controls.Add(this._nrc_distance);
@@ -138,5 +159,6 @@
     private System.Windows.Forms.NumericUpDown _nrc_distance;
     private Parsley.UI.ParsleyButtonSmall _btn_take_ref_image;
     private Parsley.UI.ParsleyButtonSmall _btn_restart;
+    private Parsley.UI.ParsleyButtonSmall _btn_save_pointcloud;
   }
 }
