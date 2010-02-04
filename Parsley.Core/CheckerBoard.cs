@@ -5,6 +5,7 @@ using System.Text;
 
 using Emgu.CV.Structure;
 using MathNet.Numerics.LinearAlgebra;
+using System.ComponentModel;
 
 namespace Parsley.Core {
 
@@ -21,6 +22,7 @@ namespace Parsley.Core {
   /// is used to generate object reference points in 3d.
   /// 
   /// </remarks>
+  [Serializable]
   public class CheckerBoard : CalibrationPattern {
     private System.Drawing.Size _inner_corners;
     private float _field_size;
@@ -29,6 +31,38 @@ namespace Parsley.Core {
       _inner_corners = new System.Drawing.Size(inner_corner_row, inner_corner_col);
       _field_size = field_size;
       this.ObjectPoints = GenerateObjectCorners();
+    }
+
+    /// <summary>
+    /// Default checkerboard constructor
+    /// </summary>
+    public CheckerBoard()
+      : this(9, 6, 25.0f) 
+    {
+    }
+
+    /// <summary>
+    /// Get/set the number of inner cornser per row and column
+    /// </summary>
+    [Description("Number of inner corners per row and column")]
+    public System.Drawing.Size Size {
+      get { return _inner_corners; }
+      set { 
+        _inner_corners = value;
+        this.ObjectPoints = GenerateObjectCorners();
+      }
+    }
+
+    /// <summary>
+    /// Get/set the size of single square in the checkerboard pattern
+    /// </summary>
+    [Description("The size of single square in the checkerboard pattern in units of your choice.")]
+    public float SizeOfSquare {
+      get { return _field_size; }
+      set { 
+        _field_size = value;
+        this.ObjectPoints = GenerateObjectCorners();
+      }
     }
 
     /// <summary>

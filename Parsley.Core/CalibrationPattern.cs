@@ -6,12 +6,14 @@ using System.Drawing;
 
 using MathNet.Numerics.LinearAlgebra;
 using Emgu.CV.Structure;
+using System.ComponentModel;
 
 namespace Parsley.Core {
 
   /// <summary>
   /// A Calibration pattern
   /// </summary>
+  [Serializable]
   public abstract class CalibrationPattern {
     private Vector[] _object_points;
     private PointF[] _image_points;
@@ -22,6 +24,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Get or set the object points
     /// </summary>
+    [Browsable(false)]
     public Vector[] ObjectPoints {
       get { return _object_points; }
       set { _object_points = value; }
@@ -30,6 +33,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Get the corresponding image points from the last call to FindPattern
     /// </summary>
+    [Browsable(false)]
     public PointF[] ImagePoints {
       get { return _image_points; }
     }
@@ -37,6 +41,7 @@ namespace Parsley.Core {
     /// <summary>
     /// True if pattern was found by last FindPattern call; false otherwise.
     /// </summary>
+    [Browsable(false)]
     public bool PatternFound {
       get { return _pattern_found; }
     }
