@@ -9,26 +9,31 @@ namespace Parsley {
   /// Provides access to Parsley objects
   /// </summary>
   public class Context {
+    private Core.BuildingBlocks.World _world;
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
-    Core.BuildingBlocks.Laser _laser;
-    private Core.CalibrationPattern _pattern;
     private UI.Concrete.ROIHandler _roi_handler;
     private List<Core.BuildingBlocks.ReferencePlane> _references;
 
     public Context(
+      Core.BuildingBlocks.World world,
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
-      Core.CalibrationPattern pattern,
-      Core.BuildingBlocks.Laser laser,
       UI.Concrete.ROIHandler roi_handler) 
     {
-      _laser = laser;
+      _world = world;
       _fg = fg;
       _rl = rl;
-      _pattern = pattern;
       _roi_handler = roi_handler;
       _references = new List<Parsley.Core.BuildingBlocks.ReferencePlane>();
+    }
+
+    /// <summary>
+    /// Get/set world components
+    /// </summary>
+    public Core.BuildingBlocks.World World {
+      get { return _world; }
+      set { _world = value; }
     }
 
     /// <summary>
@@ -38,19 +43,6 @@ namespace Parsley {
       get { return _fg; }
     }
 
-    /// <summary>
-    /// Access the camera
-    /// </summary>
-    public Core.BuildingBlocks.Camera Camera {
-      get { return _fg.Camera; }
-    }
-
-    /// <summary>
-    /// Access calibration pattern
-    /// </summary>
-    public Core.CalibrationPattern CalibrationPattern {
-      get { return _pattern; }
-    }
 
     /// <summary>
     /// Access the render-loop
@@ -64,13 +56,6 @@ namespace Parsley {
     /// </summary>
     public List<Core.BuildingBlocks.ReferencePlane> ReferencePlanes {
       get { return _references; }
-    }
-
-    /// <summary>
-    /// Access the laser settings
-    /// </summary>
-    public Core.BuildingBlocks.Laser Laser {
-      get { return _laser; }
     }
 
     /// <summary>

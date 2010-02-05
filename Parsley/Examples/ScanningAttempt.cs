@@ -16,7 +16,6 @@ namespace Parsley.Examples {
   public partial class ScanningAttempt : FrameGrabberSlide {
     Parsley.Core.BrightestPixelLLE _lle;
     Core.NotParallelPlaneConstraint _constraint;
-    int _channel;
     private Parsley.Draw3D.PointCloud _pointcloud;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _ref_image;
     bool _take_ref_image;
@@ -28,7 +27,6 @@ namespace Parsley.Examples {
       InitializeComponent();
       _lle = new Parsley.Core.BrightestPixelLLE();
       _lle.IntensityThreshold = 20;
-      _channel = 2;
 
       _pointcloud = new Parsley.Draw3D.PointCloud();
       lock (Context.Viewer) {
@@ -46,7 +44,7 @@ namespace Parsley.Examples {
       _constraint = new Parsley.Core.NotParallelPlaneConstraint(new Core.Plane[]{Context.ReferencePlanes[0].Plane, Context.ReferencePlanes[1].Plane});
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
-          Core.BuildingBlocks.Perspective.FromCamera(Context.Camera, 1.0, 5000).ToInterop()
+          Core.BuildingBlocks.Perspective.FromCamera(Context.World.Camera, 1.0, 5000).ToInterop()
         );
         Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 400 }, new double[] { 0, 1, 0 });
       }
@@ -72,8 +70,8 @@ namespace Parsley.Examples {
       }
 
       // 1. Extract laser-line
-      Context.Laser.FindLaserLine(img);
-      PointF[] laser_points = Context.Laser.ValidLaserPoints.ToArray();
+      Context.World.Laser.FindLaserLine(img);
+      PointF[] laser_points = Context.World.Laser.ValidLaserPoints.ToArray();
 
       if (_acc != null) {
         img.Draw(_acc.ROI, new Bgr(Color.Green), 1);
@@ -83,7 +81,7 @@ namespace Parsley.Examples {
         return;
       }
 
-      Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.Camera.Intrinsics, laser_points);
+      Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.World.Camera.Intrinsics, laser_points);
       Vector[] eye_ray_isects = new Vector[eye_rays.Length];
       double[] min_ts = new double[eye_ray_isects.Length];
 
@@ -174,7 +172,7 @@ namespace Parsley.Examples {
           new MCvPoint3D32f((float)r[0,0], (float)r[1,0], (float)r[2,0])
         },
         ecp,
-        Context.Camera.Intrinsics);
+        Context.World.Camera.Intrinsics);
       return coords[0];
 
     }

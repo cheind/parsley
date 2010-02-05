@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C98E003-741C-4C11-9030-3CCAAB7CAA66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -118,12 +118,6 @@
     <Compile Include="Examples\ScanningAttempt.Designer.cs">
       <DependentUpon>ScanningAttempt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Examples\TrackCheckerboard3D.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Examples\TrackCheckerboard3D.Designer.cs">
-      <DependentUpon>TrackCheckerboard3D.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExtrinsicCalibrationSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -176,10 +170,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Examples\ScanningAttempt.resx">
       <DependentUpon>ScanningAttempt.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Examples\TrackCheckerboard3D.resx">
-      <DependentUpon>TrackCheckerboard3D.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtrinsicCalibrationSlide.resx">

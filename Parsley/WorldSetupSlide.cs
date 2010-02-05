@@ -8,13 +8,21 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace Parsley {
-  public partial class WorldSetupSlide : UI.ParsleySlide {
-    private Core.BuildingBlocks.World _world;
-
-    public WorldSetupSlide() {
+  public partial class WorldSetupSlide : ContextSlide {
+    
+    public WorldSetupSlide(Context c)
+      : base(c) 
+    {
       InitializeComponent();
-      _world = new Parsley.Core.BuildingBlocks.World();
-      _pg.SelectedObject = _world;
+    }
+
+    private WorldSetupSlide(): base(null) {
+      InitializeComponent();
+    }
+
+    protected override void OnSlidingIn() {
+      _pg.SelectedObject = Context.World;
+      base.OnSlidingIn();
     }
   }
 }

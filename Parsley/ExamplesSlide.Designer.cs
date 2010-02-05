@@ -68,7 +68,6 @@
       this._btn_track_calibration_pattern.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this._btn_track_calibration_pattern.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
       this._btn_track_calibration_pattern.UseVisualStyleBackColor = true;
-      this._btn_track_calibration_pattern.Click += new System.EventHandler(this._btn_track_calibration_pattern_Click);
       // 
       // _btn_display_roi
       // 

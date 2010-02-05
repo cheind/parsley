@@ -26,8 +26,7 @@ namespace Parsley {
 
     public IntrinsicCalibrationSlide(Context c) : base(c) {
       InitializeComponent();
-      _ic = new Parsley.Core.IntrinsicCalibration(c.CalibrationPattern.ObjectPoints, Context.Camera.FrameSize);
-
+      
       _timer_auto = new Timer();
       _timer_auto.Interval = 3000;
       _timer_auto.Tick += new EventHandler(_timer_auto_Tick);
@@ -40,6 +39,7 @@ namespace Parsley {
 
     protected override void OnSlidingIn() {
       base.OnSlidingIn();
+      _ic = new Parsley.Core.IntrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.FrameSize);
       _timer_auto.Enabled = false;
       _cb_auto_take.Checked = false;
       _btn_calibrate.Enabled = false;
@@ -79,11 +79,11 @@ namespace Parsley {
 
     void _bw_calibrator_DoWork(object sender, DoWorkEventArgs e) {
       this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-      _ec = new Parsley.Core.ExtrinsicCalibration(Context.CalibrationPattern.ObjectPoints, Context.Camera.Intrinsics);
+      _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      Core.CalibrationPattern pattern = this.Context.CalibrationPattern;
+      Core.CalibrationPattern pattern = this.Context.World.IntrinsicPattern;
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
       pattern.FindPattern(gray);
@@ -93,16 +93,16 @@ namespace Parsley {
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && Context.CalibrationPattern.PatternFound && Context.Camera.HasIntrinsics) {
-        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.CalibrationPattern.ImagePoints);
-        Context.CalibrationPattern.DrawCoordinateFrame(img, ecp, Context.Camera.Intrinsics);
+      if (_ec != null && Context.World.IntrinsicPattern.PatternFound && Context.World.Camera.HasIntrinsics) {
+        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.World.IntrinsicPattern.ImagePoints);
+        Context.World.IntrinsicPattern.DrawCoordinateFrame(img, ecp, Context.World.Camera.Intrinsics);
       }
     }
 
     void HandleTakeImageRequest() {
       if (_take_image_request) {
-        if (Context.CalibrationPattern.PatternFound) {
-          _ic.AddView(Context.CalibrationPattern.ImagePoints);
+        if (Context.World.IntrinsicPattern.PatternFound) {
+          _ic.AddView(Context.World.IntrinsicPattern.ImagePoints);
           this.Invoke((MethodInvoker)delegate {
             _lbl_info.Text = String.Format("You have successfully acquired {0} calibration image(s)", _ic.Views.Count);
             _btn_calibrate.Enabled = _ic.Views.Count > 2 && !_cb_auto_take.Checked;

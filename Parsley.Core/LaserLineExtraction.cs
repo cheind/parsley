@@ -32,6 +32,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Access the set of valid laser-points
     /// </summary>
+    [Browsable(false)]
     public IEnumerable<System.Drawing.PointF> ValidLaserPoints {
       get {
         for (int x = 0; x < _laser_positions.Length; ++x) {

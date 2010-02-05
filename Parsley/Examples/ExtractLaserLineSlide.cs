@@ -37,7 +37,7 @@ namespace Parsley.Examples {
     }
 
     private void _btn_take_reference_Click(object sender, EventArgs e) {
-      _reference = Context.Camera.Frame().Copy();
+      _reference = Context.World.Camera.Frame().Copy();
     }
 
     private void _cmb_channel_SelectedIndexChanged(object sender, EventArgs e) {
