@@ -8,48 +8,44 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Parsley.Core.BuildingBlocks {
   
   /// <summary>
   /// Represents a camera.
   /// </summary>
+  [Serializable]
   public class Camera : Resource.SharedResource {
-    [XmlRoot("parsley_calibration")]
-    public class Calibration {
-      private Emgu.CV.IntrinsicCameraParameters _intrinsics;
-
-      public Calibration() {
-        _intrinsics = new IntrinsicCameraParameters();
-      }
-
-      /// <summary>
-      /// Access intrinsic calibration
-      /// </summary>
-      [XmlElement("intrinsics")]
-      [Browsable(false)]
-      public Emgu.CV.IntrinsicCameraParameters Intrinsics {
-        get { return _intrinsics; }
-        set { _intrinsics = value; }
-      }
-
-      public void Reset() {
-        _intrinsics = new IntrinsicCameraParameters();
-      }
-    }
 
     private int _device_index;
     private Emgu.CV.Capture _device;
-    private Calibration _calibration;
+    private Emgu.CV.IntrinsicCameraParameters _intrinsics;
     
     /// <summary>
     /// Initialize camera from device index
     /// </summary>
     /// <param name="device_index">Device index starting at zero.</param>
     public Camera(int device_index) {
-      _calibration = new Calibration();
+      _device_index = -1;
       this.DeviceIndex = device_index;
+      _intrinsics = null;
     }
+
+    public Camera(SerializationInfo info, StreamingContext context)
+    {
+      _device_index = -1;
+      int dev_id = (int)info.GetValue("device_index", typeof(int));
+      _intrinsics = (Emgu.CV.IntrinsicCameraParameters)info.GetValue("intrinsic", typeof(Emgu.CV.IntrinsicCameraParameters));
+      this.DeviceIndex = dev_id;
+    }
+
+    public override void GetObjectData(SerializationInfo info, StreamingContext context) {
+      base.GetObjectData(info, context);
+      info.AddValue("device_index", _device_index);
+      info.AddValue("intrinsic", _intrinsics);
+    }
+
 
     /// <summary>
     /// Initialize camera with no connection
@@ -57,12 +53,10 @@ namespace Parsley.Core.BuildingBlocks {
     public Camera() : this(-1) {
     }
 
-    /// <summary>
-    /// True if camera has an intrinsic calibration associated.
-    /// </summary>
     [Browsable(false)]
-    public bool HasIntrinsics {
-      get { return _calibration.Intrinsics != null; }
+    public Emgu.CV.IntrinsicCameraParameters Intrinsics {
+      get { return _intrinsics; }
+      set { _intrinsics = value; }
     }
 
     /// <summary>
@@ -70,7 +64,11 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     [Browsable(false)]
     public bool IsConnected {
-      get { return _device != null; }
+      get { return _device_index > -1;}
+    }
+
+    public bool HasIntrinsics {
+      get { return _intrinsics != null; }
     }
 
     /// <summary>
@@ -84,7 +82,7 @@ namespace Parsley.Core.BuildingBlocks {
           if (IsConnected) {
             _device.Dispose();
             _device = null;
-            _calibration.Reset();
+            _intrinsics = null;
           }
           try {
             if (value >= 0) {
@@ -97,19 +95,9 @@ namespace Parsley.Core.BuildingBlocks {
           } catch (NullReferenceException) {
             _device_index = -1;
             _device = null;
-            //throw new ArgumentException(String.Format("No camera device found at slot {0}.", value));
           }
         }
       }
-    }
-
-    /// <summary>
-    /// Access intrinsic calibration
-    /// </summary>
-    [Browsable(false)]
-    public Emgu.CV.IntrinsicCameraParameters Intrinsics {
-      get { return _calibration.Intrinsics; }
-      set { _calibration.Intrinsics = value; }
     }
 
     /// <summary>
@@ -150,25 +138,11 @@ namespace Parsley.Core.BuildingBlocks {
     /// <returns></returns>
     public Image<Bgr, Byte> Frame() {
       lock (this) {
-        if (this.IsConnected)
+        if (this.IsConnected && _device != null)
           return _device.QueryFrame();
         else
           return null;
       }
-    }
-
-    public void SaveCalibration(string path) {
-      // Note when debugging this might throw exceptions handled inside XmlSerializer.
-      XmlSerializer s = new XmlSerializer(typeof(Calibration));
-      TextWriter w = new StreamWriter(path);
-      s.Serialize(w, _calibration);
-      w.Close();
-    }
-
-    public void LoadCalibration(string path) {
-      TextReader r = new StreamReader(path);
-      XmlSerializer s = new XmlSerializer(typeof(Calibration));
-      _calibration = s.Deserialize(r) as Calibration;
     }
 
     /// <summary>
