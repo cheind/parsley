@@ -17,10 +17,6 @@ namespace Parsley {
       this.SlideControl.ForwardTo<Examples.ExtractLaserLineSlide>();
     }
 
-    private void _btn_track_calibration_pattern_Click(object sender, EventArgs e) {
-      this.SlideControl.ForwardTo<Examples.TrackCheckerboard3D>();
-    }
-
     private void _btn_display_roi_Click(object sender, EventArgs e) {
       this.SlideControl.ForwardTo<Examples.ROISlide>();
     }

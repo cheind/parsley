@@ -20,7 +20,7 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _property_grid.SelectedObject = Context.Camera;
+      _property_grid.SelectedObject = Context.World.Camera;
       base.OnSlidingIn();
 
     }

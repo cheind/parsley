@@ -12,11 +12,7 @@ using Parsley.Core.Extensions;
 namespace Parsley {
   public partial class Main : Form {
 
-    private Core.BuildingBlocks.FrameGrabber _fg;
-    private Core.BuildingBlocks.Camera _camera;
-    private Core.BuildingBlocks.Laser _laser;
     private Context _context;
-    private Core.CheckerBoard _calibration_pattern;
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
     
@@ -24,7 +20,7 @@ namespace Parsley {
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
     private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
-    private Examples.TrackCheckerboard3D _slide_track_checkerboard;
+    //private Examples.TrackCheckerboard3D _slide_track_checkerboard;
     private Examples.ROISlide _slide_roi;
     private Examples.ScanningAttempt _slide_scanning;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
@@ -38,29 +34,28 @@ namespace Parsley {
       InitializeComponent();
 
       // Try connect to default cam
-      _camera = new Parsley.Core.BuildingBlocks.Camera(0);
-      _fg = new Parsley.Core.BuildingBlocks.FrameGrabber(_camera);
-      _calibration_pattern = new Parsley.Core.CheckerBoard(9, 6, 15.0f);
+      Core.BuildingBlocks.World world = new Parsley.Core.BuildingBlocks.World();
+      Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(world.Camera);
+      
+
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
       _live_feed.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.RightClickMenu;
-      _live_feed.FrameGrabber = _fg;
+      _live_feed.FrameGrabber = fg;
       _live_feed.FrameGrabber.FPS = 30;
       _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
       _live_feed.Shown += new EventHandler(_live_feed_Shown);
       _live_feed.Show();
-      _fg.Start();
+      fg.Start();
 
       _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
       _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
       _3d_viewer.Shown += new EventHandler(_3d_viewer_Shown);
       _3d_viewer.RenderLoop.FPS = 30;
-      _3d_viewer.AspectRatio = _camera.FrameAspectRatio;
+      _3d_viewer.AspectRatio = world.Camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
 
-
-      _laser = new Parsley.Core.BuildingBlocks.Laser();
-      _context = new Context(_fg, _3d_viewer.RenderLoop, _calibration_pattern, _laser, _live_feed.ROIHandler);
+       _context = new Context(world, fg , _3d_viewer.RenderLoop, _live_feed.ROIHandler);
 
       _slide_main = new MainSlide();
       _slide_setup = new SetupSlide(_context);
@@ -71,10 +66,9 @@ namespace Parsley {
       _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
       _slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
-      _slide_intrinsic_calib.OnCalibrationSucceeded += new EventHandler<EventArgs>(_slide_intrinsic_calib_OnCalibrationSucceeded);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
-      _slide_world_setup = new WorldSetupSlide();
+      _slide_world_setup = new WorldSetupSlide(_context);
 
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_setup);
@@ -93,14 +87,6 @@ namespace Parsley {
       _slide_control.Selected = _slide_main;
       _slide_control.ForwardTo<SetupSlide>();
       _slide_control.ForwardTo<WorldSetupSlide>();
-    }
-
-    void _slide_intrinsic_calib_OnCalibrationSucceeded(object sender, EventArgs e) {
-      lock (_context.Viewer) {
-        _context.Viewer.SetupPerspectiveProjection(
-          Core.BuildingBlocks.Perspective.FromCamera(_context.Camera, 1.0, 5000).ToInterop()
-        );
-      }
     }
 
     void _3d_viewer_Shown(object sender, EventArgs e) {
@@ -146,7 +132,7 @@ namespace Parsley {
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
       _context.FrameGrabber.Dispose();
-      _context.Camera.Dispose();
+      _context.World.Camera.Dispose();
       _context.RenderLoop.Dispose();
       _context.Viewer.Dispose();
     }

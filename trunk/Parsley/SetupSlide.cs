@@ -23,11 +23,11 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _numeric_device_id.Value = Context.Camera.DeviceIndex;
+      _numeric_device_id.Value = Context.World.Camera.DeviceIndex;
       if (_numeric_device_id.Value == -1) {
         _error_provider.SetError(_numeric_device_id, "No such camera");
       }
-      _btn_save_calibration.Enabled = Context.Camera.HasIntrinsics;
+      _btn_save_calibration.Enabled = Context.World.Camera.HasIntrinsics;
       base.OnSlidingIn();
     }
 
@@ -42,8 +42,8 @@ namespace Parsley {
     }
 
     private void _numeric_device_id_ValueChanged(object sender, EventArgs e) {
-      Context.Camera.DeviceIndex = (int)_numeric_device_id.Value;
-      if (Context.Camera.DeviceIndex == -1) {
+      Context.World.Camera.DeviceIndex = (int)_numeric_device_id.Value;
+      if (Context.World.Camera.DeviceIndex == -1) {
         _error_provider.SetError(_numeric_device_id, "No such camera");
       } else {
         _error_provider.SetError(_numeric_device_id, "");
@@ -60,13 +60,13 @@ namespace Parsley {
 
     private void _btn_save_calibration_Click(object sender, EventArgs e) {
       if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
-        Context.Camera.SaveCalibration(_save_dialog.FileName);
+        Context.World.Camera.SaveCalibration(_save_dialog.FileName);
       }
     }
 
     private void _btn_load_calibration_Click(object sender, EventArgs e) {
       if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
-        Context.Camera.LoadCalibration(_open_dlg.FileName);
+        Context.World.Camera.LoadCalibration(_open_dlg.FileName);
       }
     }
 
