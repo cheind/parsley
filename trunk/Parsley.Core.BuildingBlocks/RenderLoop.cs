@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Parsley.Core.BuildingBlocks {
 
   /// <summary>
   /// Asynchronous render loop.
   /// </summary>
-  public class RenderLoop : Resource.SharedResource {
+  public class RenderLoop : Core.Resource {
     private Parsley.Draw3D.Viewer _v;
     private BackgroundWorker _bw;
     private FixedTimeStep _fts;
@@ -18,6 +19,7 @@ namespace Parsley.Core.BuildingBlocks {
     private BeforeRenderHandler _before_render;
     private AfterRenderHandler _after_render;
     private object _event_lock;
+    private ManualResetEvent _stopped;
 
 
     /// <summary>
@@ -31,6 +33,7 @@ namespace Parsley.Core.BuildingBlocks {
       _bw.WorkerSupportsCancellation = true;
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
       _event_lock = new object();
+      _stopped = new ManualResetEvent(false);
     }
 
     /// <summary>
@@ -79,6 +82,7 @@ namespace Parsley.Core.BuildingBlocks {
     public void Start() {
       if (!_bw.IsBusy) {
         _bw.RunWorkerAsync();
+        _stopped.Reset();
       }
     }
 
@@ -87,6 +91,14 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     public void RequestStop() {
       _bw.CancelAsync();
+    }
+
+    /// <summary>
+    /// Stop and wait until stopped
+    /// </summary>
+    public void Stop() {
+      _bw.CancelAsync();
+      _stopped.WaitOne();
     }
 
     /// <summary>
@@ -105,17 +117,14 @@ namespace Parsley.Core.BuildingBlocks {
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
-      using (Resource.SharedResource.Breath b = _v.KeepAlive()) {
-        if (b.IsBreathing) {
-          while (!bw.CancellationPending) {
-            lock (_event_lock) { if (_before_render != null) _before_render(this); }
-            lock (_v) { _v.Frame(); }
-            lock (_event_lock) { if (_after_render != null) _after_render(this); }
-            _fts.UpdateAndWait();
-          }
-        }
+      while (!bw.CancellationPending) {
+        lock (_event_lock) { if (_before_render != null) _before_render(this); }
+        lock (_v) { _v.Frame(); }
+        lock (_event_lock) { if (_after_render != null) _after_render(this); }
+        _fts.UpdateAndWait();
       }
       e.Cancel = true;
+      _stopped.Set();
     }
 
   }

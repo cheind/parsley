@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace Parsley.Core.Resource {
+namespace Parsley.Core {
 
   /// <summary>
   /// A resource is a disposable object. 

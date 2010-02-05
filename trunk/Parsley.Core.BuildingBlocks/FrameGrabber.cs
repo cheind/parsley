@@ -21,7 +21,7 @@ namespace Parsley.Core.BuildingBlocks {
   /// This bears the risk of deadlocks since arbitrary code is called when firing an event.
   /// For a discussion see http://bit.ly/6Qi8jS
   /// </remarks>
-  public class FrameGrabber : Resource.SharedResource {
+  public class FrameGrabber : Core.Resource {
     private BackgroundWorker _bw;
     private Camera _camera;
     private FixedTimeStep _fts;
@@ -143,22 +143,22 @@ namespace Parsley.Core.BuildingBlocks {
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
       Camera camera = _camera;
-      using (Resource.SharedResource.Breath b = camera.KeepAlive()) {
-        // Note: the image is disposed once the camera gets disposed.
-        // Therefore you should copy the image if needed in another
-        // thread or make sure the camera is not disposed.
-        Image<Bgr, byte> img;
-        while (!bw.CancellationPending) {
-          img = camera.Frame();
-          if (img != null) {
-            lock (_lock_event) {
-              if (_on_frame != null) _on_frame(this, img);
-            }
-            img.Dispose();
+
+      // Note: the image is disposed once the camera gets disposed.
+      // Therefore you should copy the image if needed in another
+      // thread or make sure the camera is not disposed.
+      Image<Bgr, byte> img;
+      while (!bw.CancellationPending) {
+        img = camera.Frame();
+        if (img != null) {
+          lock (_lock_event) {
+            if (_on_frame != null) _on_frame(this, img);
           }
-          _fts.UpdateAndWait();
+          img.Dispose();
         }
+        _fts.UpdateAndWait();
       }
+      
       e.Cancel = true;
       _stopped.Set();
     }

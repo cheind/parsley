@@ -6,7 +6,7 @@
 namespace Parsley {
   namespace Draw3D {    
 
-    public ref class Node : Core::Resource::Resource {
+    public ref class Node {
     public:
       Node() : _osg(new osg::Node()) {}
       Node(osg::Node *native) : _osg(native) {}

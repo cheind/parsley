@@ -234,10 +234,6 @@
       <Project>{65C11622-0F30-4E58-A81F-E47F750933EE}</Project>
       <Name>Parsley.Core.BuildingBlocks</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
-      <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
-      <Name>Parsley.Core.Resource</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
       <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
       <Name>Parsley.Core</Name>
