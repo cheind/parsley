@@ -17,7 +17,9 @@ namespace Parsley.Core {
   /// of the laser line per x-pixel. When locations with a value greater than
   /// zero are observed, the laser line was found for that x-pixel.
   /// </remarks>
+  [Serializable]
   public abstract class LaserLineExtraction {
+    [NonSerialized]
     private float[] _laser_positions;
 
     /// <summary>

@@ -19,6 +19,7 @@ namespace Parsley.Core {
   /// Since image memory is allocated in row-major order, this algorithm process
   /// one row at a time.
   /// </remarks>
+  [Serializable]
   public class BrightestPixelLLE : LaserLineExtraction {
     private int _threshold;
 
