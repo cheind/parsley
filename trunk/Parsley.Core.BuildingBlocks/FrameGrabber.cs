@@ -25,6 +25,7 @@ namespace Parsley.Core.BuildingBlocks {
     private BackgroundWorker _bw;
     private Camera _camera;
     private FixedTimeStep _fts;
+    private bool _pending_start;
 
     /// <summary>
     /// On-Frame callback
@@ -34,6 +35,7 @@ namespace Parsley.Core.BuildingBlocks {
     public delegate void OnFrameHandler(FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img);
     private OnFrameHandler _on_frame;
     private object _lock_event;
+    private ManualResetEvent _stopped;
 
     /// <summary>
     /// Initialize frame grabber with camera
@@ -41,12 +43,22 @@ namespace Parsley.Core.BuildingBlocks {
     /// <param name="camera"></param>
     public FrameGrabber(Camera camera) {
       _camera = camera;
+      _lock_event = new object();
+      _fts = new FixedTimeStep(30);
       _bw = new BackgroundWorker();
       _bw.WorkerSupportsCancellation = true;
       _bw.DoWork += new DoWorkEventHandler(_bw_DoWork);
-      _lock_event = new object();
-      _fts = new FixedTimeStep(30);
+      _bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_bw_RunWorkerCompleted);
+      _stopped = new ManualResetEvent(false);
     }
+
+    void _bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+      if (_pending_start) {
+        _pending_start = false;
+        this.Start();
+      }
+    }
+
 
     /// <summary>
     /// Get and set desired frames per second
@@ -88,6 +100,7 @@ namespace Parsley.Core.BuildingBlocks {
     public void Start()
     {
       if (!_bw.IsBusy) {
+        _stopped.Reset();
         _bw.RunWorkerAsync();
       }
     }
@@ -100,12 +113,27 @@ namespace Parsley.Core.BuildingBlocks {
       _bw.CancelAsync();
     }
 
+    public void Stop() {
+      _bw.CancelAsync();
+      _stopped.WaitOne();
+    }
+
     /// <summary>
-    /// Access the camera grabbed from
+    /// Get/Set the camera grabbed from
     /// </summary>
     public Camera Camera
     {
       get { return _camera; }
+      set {
+        bool busy = _bw.IsBusy;
+        if (busy) {
+          this.Stop();
+        }
+        _camera = value;
+        if (busy) {
+          _pending_start = true;
+        }
+      }
     }
 
     protected override void DisposeManaged() {
@@ -114,13 +142,14 @@ namespace Parsley.Core.BuildingBlocks {
 
     void _bw_DoWork(object sender, DoWorkEventArgs e) {
       BackgroundWorker bw = sender as BackgroundWorker;
-      using (Resource.SharedResource.Breath b = _camera.KeepAlive()) {
+      Camera camera = _camera;
+      using (Resource.SharedResource.Breath b = camera.KeepAlive()) {
         // Note: the image is disposed once the camera gets disposed.
         // Therefore you should copy the image if needed in another
         // thread or make sure the camera is not disposed.
         Image<Bgr, byte> img;
         while (!bw.CancellationPending) {
-          img = _camera.Frame();
+          img = camera.Frame();
           if (img != null) {
             lock (_lock_event) {
               if (_on_frame != null) _on_frame(this, img);
@@ -131,6 +160,7 @@ namespace Parsley.Core.BuildingBlocks {
         }
       }
       e.Cancel = true;
+      _stopped.Set();
     }
   }
 }
