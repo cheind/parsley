@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Runtime.Serialization;
 
 namespace Parsley.Core.Resource {
 
@@ -10,7 +11,7 @@ namespace Parsley.Core.Resource {
   /// A shared resource behaves just like a Resource with additional
   /// synchronization mechanisms on disposing that resource.
   /// </summary>
-  public class SharedResource : Resource {
+  public class SharedResource : Resource, ISerializable {
     private int _keep_alive;
     private object _lock_keep_alive;
     private bool _pending_dispose;
@@ -43,6 +44,12 @@ namespace Parsley.Core.Resource {
       _lock_keep_alive = new object();
       _pending_dispose = false;
       _can_dispose = new ManualResetEvent(true);
+    }
+
+    public SharedResource(SerializationInfo info, StreamingContext context) : this() {
+    }
+
+    public virtual void GetObjectData(SerializationInfo info, StreamingContext context) {
     }
 
     public Breath KeepAlive() {
@@ -81,6 +88,5 @@ namespace Parsley.Core.Resource {
       _can_dispose.WaitOne();
       base.Dispose(disposing);
     }
-
   }
 }

@@ -9,6 +9,7 @@ namespace Parsley.Core.Resource {
   /// <summary>
   /// A resource is a disposable object. 
   /// </summary>
+  [Serializable]
   public class Resource : IDisposable {
     private bool _disposed;
 
