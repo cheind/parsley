@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace Parsley.Core.BuildingBlocks {
 
@@ -11,6 +12,7 @@ namespace Parsley.Core.BuildingBlocks {
   /// </summary>
   [Serializable]
   public class World {
+
     private BuildingBlocks.Camera _camera;
     private BuildingBlocks.Laser _laser;
     private Core.CalibrationPattern _intrinsic_pattern;
