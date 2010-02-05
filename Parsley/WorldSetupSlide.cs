@@ -14,6 +14,12 @@ namespace Parsley {
       : base(c) 
     {
       InitializeComponent();
+      c.OnConfigurationLoaded += new EventHandler<EventArgs>(c_OnConfigurationLoaded);
+    }
+
+    void c_OnConfigurationLoaded(object sender, EventArgs e) {
+      _pg.SelectedObject = Context.World;
+      _pg.Refresh();
     }
 
     private WorldSetupSlide(): base(null) {

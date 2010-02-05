@@ -60,13 +60,13 @@ namespace Parsley {
 
     private void _btn_save_calibration_Click(object sender, EventArgs e) {
       if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
-        Context.World.Camera.SaveCalibration(_save_dialog.FileName);
+        //Context.World.Camera.SaveCalibration(_save_dialog.FileName);
       }
     }
 
     private void _btn_load_calibration_Click(object sender, EventArgs e) {
       if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
-        Context.World.Camera.LoadCalibration(_open_dlg.FileName);
+        //Context.World.Camera.LoadCalibration(_open_dlg.FileName);
       }
     }
 
