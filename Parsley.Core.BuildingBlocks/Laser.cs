@@ -9,6 +9,7 @@ namespace Parsley.Core.BuildingBlocks {
   /// <summary>
   /// Laser data and algorithms
   /// </summary>
+  [Serializable]
   public class Laser {
     private int _channel;
     private Core.LaserLineExtraction _algorithm;
