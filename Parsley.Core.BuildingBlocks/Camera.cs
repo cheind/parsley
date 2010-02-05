@@ -16,7 +16,7 @@ namespace Parsley.Core.BuildingBlocks {
   /// Represents a camera.
   /// </summary>
   [Serializable]
-  public class Camera : Resource.SharedResource {
+  public class Camera : Core.Resource, ISerializable {
 
     private int _device_index;
     private Emgu.CV.Capture _device;
@@ -40,8 +40,7 @@ namespace Parsley.Core.BuildingBlocks {
       this.DeviceIndex = dev_id;
     }
 
-    public override void GetObjectData(SerializationInfo info, StreamingContext context) {
-      base.GetObjectData(info, context);
+    public void GetObjectData(SerializationInfo info, StreamingContext context) {
       info.AddValue("device_index", _device_index);
       info.AddValue("intrinsic", _intrinsics);
     }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -95,16 +95,11 @@
     <Compile Include="Ransac.cs" />
     <Compile Include="Ray.cs" />
     <Compile Include="ReflectionTypeConverter.cs" />
+    <Compile Include="Resource.cs" />
     <Compile Include="SmoothByAverage.cs" />
     <Compile Include="SmoothLaserLine.cs" />
     <Compile Include="TypeManager.cs" />
     <Compile Include="WeightedAverageLLE.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Parsley.Core.Resource\Parsley.Core.Resource.csproj">
-      <Project>{A6A906FF-111C-4248-BF9A-15DB9AD42BD7}</Project>
-      <Name>Parsley.Core.Resource</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

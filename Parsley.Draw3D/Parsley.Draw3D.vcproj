@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Parsley.Draw3D"
 	ProjectGUID="{6B03DE61-527A-441C-A7E6-8C1CB433EA63}"
 	RootNamespace="ParsleyDraw3D"
@@ -183,11 +183,6 @@
 		<AssemblyReference
 			RelativePath="System.Windows.Forms.dll"
 			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-			MinFrameworkVersion="131072"
-		/>
-		<AssemblyReference
-			RelativePath="..\bin\Parsley.Core.Resource.dll"
-			AssemblyName="Parsley.Core.Resource, Version=1.0.0.0, processorArchitecture=IA64"
 			MinFrameworkVersion="131072"
 		/>
 	</References>
