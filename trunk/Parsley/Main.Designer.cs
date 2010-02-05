@@ -25,19 +25,20 @@
     private void InitializeComponent() {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+      this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this._mnu_save_world = new System.Windows.Forms.ToolStripMenuItem();
+      this._mnu_load_world = new System.Windows.Forms.ToolStripMenuItem();
       this.windowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mnu_3d_viewer = new System.Windows.Forms.ToolStripMenuItem();
       this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mnu_live_feed = new System.Windows.Forms.ToolStripMenuItem();
       this._mnu_show_camera_properties = new System.Windows.Forms.ToolStripMenuItem();
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-      this._btn_back = new Parsley.UI.ParsleyButtonSmall();
-      this._slide_control = new SlickInterface.SlideControl();
-      this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this._mnu_save_world = new System.Windows.Forms.ToolStripMenuItem();
-      this._mnu_load_world = new System.Windows.Forms.ToolStripMenuItem();
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
+      this._slide_control = new SlickInterface.SlideControl();
+      this._btn_back = new Parsley.UI.ParsleyButtonSmall();
+      this._mnu_show_world_config = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
@@ -53,6 +54,30 @@
       this.menuStrip1.Size = new System.Drawing.Size(549, 24);
       this.menuStrip1.TabIndex = 0;
       this.menuStrip1.Text = "menuStrip1";
+      // 
+      // configurationToolStripMenuItem
+      // 
+      this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._mnu_show_world_config,
+            this._mnu_save_world,
+            this._mnu_load_world});
+      this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
+      this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
+      this.configurationToolStripMenuItem.Text = "Configuration";
+      // 
+      // _mnu_save_world
+      // 
+      this._mnu_save_world.Name = "_mnu_save_world";
+      this._mnu_save_world.Size = new System.Drawing.Size(152, 22);
+      this._mnu_save_world.Text = "Save World";
+      this._mnu_save_world.Click += new System.EventHandler(this._mnu_save_world_Click);
+      // 
+      // _mnu_load_world
+      // 
+      this._mnu_load_world.Name = "_mnu_load_world";
+      this._mnu_load_world.Size = new System.Drawing.Size(152, 22);
+      this._mnu_load_world.Text = "Load World";
+      this._mnu_load_world.Click += new System.EventHandler(this._mnu_load_world_Click);
       // 
       // windowsToolStripMenuItem
       // 
@@ -109,6 +134,24 @@
       this.tableLayoutPanel1.Size = new System.Drawing.Size(549, 513);
       this.tableLayoutPanel1.TabIndex = 2;
       // 
+      // _save_dialog
+      // 
+      this._save_dialog.FileName = "world_configuration.parsley";
+      // 
+      // _open_dlg
+      // 
+      this._open_dlg.FileName = "world_configuration.parsley";
+      // 
+      // _slide_control
+      // 
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(3, 3);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(543, 466);
+      this._slide_control.SlideSpeed = 250;
+      this._slide_control.TabIndex = 1;
+      // 
       // _btn_back
       // 
       this._btn_back.BackColor = System.Drawing.Color.White;
@@ -129,46 +172,12 @@
       this._btn_back.UseVisualStyleBackColor = true;
       this._btn_back.Click += new System.EventHandler(this._btn_back_Click);
       // 
-      // _slide_control
+      // _mnu_show_world_config
       // 
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(3, 3);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(543, 466);
-      this._slide_control.SlideSpeed = 250;
-      this._slide_control.TabIndex = 1;
-      // 
-      // configurationToolStripMenuItem
-      // 
-      this.configurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._mnu_save_world,
-            this._mnu_load_world});
-      this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-      this.configurationToolStripMenuItem.Size = new System.Drawing.Size(93, 20);
-      this.configurationToolStripMenuItem.Text = "Configuration";
-      // 
-      // _mnu_save_world
-      // 
-      this._mnu_save_world.Name = "_mnu_save_world";
-      this._mnu_save_world.Size = new System.Drawing.Size(152, 22);
-      this._mnu_save_world.Text = "Save World";
-      this._mnu_save_world.Click += new System.EventHandler(this._mnu_save_world_Click);
-      // 
-      // _mnu_load_world
-      // 
-      this._mnu_load_world.Name = "_mnu_load_world";
-      this._mnu_load_world.Size = new System.Drawing.Size(152, 22);
-      this._mnu_load_world.Text = "Load World";
-      this._mnu_load_world.Click += new System.EventHandler(this._mnu_load_world_Click);
-      // 
-      // _save_dialog
-      // 
-      this._save_dialog.FileName = "world_configuration.parsley";
-      // 
-      // _open_dlg
-      // 
-      this._open_dlg.FileName = "world_configuration.parsley";
+      this._mnu_show_world_config.Name = "_mnu_show_world_config";
+      this._mnu_show_world_config.Size = new System.Drawing.Size(152, 22);
+      this._mnu_show_world_config.Text = "Show";
+      this._mnu_show_world_config.Click += new System.EventHandler(this._mnu_show_world_config_Click);
       // 
       // Main
       // 
@@ -206,6 +215,7 @@
     private System.Windows.Forms.ToolStripMenuItem _mnu_load_world;
     private System.Windows.Forms.SaveFileDialog _save_dialog;
     private System.Windows.Forms.OpenFileDialog _open_dlg;
+    private System.Windows.Forms.ToolStripMenuItem _mnu_show_world_config;
   }
 }
 

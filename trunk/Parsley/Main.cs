@@ -158,5 +158,9 @@ namespace Parsley {
         _context.LoadBinary(_open_dlg.FileName);
       }
     }
+
+    private void _mnu_show_world_config_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<WorldSetupSlide>();
+    }
   }
 }
