@@ -16,7 +16,9 @@ namespace Parsley.Core {
   [Serializable]
   public abstract class CalibrationPattern {
     private Vector[] _object_points;
+    [NonSerialized]
     private PointF[] _image_points;
+    [NonSerialized]
     private bool _pattern_found;
 
     public CalibrationPattern() {}
