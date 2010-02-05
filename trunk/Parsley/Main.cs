@@ -54,6 +54,8 @@ namespace Parsley {
       _3d_viewer.RenderLoop.FPS = 30;
       _3d_viewer.AspectRatio = world.Camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
+      _3d_viewer.RenderLoop.Start();
+      _3d_viewer.Show();
 
        _context = new Context(world, fg , _3d_viewer.RenderLoop, _live_feed.ROIHandler);
 
@@ -143,6 +145,18 @@ namespace Parsley {
 
     private void _mnu_show_camera_properties_Click(object sender, EventArgs e) {
       _slide_control.ForwardTo<CameraParameterSlide>();
+    }
+
+    private void _mnu_save_world_Click(object sender, EventArgs e) {
+      if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
+        _context.SaveBinary(_save_dialog.FileName);
+      }
+    }
+
+    private void _mnu_load_world_Click(object sender, EventArgs e) {
+      if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
+        _context.LoadBinary(_open_dlg.FileName);
+      }
     }
   }
 }

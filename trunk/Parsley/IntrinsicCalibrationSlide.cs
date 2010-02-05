@@ -74,7 +74,9 @@ namespace Parsley {
       _cb_auto_take.Checked = false;
       _lbl_info.Text = "Calibration succeeded!";
       EventHandler<EventArgs> d = OnCalibrationSucceeded;
-      d(this, new EventArgs());
+      if (d != null) {
+        d(this, new EventArgs());
+      }
     }
 
     void _bw_calibrator_DoWork(object sender, DoWorkEventArgs e) {
