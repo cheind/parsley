@@ -41,41 +41,56 @@ namespace Parsley {
       _references = new List<Parsley.Core.BuildingBlocks.ReferencePlane>();
     }
 
-    public void SaveBinary(string filepath) {
-      using (Stream s = File.OpenWrite(filepath)) {
-        if (s != null) {
-          IFormatter formatter = new BinaryFormatter();
-          formatter.Serialize(s, _world);
-          s.Close();
+    public bool SaveBinary(string filepath) {
+      try {
+        using (Stream s = File.OpenWrite(filepath)) {
+          if (s != null) {
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(s, _world);
+            s.Close();
+          }
         }
+        return true;
+      } catch (Exception) {
+        return false;
       }
     }
 
-    public void LoadBinary(string filepath) {
-      using (Stream s = File.Open(filepath, FileMode.Open)) {
-        if (s != null) {
-          // Make sure the frame grabber is offline and 
-          // the old camera is disposed before loading a new one
-          // with a potentially equal device_id => conflict
-          _fg.Stop();
-          _fg.Camera.Dispose();
+    public bool LoadBinary(string filepath) {
+      bool success = false;
+      int device_index = -1;
+      try {
+        using (Stream s = File.Open(filepath, FileMode.Open)) {
+          if (s != null) {
+            // Make sure the frame grabber is offline and 
+            // the old camera is disposed before loading a new one
+            // with a potentially equal device_id => conflict
 
-          IFormatter formatter = new BinaryFormatter();
-          Core.BuildingBlocks.World new_world = formatter.Deserialize(s) as Core.BuildingBlocks.World;
-          s.Close();
+            _fg.Stop();
+            device_index = _fg.Camera.DeviceIndex;
+            _fg.Camera.Dispose();
 
-          Core.BuildingBlocks.Camera old_camera = _fg.Camera;
-          _fg.Camera = new_world.Camera;
-          _world = new_world;
-          _fg.Start();
+            IFormatter formatter = new BinaryFormatter();
+            Core.BuildingBlocks.World new_world = formatter.Deserialize(s) as Core.BuildingBlocks.World;
+            s.Close();
 
-          if (OnConfigurationLoaded != null) {
-            OnConfigurationLoaded(this, new EventArgs());
+            Core.BuildingBlocks.Camera old_camera = _fg.Camera;
+            _fg.Camera = new_world.Camera;
+            _world = new_world;
+
+            if (OnConfigurationLoaded != null) {
+              OnConfigurationLoaded(this, new EventArgs());
+            }
+            success = true;
           }
-
-          // Todo: Update aspect ratio of 3d viewer
         }
+      } catch (Exception) {
+        _world.Camera = new Parsley.Core.BuildingBlocks.Camera(device_index);
+        _fg.Camera = _world.Camera;
+      } finally {
+         _fg.Start();
       }
+      return success;
     }
 
     /// <summary>

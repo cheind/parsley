@@ -27,13 +27,12 @@
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._ts_container = new System.Windows.Forms.ToolStripContainer();
-      this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this._btn_settings = new System.Windows.Forms.ToolStripButton();
       this.toolStrip2 = new System.Windows.Forms.ToolStrip();
       this._btn_back = new System.Windows.Forms.ToolStripButton();
-      this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-      this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this._btn_load_configuration = new System.Windows.Forms.ToolStripButton();
+      this._btn_save_configuration = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.x = new System.Windows.Forms.ToolStripDropDownButton();
       this._btn_intrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,7 @@
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
       this._status_strip = new System.Windows.Forms.StatusStrip();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
+      this._slide_control = new SlickInterface.SlideControl();
       this._properties = new Parsley.PropertyPane();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
@@ -54,11 +54,11 @@
       // 
       // _save_dialog
       // 
-      this._save_dialog.FileName = "world_configuration.parsley";
+      this._save_dialog.FileName = "Parsley.cfg";
       // 
       // _open_dlg
       // 
-      this._open_dlg.FileName = "world_configuration.parsley";
+      this._open_dlg.FileName = "Parsley.cfg";
       // 
       // _ts_container
       // 
@@ -70,7 +70,7 @@
       this._ts_container.ContentPanel.Controls.Add(this._properties);
       this._ts_container.ContentPanel.Controls.Add(this._slide_control);
       this._ts_container.ContentPanel.Padding = new System.Windows.Forms.Padding(10);
-      this._ts_container.ContentPanel.Size = new System.Drawing.Size(481, 386);
+      this._ts_container.ContentPanel.Size = new System.Drawing.Size(489, 386);
       this._ts_container.Dock = System.Windows.Forms.DockStyle.Fill;
       this._ts_container.LeftToolStripPanelVisible = false;
       this._ts_container.Location = new System.Drawing.Point(0, 0);
@@ -89,18 +89,6 @@
       this._ts_container.TopToolStripPanel.Controls.Add(this.toolStrip2);
       this._ts_container.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
       // 
-      // _slide_control
-      // 
-      this._slide_control.BackColor = System.Drawing.Color.White;
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(10, 10);
-      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(461, 366);
-      this._slide_control.SlideSpeed = 250;
-      this._slide_control.TabIndex = 1;
-      // 
       // toolStrip1
       // 
       this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -110,7 +98,7 @@
             this._btn_settings});
       this.toolStrip1.Location = new System.Drawing.Point(0, 43);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(32, 96);
+      this.toolStrip1.Size = new System.Drawing.Size(24, 77);
       this.toolStrip1.TabIndex = 0;
       // 
       // _btn_settings
@@ -120,7 +108,7 @@
       this._btn_settings.Image = global::Parsley.Properties.Resources.agt_utilities;
       this._btn_settings.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._btn_settings.Name = "_btn_settings";
-      this._btn_settings.Size = new System.Drawing.Size(30, 72);
+      this._btn_settings.Size = new System.Drawing.Size(22, 72);
       this._btn_settings.Text = "Settings";
       this._btn_settings.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
       this._btn_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -133,8 +121,8 @@
       this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._btn_back,
-            this.openToolStripButton,
-            this.saveToolStripButton,
+            this._btn_load_configuration,
+            this._btn_save_configuration,
             this.toolStripSeparator2,
             this.x,
             this.toolStripSeparator1,
@@ -143,7 +131,7 @@
       this.toolStrip2.Location = new System.Drawing.Point(3, 0);
       this.toolStrip2.Name = "toolStrip2";
       this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.toolStrip2.Size = new System.Drawing.Size(165, 25);
+      this.toolStrip2.Size = new System.Drawing.Size(196, 25);
       this.toolStrip2.TabIndex = 5;
       // 
       // _btn_back
@@ -157,25 +145,27 @@
       this._btn_back.ToolTipText = "Go back to previous slide";
       this._btn_back.Click += new System.EventHandler(this._btn_back_Click);
       // 
-      // openToolStripButton
+      // _btn_load_configuration
       // 
-      this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-      this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.openToolStripButton.Name = "openToolStripButton";
-      this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-      this.openToolStripButton.Text = "&Open";
-      this.openToolStripButton.ToolTipText = "Load Parsley configuration";
+      this._btn_load_configuration.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this._btn_load_configuration.Image = ((System.Drawing.Image)(resources.GetObject("_btn_load_configuration.Image")));
+      this._btn_load_configuration.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._btn_load_configuration.Name = "_btn_load_configuration";
+      this._btn_load_configuration.Size = new System.Drawing.Size(23, 22);
+      this._btn_load_configuration.Text = "&Open";
+      this._btn_load_configuration.ToolTipText = "Load Parsley configuration";
+      this._btn_load_configuration.Click += new System.EventHandler(this._btn_load_configuration_Click);
       // 
-      // saveToolStripButton
+      // _btn_save_configuration
       // 
-      this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-      this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.saveToolStripButton.Name = "saveToolStripButton";
-      this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
-      this.saveToolStripButton.Text = "&Save";
-      this.saveToolStripButton.ToolTipText = "Save current Parsley configuration";
+      this._btn_save_configuration.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this._btn_save_configuration.Image = ((System.Drawing.Image)(resources.GetObject("_btn_save_configuration.Image")));
+      this._btn_save_configuration.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._btn_save_configuration.Name = "_btn_save_configuration";
+      this._btn_save_configuration.Size = new System.Drawing.Size(23, 22);
+      this._btn_save_configuration.Text = "&Save";
+      this._btn_save_configuration.ToolTipText = "Save current Parsley configuration";
+      this._btn_save_configuration.Click += new System.EventHandler(this._btn_save_configuration_Click);
       // 
       // toolStripSeparator2
       // 
@@ -248,9 +238,21 @@
       this._status_label.Size = new System.Drawing.Size(190, 17);
       this._status_label.Text = "Here goes Info/Warnings/Errors";
       // 
+      // _slide_control
+      // 
+      this._slide_control.BackColor = System.Drawing.Color.White;
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(10, 10);
+      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(469, 366);
+      this._slide_control.SlideSpeed = 250;
+      this._slide_control.TabIndex = 1;
+      // 
       // _properties
       // 
-      this._properties.Location = new System.Drawing.Point(207, 10);
+      this._properties.Location = new System.Drawing.Point(183, 10);
       this._properties.Name = "_properties";
       this._properties.Size = new System.Drawing.Size(306, 366);
       this._properties.TabIndex = 3;
@@ -294,8 +296,8 @@
     private System.Windows.Forms.ToolStripContainer _ts_container;
     private System.Windows.Forms.ToolStrip toolStrip2;
     private System.Windows.Forms.ToolStripButton _btn_back;
-    private System.Windows.Forms.ToolStripButton openToolStripButton;
-    private System.Windows.Forms.ToolStripButton saveToolStripButton;
+    private System.Windows.Forms.ToolStripButton _btn_load_configuration;
+    private System.Windows.Forms.ToolStripButton _btn_save_configuration;
     private System.Windows.Forms.ToolStripDropDownButton x;
     private System.Windows.Forms.ToolStripMenuItem _btn_intrinsic_calibration;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
