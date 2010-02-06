@@ -159,6 +159,26 @@ namespace Parsley {
       _properties.UpdatePosition();
     }
 
+    private void _btn_load_configuration_Click(object sender, EventArgs e) {
+      if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
+        if (_context.LoadBinary(_open_dlg.FileName)) {
+          _context.StatusDisplay.UpdateStatus("Sucessfully loaded Parsley configuration.", Status.Ok);
+        } else {
+          _context.StatusDisplay.UpdateStatus("Loading Parsley configuration failed.", Status.Error);
+        }
+      }
+    }
+
+    private void _btn_save_configuration_Click(object sender, EventArgs e) {
+      if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
+        if (_context.SaveBinary(_save_dialog.FileName)) {
+          _context.StatusDisplay.UpdateStatus("Sucessfully saved Parsley configuration.", Status.Ok);
+        } else {
+          _context.StatusDisplay.UpdateStatus("Saving Parsley configuration failed.", Status.Error);
+        }
+      }
+    }
+
     
   }
 }
