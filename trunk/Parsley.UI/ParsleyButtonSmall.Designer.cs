@@ -28,9 +28,10 @@
       // ParsleyButtonSmall
       // 
       this.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-      this.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.Image = global::Parsley.UI.Properties.Resources.parsley24;
-      this.Size = new System.Drawing.Size(190, 35);
+      this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.ForeColor = System.Drawing.Color.Black;
+      this.Image = global::Parsley.UI.Properties.Resources.parsley16;
+      this.Size = new System.Drawing.Size(142, 27);
       this.ResumeLayout(false);
 
     }
