@@ -82,12 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CameraParameterSlide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CameraParameterSlide.Designer.cs">
-      <DependentUpon>CameraParameterSlide.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConfigurationSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -131,6 +125,7 @@
     <Compile Include="IntrinsicCalibrationSlide.Designer.cs">
       <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="IStatusDisplay.cs" />
     <Compile Include="LaserSetupSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,10 +146,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CameraParameterSlide.resx">
-      <DependentUpon>CameraParameterSlide.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="ConfigurationSlide.resx">
       <DependentUpon>ConfigurationSlide.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,8 +187,8 @@
     <EmbeddedResource Include="SetupSlide.resx">
       <DependentUpon>SetupSlide.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WorldSetupSlide.resx">
-      <DependentUpon>WorldSetupSlide.cs</DependentUpon>
+    <EmbeddedResource Include="WelcomeSlide.resx">
+      <DependentUpon>WelcomeSlide.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -225,11 +216,12 @@
     <Compile Include="SetupSlide.Designer.cs">
       <DependentUpon>SetupSlide.cs</DependentUpon>
     </Compile>
-    <Compile Include="WorldSetupSlide.cs">
+    <Compile Include="StatusStripStatusDisplay.cs" />
+    <Compile Include="WelcomeSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WorldSetupSlide.Designer.cs">
-      <DependentUpon>WorldSetupSlide.cs</DependentUpon>
+    <Compile Include="WelcomeSlide.Designer.cs">
+      <DependentUpon>WelcomeSlide.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +274,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\agt_utilities.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

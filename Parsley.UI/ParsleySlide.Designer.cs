@@ -57,6 +57,7 @@
 
     #endregion
 
-    private GrowLabel growLabel1;
+    protected GrowLabel growLabel1;
+
   }
 }

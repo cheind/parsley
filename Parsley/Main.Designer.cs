@@ -27,26 +27,29 @@
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._ts_container = new System.Windows.Forms.ToolStripContainer();
+      this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this._btn_settings = new System.Windows.Forms.ToolStripButton();
       this.toolStrip2 = new System.Windows.Forms.ToolStrip();
       this._btn_back = new System.Windows.Forms.ToolStripButton();
       this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.x = new System.Windows.Forms.ToolStripDropDownButton();
       this._btn_intrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
-      this._slide_control = new SlickInterface.SlideControl();
+      this._status_strip = new System.Windows.Forms.StatusStrip();
+      this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
       this._properties = new Parsley.PropertyPane();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
       this._ts_container.TopToolStripPanel.SuspendLayout();
       this._ts_container.SuspendLayout();
       this.toolStrip1.SuspendLayout();
       this.toolStrip2.SuspendLayout();
+      this._status_strip.SuspendLayout();
       this.SuspendLayout();
       // 
       // _save_dialog
@@ -67,7 +70,7 @@
       this._ts_container.ContentPanel.Controls.Add(this._properties);
       this._ts_container.ContentPanel.Controls.Add(this._slide_control);
       this._ts_container.ContentPanel.Padding = new System.Windows.Forms.Padding(10);
-      this._ts_container.ContentPanel.Size = new System.Drawing.Size(682, 460);
+      this._ts_container.ContentPanel.Size = new System.Drawing.Size(481, 386);
       this._ts_container.Dock = System.Windows.Forms.DockStyle.Fill;
       this._ts_container.LeftToolStripPanelVisible = false;
       this._ts_container.Location = new System.Drawing.Point(0, 0);
@@ -76,7 +79,7 @@
       // _ts_container.RightToolStripPanel
       // 
       this._ts_container.RightToolStripPanel.Controls.Add(this.toolStrip1);
-      this._ts_container.Size = new System.Drawing.Size(706, 485);
+      this._ts_container.Size = new System.Drawing.Size(513, 411);
       this._ts_container.TabIndex = 3;
       this._ts_container.Text = "toolStripContainer1";
       // 
@@ -86,15 +89,28 @@
       this._ts_container.TopToolStripPanel.Controls.Add(this.toolStrip2);
       this._ts_container.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
       // 
+      // _slide_control
+      // 
+      this._slide_control.BackColor = System.Drawing.Color.White;
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(10, 10);
+      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(461, 366);
+      this._slide_control.SlideSpeed = 250;
+      this._slide_control.TabIndex = 1;
+      // 
       // toolStrip1
       // 
+      this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.None;
       this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
       this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._btn_settings});
-      this.toolStrip1.Location = new System.Drawing.Point(0, 3);
+      this.toolStrip1.Location = new System.Drawing.Point(0, 43);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(24, 89);
+      this.toolStrip1.Size = new System.Drawing.Size(32, 96);
       this.toolStrip1.TabIndex = 0;
       // 
       // _btn_settings
@@ -104,15 +120,15 @@
       this._btn_settings.Image = global::Parsley.Properties.Resources.agt_utilities;
       this._btn_settings.ImageTransparentColor = System.Drawing.Color.Magenta;
       this._btn_settings.Name = "_btn_settings";
-      this._btn_settings.Size = new System.Drawing.Size(22, 84);
-      this._btn_settings.Text = "Properties";
+      this._btn_settings.Size = new System.Drawing.Size(30, 72);
+      this._btn_settings.Text = "Settings";
       this._btn_settings.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
       this._btn_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
       this._btn_settings.Click += new System.EventHandler(this._btn_settings_Click);
       // 
       // toolStrip2
       // 
-      this.toolStrip2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
       this.toolStrip2.GripMargin = new System.Windows.Forms.Padding(0);
       this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -127,7 +143,7 @@
       this.toolStrip2.Location = new System.Drawing.Point(3, 0);
       this.toolStrip2.Name = "toolStrip2";
       this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.toolStrip2.Size = new System.Drawing.Size(196, 25);
+      this.toolStrip2.Size = new System.Drawing.Size(165, 25);
       this.toolStrip2.TabIndex = 5;
       // 
       // _btn_back
@@ -160,6 +176,11 @@
       this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
       this.saveToolStripButton.Text = "&Save";
       this.saveToolStripButton.ToolTipText = "Save current Parsley configuration";
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
       // x
       // 
@@ -209,37 +230,39 @@
       this._btn_show_3d_visualization.Text = "toolStripButton1";
       this._btn_show_3d_visualization.Click += new System.EventHandler(this._btn_show_3d_visualization_Click);
       // 
-      // _slide_control
+      // _status_strip
       // 
-      this._slide_control.BackColor = System.Drawing.Color.White;
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(10, 10);
-      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(662, 440);
-      this._slide_control.SlideSpeed = 250;
-      this._slide_control.TabIndex = 1;
+      this._status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._status_label});
+      this._status_strip.Location = new System.Drawing.Point(0, 411);
+      this._status_strip.Name = "_status_strip";
+      this._status_strip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+      this._status_strip.Size = new System.Drawing.Size(513, 22);
+      this._status_strip.SizingGrip = false;
+      this._status_strip.TabIndex = 4;
+      // 
+      // _status_label
+      // 
+      this._status_label.Image = global::Parsley.Properties.Resources.ok;
+      this._status_label.Name = "_status_label";
+      this._status_label.Size = new System.Drawing.Size(190, 17);
+      this._status_label.Text = "Here goes Info/Warnings/Errors";
       // 
       // _properties
       // 
-      this._properties.Location = new System.Drawing.Point(373, 0);
+      this._properties.Location = new System.Drawing.Point(207, 10);
       this._properties.Name = "_properties";
-      this._properties.Size = new System.Drawing.Size(306, 460);
+      this._properties.Size = new System.Drawing.Size(306, 366);
       this._properties.TabIndex = 3;
       this._properties.Visible = false;
-      // 
-      // toolStripSeparator2
-      // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(706, 485);
+      this.ClientSize = new System.Drawing.Size(513, 433);
       this.Controls.Add(this._ts_container);
+      this.Controls.Add(this._status_strip);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Main";
       this.Text = "Welcome to Parsely!";
@@ -256,7 +279,10 @@
       this.toolStrip1.PerformLayout();
       this.toolStrip2.ResumeLayout(false);
       this.toolStrip2.PerformLayout();
+      this._status_strip.ResumeLayout(false);
+      this._status_strip.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -279,6 +305,8 @@
     private System.Windows.Forms.ToolStripButton _btn_settings;
     private PropertyPane _properties;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.StatusStrip _status_strip;
+    private System.Windows.Forms.ToolStripStatusLabel _status_label;
   }
 }
 

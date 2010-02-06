@@ -160,7 +160,6 @@
       this._btn_advanced.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this._btn_advanced.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
       this._btn_advanced.UseVisualStyleBackColor = true;
-      this._btn_advanced.Click += new System.EventHandler(this._btn_advanced_Click);
       // 
       // label5
       // 

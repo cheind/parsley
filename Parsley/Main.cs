@@ -15,6 +15,8 @@ namespace Parsley {
     private Context _context;
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
+
+    private IStatusDisplay _status_display;
     
 
     private MainSlide _slide_main;
@@ -25,11 +27,10 @@ namespace Parsley {
     private Examples.ScanningAttempt _slide_scanning;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
-    private CameraParameterSlide _slide_cam_parameters;
     private LaserSetupSlide _slide_laser_setup;
     private SetupSlide _slide_setup;
-    private WorldSetupSlide _slide_world_setup;
-
+    private WelcomeSlide _slide_welcome;
+    
     private ConfigurationSlide _slide_configuration;
     
     public Main() {
@@ -57,46 +58,37 @@ namespace Parsley {
       _3d_viewer.RenderLoop.Start();
       //_3d_viewer.Show();
 
-       _context = new Context(world, fg , _3d_viewer.RenderLoop, _live_feed.ROIHandler);
+      _status_display = new StatusStripStatusDisplay(_status_strip, _status_label);
+       _context = new Context(world, fg , _3d_viewer.RenderLoop, _live_feed.ROIHandler, _status_display);
        _properties.Context = _context;
        //_property_pane = new PropertyPane(_context);
        //this.Controls.Add(_property_pane);
 
+       _slide_welcome = new WelcomeSlide();
+
       _slide_main = new MainSlide();
       _slide_setup = new SetupSlide(_context);
       _slide_examples = new ExamplesSlide();
-      _slide_cam_parameters = new CameraParameterSlide(_context);
-      //_slide_extract_laser_line = new Parsley.Examples.ExtractLaserLineSlide(_context);
-      //_slide_track_checkerboard = new Parsley.Examples.TrackCheckerboard3D(_context);
-      //_slide_roi = new Parsley.Examples.ROISlide(_context);
       _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
       
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
-      _slide_world_setup = new WorldSetupSlide(_context);
 
       _slide_configuration = new ConfigurationSlide(_context);
 
+      _slide_control.AddSlide(_slide_welcome);
       _slide_control.AddSlide(_slide_configuration);
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_setup);
       _slide_control.AddSlide(_slide_examples);
-      //_slide_control.AddSlide(_slide_extract_laser_line);
-      //_slide_control.AddSlide(_slide_track_checkerboard);
-      //_slide_control.AddSlide(_slide_roi);
       _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
-      _slide_control.AddSlide(_slide_cam_parameters);
       _slide_control.AddSlide(_slide_laser_setup);
-      _slide_control.AddSlide(_slide_world_setup);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
-      _slide_control.Selected = _slide_main;
-      _slide_control.ForwardTo<SetupSlide>();
-      _slide_control.ForwardTo<WorldSetupSlide>();
-      _slide_control.ForwardTo<ConfigurationSlide>();
+      _slide_control.Selected = _slide_welcome;
     }
 
     void _3d_viewer_FormClosing(object sender, FormClosingEventArgs e) {

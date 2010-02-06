@@ -31,9 +31,5 @@ namespace Parsley {
         Context.SaveBinary(_save_dialog.FileName);
       }
     }
-
-    private void _btn_advanced_Click(object sender, EventArgs e) {
-      this.SlideControl.ForwardTo<WorldSetupSlide>();
-    }
   }
 }

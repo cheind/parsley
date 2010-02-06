@@ -44,10 +44,11 @@ namespace Parsley {
       _cb_auto_take.Checked = false;
       _btn_calibrate.Enabled = false;
       _btn_take_image.Enabled = true;
-      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {
-        _lbl_info.Text = "The camera already has a calibration. You can restart the calibration process by taking images. You need at least 3 images to proceed.";
+
+      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {        
+        Context.StatusDisplay.UpdateStatus("The camera already has a calibration. You can restart the calibration process by taking images.", Status.Ok);
       } else {
-        _lbl_info.Text = "Start the calibration process by taking images of your chessboard. You need at least 3 images to complete the calibration.";
+        Context.StatusDisplay.UpdateStatus("Start the calibration process by taking images of your chessboard.", Status.Ok);
       }
       
       _ic.ClearViews();
@@ -67,12 +68,11 @@ namespace Parsley {
     }
 
     void _bw_calibrator_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-      _ic.ClearViews();
       _btn_calibrate.Enabled = false;
       _btn_take_image.Enabled = true;
       _cb_auto_take.Enabled = true;
       _cb_auto_take.Checked = false;
-      _lbl_info.Text = "Calibration succeeded!";
+      Context.StatusDisplay.UpdateStatus("Calibration succeeded", Status.Ok);
       EventHandler<EventArgs> d = OnCalibrationSucceeded;
       if (d != null) {
         d(this, new EventArgs());
@@ -89,9 +89,20 @@ namespace Parsley {
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
       pattern.FindPattern(gray);
+      this.UpdateStatusDisplay(pattern.PatternFound);
       this.HandleTakeImageRequest();
       this.DrawCoordinateFrame(img);
       pattern.DrawPattern(img, pattern.ImagePoints, pattern.PatternFound);
+    }
+
+    private void UpdateStatusDisplay(bool pattern_found) {
+      if (_ic.Views.Count == 0) {
+        if (pattern_found) {
+          Context.StatusDisplay.UpdateStatus("Pattern found", Status.Ok);
+        } else {
+          Context.StatusDisplay.UpdateStatus("Pattern not found", Status.Error);
+        }
+      }
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
@@ -105,8 +116,8 @@ namespace Parsley {
       if (_take_image_request) {
         if (Context.World.IntrinsicPattern.PatternFound) {
           _ic.AddView(Context.World.IntrinsicPattern.ImagePoints);
-          this.Invoke((MethodInvoker)delegate {
-            _lbl_info.Text = String.Format("You have successfully acquired {0} calibration image(s)", _ic.Views.Count);
+          Context.StatusDisplay.UpdateStatus(String.Format("You have successfully acquired {0} calibration images.", _ic.Views.Count), Status.Ok);
+          this.Invoke((MethodInvoker)delegate {  
             _btn_calibrate.Enabled = _ic.Views.Count > 2 && !_cb_auto_take.Checked;
           });
         }
@@ -114,11 +125,11 @@ namespace Parsley {
       _take_image_request = false;
     }
 
-    private void x_btn_take_image_Click(object sender, EventArgs e) {
+    private void btn_take_image_Click(object sender, EventArgs e) {
       _take_image_request = true;
     }
 
-    private void x_btn_calibrate_Click(object sender, EventArgs e) {
+    private void btn_calibrate_Click(object sender, EventArgs e) {
       _take_image_request = false;
       _timer_auto.Enabled = false;
       _cb_auto_take.Enabled = false;
@@ -131,13 +142,9 @@ namespace Parsley {
       _btn_take_image.Enabled = !_cb_auto_take.Checked;
       _btn_calibrate.Enabled = !_cb_auto_take.Checked && _ic.Views.Count > 2;
       if (_cb_auto_take.Checked) {
-        _lbl_info.Text = "Auto-taking calibration images every three seconds.";
+        Context.StatusDisplay.UpdateStatus("Auto-taking calibration images every three seconds.", Status.Ok);
       }
       _timer_auto.Enabled = _cb_auto_take.Checked;
-    }
-
-    private void header1_Load(object sender, EventArgs e) {
-
     }
   }
 }
