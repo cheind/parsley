@@ -7,6 +7,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters.Soap;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace Parsley {
 
@@ -19,6 +21,8 @@ namespace Parsley {
     private Core.BuildingBlocks.RenderLoop _rl;
     private UI.Concrete.ROIHandler _roi_handler;
     private List<Core.BuildingBlocks.ReferencePlane> _references;
+    private IStatusDisplay _status_display;
+  
 
     public event EventHandler<EventArgs> OnConfigurationLoaded;
 
@@ -26,8 +30,10 @@ namespace Parsley {
       Core.BuildingBlocks.World world,
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
-      UI.Concrete.ROIHandler roi_handler) 
+      UI.Concrete.ROIHandler roi_handler,
+      IStatusDisplay status_display) 
     {
+      _status_display = status_display; 
       _world = world;
       _fg = fg;
       _rl = rl;
@@ -70,6 +76,13 @@ namespace Parsley {
           // Todo: Update aspect ratio of 3d viewer
         }
       }
+    }
+
+    /// <summary>
+    /// Get the object that displays status messages
+    /// </summary>
+    public IStatusDisplay StatusDisplay {
+      get { return _status_display; }
     }
 
     /// <summary>

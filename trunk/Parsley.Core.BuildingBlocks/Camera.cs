@@ -74,6 +74,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Connect to camera at given device index
     /// </summary>
     [Description("Specifies the camera device index to use. A device index less than zero indicates no connection. Default is zero.")]
+    [RefreshProperties(RefreshProperties.All)]
     public int DeviceIndex {
       get { lock (this) { return _device_index; } }
       set {

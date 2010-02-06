@@ -81,6 +81,20 @@ namespace Parsley.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap error {
+            get {
+                object obj = ResourceManager.GetObject("error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ok {
+            get {
+                object obj = ResourceManager.GetObject("ok", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap package_games_board {
             get {
                 object obj = ResourceManager.GetObject("package_games_board", resourceCulture);
@@ -98,6 +112,13 @@ namespace Parsley.Properties {
         internal static System.Drawing.Bitmap package_graphics48 {
             get {
                 object obj = ResourceManager.GetObject("package_graphics48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap parsley64 {
+            get {
+                object obj = ResourceManager.GetObject("parsley64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
