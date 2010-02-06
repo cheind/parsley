@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C98E003-741C-4C11-9030-3CCAAB7CAA66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -88,6 +88,12 @@
     <Compile Include="CameraParameterSlide.Designer.cs">
       <DependentUpon>CameraParameterSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigurationSlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConfigurationSlide.Designer.cs">
+      <DependentUpon>ConfigurationSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="ContextSlide.cs">
       <SubType>UserControl</SubType>
@@ -100,18 +106,6 @@
     </Compile>
     <Compile Include="ExamplesSlide.Designer.cs">
       <DependentUpon>ExamplesSlide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\ExtractLaserLineSlide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Examples\ExtractLaserLineSlide.Designer.cs">
-      <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\ROISlide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Examples\ROISlide.Designer.cs">
-      <DependentUpon>ROISlide.cs</DependentUpon>
     </Compile>
     <Compile Include="Examples\ScanningAttempt.cs">
       <SubType>UserControl</SubType>
@@ -161,12 +155,11 @@
       <DependentUpon>CameraParameterSlide.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfigurationSlide.resx">
+      <DependentUpon>ConfigurationSlide.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExamplesSlide.resx">
       <DependentUpon>ExamplesSlide.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Examples\ExtractLaserLineSlide.resx">
-      <DependentUpon>ExtractLaserLineSlide.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Examples\ScanningAttempt.resx">
@@ -197,6 +190,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="PropertyPane.resx">
+      <DependentUpon>PropertyPane.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetupSlide.resx">
       <DependentUpon>SetupSlide.cs</DependentUpon>
     </EmbeddedResource>
@@ -206,6 +202,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -215,6 +212,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PropertyPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PropertyPane.Designer.cs">
+      <DependentUpon>PropertyPane.cs</DependentUpon>
     </Compile>
     <Compile Include="SetupSlide.cs">
       <SubType>UserControl</SubType>
@@ -246,6 +249,39 @@
       <Project>{9708F1BC-959D-4539-82DB-0FB96B879AD4}</Project>
       <Name>SlickInterface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xine1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restart-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xine2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3d.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\package_graphics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\package_graphics48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\package_games_board.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agt_utilities.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

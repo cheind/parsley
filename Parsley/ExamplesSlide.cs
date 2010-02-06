@@ -14,11 +14,11 @@ namespace Parsley {
     }
 
     private void _btn_extract_laser_line_Click(object sender, EventArgs e) {
-      this.SlideControl.ForwardTo<Examples.ExtractLaserLineSlide>();
+      //this.SlideControl.ForwardTo<Examples.ExtractLaserLineSlide>();
     }
 
     private void _btn_display_roi_Click(object sender, EventArgs e) {
-      this.SlideControl.ForwardTo<Examples.ROISlide>();
+      //this.SlideControl.ForwardTo<Examples.ROISlide>();
     }
 
     private void _btn_scanning_Click(object sender, EventArgs e) {

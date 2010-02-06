@@ -114,11 +114,11 @@ namespace Parsley {
       _take_image_request = false;
     }
 
-    private void _btn_take_image_Click(object sender, EventArgs e) {
+    private void x_btn_take_image_Click(object sender, EventArgs e) {
       _take_image_request = true;
     }
 
-    private void _btn_calibrate_Click(object sender, EventArgs e) {
+    private void x_btn_calibrate_Click(object sender, EventArgs e) {
       _take_image_request = false;
       _timer_auto.Enabled = false;
       _cb_auto_take.Enabled = false;
@@ -134,6 +134,10 @@ namespace Parsley {
         _lbl_info.Text = "Auto-taking calibration images every three seconds.";
       }
       _timer_auto.Enabled = _cb_auto_take.Checked;
+    }
+
+    private void header1_Load(object sender, EventArgs e) {
+
     }
   }
 }

@@ -1,5 +1,5 @@
-﻿namespace Parsley.UI {
-  partial class ParsleySlide {
+﻿namespace Parsley {
+  partial class PropertyPane {
     /// <summary> 
     /// Erforderliche Designervariable.
     /// </summary>
@@ -23,8 +23,20 @@
     /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
     /// </summary>
     private void InitializeComponent() {
+      this._pg_config = new System.Windows.Forms.PropertyGrid();
       this.growLabel1 = new Parsley.UI.GrowLabel();
       this.SuspendLayout();
+      // 
+      // _pg_config
+      // 
+      this._pg_config.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._pg_config.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._pg_config.Location = new System.Drawing.Point(0, 21);
+      this._pg_config.Name = "_pg_config";
+      this._pg_config.PropertySort = System.Windows.Forms.PropertySort.NoSort;
+      this._pg_config.Size = new System.Drawing.Size(308, 406);
+      this._pg_config.TabIndex = 3;
+      this._pg_config.ToolbarVisible = false;
       // 
       // growLabel1
       // 
@@ -35,28 +47,27 @@
       this.growLabel1.Location = new System.Drawing.Point(0, 0);
       this.growLabel1.MinimumSize = new System.Drawing.Size(0, 20);
       this.growLabel1.Name = "growLabel1";
-      this.growLabel1.Size = new System.Drawing.Size(550, 21);
-      this.growLabel1.TabIndex = 13;
-      this.growLabel1.Text = "Intrinsic Camera Calibration";
+      this.growLabel1.Size = new System.Drawing.Size(308, 21);
+      this.growLabel1.TabIndex = 14;
+      this.growLabel1.Text = "Properties";
       this.growLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
-      // ParsleySlide
+      // PropertyPane
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.BackColor = System.Drawing.Color.White;
+      this.Controls.Add(this._pg_config);
       this.Controls.Add(this.growLabel1);
-      this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.ForeColor = System.Drawing.Color.Black;
-      this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-      this.Name = "ParsleySlide";
-      this.Size = new System.Drawing.Size(550, 173);
+      this.Name = "PropertyPane";
+      this.Size = new System.Drawing.Size(308, 427);
+      this.VisibleChanged += new System.EventHandler(this.PropertyPane_VisibleChanged);
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private GrowLabel growLabel1;
+    private System.Windows.Forms.PropertyGrid _pg_config;
+    private Parsley.UI.GrowLabel growLabel1;
   }
 }
