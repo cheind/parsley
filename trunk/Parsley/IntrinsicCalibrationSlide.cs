@@ -38,20 +38,8 @@ namespace Parsley {
 
 
     protected override void OnSlidingIn() {
+      this.OnConfigurationLoaded(this, null);
       base.OnSlidingIn();
-      _ic = new Parsley.Core.IntrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.FrameSize);
-      _timer_auto.Enabled = false;
-      _cb_auto_take.Checked = false;
-      _btn_calibrate.Enabled = false;
-      _btn_take_image.Enabled = true;
-
-      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {        
-        Context.StatusDisplay.UpdateStatus("The camera already has a calibration. You can restart the calibration process by taking images.", Status.Ok);
-      } else {
-        Context.StatusDisplay.UpdateStatus("Start the calibration process by taking images of your chessboard.", Status.Ok);
-      }
-      
-      _ic.ClearViews();
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
@@ -61,6 +49,21 @@ namespace Parsley {
         _timer_auto.Enabled = false;
         base.OnSlidingOut(args);
       }
+    }
+
+    protected override void OnConfigurationLoaded(object sender, EventArgs e) {
+      _ic = new Parsley.Core.IntrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.FrameSize);
+      _ic.ClearViews();
+      _timer_auto.Enabled = false;
+      _cb_auto_take.Checked = false;
+      _btn_calibrate.Enabled = false;
+      _btn_take_image.Enabled = true;
+      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {
+        Context.StatusDisplay.UpdateStatus("The camera already has a calibration. You can restart the calibration process by taking images.", Status.Ok);
+      } else {
+        Context.StatusDisplay.UpdateStatus("Start the calibration process by taking images of your chessboard.", Status.Ok);
+      }
+      
     }
 
     void _timer_auto_Tick(object sender, EventArgs e) {
@@ -145,6 +148,10 @@ namespace Parsley {
         Context.StatusDisplay.UpdateStatus("Auto-taking calibration images every three seconds.", Status.Ok);
       }
       _timer_auto.Enabled = _cb_auto_take.Checked;
+    }
+
+    private void richTextBox1_TextChanged(object sender, EventArgs e) {
+
     }
   }
 }

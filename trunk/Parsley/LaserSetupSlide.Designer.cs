@@ -25,46 +25,16 @@
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaserSetupSlide));
-      this._cmb_laser_color = new System.Windows.Forms.ComboBox();
-      this.label1 = new System.Windows.Forms.Label();
-      this._pg_algorithm_settings = new System.Windows.Forms.PropertyGrid();
       this._btn_filter_noise = new Parsley.UI.ParsleyButtonSmall();
       this._timer_take_image = new System.Windows.Forms.Timer(this.components);
       this.parsleyButtonSmall1 = new Parsley.UI.ParsleyButtonSmall();
+      this.richTextBox1 = new System.Windows.Forms.RichTextBox();
       this.SuspendLayout();
       // 
-      // _cmb_laser_color
+      // growLabel1
       // 
-      this._cmb_laser_color.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this._cmb_laser_color.FormattingEnabled = true;
-      this._cmb_laser_color.Items.AddRange(new object[] {
-            "Blue",
-            "Green",
-            "Red"});
-      this._cmb_laser_color.Location = new System.Drawing.Point(264, 82);
-      this._cmb_laser_color.Name = "_cmb_laser_color";
-      this._cmb_laser_color.Size = new System.Drawing.Size(121, 27);
-      this._cmb_laser_color.TabIndex = 0;
-      this._cmb_laser_color.SelectedIndexChanged += new System.EventHandler(this._cmb_laser_color_SelectedIndexChanged);
-      // 
-      // label1
-      // 
-      this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(174, 85);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(84, 19);
-      this.label1.TabIndex = 1;
-      this.label1.Text = "Laser Color";
-      // 
-      // _pg_algorithm_settings
-      // 
-      this._pg_algorithm_settings.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this._pg_algorithm_settings.Location = new System.Drawing.Point(94, 124);
-      this._pg_algorithm_settings.Name = "_pg_algorithm_settings";
-      this._pg_algorithm_settings.Size = new System.Drawing.Size(291, 230);
-      this._pg_algorithm_settings.TabIndex = 0;
-      this._pg_algorithm_settings.ToolbarVisible = false;
+      this.growLabel1.Size = new System.Drawing.Size(418, 30);
+      this.growLabel1.Text = "Laser Configuration";
       // 
       // _btn_filter_noise
       // 
@@ -76,9 +46,10 @@
       this._btn_filter_noise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this._btn_filter_noise.Image = ((System.Drawing.Image)(resources.GetObject("_btn_filter_noise.Image")));
       this._btn_filter_noise.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_filter_noise.Location = new System.Drawing.Point(195, 369);
+      this._btn_filter_noise.Location = new System.Drawing.Point(171, 291);
+      this._btn_filter_noise.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this._btn_filter_noise.Name = "_btn_filter_noise";
-      this._btn_filter_noise.Size = new System.Drawing.Size(190, 35);
+      this._btn_filter_noise.Size = new System.Drawing.Size(166, 28);
       this._btn_filter_noise.TabIndex = 5;
       this._btn_filter_noise.Text = "Filter Chip Noise";
       this._btn_filter_noise.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -101,9 +72,10 @@
       this.parsleyButtonSmall1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
       this.parsleyButtonSmall1.Image = ((System.Drawing.Image)(resources.GetObject("parsleyButtonSmall1.Image")));
       this.parsleyButtonSmall1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.parsleyButtonSmall1.Location = new System.Drawing.Point(195, 410);
+      this.parsleyButtonSmall1.Location = new System.Drawing.Point(171, 324);
+      this.parsleyButtonSmall1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
       this.parsleyButtonSmall1.Name = "parsleyButtonSmall1";
-      this.parsleyButtonSmall1.Size = new System.Drawing.Size(190, 35);
+      this.parsleyButtonSmall1.Size = new System.Drawing.Size(166, 28);
       this.parsleyButtonSmall1.TabIndex = 6;
       this.parsleyButtonSmall1.Text = "Save Laser Data";
       this.parsleyButtonSmall1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,29 +83,41 @@
       this.parsleyButtonSmall1.UseVisualStyleBackColor = true;
       this.parsleyButtonSmall1.Click += new System.EventHandler(this.parsleyButtonSmall1_Click);
       // 
+      // richTextBox1
+      // 
+      this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
+      this.richTextBox1.Location = new System.Drawing.Point(4, 33);
+      this.richTextBox1.Name = "richTextBox1";
+      this.richTextBox1.Size = new System.Drawing.Size(414, 171);
+      this.richTextBox1.TabIndex = 18;
+      this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+      // 
       // LaserSetupSlide
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.richTextBox1);
       this.Controls.Add(this.parsleyButtonSmall1);
-      this.Controls.Add(this._pg_algorithm_settings);
       this.Controls.Add(this._btn_filter_noise);
-      this.Controls.Add(this.label1);
-      this.Controls.Add(this._cmb_laser_color);
+      this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
       this.Name = "LaserSetupSlide";
-      this.Size = new System.Drawing.Size(478, 486);
+      this.Size = new System.Drawing.Size(418, 384);
+      this.Controls.SetChildIndex(this._btn_filter_noise, 0);
+      this.Controls.SetChildIndex(this.parsleyButtonSmall1, 0);
+      this.Controls.SetChildIndex(this.growLabel1, 0);
+      this.Controls.SetChildIndex(this.richTextBox1, 0);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.ComboBox _cmb_laser_color;
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.PropertyGrid _pg_algorithm_settings;
     private Parsley.UI.ParsleyButtonSmall _btn_filter_noise;
     private System.Windows.Forms.Timer _timer_take_image;
     private Parsley.UI.ParsleyButtonSmall parsleyButtonSmall1;
+    private System.Windows.Forms.RichTextBox richTextBox1;
   }
 }

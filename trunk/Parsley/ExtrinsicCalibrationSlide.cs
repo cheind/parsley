@@ -30,9 +30,17 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.ExtrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
+      this.OnConfigurationLoaded(this, null);
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       base.OnSlidingIn();
+    }
+
+    protected override void OnConfigurationLoaded(object sender, EventArgs e) {
+      if (!Context.World.Camera.HasIntrinsics) {
+        Context.StatusDisplay.UpdateStatus("An intrinsic calibration is required to perform extrinsic calibration.", Status.Error);
+      } else {
+        _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.ExtrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
+      }
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
@@ -41,6 +49,12 @@ namespace Parsley {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+      // Constraint checking
+      if (!Context.World.Camera.HasIntrinsics) {
+        _on_roi = false;
+        return;
+      }
+
       Core.CalibrationPattern pattern = Context.World.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
@@ -57,14 +71,16 @@ namespace Parsley {
             pattern.ObjectPoints,
             out deviations,
             out points);
-          Console.WriteLine("Max error: {0}", deviations.Max());
-          Context.ReferencePlanes.Add(new Parsley.Core.BuildingBlocks.ReferencePlane(ecp, points, deviations));
+          Context.World.ReferencePlanes.Add(new Core.Plane(ecp));
+          Context.World.Extrinsics.Add(ecp);
+          Context.StatusDisplay.UpdateStatus(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.World.ReferencePlanes.Count, deviations.Max()), Status.Ok);
+        } else {
+          Context.StatusDisplay.UpdateStatus("Plane not detected. Please repeat", Status.Error);
         }
         _on_roi = false;
       }
-      foreach (Core.BuildingBlocks.ReferencePlane p in Context.ReferencePlanes) {
-        pattern.DrawCoordinateFrame(img, p.Extrinsic, Context.World.Camera.Intrinsics);
-        Core.ExtrinsicCalibration.VisualizeError(img, p.Extrinsic, Context.World.Camera.Intrinsics, p.Deviations, p.DeviationPoints);
+      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.World.Extrinsics) {
+        pattern.DrawCoordinateFrame(img, ecp, Context.World.Camera.Intrinsics);
       }
     }
 

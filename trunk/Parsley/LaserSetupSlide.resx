@@ -121,8 +121,8 @@
   <data name="_btn_filter_noise.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
-        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvgAA
-        Dr4B6kKxwAAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAGAAAABgAeEylpgAAABl0RVh0Q29tbWVu
+        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvQAA
+        Dr0BR/uQrQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAGAAAABgAeEylpgAAABl0RVh0Q29tbWVu
         dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
         MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
         lwAABxFJREFUSEullntQ01cWx3/talt36mxnZ/ev3bVF8YXIqxCeRVJe2qK8FIFCRRBCeCkPASHhlQTC
@@ -164,8 +164,8 @@
   <data name="parsleyButtonSmall1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
-        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvQAA
-        Dr0BR/uQrQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAGAAAABgAeEylpgAAABl0RVh0Q29tbWVu
+        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvAAA
+        DrwBlbxySQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAGAAAABgAeEylpgAAABl0RVh0Q29tbWVu
         dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
         MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
         lwAABxFJREFUSEullntQ01cWx3/talt36mxnZ/ev3bVF8YXIqxCeRVJe2qK8FIFCRRBCeCkPASHhlQTC
@@ -200,5 +200,10 @@
         gf92AIBibPp+0gfzy+wdTKVTHqPB/Aem8hD/6myy7exSwvt6qHw7wH9GEbAE3k6M0/a5Pa/Fy6u6zdeU
         UnHuHWFnyv/+Ht6A+jdYVfLT48THLQAAAABJRU5ErkJggg==
 </value>
+  </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>The laser configuration can be adjusted by using the settings on the right.
+
+Tune parameters so the laser line is robustly extracted. You can verify the robustness by looking at the augmented live-video feed.</value>
   </data>
 </root>

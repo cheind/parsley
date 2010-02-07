@@ -41,7 +41,7 @@ namespace Parsley.Examples {
 
     protected override void OnSlidingIn() {
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
-      _constraint = new Parsley.Core.NotParallelPlaneConstraint(new Core.Plane[]{Context.ReferencePlanes[0].Plane, Context.ReferencePlanes[1].Plane});
+      _constraint = new Parsley.Core.NotParallelPlaneConstraint(Context.World.ReferencePlanes);
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
           Core.BuildingBlocks.Perspective.FromCamera(Context.World.Camera, 1.0, 5000).ToInterop()
@@ -91,9 +91,9 @@ namespace Parsley.Examples {
         Core.Ray r = eye_rays[i];
 
         double min_t = Double.MaxValue;
-        foreach (Core.BuildingBlocks.ReferencePlane p in Context.ReferencePlanes) {
+        foreach (Core.Plane p in Context.World.ReferencePlanes) {
           double t;
-          Core.Intersection.RayPlane(r, p.Plane, out t);
+          Core.Intersection.RayPlane(r, p, out t);
           if (t < min_t) {
             min_t = t;
           }

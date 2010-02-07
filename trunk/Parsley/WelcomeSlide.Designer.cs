@@ -39,7 +39,7 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
       this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
-      this.richTextBox1.Location = new System.Drawing.Point(4, 37);
+      this.richTextBox1.Location = new System.Drawing.Point(4, 33);
       this.richTextBox1.Name = "richTextBox1";
       this.richTextBox1.Size = new System.Drawing.Size(546, 124);
       this.richTextBox1.TabIndex = 14;
@@ -59,12 +59,12 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.richTextBox1);
       this.Controls.Add(this.pictureBox1);
+      this.Controls.Add(this.richTextBox1);
       this.Name = "WelcomeSlide";
       this.Size = new System.Drawing.Size(550, 367);
-      this.Controls.SetChildIndex(this.pictureBox1, 0);
       this.Controls.SetChildIndex(this.richTextBox1, 0);
+      this.Controls.SetChildIndex(this.pictureBox1, 0);
       this.Controls.SetChildIndex(this.growLabel1, 0);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
       this.ResumeLayout(false);

@@ -168,4 +168,11 @@
         AAghcIAXe7RxJqXXThH12nP2IRTa9RjJ/wP4C6Vm2iyIu/axAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>The instrinsic calibration uses a known calibration pattern to calculate camera parameters. The calibration pattern can be adjusted using the settings on the right.
+
+To start the calibration, show the calibration pattern to the camera in different angles and from various distances. When the pattern is detected, take an image or use the auto-take image mechanism.
+
+During the intrinsic calibration the calibration pattern or the camera can move freely. Note however, that modifying the camera focus during or after intrinsic calibration will result in distorted 3D models.</value>
+  </data>
 </root>

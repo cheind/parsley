@@ -74,6 +74,13 @@ namespace Parsley.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap aisles {
+            get {
+                object obj = ResourceManager.GetObject("aisles", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap camera {
             get {
                 object obj = ResourceManager.GetObject("camera", resourceCulture);
@@ -84,6 +91,13 @@ namespace Parsley.Properties {
         internal static System.Drawing.Bitmap error {
             get {
                 object obj = ResourceManager.GetObject("error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap highlight {
+            get {
+                object obj = ResourceManager.GetObject("highlight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

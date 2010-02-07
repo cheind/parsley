@@ -179,6 +179,14 @@ namespace Parsley {
       }
     }
 
+    private void _btn_extrinsic_calibration_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<ExtrinsicCalibrationSlide>();
+    }
+
+    private void _btn_laser_configuration_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<LaserSetupSlide>();
+    }
+
     
   }
 }
