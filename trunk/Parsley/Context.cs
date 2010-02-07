@@ -20,7 +20,6 @@ namespace Parsley {
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
     private UI.Concrete.ROIHandler _roi_handler;
-    private List<Core.BuildingBlocks.ReferencePlane> _references;
     private IStatusDisplay _status_display;
   
 
@@ -38,7 +37,6 @@ namespace Parsley {
       _fg = fg;
       _rl = rl;
       _roi_handler = roi_handler;
-      _references = new List<Parsley.Core.BuildingBlocks.ReferencePlane>();
     }
 
     public bool SaveBinary(string filepath) {
@@ -121,13 +119,6 @@ namespace Parsley {
     /// </summary>
     public Core.BuildingBlocks.RenderLoop RenderLoop {
       get { return _rl; }
-    }
-
-    /// <summary>
-    /// Access the reference planes
-    /// </summary>
-    public List<Core.BuildingBlocks.ReferencePlane> ReferencePlanes {
-      get { return _references; }
     }
 
     /// <summary>
