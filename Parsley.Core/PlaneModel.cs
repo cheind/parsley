@@ -46,9 +46,9 @@ namespace Parsley.Core {
   }
 
   public class NotParallelPlaneConstraint : IRansacModelConstraint {
-    private Plane[] _planes;
+    private IEnumerable<Plane> _planes;
 
-    public NotParallelPlaneConstraint(Plane[] planes) {
+    public NotParallelPlaneConstraint(IEnumerable<Plane> planes) {
       _planes = planes;
     }
 
