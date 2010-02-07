@@ -11,7 +11,17 @@ namespace Parsley.Core.BuildingBlocks {
   /// </summary>
   [Serializable]
   public class Laser {
-    private int _channel;
+    /// <summary>
+    /// Defines the main color channel of the laser.
+    /// Enumeration matches Emgu BGR color format.
+    /// </summary>
+    public enum ColorChannel {
+      Blue = 0,
+      Green = 1,
+      Red = 2
+    }
+
+    private Laser.ColorChannel _color;
     private Core.LaserLineExtraction _algorithm;
     private Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> _threshold_img;
 
@@ -19,7 +29,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Instance a default red-light laser
     /// </summary>
     public Laser() {
-      _channel = 2; // Emgu color format is bgr.
+      _color = ColorChannel.Red;
       //_algorithm = new BrightestPixelLLE(30);
       _algorithm = new WeightedAverageLLE(30);
     }
@@ -27,13 +37,9 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Get/set the color channel the laser is to find in.
     /// </summary>
-    public int Channel {
-      get { return _channel; }
-      set {
-        if (value < 0 || value > 2)
-          throw new ArgumentOutOfRangeException("Channel");
-        _channel = value;
-      }
+    public ColorChannel Color {
+      get { return _color; }
+      set { _color = value; }
     }
 
     /// <summary>
@@ -72,7 +78,7 @@ namespace Parsley.Core.BuildingBlocks {
         // Create a black start image
         _threshold_img = new Emgu.CV.Image<Emgu.CV.Structure.Gray, byte>(img.Size);
       }
-      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = img[_channel]) {
+      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = img[(int)_color]) {
         _threshold_img._Max(channel);
       }
     }
@@ -93,7 +99,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <param name="channel">Image to search in.</param>
     /// <param name="laser_points">Laser points found.</param>
     public void FindLaserLine(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = img[_channel]) {
+      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = img[(int)_color]) {
         if (_threshold_img != null) {
           _algorithm.FindLaserLine(channel.Sub(_threshold_img));
         } else {
