@@ -29,6 +29,15 @@ namespace Parsley {
     public ContextSlide(Context context) {
       InitializeComponent();
       _c = context;
+      if (_c != null) {
+        _c.OnConfigurationLoaded += new EventHandler<EventArgs>(OnConfigurationLoaded);
+      }
+    }
+
+    /// <summary>
+    /// When the configuration was updated
+    /// </summary>
+    protected virtual void OnConfigurationLoaded(object sender, EventArgs e) {
     }
 
     /// <summary>
