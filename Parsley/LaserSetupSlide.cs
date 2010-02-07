@@ -24,9 +24,6 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      _pg_algorithm_settings.SelectedObject = Context.World.Laser;
-      _pg_algorithm_settings.Refresh();
-      _cmb_laser_color.SelectedIndex = Context.World.Laser.Channel;
       base.OnSlidingIn();
     }
 
@@ -54,11 +51,6 @@ namespace Parsley {
     private void _timer_take_image_Tick(object sender, EventArgs e) {
       _filter_enabled = false;
       _btn_filter_noise.Enabled = true;
-    }
-
-    private void _cmb_laser_color_SelectedIndexChanged(object sender, EventArgs e) {
-      Context.World.Laser.ClearThresholdImage();
-      Context.World.Laser.Channel = _cmb_laser_color.SelectedIndex;
     }
 
     private void _btn_filter_noise_Click(object sender, EventArgs e) {

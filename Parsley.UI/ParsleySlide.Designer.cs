@@ -33,12 +33,11 @@
       this.growLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(129)))), ((int)(((byte)(41)))));
       this.growLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
       this.growLabel1.Location = new System.Drawing.Point(0, 0);
-      this.growLabel1.MinimumSize = new System.Drawing.Size(0, 20);
+      this.growLabel1.MinimumSize = new System.Drawing.Size(0, 30);
       this.growLabel1.Name = "growLabel1";
-      this.growLabel1.Size = new System.Drawing.Size(550, 21);
+      this.growLabel1.Size = new System.Drawing.Size(550, 30);
       this.growLabel1.TabIndex = 13;
       this.growLabel1.Text = "Intrinsic Camera Calibration";
-      this.growLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       // 
       // ParsleySlide
       // 
