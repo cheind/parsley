@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Parsley.Core.Extensions;
+using log4net;
 
 namespace Parsley {
   public partial class Main : Form {
@@ -16,30 +17,25 @@ namespace Parsley {
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
 
-    private IStatusDisplay _status_display;
-    
+    private readonly ILog _logger = LogManager.GetLogger(typeof(Main));
+
 
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
-    //private Examples.ExtractLaserLineSlide _slide_extract_laser_line;
-    //private Examples.TrackCheckerboard3D _slide_track_checkerboard;
-    //private Examples.ROISlide _slide_roi;
     private Examples.ScanningAttempt _slide_scanning;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private LaserSetupSlide _slide_laser_setup;
     private SetupSlide _slide_setup;
     private WelcomeSlide _slide_welcome;
-    
-    private ConfigurationSlide _slide_configuration;
-    
+
     public Main() {
       InitializeComponent();
 
       // Try connect to default cam
       Core.BuildingBlocks.World world = new Parsley.Core.BuildingBlocks.World();
       Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(world.Camera);
-      
+
 
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
@@ -58,27 +54,30 @@ namespace Parsley {
       _3d_viewer.RenderLoop.Start();
       //_3d_viewer.Show();
 
-      _status_display = new StatusStripStatusDisplay(_status_strip, _status_label);
-       _context = new Context(world, fg , _3d_viewer.RenderLoop, _live_feed.ROIHandler, _status_display);
-       _properties.Context = _context;
-       //_property_pane = new PropertyPane(_context);
-       //this.Controls.Add(_property_pane);
+      _context = new Context(world, fg, _3d_viewer.RenderLoop, _live_feed.ROIHandler);
+      _properties.Context = _context;
 
-       _slide_welcome = new WelcomeSlide();
+      log4net.Appender.IAppender app = 
+        LogManager.GetRepository().GetAppenders().FirstOrDefault(x => x is Logging.StatusStripAppender);
+      if (app != null) {
+        Logging.StatusStripAppender ssa = app as Logging.StatusStripAppender;
+        ssa.StatusStrip = _status_strip;
+        ssa.ToolStripStatusLabel = _status_label;
+      }
+
+      _slide_welcome = new WelcomeSlide();
 
       _slide_main = new MainSlide();
       _slide_setup = new SetupSlide(_context);
       _slide_examples = new ExamplesSlide();
       _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
-      
+
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
 
-      _slide_configuration = new ConfigurationSlide(_context);
-
+      
       _slide_control.AddSlide(_slide_welcome);
-      _slide_control.AddSlide(_slide_configuration);
       _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_setup);
       _slide_control.AddSlide(_slide_examples);
@@ -138,10 +137,6 @@ namespace Parsley {
       _slide_control.ForwardTo<IntrinsicCalibrationSlide>();
     }
 
-    private void _btn_setup_Click(object sender, EventArgs e) {
-      _slide_control.ForwardTo<ConfigurationSlide>();
-    }
-
     private void _btn_intrinsic_calibration_Click(object sender, EventArgs e) {
       _slide_control.ForwardTo<IntrinsicCalibrationSlide>();
     }
@@ -162,9 +157,9 @@ namespace Parsley {
     private void _btn_load_configuration_Click(object sender, EventArgs e) {
       if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
         if (_context.LoadBinary(_open_dlg.FileName)) {
-          _context.StatusDisplay.UpdateStatus("Sucessfully loaded Parsley configuration.", Status.Ok);
+         _logger.Info("Sucessfully loaded Parsley configuration.");
         } else {
-          _context.StatusDisplay.UpdateStatus("Loading Parsley configuration failed.", Status.Error);
+          _logger.Error("Loading Parsley configuration failed.");
         }
       }
     }
@@ -172,9 +167,9 @@ namespace Parsley {
     private void _btn_save_configuration_Click(object sender, EventArgs e) {
       if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
         if (_context.SaveBinary(_save_dialog.FileName)) {
-          _context.StatusDisplay.UpdateStatus("Sucessfully saved Parsley configuration.", Status.Ok);
+          _logger.Info("Sucessfully saved Parsley configuration.");
         } else {
-          _context.StatusDisplay.UpdateStatus("Saving Parsley configuration failed.", Status.Error);
+          _logger.Error("Saving Parsley configuration failed.");
         }
       }
     }
@@ -187,6 +182,6 @@ namespace Parsley {
       _slide_control.ForwardTo<LaserSetupSlide>();
     }
 
-    
+
   }
 }

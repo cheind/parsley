@@ -107,7 +107,6 @@
       this.richTextBox1.Size = new System.Drawing.Size(388, 171);
       this.richTextBox1.TabIndex = 17;
       this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
-      this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
       // 
       // IntrinsicCalibrationSlide
       // 

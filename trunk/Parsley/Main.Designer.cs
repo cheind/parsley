@@ -30,20 +30,20 @@
       this._properties = new Parsley.PropertyPane();
       this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-      this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this._status_strip = new System.Windows.Forms.StatusStrip();
       this._btn_settings = new System.Windows.Forms.ToolStripButton();
+      this.toolStrip2 = new System.Windows.Forms.ToolStrip();
       this._btn_back = new System.Windows.Forms.ToolStripButton();
       this._btn_load_configuration = new System.Windows.Forms.ToolStripButton();
       this._btn_save_configuration = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.x = new System.Windows.Forms.ToolStripDropDownButton();
       this._btn_intrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_extrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_laser_configuration = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
+      this._status_strip = new System.Windows.Forms.StatusStrip();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
@@ -123,6 +123,19 @@
       this.toolStrip1.Size = new System.Drawing.Size(24, 77);
       this.toolStrip1.TabIndex = 0;
       // 
+      // _btn_settings
+      // 
+      this._btn_settings.CheckOnClick = true;
+      this._btn_settings.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_settings.Image = global::Parsley.Properties.Resources.agt_utilities;
+      this._btn_settings.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._btn_settings.Name = "_btn_settings";
+      this._btn_settings.Size = new System.Drawing.Size(22, 72);
+      this._btn_settings.Text = "Settings";
+      this._btn_settings.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
+      this._btn_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+      this._btn_settings.Click += new System.EventHandler(this._btn_settings_Click);
+      // 
       // toolStrip2
       // 
       this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
@@ -142,40 +155,6 @@
       this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
       this.toolStrip2.Size = new System.Drawing.Size(196, 25);
       this.toolStrip2.TabIndex = 5;
-      // 
-      // toolStripSeparator2
-      // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-      // 
-      // toolStripSeparator1
-      // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-      // 
-      // _status_strip
-      // 
-      this._status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._status_label});
-      this._status_strip.Location = new System.Drawing.Point(0, 411);
-      this._status_strip.Name = "_status_strip";
-      this._status_strip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this._status_strip.Size = new System.Drawing.Size(513, 22);
-      this._status_strip.SizingGrip = false;
-      this._status_strip.TabIndex = 4;
-      // 
-      // _btn_settings
-      // 
-      this._btn_settings.CheckOnClick = true;
-      this._btn_settings.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this._btn_settings.Image = global::Parsley.Properties.Resources.agt_utilities;
-      this._btn_settings.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this._btn_settings.Name = "_btn_settings";
-      this._btn_settings.Size = new System.Drawing.Size(22, 72);
-      this._btn_settings.Text = "Settings";
-      this._btn_settings.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
-      this._btn_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-      this._btn_settings.Click += new System.EventHandler(this._btn_settings_Click);
       // 
       // _btn_back
       // 
@@ -209,6 +188,11 @@
       this._btn_save_configuration.Text = "&Save";
       this._btn_save_configuration.ToolTipText = "Save current Parsley configuration";
       this._btn_save_configuration.Click += new System.EventHandler(this._btn_save_configuration_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
       // x
       // 
@@ -247,6 +231,11 @@
       this._btn_laser_configuration.Text = "Laser Configuration";
       this._btn_laser_configuration.Click += new System.EventHandler(this._btn_laser_configuration_Click);
       // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+      // 
       // _btn_show_camera_live_feed
       // 
       this._btn_show_camera_live_feed.CheckOnClick = true;
@@ -271,11 +260,22 @@
       this._btn_show_3d_visualization.Text = "toolStripButton1";
       this._btn_show_3d_visualization.Click += new System.EventHandler(this._btn_show_3d_visualization_Click);
       // 
+      // _status_strip
+      // 
+      this._status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._status_label});
+      this._status_strip.Location = new System.Drawing.Point(0, 411);
+      this._status_strip.Name = "_status_strip";
+      this._status_strip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+      this._status_strip.Size = new System.Drawing.Size(513, 22);
+      this._status_strip.SizingGrip = false;
+      this._status_strip.TabIndex = 4;
+      // 
       // _status_label
       // 
       this._status_label.Image = global::Parsley.Properties.Resources.ok;
       this._status_label.Name = "_status_label";
-      this._status_label.Size = new System.Drawing.Size(127, 16);
+      this._status_label.Size = new System.Drawing.Size(127, 17);
       this._status_label.Text = "Welcome to Parsley";
       // 
       // Main

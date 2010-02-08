@@ -20,8 +20,6 @@ namespace Parsley {
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
     private UI.Concrete.ROIHandler _roi_handler;
-    private IStatusDisplay _status_display;
-  
 
     public event EventHandler<EventArgs> OnConfigurationLoaded;
 
@@ -29,10 +27,8 @@ namespace Parsley {
       Core.BuildingBlocks.World world,
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
-      UI.Concrete.ROIHandler roi_handler,
-      IStatusDisplay status_display) 
+      UI.Concrete.ROIHandler roi_handler) 
     {
-      _status_display = status_display; 
       _world = world;
       _fg = fg;
       _rl = rl;
@@ -89,13 +85,6 @@ namespace Parsley {
          _fg.Start();
       }
       return success;
-    }
-
-    /// <summary>
-    /// Get the object that displays status messages
-    /// </summary>
-    public IStatusDisplay StatusDisplay {
-      get { return _status_display; }
     }
 
     /// <summary>
