@@ -26,7 +26,6 @@ namespace Parsley {
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private LaserSetupSlide _slide_laser_setup;
-    private SetupSlide _slide_setup;
     private WelcomeSlide _slide_welcome;
 
     public Main() {
@@ -68,7 +67,6 @@ namespace Parsley {
       _slide_welcome = new WelcomeSlide();
 
       _slide_main = new MainSlide();
-      _slide_setup = new SetupSlide(_context);
       _slide_examples = new ExamplesSlide();
       _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
 
@@ -79,7 +77,6 @@ namespace Parsley {
       
       _slide_control.AddSlide(_slide_welcome);
       _slide_control.AddSlide(_slide_main);
-      _slide_control.AddSlide(_slide_setup);
       _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
