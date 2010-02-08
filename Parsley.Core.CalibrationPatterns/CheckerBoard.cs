@@ -7,7 +7,7 @@ using Emgu.CV.Structure;
 using MathNet.Numerics.LinearAlgebra;
 using System.ComponentModel;
 
-namespace Parsley.Core {
+namespace Parsley.Core.CalibrationPatterns {
 
   /// <summary>
   /// Represents a checker board used for calibration.

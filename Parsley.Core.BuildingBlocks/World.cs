@@ -26,8 +26,8 @@ namespace Parsley.Core.BuildingBlocks {
     public World() {
       _camera = new Camera(0);
       _laser = new Laser();
-      _intrinsic_pattern = new Core.CheckerBoard(9, 6, 25.0f);
-      _extrinsic_pattern = new Core.CheckerBoard(9, 6, 10.0f);
+      _intrinsic_pattern = new Core.CalibrationPatterns.CheckerBoard(9, 6, 25.0f);
+      _extrinsic_pattern = new Core.CalibrationPatterns.CheckerBoard(9, 6, 10.0f);
       _reference_planes = new List<Plane>();
       _extrinsics = new List<Emgu.CV.ExtrinsicCameraParameters>();
     }
