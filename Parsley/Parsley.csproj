@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C98E003-741C-4C11-9030-3CCAAB7CAA66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -59,6 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\bin\Emgu.Util.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL" />
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL" />
     <Reference Include="Parsley.Draw3D, Version=1.0.3673.13486, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -82,12 +83,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationSlide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ConfigurationSlide.Designer.cs">
-      <DependentUpon>ConfigurationSlide.cs</DependentUpon>
-    </Compile>
     <Compile Include="Context.cs" />
     <Compile Include="ContextSlide.cs">
       <SubType>UserControl</SubType>
@@ -125,13 +120,13 @@
     <Compile Include="IntrinsicCalibrationSlide.Designer.cs">
       <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
     </Compile>
-    <Compile Include="IStatusDisplay.cs" />
     <Compile Include="LaserSetupSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="LaserSetupSlide.Designer.cs">
       <DependentUpon>LaserSetupSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logging\StatusStripAppender.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -146,9 +141,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ConfigurationSlide.resx">
-      <DependentUpon>ConfigurationSlide.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ExamplesSlide.resx">
       <DependentUpon>ExamplesSlide.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -216,7 +208,6 @@
     <Compile Include="SetupSlide.Designer.cs">
       <DependentUpon>SetupSlide.cs</DependentUpon>
     </Compile>
-    <Compile Include="StatusStripStatusDisplay.cs" />
     <Compile Include="WelcomeSlide.cs">
       <SubType>UserControl</SubType>
     </Compile>

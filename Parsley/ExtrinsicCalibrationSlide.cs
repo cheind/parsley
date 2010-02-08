@@ -37,7 +37,7 @@ namespace Parsley {
 
     protected override void OnConfigurationLoaded(object sender, EventArgs e) {
       if (!Context.World.Camera.HasIntrinsics) {
-        Context.StatusDisplay.UpdateStatus("An intrinsic calibration is required to perform extrinsic calibration.", Status.Error);
+        this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
       } else {
         _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.ExtrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
       }
@@ -73,9 +73,9 @@ namespace Parsley {
             out points);
           Context.World.ReferencePlanes.Add(new Core.Plane(ecp));
           Context.World.Extrinsics.Add(ecp);
-          Context.StatusDisplay.UpdateStatus(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.World.ReferencePlanes.Count, deviations.Max()), Status.Ok);
+          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.World.ReferencePlanes.Count, deviations.Max()));
         } else {
-          Context.StatusDisplay.UpdateStatus("Plane not detected. Please repeat", Status.Error);
+          this.Logger.Warn("Plane not detected. Please repeat");
         }
         _on_roi = false;
       }

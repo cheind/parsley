@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using log4net;
 
 namespace Parsley {
 
@@ -14,12 +15,14 @@ namespace Parsley {
   /// </summary>
   public partial class ContextSlide : UI.ParsleySlide {
     private Context _c;
+    private readonly ILog _logger;
 
     /// <summary>
     /// Empty constructor for designer
     /// </summary>
     public ContextSlide() {
       InitializeComponent();
+      _logger = LogManager.GetLogger(typeof(ContextSlide));
     }
 
     /// <summary>
@@ -29,9 +32,17 @@ namespace Parsley {
     public ContextSlide(Context context) {
       InitializeComponent();
       _c = context;
+      _logger = LogManager.GetLogger(typeof(ContextSlide));
       if (_c != null) {
         _c.OnConfigurationLoaded += new EventHandler<EventArgs>(OnConfigurationLoaded);
       }
+    }
+
+    /// <summary>
+    /// Default logger for slides
+    /// </summary>
+    public ILog Logger {
+      get { return _logger; }
     }
 
     /// <summary>
