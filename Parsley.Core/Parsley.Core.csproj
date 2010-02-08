@@ -96,8 +96,6 @@
     <Compile Include="Ray.cs" />
     <Compile Include="ReflectionTypeConverter.cs" />
     <Compile Include="Resource.cs" />
-    <Compile Include="SmoothByAverage.cs" />
-    <Compile Include="SmoothLaserLine.cs" />
     <Compile Include="TypeManager.cs" />
     <Compile Include="WeightedAverageLLE.cs" />
   </ItemGroup>
