@@ -23,10 +23,7 @@
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
-      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LaserSetupSlide));
-      this._btn_filter_noise = new Parsley.UI.ParsleyButtonSmall();
-      this._timer_take_image = new System.Windows.Forms.Timer(this.components);
       this.parsleyButtonSmall1 = new Parsley.UI.ParsleyButtonSmall();
       this.richTextBox1 = new System.Windows.Forms.RichTextBox();
       this.SuspendLayout();
@@ -35,32 +32,6 @@
       // 
       this.growLabel1.Size = new System.Drawing.Size(418, 30);
       this.growLabel1.Text = "Laser Configuration";
-      // 
-      // _btn_filter_noise
-      // 
-      this._btn_filter_noise.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this._btn_filter_noise.BackColor = System.Drawing.Color.White;
-      this._btn_filter_noise.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-      this._btn_filter_noise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-      this._btn_filter_noise.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this._btn_filter_noise.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-      this._btn_filter_noise.Image = ((System.Drawing.Image)(resources.GetObject("_btn_filter_noise.Image")));
-      this._btn_filter_noise.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_filter_noise.Location = new System.Drawing.Point(171, 291);
-      this._btn_filter_noise.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-      this._btn_filter_noise.Name = "_btn_filter_noise";
-      this._btn_filter_noise.Size = new System.Drawing.Size(166, 28);
-      this._btn_filter_noise.TabIndex = 5;
-      this._btn_filter_noise.Text = "Filter Chip Noise";
-      this._btn_filter_noise.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_filter_noise.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-      this._btn_filter_noise.UseVisualStyleBackColor = true;
-      this._btn_filter_noise.Click += new System.EventHandler(this._btn_filter_noise_Click);
-      // 
-      // _timer_take_image
-      // 
-      this._timer_take_image.Interval = 3000;
-      this._timer_take_image.Tick += new System.EventHandler(this._timer_take_image_Tick);
       // 
       // parsleyButtonSmall1
       // 
@@ -101,11 +72,9 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.richTextBox1);
       this.Controls.Add(this.parsleyButtonSmall1);
-      this.Controls.Add(this._btn_filter_noise);
       this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
       this.Name = "LaserSetupSlide";
       this.Size = new System.Drawing.Size(418, 384);
-      this.Controls.SetChildIndex(this._btn_filter_noise, 0);
       this.Controls.SetChildIndex(this.parsleyButtonSmall1, 0);
       this.Controls.SetChildIndex(this.growLabel1, 0);
       this.Controls.SetChildIndex(this.richTextBox1, 0);
@@ -115,8 +84,6 @@
 
     #endregion
 
-    private Parsley.UI.ParsleyButtonSmall _btn_filter_noise;
-    private System.Windows.Forms.Timer _timer_take_image;
     private Parsley.UI.ParsleyButtonSmall parsleyButtonSmall1;
     private System.Windows.Forms.RichTextBox richTextBox1;
   }
