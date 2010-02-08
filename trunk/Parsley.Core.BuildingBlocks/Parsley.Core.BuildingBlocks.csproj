@@ -49,15 +49,18 @@
   <ItemGroup>
     <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Emgu.CV.dll</HintPath>
+      <HintPath>..\ThirdParty\Emgu\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Emgu.Util.dll</HintPath>
+      <HintPath>..\ThirdParty\Emgu\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\MathNet.Iridium.dll</HintPath>
+      <HintPath>..\ThirdParty\MathNet\MathNet.Iridium.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Parsley.Draw3D, Version=1.0.3688.23802, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

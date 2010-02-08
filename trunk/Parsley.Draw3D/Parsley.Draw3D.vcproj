@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\osg\include;.\inc"
+				AdditionalIncludeDirectories="..\ThirdParty\OpenSceneGraph\include;.\inc"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -62,7 +62,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="User32.lib osgGA.lib osg.lib osgViewer.lib  OpenThreads.lib $(NOINHERIT)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\osg\lib"
+				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -116,7 +116,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\osg\include;.\inc"
+				AdditionalIncludeDirectories="..\ThirdParty\OpenSceneGraph\include;.\inc"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -136,7 +136,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="User32.lib osgGA.lib osg.lib osgViewer.lib  OpenThreads.lib $(NOINHERIT)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\osg\lib"
+				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
