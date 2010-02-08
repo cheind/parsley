@@ -16,9 +16,9 @@ namespace Parsley {
     private Context _context;
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
+    private Core.TypeManager _tm;
 
     private readonly ILog _logger = LogManager.GetLogger(typeof(Main));
-
 
     private MainSlide _slide_main;
     private ExamplesSlide _slide_examples;
@@ -30,6 +30,8 @@ namespace Parsley {
 
     public Main() {
       InitializeComponent();
+      _tm = new Parsley.Core.TypeManager();
+      Parsley.Core.TypeManager.LoadAllFrom(Environment.CurrentDirectory + "\\plugins", true);
 
       // Try connect to default cam
       Core.BuildingBlocks.World world = new Parsley.Core.BuildingBlocks.World();
