@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace Parsley {
   public partial class LaserSetupSlide : FrameGrabberSlide {
@@ -15,6 +16,9 @@ namespace Parsley {
     public LaserSetupSlide(Context c) : base(c) 
     {
       InitializeComponent();
+#if !DEBUG
+      this._btn_save_laser_data.Visible = false;
+#endif
     }
 
     public LaserSetupSlide() :base(null) {
@@ -28,6 +32,14 @@ namespace Parsley {
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
       Context.World.Laser.FindLaserLine(img);
+      SaveLaserData();
+      foreach (System.Drawing.PointF p in Context.World.Laser.ValidLaserPoints) {
+        img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
+      }
+    }
+
+    [Conditional("DEBUG")]
+    void SaveLaserData() {
       if (_save_laser_data) {
         _save_laser_data = false;
         using (TextWriter tw = new StreamWriter(string.Format("laser_{0}.txt", Guid.NewGuid()))) {
@@ -36,13 +48,9 @@ namespace Parsley {
           }
         }
       }
-      foreach (System.Drawing.PointF p in Context.World.Laser.ValidLaserPoints) {
-        img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
-      }
     }
 
-
-    private void parsleyButtonSmall1_Click(object sender, EventArgs e) {
+    private void _btn_save_laser_data_Click(object sender, EventArgs e) {
       _save_laser_data = true;
     }
   }
