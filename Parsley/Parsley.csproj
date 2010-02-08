@@ -176,9 +176,6 @@
     <EmbeddedResource Include="PropertyPane.resx">
       <DependentUpon>PropertyPane.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetupSlide.resx">
-      <DependentUpon>SetupSlide.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WelcomeSlide.resx">
       <DependentUpon>WelcomeSlide.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,12 +198,6 @@
     </Compile>
     <Compile Include="PropertyPane.Designer.cs">
       <DependentUpon>PropertyPane.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SetupSlide.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SetupSlide.Designer.cs">
-      <DependentUpon>SetupSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="WelcomeSlide.cs">
       <SubType>UserControl</SubType>

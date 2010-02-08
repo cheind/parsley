@@ -108,7 +108,6 @@
       this._btn_setup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this._btn_setup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
       this._btn_setup.UseVisualStyleBackColor = true;
-      this._btn_setup.Click += new System.EventHandler(this._btn_setup_Click);
       // 
       // MainSlide
       // 
