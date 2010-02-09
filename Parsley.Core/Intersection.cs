@@ -29,5 +29,28 @@ namespace Parsley.Core {
       }
     }
 
+    /// <summary>
+    /// Find best intersection of eye-rays and reference planes.
+    /// </summary>
+    /// <remarks>Best is defined as the the plane with the shortest distance</remarks>
+    /// <param name="eye_rays">Eye-rays</param>
+    /// <param name="planes">Calibrated reference planes</param>
+    /// <param name="isect_t">Parametric ray intersection distance</param>
+    /// <param name="isect_p">Intersection points (optional).</param>
+    public static void FindEyeRayPlaneIntersections(Ray[] eye_rays, IEnumerable<Plane> planes, ref double[] isect_t, ref Vector[] isect_p) {
+      isect_t = new double[eye_rays.Length];
+      for (int i = 0; i < eye_rays.Length; ++i) {
+        Ray r = eye_rays[i];
+        double t = Double.MaxValue;
+        foreach (Plane p in planes) {
+          double this_t;
+          Intersection.RayPlane(r, p, out this_t);
+          if (this_t < t) t = this_t;
+        }
+        isect_t[i] = t;
+        if (isect_p != null) isect_p[i] = r.At(t);
+      }
+    }
+
   }
 }

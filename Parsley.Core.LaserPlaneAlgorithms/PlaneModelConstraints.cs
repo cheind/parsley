@@ -13,7 +13,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   /// </summary>
   public interface IPlaneRansacConstraint : IRansacModelConstraint {
     [Browsable(false)]
-    IEnumerable<Plane> ReferencePlanes {
+    Core.ILaserPlaneAlgorithmContext Context {
       set;
     }
   };
@@ -25,22 +25,18 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   [Serializable]
   public class RejectParallelPlanes : IPlaneRansacConstraint {
     [NonSerialized]
-    private IEnumerable<Plane> _planes;
+    private Core.ILaserPlaneAlgorithmContext _context;
 
     public RejectParallelPlanes() { }
 
-    public RejectParallelPlanes(IEnumerable<Plane> planes) {
-      _planes = planes;
-    }
-
-    public IEnumerable<Plane> ReferencePlanes {
-      set { _planes = value; }
+    ILaserPlaneAlgorithmContext IPlaneRansacConstraint.Context {
+      set { _context = value; }
     }
 
     public bool Test(IRansacModel model) {
       PlaneModel r = model as PlaneModel;
       bool no_parallel_found = true;
-      foreach (Plane p in _planes) {
+      foreach (Plane p in _context.ReferencePlanes) {
         double d = Vector.ScalarProduct(r.Plane.Normal, p.Normal);
         if ((1.0 - Math.Abs(d)) < 1e-2) {
           no_parallel_found = false;
@@ -49,5 +45,11 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
       }
       return no_parallel_found;
     }
+
+    #region IPlaneRansacConstraint Members
+
+
+
+    #endregion
   }
 }
