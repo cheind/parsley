@@ -6,6 +6,7 @@ using System.Text;
 namespace HelloWorldPlugin {
 
   [Serializable]
+  [Parsley.Core.Addins.Addin]
   public class MyLaserLineAlgorithm : Parsley.Core.LaserLineExtraction {
     public MyLaserLineAlgorithm() { }
 
