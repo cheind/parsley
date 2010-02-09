@@ -58,7 +58,7 @@ namespace Parsley.Examples {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-
+      /*
       if (_take_ref_image) {
         _ref_image = img.Copy();
         _take_ref_image = false;
@@ -114,6 +114,7 @@ namespace Parsley.Examples {
           }
         }
       }
+       * */
     }
 
     PointF Backproject(Vector p, Emgu.CV.ExtrinsicCameraParameters ecp) {

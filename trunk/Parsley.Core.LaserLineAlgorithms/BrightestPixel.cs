@@ -20,7 +20,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
   /// </remarks>
   [Serializable]
   [Addins.Addin]
-  public class BrightestPixel : LaserLineExtraction {
+  public class BrightestPixel : ILaserLineAlgorithm {
     private int _threshold;
 
     /// <summary>
@@ -47,10 +47,10 @@ namespace Parsley.Core.LaserLineAlgorithms {
       set { _threshold = value; }
     }
 
-    public override void FindLaserLine(Emgu.CV.Image<Gray, byte> channel, out float[] laser_pos) {
-           
+    public void FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
+      Emgu.CV.Image<Gray, byte> channel = context.ChannelImage;
       int[] max_intensities = new int[channel.Width];
-      laser_pos = new float[channel.Width];
+      float[] range = new float[channel.Width];
       // Note that default float is zero.
 
       // Search per row
@@ -66,14 +66,15 @@ namespace Parsley.Core.LaserLineAlgorithms {
             byte i = d[offset + c];
             if (i > max_intensities[c]) {
               max_intensities[c] = i;
-              laser_pos[c] = r;
+              range[c] = r;
             }
           }
         }
         // Update output: set -1 for invalid laser line poses
+        laser_pos = new System.Drawing.PointF[channel.Width];
         for (int i = 0; i < w; ++i) {
-          if (max_intensities[i] < _threshold) {
-            laser_pos[i] = -1.0f;
+          if (max_intensities[i] >= _threshold) {
+            laser_pos[i] = new System.Drawing.PointF(i, range[i]);
           }
         }
       }

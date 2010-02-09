@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Parsley.Core.LaserPlaneAlgorithms {
 
+  [Serializable]
   [Parsley.Core.Addins.Addin]
   public class PlaneRansac : Core.LaserPlaneExtraction {
     private double _min_consensus_precent;
