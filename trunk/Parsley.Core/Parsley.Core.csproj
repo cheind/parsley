@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Addins\AddinAttribute.cs" />
     <Compile Include="Addins\AddinInfo.cs" />
     <Compile Include="Addins\AddinStore.cs" />
     <Compile Include="BrightestPixelLLE.cs" />

@@ -20,6 +20,7 @@ namespace Parsley.Core {
   /// one row at a time.
   /// </remarks>
   [Serializable]
+  [Addins.Addin]
   public class BrightestPixelLLE : LaserLineExtraction {
     private int _threshold;
 

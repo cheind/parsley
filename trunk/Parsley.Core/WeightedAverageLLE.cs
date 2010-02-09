@@ -10,6 +10,7 @@ namespace Parsley.Core {
   /// Weighted average laser line extraction
   /// </summary>
   [Serializable]
+  [Addins.Addin]
   public class WeightedAverageLLE : LaserLineExtraction {
     private int _threshold;
 

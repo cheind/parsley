@@ -13,6 +13,20 @@ namespace Parsley.Core.Addins {
     private static readonly ILog _logger = LogManager.GetLogger(typeof(AddinStore));
 
     /// <summary>
+    /// Discovers add-ins from current set of loaded assemblies
+    /// </summary>
+    public static void Discover() {
+      _addins.Clear();
+      foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies()) {
+        foreach (Type t in a.GetExportedTypes()) {
+          if (IsAddin(t)) {
+            _addins.Add(new AddinInfo(t));
+          }
+        }
+      }
+    }
+
+    /// <summary>
     /// Discover addins from the directory path
     /// </summary>
     /// <param name="directory_path">Directory path</param>
@@ -59,7 +73,9 @@ namespace Parsley.Core.Addins {
       try {
         Assembly a = Assembly.LoadFrom(assembly_path);
         foreach (Type t in a.GetExportedTypes()) {
-          _addins.Add(new AddinInfo(t));
+          if (IsAddin(t)) {
+            _addins.Add(new AddinInfo(t));
+          }
         }
         _logger.Info(String.Format("'{0}' successfully loaded.", assembly_path));
       } catch (System.BadImageFormatException) {
@@ -67,6 +83,15 @@ namespace Parsley.Core.Addins {
       } catch (System.IO.FileLoadException) {
         _logger.Info(String.Format("'{0}' already loaded.", assembly_path));
       }
+    }
+
+    /// <summary>
+    /// Test if type is flagged as addin
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    private static bool IsAddin(Type t) {
+      return Attribute.IsDefined(t, typeof(AddinAttribute));
     }
   }
 }

@@ -23,6 +23,7 @@ namespace Parsley.Core.CalibrationPatterns {
   /// 
   /// </remarks>
   [Serializable]
+  [Parsley.Core.Addins.Addin]
   public class CheckerBoard : CalibrationPattern {
     private System.Drawing.Size _inner_corners;
     private float _field_size;

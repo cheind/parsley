@@ -36,6 +36,7 @@ namespace Parsley {
       Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(world.Camera);
 
       // Addin
+      Core.Addins.AddinStore.Discover();
       Core.Addins.AddinStore.Discover(Environment.CurrentDirectory + @"\plugins");
       foreach(Core.Addins.AddinInfo ai in Core.Addins.AddinStore.FindAddins(typeof(Core.LaserLineExtraction), ai => ai.DefaultConstructible)) {
         Console.WriteLine(ai);
