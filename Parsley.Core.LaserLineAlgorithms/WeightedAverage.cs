@@ -11,7 +11,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
   /// </summary>
   [Serializable]
   [Addins.Addin]
-  public class WeightedAverage : LaserLineExtraction {
+  public class WeightedAverage : ILaserLineAlgorithm {
     private int _threshold;
 
     /// <summary>
@@ -49,7 +49,8 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
     }
 
-    public override void FindLaserLine(Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel, out float[] laser_pos) {
+    public void FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
+      Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = context.ChannelImage;
       IncWeightedAverage[] iwas = new IncWeightedAverage[channel.Width];
 
       // Search per row
@@ -76,12 +77,10 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
 
       // Update output: set -1 for invalid laser line poses
-      laser_pos = new float[w];
+      laser_pos = new System.Drawing.PointF[w];
       for (int i = 0; i < w; ++i) {
         if (iwas[i].iwa > 0) {
-          laser_pos[i] = (float)iwas[i].iwa;
-        } else {
-          laser_pos[i] = -1.0f;
+          laser_pos[i] = new System.Drawing.PointF(i, (float)iwas[i].iwa);
         }
       }
     }

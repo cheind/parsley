@@ -53,7 +53,7 @@ namespace Parsley.Core.Addins {
     /// <param name="type_of">Type</param>
     /// <returns>Enumeration of addin infos</returns>
     public static IEnumerable<AddinInfo> FindAddins(Type type_of, Func<AddinInfo, bool> predicate) {
-      return _addins.Select(ai => ai).Where(ai => ai.TypeOf(type_of) && predicate(ai));
+      return _addins.Where(ai => ai.TypeOf(type_of) && predicate(ai));
     }
 
     /// <summary>
@@ -82,6 +82,8 @@ namespace Parsley.Core.Addins {
         _logger.Warn(String.Format("'{0}' is not a valid assembly.", assembly_path));
       } catch (System.IO.FileLoadException) {
         _logger.Info(String.Format("'{0}' already loaded.", assembly_path));
+      } catch (System.TypeLoadException) {
+        _logger.Warn(String.Format("Type load exception during loading of '{0}' occurred.", assembly_path));
       }
     }
 

@@ -38,10 +38,6 @@ namespace Parsley {
       // Addin
       Core.Addins.AddinStore.Discover();
       Core.Addins.AddinStore.Discover(Environment.CurrentDirectory + @"\plugins");
-      foreach(Core.Addins.AddinInfo ai in Core.Addins.AddinStore.FindAddins(typeof(Core.LaserLineExtraction), ai => ai.DefaultConstructible)) {
-        Console.WriteLine(ai);
-      }
-
 
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
