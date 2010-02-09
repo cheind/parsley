@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace Parsley.Core {
+namespace Parsley.Core.Addins {
 
   /// <summary>
   /// Used as TypeConverter in a PropertyGrid to populate drop-down with
