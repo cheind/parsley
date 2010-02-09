@@ -14,7 +14,6 @@ using System.IO;
 
 namespace Parsley.Examples {
   public partial class ScanningAttempt : FrameGrabberSlide {
-    Parsley.Core.BrightestPixelLLE _lle;
     Core.NotParallelPlaneConstraint _constraint;
     private Parsley.Draw3D.PointCloud _pointcloud;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _ref_image;
@@ -25,8 +24,6 @@ namespace Parsley.Examples {
       : base(c) 
     {
       InitializeComponent();
-      _lle = new Parsley.Core.BrightestPixelLLE();
-      _lle.IntensityThreshold = 20;
 
       _pointcloud = new Parsley.Draw3D.PointCloud();
       lock (Context.Viewer) {

@@ -87,6 +87,11 @@
     <Compile Include="TypeConversionTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core.LaserLineAlgorithms\Parsley.Core.LaserLineAlgorithms.csproj">
+      <Project>{4C1A7967-4636-4067-AB3D-8AD837B11B11}</Project>
+      <Name>Parsley.Core.LaserLineAlgorithms</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
       <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
       <Name>Parsley.Core</Name>
