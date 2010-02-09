@@ -85,7 +85,6 @@
     <Compile Include="Addins\AddinAttribute.cs" />
     <Compile Include="Addins\AddinInfo.cs" />
     <Compile Include="Addins\AddinStore.cs" />
-    <Compile Include="BrightestPixelLLE.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
@@ -105,7 +104,6 @@
     <Compile Include="Ray.cs" />
     <Compile Include="ReflectionTypeConverter.cs" />
     <Compile Include="Resource.cs" />
-    <Compile Include="WeightedAverageLLE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

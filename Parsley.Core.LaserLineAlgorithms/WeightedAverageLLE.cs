@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 
-namespace Parsley.Core {
+namespace Parsley.Core.LaserLineAlgorithms {
 
   /// <summary>
   /// Weighted average laser line extraction
@@ -18,7 +18,7 @@ namespace Parsley.Core {
     /// Initialize with no threshold
     /// </summary>
     public WeightedAverageLLE() {
-      _threshold = 0;
+      _threshold = 220;
     }
 
     /// <summary>

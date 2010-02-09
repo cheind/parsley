@@ -29,7 +29,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     public Laser() {
       _color = ColorChannel.Red;
-      _algorithm = new WeightedAverageLLE(30);
+      _algorithm = new LaserLineAlgorithms.WeightedAverageLLE(220);
     }
 
     /// <summary>

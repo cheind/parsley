@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using Emgu.CV.Structure;
 using System.ComponentModel;
 
-namespace Parsley.Core {
+namespace Parsley.Core.LaserLineAlgorithms {
   /// <summary>
   /// Laser line extraction based on the brightest pixel
   /// </summary>
@@ -28,7 +27,7 @@ namespace Parsley.Core {
     /// Initialize with no threshold
     /// </summary>
     public BrightestPixelLLE() {
-      _threshold = 0;
+      _threshold = 220;
     }
 
     /// <summary>
