@@ -95,13 +95,12 @@
     <Compile Include="IntrinsicCalibration.cs" />
     <Compile Include="LaserLineExtraction.cs" />
     <Compile Include="LaserPlaneExtraction.cs" />
+    <Compile Include="MathHelper.cs" />
     <Compile Include="MedianPointAccumulator.cs" />
     <Compile Include="Plane.cs" />
-    <Compile Include="PlaneModel.cs" />
     <Compile Include="PointPerPixelAccumulator.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ransac.cs" />
     <Compile Include="Ray.cs" />
     <Compile Include="Resource.cs" />
   </ItemGroup>

@@ -56,4 +56,41 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Emgu\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Emgu\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\MathNet\MathNet.Iridium.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PlaneModel.cs" />
+    <Compile Include="PlaneModelConstraints.cs" />
+    <Compile Include="PlaneRansac.cs" />
+    <Compile Include="Ransac.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
+      <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
+      <Name>Parsley.Core</Name>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

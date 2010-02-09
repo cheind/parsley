@@ -5,8 +5,11 @@ using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
 
-namespace Parsley.Core {
+namespace Parsley.Core.LaserPlaneAlgorithms {
 
+  /// <summary>
+  /// A model to be searched by the RANSAC algorithm
+  /// </summary>
   public interface IRansacModel {
     /// <summary>
     /// Return the number of required samples to estimate initial model parameters.
@@ -41,6 +44,11 @@ namespace Parsley.Core {
   /// </summary>
   /// <typeparam name="T">Model to apply constraint to</typeparam>
   public interface IRansacModelConstraint {
+    /// <summary>
+    /// Test contraint on model
+    /// </summary>
+    /// <param name="model">Model to test</param>
+    /// <returns>True if model passes test, false if model should be rejected</returns>
     bool Test(IRansacModel model);
   }
 
