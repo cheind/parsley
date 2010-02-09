@@ -22,14 +22,16 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     private Laser.ColorChannel _color;
-    private Core.LaserLineExtraction _algorithm;
+    private Core.LaserLineExtraction _line_algorithm;
+    private Core.LaserPlaneExtraction _plane_algorithm;
 
     /// <summary>
     /// Instance a default red-light laser
     /// </summary>
     public Laser() {
       _color = ColorChannel.Red;
-      _algorithm = new LaserLineAlgorithms.WeightedAverage(220);
+      _line_algorithm = new LaserLineAlgorithms.WeightedAverage(220);
+      _plane_algorithm = new LaserPlaneAlgorithms.PlaneRansac();
     }
 
     /// <summary>
@@ -46,8 +48,18 @@ namespace Parsley.Core.BuildingBlocks {
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
     public LaserLineExtraction LaserLineAlgorithm {
-      get { return _algorithm; }
-      set { _algorithm = value; }
+      get { return _line_algorithm; }
+      set { _line_algorithm = value; }
+    }
+
+    /// <summary>
+    /// Get/set the algorithm that performs laser plane extraction
+    /// </summary>
+    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
+    [RefreshProperties(RefreshProperties.All)]
+    public LaserPlaneExtraction LaserPlaneAlgorithm {
+      get { return _plane_algorithm; }
+      set { _plane_algorithm = value; }
     }
 
     /// <summary>
@@ -56,7 +68,7 @@ namespace Parsley.Core.BuildingBlocks {
     [Browsable(false)]
     public IEnumerable<System.Drawing.PointF> ValidLaserPoints {
       get {
-        float[] positions = _algorithm.LaserPositions;
+        float[] positions = _line_algorithm.LaserPositions;
         if (positions != null) {
           for (int x = 0; x < positions.Length; ++x) {
             float y = positions[x];
@@ -74,7 +86,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <param name="laser_points">Laser points found.</param>
     public void FindLaserLine(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = img[(int)_color]) {
-        _algorithm.FindLaserLine(channel);
+        _line_algorithm.FindLaserLine(channel);
       }
     }
   }

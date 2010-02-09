@@ -5,7 +5,7 @@ using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
 
-namespace Parsley.Core {
+namespace Parsley.Core.LaserPlaneAlgorithms {
 
   /// <summary>
   /// Plane model to be used in conjunction with Ransac
@@ -43,27 +43,5 @@ namespace Parsley.Core {
     public Plane Plane {
       get { return _plane; }
     } 
-  }
-
-  public class NotParallelPlaneConstraint : IRansacModelConstraint {
-    private IEnumerable<Plane> _planes;
-
-    public NotParallelPlaneConstraint(IEnumerable<Plane> planes) {
-      _planes = planes;
-    }
-
-
-    public bool Test(IRansacModel model) {
-      PlaneModel r = model as PlaneModel;
-      bool no_parallel_found = true;
-      foreach (Plane p in _planes) {
-        double d = Vector.ScalarProduct(r.Plane.Normal, p.Normal);
-        if ((1.0 - Math.Abs(d)) < 1e-2) {
-          no_parallel_found = false;
-          break;
-        }
-      }
-      return no_parallel_found;
-    }
   }
 }

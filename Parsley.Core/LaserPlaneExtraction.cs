@@ -41,10 +41,10 @@ namespace Parsley.Core {
     /// Find laser-plane through detected laser-points.
     /// </summary>
     /// <remarks>Method is only invoked when at least 3 laser_points have been detected.</remarks>
-    /// <param name="laser_points">Laser points</param>
+    /// <param name="eye_rays">Eye-rays for each laser-points</param>
     /// <param name="reference_planes">Calibrated reference planes</param>
     /// <returns>True on success, false otherwise</returns>
-    public abstract bool FindLaserPlane(PointF[] laser_points, IEnumerable<Plane> reference_planes, out Plane plane);
+    public abstract bool FindLaserPlane(Ray[] eye_rays, IEnumerable<Plane> reference_planes, out Plane plane);
 
   }
 }

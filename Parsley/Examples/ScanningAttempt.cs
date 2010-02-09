@@ -14,7 +14,6 @@ using System.IO;
 
 namespace Parsley.Examples {
   public partial class ScanningAttempt : FrameGrabberSlide {
-    Core.NotParallelPlaneConstraint _constraint;
     private Parsley.Draw3D.PointCloud _pointcloud;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _ref_image;
     bool _take_ref_image;
@@ -38,7 +37,6 @@ namespace Parsley.Examples {
 
     protected override void OnSlidingIn() {
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
-      _constraint = new Parsley.Core.NotParallelPlaneConstraint(Context.World.ReferencePlanes);
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
           Core.BuildingBlocks.Perspective.FromCamera(Context.World.Camera, 1.0, 5000).ToInterop()
@@ -79,54 +77,16 @@ namespace Parsley.Examples {
       }
 
       Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.World.Camera.Intrinsics, laser_points);
-      Vector[] eye_ray_isects = new Vector[eye_rays.Length];
-      double[] min_ts = new double[eye_ray_isects.Length];
-
-
-      for (int i = 0; i < laser_points.Length; ++i) {
-        // Intersect with all planes and choose closest
-        Core.Ray r = eye_rays[i];
-
-        double min_t = Double.MaxValue;
-        foreach (Core.Plane p in Context.World.ReferencePlanes) {
-          double t;
-          Core.Intersection.RayPlane(r, p, out t);
-          if (t < min_t) {
-            min_t = t;
-          }
-        }
-        min_ts[i] = min_t;
-        eye_ray_isects[i] = r.At(min_t);
-      }
-
-      Core.Ransac<Core.PlaneModel> ransac = new Parsley.Core.Ransac<Parsley.Core.PlaneModel>(eye_ray_isects);
-      int min_consensus = (int)Math.Max(laser_points.Length * (float)_nrc_consensus.Value, img.Width * 0.1);
-      Core.Ransac<Core.PlaneModel>.Hypothesis h = ransac.Run(30, (double)_nrc_distance.Value, min_consensus, _constraint);
-
-      Vector z = new Vector(new double[] { 0, 0, 1 });
-      if (h != null) {
-        Core.Plane laser_plane = h.Model.Plane;
-
+      Core.Plane laser_plane;
+      if (Context.World.Laser.LaserPlaneAlgorithm.FindLaserPlane(
+            eye_rays,
+            Context.World.ReferencePlanes, out laser_plane)) 
+      {
+        Vector z = Vector.Create(new double[] { 0, 0, 1 });
         if (Math.Abs(laser_plane.Normal.ScalarMultiply(z)) < 0.3) {
           Console.WriteLine(laser_plane.Normal);
           return;
         }
-
-        /*
-        using (TextWriter tw = new StreamWriter(String.Format("distances{0}.txt", Guid.NewGuid()))) {
-          for (int i = 0; i < laser_points.Length; ++i) {
-            if (h.ConsensusIds.Contains(i)) {
-              double t;
-              Core.Intersection.RayPlane(eye_rays[i], laser_plane, out t);
-              tw.WriteLine(String.Format("{0} {1} {2}", laser_points[i].X, (eye_rays[i].At(t) - eye_ray_isects[i]).Norm(), Math.Abs(t-min_ts[i])));
-            }
-          }
-        }
-         */
-
-
-
-
 
         lock (Context.Viewer) {
           for (int i = 0; i < laser_points.Length; ++i) {
@@ -154,8 +114,6 @@ namespace Parsley.Examples {
           }
         }
       }
-
-
     }
 
     PointF Backproject(Vector p, Emgu.CV.ExtrinsicCameraParameters ecp) {

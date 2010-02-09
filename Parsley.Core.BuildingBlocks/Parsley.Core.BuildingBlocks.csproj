@@ -103,6 +103,10 @@
       <Name>Parsley.Core.LaserLineAlgorithms</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Parsley.Core.LaserPlaneAlgorithms\Parsley.Core.LaserPlaneAlgorithms.csproj">
+      <Project>{931CC660-6939-4397-9D88-484CDBA45DF9}</Project>
+      <Name>Parsley.Core.LaserPlaneAlgorithms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
       <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
       <Name>Parsley.Core</Name>
