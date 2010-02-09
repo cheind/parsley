@@ -23,6 +23,6 @@ namespace Parsley.Core {
     /// Find laser line.
     /// </summary>
     /// <param name="channel">Image to search in.</param>
-    void FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos);
+    bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos);
   }
 }
