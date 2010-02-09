@@ -47,7 +47,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
       set { _threshold = value; }
     }
 
-    public void FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
+    public bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
       Emgu.CV.Image<Gray, byte> channel = context.ChannelImage;
       int[] max_intensities = new int[channel.Width];
       float[] range = new float[channel.Width];
@@ -78,6 +78,8 @@ namespace Parsley.Core.LaserLineAlgorithms {
           }
         }
       }
+
+      return true;
     }
   }
 }

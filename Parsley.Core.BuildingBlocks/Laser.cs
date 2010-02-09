@@ -23,7 +23,7 @@ namespace Parsley.Core.BuildingBlocks {
 
     private Laser.ColorChannel _color;
     private Core.ILaserLineAlgorithm _line_algorithm;
-    private Core.LaserPlaneExtraction _plane_algorithm;
+    private Core.ILaserPlaneAlgorithm _plane_algorithm;
 
     /// <summary>
     /// Instance a default red-light laser
@@ -57,7 +57,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
-    public LaserPlaneExtraction LaserPlaneAlgorithm {
+    public ILaserPlaneAlgorithm LaserPlaneAlgorithm {
       get { return _plane_algorithm; }
       set { _plane_algorithm = value; }
     }

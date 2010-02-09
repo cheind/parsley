@@ -49,7 +49,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
     }
 
-    public void FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
+    public bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
       Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = context.ChannelImage;
       IncWeightedAverage[] iwas = new IncWeightedAverage[channel.Width];
 
@@ -83,6 +83,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
           laser_pos[i] = new System.Drawing.PointF(i, (float)iwas[i].iwa);
         }
       }
+      return true;
     }
   }
 }
