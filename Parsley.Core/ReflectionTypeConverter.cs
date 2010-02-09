@@ -15,7 +15,7 @@ namespace Parsley.Core {
   /// </summary>
   public class ReflectionTypeConverter : ExpandableObjectConverter {
     private Type _type_of;
-    private Dictionary<string, Type> _type_dict;
+    private Dictionary<string, Core.Addins.AddinInfo> _type_dict;
 
 
     public ReflectionTypeConverter(Type type_of) {
@@ -24,9 +24,7 @@ namespace Parsley.Core {
 
     public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) {
       if (value.GetType() == typeof(string)) {
-        string class_name = (string)value;
-        Type t = _type_dict[class_name];
-        return System.Activator.CreateInstance(t);
+        return Addins.AddinStore.CreateInstance(_type_dict[(string)value]);
       } else
         return base.ConvertFrom(context, culture, value);
     }
@@ -37,14 +35,9 @@ namespace Parsley.Core {
     }
 
     public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) {
-      IEnumerable<Type> types = Core.TypeManager.AllDefaultConstructibleTypes(_type_of);
-      // Need to build type-dictory. GetType() normally only returns types from mscorlib and the calling assembly
-      // For dynamically loaded assemblies GetType() returns null.
-      _type_dict = new Dictionary<string, Type>();
-      foreach (Type t in types) {
-        _type_dict.Add(t.FullName, t);
-      }
-      return new StandardValuesCollection(types.ToArray());
+      IEnumerable<Addins.AddinInfo> t = Addins.AddinStore.FindAddins(_type_of, ai => ai.DefaultConstructible);
+      _type_dict = t.ToDictionary(ai => ai.FullName);
+      return new StandardValuesCollection(t.ToArray());
     }
 
     public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) {
