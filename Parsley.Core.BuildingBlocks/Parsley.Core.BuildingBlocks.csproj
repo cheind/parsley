@@ -85,6 +85,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
+    <Compile Include="ScanWorkflow.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="Perspective.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
