@@ -29,7 +29,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     public Laser() {
       _color = ColorChannel.Red;
-      _algorithm = new LaserLineAlgorithms.WeightedAverageLLE(220);
+      _algorithm = new LaserLineAlgorithms.WeightedAverage(220);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Get/set the algorithm that performs laser line extraction
     /// </summary>
-    [TypeConverter(typeof(Core.ReflectionTypeConverter))]
+    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
     public LaserLineExtraction LaserLineAlgorithm {
       get { return _algorithm; }

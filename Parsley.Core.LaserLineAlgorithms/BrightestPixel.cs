@@ -20,13 +20,13 @@ namespace Parsley.Core.LaserLineAlgorithms {
   /// </remarks>
   [Serializable]
   [Addins.Addin]
-  public class BrightestPixelLLE : LaserLineExtraction {
+  public class BrightestPixel : LaserLineExtraction {
     private int _threshold;
 
     /// <summary>
     /// Initialize with no threshold
     /// </summary>
-    public BrightestPixelLLE() {
+    public BrightestPixel() {
       _threshold = 220;
     }
 
@@ -34,7 +34,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
     /// Initialize with threshold
     /// </summary>
     /// <param name="threshold">Minimum intensity threshold</param>
-    public BrightestPixelLLE(int threshold) {
+    public BrightestPixel(int threshold) {
       _threshold = threshold;
     }
 

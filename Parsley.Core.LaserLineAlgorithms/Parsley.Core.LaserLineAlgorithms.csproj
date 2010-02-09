@@ -57,10 +57,6 @@
   </Target>
   -->
   <ItemGroup>
-    <Compile Include="BrightestPixelLLE.cs" />
-    <Compile Include="WeightedAverageLLE.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\Emgu\Emgu.CV.dll</HintPath>
@@ -86,5 +82,9 @@
       <Name>Parsley.Core</Name>
       <Private>False</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BrightestPixel.cs" />
+    <Compile Include="WeightedAverage.cs" />
   </ItemGroup>
 </Project>

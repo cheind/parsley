@@ -72,7 +72,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Get/set the calibration pattern for the intrinsic camera calibration
     /// </summary>
     [Description("Choose the calibration pattern for the intrinsic camera calibration")]
-    [TypeConverter(typeof(Core.ReflectionTypeConverter))]
+    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
     public Core.CalibrationPattern IntrinsicPattern {
       get { return _intrinsic_pattern; }
@@ -83,7 +83,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Get/set the calibration pattern for the extrinsic camera calibration
     /// </summary>
     [Description("Choose the calibration pattern for the extrinsic camera calibration")]
-    [TypeConverter(typeof(Core.ReflectionTypeConverter))]
+    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
     public Core.CalibrationPattern ExtrinsicPattern {
       get { return _extrinsic_pattern; }

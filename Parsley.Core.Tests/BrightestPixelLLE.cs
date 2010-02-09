@@ -16,7 +16,7 @@ namespace Parsley.Core.Tests {
       System.Drawing.Bitmap b = new System.Drawing.Bitmap(@"../Parsley.Core.Tests/etc/brightest_lle/a.bmp");
       Emgu.CV.Image<Gray, byte> img = new Emgu.CV.Image<Gray, byte>(b);
       
-      Parsley.Core.LaserLineAlgorithms.BrightestPixelLLE lle = new Parsley.Core.LaserLineAlgorithms.BrightestPixelLLE();
+      Parsley.Core.LaserLineAlgorithms.BrightestPixel lle = new Parsley.Core.LaserLineAlgorithms.BrightestPixel();
       lle.IntensityThreshold = 1;
 
       float[] laser_pos;

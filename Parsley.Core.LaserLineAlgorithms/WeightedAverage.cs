@@ -11,13 +11,13 @@ namespace Parsley.Core.LaserLineAlgorithms {
   /// </summary>
   [Serializable]
   [Addins.Addin]
-  public class WeightedAverageLLE : LaserLineExtraction {
+  public class WeightedAverage : LaserLineExtraction {
     private int _threshold;
 
     /// <summary>
     /// Initialize with no threshold
     /// </summary>
-    public WeightedAverageLLE() {
+    public WeightedAverage() {
       _threshold = 220;
     }
 
@@ -25,7 +25,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
     /// Initialize with threshold
     /// </summary>
     /// <param name="threshold">Minimum intensity threshold</param>
-    public WeightedAverageLLE(int threshold) {
+    public WeightedAverage(int threshold) {
       _threshold = threshold;
     }
 
