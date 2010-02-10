@@ -97,8 +97,10 @@
     <Compile Include="ILaserLineAlgorithmContext.cs" />
     <Compile Include="ILaserLineFilterAlgorithm.cs" />
     <Compile Include="ILaserLineFilterAlgorithmContext.cs" />
+    <Compile Include="ILaserPlaneAlgorithm.cs" />
     <Compile Include="ILaserPlaneAlgorithmContext.cs" />
-    <Compile Include="ILaserPlaneExtraction.cs" />
+    <Compile Include="ILaserPlaneFilterAlgorithm.cs" />
+    <Compile Include="ILaserPlaneFilterAlgorithmContext.cs" />
     <Compile Include="IndexHelper.cs" />
     <Compile Include="Intersection.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="LaserLineAlgorithmContext.cs" />
     <Compile Include="LaserLineFilterAlgorithmContext.cs" />
     <Compile Include="LaserPlaneAlgorithmContext.cs" />
+    <Compile Include="LaserPlaneFilterAlgorithmContext.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="MedianPointAccumulator.cs" />
     <Compile Include="DensePixelGrid.cs" />

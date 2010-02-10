@@ -16,7 +16,7 @@ namespace Parsley {
   /// Provides access to Parsley objects
   /// </summary>
   public class Context {
-    private Core.BuildingBlocks.World _world;
+    private Core.BuildingBlocks.Setup _setup;
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
     private UI.Concrete.ROIHandler _roi_handler;
@@ -24,17 +24,18 @@ namespace Parsley {
     public event EventHandler<EventArgs> OnConfigurationLoaded;
 
     public Context(
-      Core.BuildingBlocks.World world,
+      Core.BuildingBlocks.Setup setup,
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
       UI.Concrete.ROIHandler roi_handler) 
     {
-      _world = world;
+      _setup = setup;
       _fg = fg;
       _rl = rl;
       _roi_handler = roi_handler;
     }
 
+    /*
     public bool SaveBinary(string filepath) {
       try {
         using (Stream s = File.OpenWrite(filepath)) {
@@ -86,13 +87,14 @@ namespace Parsley {
       }
       return success;
     }
+     */
 
     /// <summary>
-    /// Get/set world components
+    /// Get/set the setup
     /// </summary>
-    public Core.BuildingBlocks.World World {
-      get { return _world; }
-      set { _world = value; }
+    public Core.BuildingBlocks.Setup Setup {
+      get { return _setup; }
+      set { _setup = value; }
     }
 
     /// <summary>

@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrightestPixel.cs" />
+    <Compile Include="NoFilter.cs" />
     <Compile Include="WeightedAverage.cs" />
   </ItemGroup>
 </Project>

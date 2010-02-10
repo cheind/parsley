@@ -34,7 +34,7 @@
       this._pg_config.Location = new System.Drawing.Point(0, 21);
       this._pg_config.Name = "_pg_config";
       this._pg_config.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this._pg_config.Size = new System.Drawing.Size(308, 406);
+      this._pg_config.Size = new System.Drawing.Size(367, 406);
       this._pg_config.TabIndex = 3;
       this._pg_config.ToolbarVisible = false;
       // 
@@ -47,7 +47,7 @@
       this.growLabel1.Location = new System.Drawing.Point(0, 0);
       this.growLabel1.MinimumSize = new System.Drawing.Size(0, 20);
       this.growLabel1.Name = "growLabel1";
-      this.growLabel1.Size = new System.Drawing.Size(308, 21);
+      this.growLabel1.Size = new System.Drawing.Size(367, 21);
       this.growLabel1.TabIndex = 14;
       this.growLabel1.Text = "Properties";
       this.growLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -58,8 +58,9 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this._pg_config);
       this.Controls.Add(this.growLabel1);
+      this.MinimumSize = new System.Drawing.Size(367, 0);
       this.Name = "PropertyPane";
-      this.Size = new System.Drawing.Size(308, 427);
+      this.Size = new System.Drawing.Size(367, 427);
       this.VisibleChanged += new System.EventHandler(this.PropertyPane_VisibleChanged);
       this.ResumeLayout(false);
 

@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FilterByCameraPlaneAngle.cs" />
     <Compile Include="PlaneModel.cs" />
     <Compile Include="PlaneModelConstraints.cs" />
     <Compile Include="PlaneRansac.cs" />

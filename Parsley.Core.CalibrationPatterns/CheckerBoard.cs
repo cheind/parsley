@@ -46,6 +46,7 @@ namespace Parsley.Core.CalibrationPatterns {
     /// Get/set the number of inner cornser per row and column
     /// </summary>
     [Description("Number of inner corners per row and column")]
+    [DefaultValue(typeof(System.Drawing.Size), "9, 6")]
     public System.Drawing.Size Size {
       get { return _inner_corners; }
       set { 
@@ -58,6 +59,7 @@ namespace Parsley.Core.CalibrationPatterns {
     /// Get/set the size of single square in the checkerboard pattern
     /// </summary>
     [Description("The size of single square in the checkerboard pattern in units of your choice.")]
+    [DefaultValue(25.0f)]
     public float SizeOfSquare {
       get { return _field_size; }
       set { 
