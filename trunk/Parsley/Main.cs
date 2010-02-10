@@ -21,12 +21,12 @@ namespace Parsley {
 
 
     private MainSlide _slide_main;
-    private ExamplesSlide _slide_examples;
-    private Examples.ScanningAttempt _slide_scanning;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private LaserSetupSlide _slide_laser_setup;
     private WelcomeSlide _slide_welcome;
+    private ScanningSlide _slide_scanning;
+
 
     public Main() {
       InitializeComponent();
@@ -70,17 +70,15 @@ namespace Parsley {
       _slide_welcome = new WelcomeSlide();
 
       _slide_main = new MainSlide();
-      _slide_examples = new ExamplesSlide();
-      _slide_scanning = new Parsley.Examples.ScanningAttempt(_context);
 
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
+      _slide_scanning = new ScanningSlide(_context);
 
       
       _slide_control.AddSlide(_slide_welcome);
       _slide_control.AddSlide(_slide_main);
-      _slide_control.AddSlide(_slide_examples);
       _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
@@ -193,6 +191,10 @@ namespace Parsley {
 
     private void _btn_laser_configuration_Click(object sender, EventArgs e) {
       _slide_control.ForwardTo<LaserSetupSlide>();
+    }
+
+    private void _btn_scanning_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<ScanningSlide>();
     }
 
 

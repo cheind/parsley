@@ -6,6 +6,7 @@ using System.ComponentModel;
 
 using Emgu.CV.Structure;
 using MathNet.Numerics.LinearAlgebra;
+using System.Runtime.Serialization;
 
 namespace Parsley.Core.BuildingBlocks {
   
@@ -13,7 +14,8 @@ namespace Parsley.Core.BuildingBlocks {
   /// Defines how scanning is performed
   /// </summary>
   [Serializable]
-  public class ScanWorkflow {
+  public class ScanWorkflow : IDeserializationCallback {
+    [NonSerialized]
     private World _world;
     private System.Drawing.Rectangle _roi;
     private Core.ILaserLineAlgorithm _line_algorithm;
@@ -31,6 +33,11 @@ namespace Parsley.Core.BuildingBlocks {
       _plane_filter = new LaserPlaneAlgorithms.FilterByCameraPlaneAngle();
       _point_accum = new MedianPointAccumulator();
       _context = new LaserPlaneFilterAlgorithmContext();
+    }
+
+    public void OnDeserialization(object sender) {
+      _context = new LaserPlaneFilterAlgorithmContext();
+      _point_accum.Size = _roi.Size;
     }
 
     /// <summary>
@@ -171,9 +178,5 @@ namespace Parsley.Core.BuildingBlocks {
       pixels = my_pixels.ToArray();
       return points.Length > 0;
     }
-
-
-
-
   }
 }

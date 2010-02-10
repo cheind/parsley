@@ -35,7 +35,7 @@ namespace Parsley.Core {
     /// <param name="r">Rectangle</param>
     /// <returns>Relative coordinates</returns>
     public static System.Drawing.Point MakeRelative(System.Drawing.Point pixel, System.Drawing.Rectangle r) {
-      return new System.Drawing.Point(r.X - pixel.X, r.Y - pixel.Y);
+      return new System.Drawing.Point(pixel.X - r.X, pixel.Y - r.Y);
     }
   }
 }

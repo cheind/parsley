@@ -43,6 +43,13 @@ namespace Parsley.Core.Addins {
     }
 
     /// <summary>
+    /// Get addin's inner namespace name
+    /// </summary>
+    public string Name {
+      get { return _type.Name; }
+    }
+
+    /// <summary>
     /// Report name of addin
     /// </summary>
     /// <returns>Addin name</returns>
