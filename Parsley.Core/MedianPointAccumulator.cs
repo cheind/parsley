@@ -10,8 +10,10 @@ namespace Parsley.Core {
   /// <summary>
   /// Accumulates points by median
   /// </summary>
+  [Serializable]
   public class MedianPointAccumulator : IPointPerPixelAccumulator {  
     private int _max_entries;
+    [NonSerialized]
     private DensePixelGrid<PerPixel> _grid;
 
     /// <summary>

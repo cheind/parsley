@@ -11,6 +11,7 @@ namespace Parsley.Core {
   /// <summary>
   /// Defines a ray through the origin
   /// </summary>
+  [Serializable]
   public class Ray {
     private Vector _direction;
 
