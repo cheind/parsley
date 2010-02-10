@@ -54,7 +54,6 @@ namespace Parsley.Core.BuildingBlocks {
     [Category("Calibration")]
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
-    [DefaultValue(typeof(Core.CalibrationPatterns.CheckerBoard), "Parsley.Core.CalibrationPatterns.CheckerBoard")]
     public Core.CalibrationPattern IntrinsicPattern {
       get { return _intrinsic_pattern; }
       set { _intrinsic_pattern = value; }
