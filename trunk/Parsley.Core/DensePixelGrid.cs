@@ -8,6 +8,7 @@ namespace Parsley.Core {
   /// Stores user-data per pixel.
   /// </summary>
   /// <remarks>Uses a dense-storage to optimize lookup</remarks>
+  [Serializable]
   public class DensePixelGrid<T> {
     private T[] _data;
     private System.Drawing.Size _size;

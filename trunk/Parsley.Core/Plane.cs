@@ -12,6 +12,7 @@ namespace Parsley.Core {
   /// A plane in three dimensions represented in 
   /// its parametric form a*x+b*y+c*z = d
   /// </summary>
+  [Serializable]
   public class Plane {
     private Vector _normal;
     private double _d;
