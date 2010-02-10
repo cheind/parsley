@@ -61,6 +61,7 @@ namespace Parsley.Core.BuildingBlocks {
       set { 
         _roi = value;
         _point_accum.Size = _roi.Size;
+        _context.ROI = value;
       }
     }
 
@@ -115,6 +116,13 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Reset workflow
+    /// </summary>
+    public void Reset() {
+      _point_accum.Reset();
+    }
+
+    /// <summary>
     /// Process image
     /// </summary>
     /// <param name="image">Image</param>
@@ -150,7 +158,10 @@ namespace Parsley.Core.BuildingBlocks {
 
       // 5. Filter laser plane
       Core.Plane filtered_laser_plane;
-      if (!_plane_filter.FilterLaserPlane(_context, out filtered_laser_plane)) return false;
+      if (!_plane_filter.FilterLaserPlane(_context, out filtered_laser_plane)) {
+        Console.WriteLine("filtered" + filtered_laser_plane.Normal);
+        return false;
+      }
 
       // 6. Extract relevant points in ROI
       List<System.Drawing.Point> my_pixels = new List<System.Drawing.Point>();
