@@ -31,6 +31,7 @@ namespace Parsley {
 
     protected override void OnSlidingIn() {
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
+      Context.Setup.ScanWorkflow.World = Context.Setup.World;
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
           Core.BuildingBlocks.Perspective.FromCamera(Context.Setup.World.Camera, 1.0, 5000).ToInterop()
@@ -74,12 +75,21 @@ namespace Parsley {
         _pixel_point_ids.Size = _next_roi.Size;
       }
 
+      if (Context.Setup.ScanWorkflow.ROI == Rectangle.Empty) {
+        return;
+      }
+
+      img.Draw(Context.Setup.ScanWorkflow.ROI, new Bgr(Color.Green), 1);
+
       Vector[] points;
       System.Drawing.Point[] pixels;
 
       if (Context.Setup.ScanWorkflow.Process(img, out points, out pixels)) {
         lock (Context.Viewer) {
           UpdatePoints(points, pixels);
+        }
+        foreach (System.Drawing.Point p in pixels) {
+          img[p.Y, p.X] = new Bgr(Color.Green);
         }
       }
     }

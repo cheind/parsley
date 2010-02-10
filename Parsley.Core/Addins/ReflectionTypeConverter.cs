@@ -15,8 +15,10 @@ namespace Parsley.Core.Addins {
   /// [RefreshProperties(RefreshProperties.All)] attribute in order to refresh on change.</remarks>
   /// </summary>
   public class ReflectionTypeConverter : ExpandableObjectConverter {
+
     private Type _type_of;
     private Dictionary<string, Core.Addins.AddinInfo> _addin_dict;
+    private bool _name_clashes_expected;
 
     /// <summary>
     /// Initialize with type to reflect
@@ -24,6 +26,7 @@ namespace Parsley.Core.Addins {
     /// <param name="type_of"></param>
     public ReflectionTypeConverter(Type type_of) {
       _type_of = type_of;
+      _name_clashes_expected = false;
     }
 
     /// <summary>
@@ -47,27 +50,6 @@ namespace Parsley.Core.Addins {
     }
 
     /// <summary>
-    /// Converts the given value object to the specified type, using the arguments.
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="culture"></param>
-    /// <param name="value"></param>
-    /// <param name="destType"></param>
-    /// <returns></returns>
-    public override object ConvertTo(
-           ITypeDescriptorContext context,
-           CultureInfo culture,
-           object value,
-           Type destType) 
-    {
-      if (destType == typeof(string)) {
-        return value.GetType().FullName;
-      }
-      return base.ConvertTo(context, culture, value, destType);
-    }
-
-
-    /// <summary>
     /// Returns whether this object supports a standard set of values that can be picked from a list.
     /// </summary>
     public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) {
@@ -80,7 +62,7 @@ namespace Parsley.Core.Addins {
     public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) {
       IEnumerable<Addins.AddinInfo> t = Addins.AddinStore.FindAddins(_type_of, ai => ai.DefaultConstructible);
       _addin_dict = t.ToDictionary(ai => ai.FullName);
-      return new StandardValuesCollection(t.ToArray());
+      return new StandardValuesCollection(t.Select(ad => ad.FullName).ToArray());
     }
 
     /// <summary>

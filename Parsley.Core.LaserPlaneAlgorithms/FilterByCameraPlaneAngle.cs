@@ -13,7 +13,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   [Serializable]
   [Core.Addins.Addin]
   public class FilterByCameraPlaneAngle : Core.ILaserPlaneFilterAlgorithm {
-    private double _angle_proj_rad;
+    private double _angle_proj_cos;
     private double _angle_deg;
     private Vector _camera_view_direction;
 
@@ -30,7 +30,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
       get { return _angle_deg; }
       set {
         _angle_deg =  MathHelper.Clamp(value, 0.0, 90.0);
-        _angle_proj_rad = ((90.0 - _angle_deg) / 180.0) * Math.PI;
+        _angle_proj_cos = Math.Cos(((90.0 - _angle_deg) / 180.0) * Math.PI);
       }
     }
 
@@ -43,7 +43,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     /// <returns>True if angle between camera and laser is greater-equal to minimum angle specified, false otherwise</returns>
     public bool FilterLaserPlane(ILaserPlaneFilterAlgorithmContext context, out Plane filtered_plane) {
       filtered_plane = context.LaserPlane;
-      return Math.Abs(Vector.ScalarProduct(_camera_view_direction, filtered_plane.Normal)) >= _angle_proj_rad;
+      return Math.Abs(Vector.ScalarProduct(_camera_view_direction, filtered_plane.Normal)) >= _angle_proj_cos;
     }
 
   }
