@@ -35,6 +35,11 @@ namespace Parsley.Core {
     /// <returns>Vector</returns>
     Vector Extract(System.Drawing.Point pixel);
 
+    /// <summary>
+    /// Reset accumator entries
+    /// </summary>
+    void Reset();
+
 
     /// <summary>
     /// Access all points
