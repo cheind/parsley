@@ -46,6 +46,14 @@ namespace Parsley.Core {
     }
 
     /// <summary>
+    /// Reset indivdual entries to empty state
+    /// </summary>
+    public void Reset() {
+      _data = new T[_size.Width * _size.Height];
+    }
+
+
+    /// <summary>
     /// Test was set previously.
     /// </summary>
     /// <remarks>Uses comparison with default(T).</remarks>
