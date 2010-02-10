@@ -43,10 +43,15 @@ namespace Parsley {
     }
 
     void
-      PointCloud::UpdatePoint(unsigned id, array<double>^ x, array<double>^ color)
+      PointCloud::UpdatePoint(unsigned id, array<double>^ x)
+    {
+      _vertices->at(id) = convert3(x);
+    }
+
+    void
+      PointCloud::UpdateColor(unsigned id, array<double>^ color)
     {
       _colors->at(id) = convert4(color);
-      _vertices->at(id) = convert3(x);
     }
 
     void
