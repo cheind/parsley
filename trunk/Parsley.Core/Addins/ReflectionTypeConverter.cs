@@ -18,7 +18,6 @@ namespace Parsley.Core.Addins {
 
     private Type _type_of;
     private Dictionary<string, Core.Addins.AddinInfo> _addin_dict;
-    private bool _name_clashes_expected;
 
     /// <summary>
     /// Initialize with type to reflect
@@ -26,7 +25,6 @@ namespace Parsley.Core.Addins {
     /// <param name="type_of"></param>
     public ReflectionTypeConverter(Type type_of) {
       _type_of = type_of;
-      _name_clashes_expected = false;
     }
 
     /// <summary>
