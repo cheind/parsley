@@ -11,6 +11,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   [Serializable]
   [Parsley.Core.Addins.Addin]
   public class PlaneRansac : Core.ILaserPlaneAlgorithm {
+    private bool _only_out_of_roi;
     private double _min_consensus_precent;
     private double _plane_accurracy;
     private int _max_iterations;
@@ -35,6 +36,14 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     public double MinimumConsensus {
       get { return _min_consensus_precent; }
       set { _min_consensus_precent = MathHelper.Clamp(value, 0, 1); }
+    }
+
+    /// <summary>
+    /// True if points only outside of ROI are used for plane estimation.
+    /// </summary>
+    public bool OnlyOutOfROI {
+      get { return _only_out_of_roi; }
+      set { _only_out_of_roi = value; }
     }
 
     /// <summary>
