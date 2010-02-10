@@ -45,11 +45,5 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
       }
       return no_parallel_found;
     }
-
-    #region IPlaneRansacConstraint Members
-
-
-
-    #endregion
   }
 }
