@@ -41,7 +41,7 @@ namespace Parsley {
     }
 
     protected override void OnConfigurationLoaded(object sender, EventArgs e) {
-      _ic = new Parsley.Core.IntrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.FrameSize);
+      _ic = new Parsley.Core.IntrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.World.Camera.FrameSize);
       _ic.ClearViews();
       _timer_auto.Enabled = false;
       _cb_auto_take.Checked = false;
@@ -61,7 +61,7 @@ namespace Parsley {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      Core.CalibrationPattern pattern = this.Context.World.IntrinsicPattern;
+      Core.CalibrationPattern pattern = this.Context.Setup.IntrinsicPattern;
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
       gray._EqualizeHist();
       pattern.FindPattern(gray);
@@ -87,16 +87,16 @@ namespace Parsley {
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && Context.World.IntrinsicPattern.PatternFound && Context.World.Camera.HasIntrinsics) {
-        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.World.IntrinsicPattern.ImagePoints);
-        Context.World.IntrinsicPattern.DrawCoordinateFrame(img, ecp, Context.World.Camera.Intrinsics);
+      if (_ec != null && Context.Setup.IntrinsicPattern.PatternFound && Context.Setup.World.Camera.HasIntrinsics) {
+        Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.Setup.IntrinsicPattern.ImagePoints);
+        Context.Setup.IntrinsicPattern.DrawCoordinateFrame(img, ecp, Context.Setup.World.Camera.Intrinsics);
       }
     }
 
     void HandleTakeImageRequest() {
       if (_take_image_request) {
-        if (Context.World.IntrinsicPattern.PatternFound) {
-          _ic.AddView(Context.World.IntrinsicPattern.ImagePoints);
+        if (Context.Setup.IntrinsicPattern.PatternFound) {
+          _ic.AddView(Context.Setup.IntrinsicPattern.ImagePoints);
           this.Logger.Info(String.Format("You have successfully acquired {0} calibration images.", _ic.Views.Count));
           this.Invoke((MethodInvoker)delegate {  
             _btn_calibrate.Enabled = _ic.Views.Count > 2 && !_cb_auto_take.Checked;
@@ -109,7 +109,7 @@ namespace Parsley {
     void HandleCalibrateRequest() {
       if (_calibrate_request) {
         this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.IntrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
+        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.World.Camera.Intrinsics);
         this.Logger.Info("Calibration succeeded");
         this.Invoke((MethodInvoker)delegate {
           _btn_calibrate.Enabled = false;

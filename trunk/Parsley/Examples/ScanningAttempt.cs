@@ -17,7 +17,7 @@ namespace Parsley.Examples {
     private Parsley.Draw3D.PointCloud _pointcloud;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _ref_image;
     bool _take_ref_image;
-    Core.PointPerPixelAccumulator _acc;
+    //Core.PointPerPixelAccumulator _acc;
 
     public ScanningAttempt(Context c)
       : base(c) 
@@ -39,7 +39,7 @@ namespace Parsley.Examples {
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
-          Core.BuildingBlocks.Perspective.FromCamera(Context.World.Camera, 1.0, 5000).ToInterop()
+          Core.BuildingBlocks.Perspective.FromCamera(Context.Setup.World.Camera, 1.0, 5000).ToInterop()
         );
         Context.Viewer.LookAt(new double[] { 0, 0, 0 }, new double[] { 0, 0, 400 }, new double[] { 0, 1, 0 });
       }
@@ -53,7 +53,7 @@ namespace Parsley.Examples {
 
     void ROIHandler_OnROI(Rectangle r) {
       if (r != Rectangle.Empty) {
-        _acc = new Core.MedianPointAccumulator(r, 100);
+        //_acc = new Core.MedianPointAccumulator(r, 100);
       }
     }
 
@@ -65,8 +65,8 @@ namespace Parsley.Examples {
       }
 
       // 1. Extract laser-line
-      Context.World.Laser.FindLaserLine(img);
-      PointF[] laser_points = Context.World.Laser.ValidLaserPoints.ToArray();
+      Context.Setup.World.Laser.FindLaserLine(img);
+      PointF[] laser_points = Context.Setup.World.Laser.ValidLaserPoints.ToArray();
 
       if (_acc != null) {
         img.Draw(_acc.ROI, new Bgr(Color.Green), 1);
@@ -76,11 +76,11 @@ namespace Parsley.Examples {
         return;
       }
 
-      Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.World.Camera.Intrinsics, laser_points);
+      Core.Ray[] eye_rays = Core.Ray.EyeRays(Context.Setup.World.Camera.Intrinsics, laser_points);
       Core.Plane laser_plane;
-      if (Context.World.Laser.LaserPlaneAlgorithm.FindLaserPlane(
+      if (Context.Setup.World.Laser.LaserPlaneAlgorithm.FindLaserPlane(
             eye_rays,
-            Context.World.ReferencePlanes, out laser_plane)) 
+            Context.Setup.World.ReferencePlanes, out laser_plane)) 
       {
         Vector z = Vector.Create(new double[] { 0, 0, 1 });
         if (Math.Abs(laser_plane.Normal.ScalarMultiply(z)) < 0.3) {
@@ -128,7 +128,7 @@ namespace Parsley.Examples {
           new MCvPoint3D32f((float)r[0,0], (float)r[1,0], (float)r[2,0])
         },
         ecp,
-        Context.World.Camera.Intrinsics);
+        Context.Setup.World.Camera.Intrinsics);
       return coords[0];
 
     }
@@ -139,16 +139,16 @@ namespace Parsley.Examples {
 
     private void _btn_restart_Click(object sender, EventArgs e) {
       lock (Context.Viewer) {
-        _acc = null;
+        //_acc = null;
         _pointcloud.ClearPoints();
       }
     }
 
     private void _btn_save_pointcloud_Click(object sender, EventArgs e) {
       using (TextWriter tw = new StreamWriter("points.csv")) {
-        foreach (Vector v in _acc.Points) {
+        /*foreach (Vector v in _acc.Points) {
           tw.WriteLine(String.Format("{0} {1} {2}", v[0], v[1], v[2]));
-        }
+        }*/
       }
     }
   }

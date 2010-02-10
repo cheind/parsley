@@ -7,6 +7,7 @@ namespace Parsley.Core {
   public class AlgorithmContext : IAlgorithmContext {
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _image;
     Emgu.CV.IntrinsicCameraParameters _intrinsics;
+    private Plane[] _reference_planes;
 
     public AlgorithmContext() { }
 
@@ -18,6 +19,11 @@ namespace Parsley.Core {
     public Emgu.CV.IntrinsicCameraParameters Intrinsics {
       get { return _intrinsics; }
       set { _intrinsics = value; }
+    }
+
+    public Plane[] ReferencePlanes {
+      get { return _reference_planes; }
+      set { _reference_planes = value; }
     }
   }
 }

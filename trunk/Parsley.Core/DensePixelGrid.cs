@@ -33,7 +33,7 @@ namespace Parsley.Core {
       get { return _size; }
       set {
         _size = value;
-        _data = new T[s.Width * s.Height];
+        _data = new T[_size.Width * _size.Height];
       }
     }
 

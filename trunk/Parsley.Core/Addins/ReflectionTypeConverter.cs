@@ -17,7 +17,6 @@ namespace Parsley.Core.Addins {
     private Type _type_of;
     private Dictionary<string, Core.Addins.AddinInfo> _type_dict;
 
-
     public ReflectionTypeConverter(Type type_of) {
       _type_of = type_of;
     }
@@ -29,7 +28,6 @@ namespace Parsley.Core.Addins {
         return base.ConvertFrom(context, culture, value);
     }
 
-
     public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) {
       return true;
     }
@@ -37,7 +35,7 @@ namespace Parsley.Core.Addins {
     public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) {
       IEnumerable<Addins.AddinInfo> t = Addins.AddinStore.FindAddins(_type_of, ai => ai.DefaultConstructible);
       _type_dict = t.ToDictionary(ai => ai.FullName);
-      return new StandardValuesCollection(t.ToArray());
+      return new StandardValuesCollection(t.Select(ai => ai.FullName).ToArray());
     }
 
     public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type sourceType) {

@@ -36,10 +36,10 @@ namespace Parsley {
     }
 
     protected override void OnConfigurationLoaded(object sender, EventArgs e) {
-      if (!Context.World.Camera.HasIntrinsics) {
+      if (!Context.Setup.World.Camera.HasIntrinsics) {
         this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
       } else {
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.World.ExtrinsicPattern.ObjectPoints, Context.World.Camera.Intrinsics);
+        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.World.Camera.Intrinsics);
       }
     }
 
@@ -50,12 +50,12 @@ namespace Parsley {
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       // Constraint checking
-      if (!Context.World.Camera.HasIntrinsics) {
+      if (!Context.Setup.World.Camera.HasIntrinsics) {
         _on_roi = false;
         return;
       }
 
-      Core.CalibrationPattern pattern = Context.World.ExtrinsicPattern;
+      Core.CalibrationPattern pattern = Context.Setup.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
         pattern.FindPattern(gray, Context.ROIHandler.Last);
@@ -66,21 +66,21 @@ namespace Parsley {
 
           Core.ExtrinsicCalibration.CalibrationError(
             ecp,
-            Context.World.Camera.Intrinsics,
+            Context.Setup.World.Camera.Intrinsics,
             pattern.ImagePoints,
             pattern.ObjectPoints,
             out deviations,
             out points);
-          Context.World.ReferencePlanes.Add(new Core.Plane(ecp));
-          Context.World.Extrinsics.Add(ecp);
-          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.World.ReferencePlanes.Count, deviations.Max()));
+          Context.Setup.World.ReferencePlanes.Add(new Core.Plane(ecp));
+          Context.Setup.World.Extrinsics.Add(ecp);
+          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.Setup.World.ReferencePlanes.Count, deviations.Max()));
         } else {
           this.Logger.Warn("Plane not detected. Please repeat");
         }
         _on_roi = false;
       }
-      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.World.Extrinsics) {
-        pattern.DrawCoordinateFrame(img, ecp, Context.World.Camera.Intrinsics);
+      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.Setup.World.Extrinsics) {
+        pattern.DrawCoordinateFrame(img, ecp, Context.Setup.World.Camera.Intrinsics);
       }
     }
 

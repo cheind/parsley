@@ -11,13 +11,15 @@ namespace Parsley.Core {
   public interface ILaserPlaneAlgorithmContext : ILaserLineFilterAlgorithmContext {
 
     /// <summary>
+    /// Get all valid laser-points
+    /// </summary>
+    System.Drawing.PointF[] ValidLaserPoints {
+      get;
+    }
+
+    /// <summary>
     /// Get eye-rays throuh all valid laser points
     /// </summary>
     Ray[] EyeRays { get; }
-
-    /// <summary>
-    /// The set of calibrated reference planes
-    /// </summary>
-    Plane[] ReferencePlanes { get; }
   }
 }

@@ -33,12 +33,12 @@ namespace Parsley {
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
       _context.Image = img;
-      _context.Intrinsics = Context.World.Camera.Intrinsics;
+      _context.Intrinsics = Context.Setup.World.Camera.Intrinsics;
       
-      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel_image = img[(int)Context.World.Laser.Color]) {
+      using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel_image = img[(int)Context.Setup.World.Laser.Color]) {
         _context.ChannelImage = channel_image;
         System.Drawing.PointF[] laser_points;
-        Context.World.Laser.LaserLineAlgorithm.FindLaserLine(_context, out laser_points);
+        Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(_context, out laser_points);
 
         SaveLaserData(laser_points);
         foreach (System.Drawing.PointF p in laser_points.Where(p => p != PointF.Empty)) {

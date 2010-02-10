@@ -18,5 +18,10 @@ namespace Parsley.Core {
     /// Intrinsic camera calibration
     /// </summary>
     Emgu.CV.IntrinsicCameraParameters Intrinsics { get; }
+
+    /// <summary>
+    /// The set of calibrated reference planes
+    /// </summary>
+    Plane[] ReferencePlanes { get; }
   }
 }

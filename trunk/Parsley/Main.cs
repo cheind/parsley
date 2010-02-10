@@ -32,8 +32,8 @@ namespace Parsley {
       InitializeComponent();
 
       // Try connect to default cam
-      Core.BuildingBlocks.World world = new Parsley.Core.BuildingBlocks.World();
-      Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(world.Camera);
+      Core.BuildingBlocks.Setup setup = new Parsley.Core.BuildingBlocks.Setup();
+      Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(setup.World.Camera);
 
       // Addin
       Core.Addins.AddinStore.Discover();
@@ -51,12 +51,12 @@ namespace Parsley {
       _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
       _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
       _3d_viewer.RenderLoop.FPS = 30;
-      _3d_viewer.AspectRatio = world.Camera.FrameAspectRatio;
+      _3d_viewer.AspectRatio = setup.World.Camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
       _3d_viewer.RenderLoop.Start();
       //_3d_viewer.Show();
 
-      _context = new Context(world, fg, _3d_viewer.RenderLoop, _live_feed.ROIHandler);
+      _context = new Context(setup, fg, _3d_viewer.RenderLoop, _live_feed.ROIHandler);
       _properties.Context = _context;
 
       log4net.Appender.IAppender app = 
@@ -103,7 +103,7 @@ namespace Parsley {
 
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
       _context.FrameGrabber.Dispose();
-      _context.World.Camera.Dispose();
+      _context.Setup.World.Camera.Dispose();
       _context.RenderLoop.Dispose();
       _context.Viewer.Dispose();
     }
@@ -156,19 +156,32 @@ namespace Parsley {
 
     private void _btn_load_configuration_Click(object sender, EventArgs e) {
       if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
-        if (_context.LoadBinary(_open_dlg.FileName)) {
-         _logger.Info("Sucessfully loaded Parsley configuration.");
-        } else {
+        int device_index = -1;
+        try {
+          _context.FrameGrabber.Stop();
+          device_index = _context.Setup.World.Camera.DeviceIndex;
+          _context.Setup.World.Camera.Dispose(); // Throw old camera away
+
+          Core.BuildingBlocks.Setup s = Core.BuildingBlocks.Setup.LoadBinary(_open_dlg.FileName);
+          _context.FrameGrabber.Camera = s.World.Camera;
+          _context.Setup = s;
+          _logger.Info("Loading Parsley configuration succeeded.");
+        } catch (Exception) {
           _logger.Error("Loading Parsley configuration failed.");
+          _context.Setup.World.Camera = new Parsley.Core.BuildingBlocks.Camera(device_index);
+          _context.FrameGrabber.Camera = _context.Setup.World.Camera;
+        } finally {
+          _context.FrameGrabber.Start();
         }
       }
     }
 
     private void _btn_save_configuration_Click(object sender, EventArgs e) {
       if (_save_dialog.ShowDialog(this) == DialogResult.OK) {
-        if (_context.SaveBinary(_save_dialog.FileName)) {
+        try {
+          Core.BuildingBlocks.Setup.SaveBinary(_save_dialog.FileName, _context.Setup);
           _logger.Info("Sucessfully saved Parsley configuration.");
-        } else {
+        } catch (Exception) {
           _logger.Error("Saving Parsley configuration failed.");
         }
       }

@@ -10,16 +10,16 @@ namespace Parsley.Core {
   /// </summary>
   public class LaserPlaneAlgorithmContext : LaserLineFilterAlgorithmContext, ILaserPlaneAlgorithmContext {
     private Ray[] _eye_rays;
-    private Plane[] _reference_planes;
+    private System.Drawing.PointF[] _valid_laser_points;
 
     public Ray[] EyeRays {
       get { return _eye_rays; }
       set { _eye_rays = value; }
     }
 
-    public Plane[] ReferencePlanes {
-      get { return _reference_planes; }
-      set { _reference_planes = value; }
+    public System.Drawing.PointF[] ValidLaserPoints {
+      get { return _valid_laser_points; }
+      set { _valid_laser_points = value; }
     }
   }
 }

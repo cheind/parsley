@@ -13,6 +13,6 @@ namespace Parsley.Core {
     /// <remarks>Filter algorithms do not delete previous laser positions, but mark unwanted positions as invalid (PointF.Empty)</remarks>
     /// <param name="context">Algorithm Context</param>
     /// <param name="filtered_positions">Filtered output</param>
-    void FilterLaserLine(ILaserLineFilterAlgorithmContext context, out System.Drawing.PointF[] filtered_positions);
+    bool FilterLaserLine(ILaserLineFilterAlgorithmContext context, out System.Drawing.PointF[] filtered_positions);
   }
 }
