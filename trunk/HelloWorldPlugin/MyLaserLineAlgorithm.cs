@@ -10,8 +10,9 @@ namespace HelloWorldPlugin {
   public class MyLaserLineAlgorithm : Parsley.Core.ILaserLineAlgorithm {
     public MyLaserLineAlgorithm() { }
 
-    public void FindLaserLine(Parsley.Core.ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
+    public bool FindLaserLine(Parsley.Core.ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
       laser_pos = new System.Drawing.PointF[0];
+      return true;
     }
   }
 }
