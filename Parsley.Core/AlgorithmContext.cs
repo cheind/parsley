@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Parsley.Core {
   public class AlgorithmContext : IAlgorithmContext {
+    System.Drawing.Rectangle _roi;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _image;
     Emgu.CV.IntrinsicCameraParameters _intrinsics;
     private Plane[] _reference_planes;
@@ -24,6 +25,11 @@ namespace Parsley.Core {
     public Plane[] ReferencePlanes {
       get { return _reference_planes; }
       set { _reference_planes = value; }
+    }
+
+    public System.Drawing.Rectangle ROI {
+      get { return _roi; }
+      set { _roi = value; }
     }
   }
 }
