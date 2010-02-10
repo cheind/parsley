@@ -71,7 +71,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     /// <param name="reference_planes"></param>
     /// <param name="plane"></param>
     /// <returns></returns>
-    public override bool FindLaserPlane(ILaserPlaneAlgorithmContext context, out Plane plane) {
+    public bool FindLaserPlane(ILaserPlaneAlgorithmContext context, out Plane plane) {
       Vector[] isect = new Vector[context.EyeRays.Length];
       double[] ts = new double[context.EyeRays.Length];
 
