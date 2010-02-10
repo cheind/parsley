@@ -5,6 +5,7 @@ using System.Text;
 
 using MathNet.Numerics.LinearAlgebra;
 using System.Runtime.Serialization;
+using Parsley.Core.Extensions;
 
 namespace Parsley.Core {
 
@@ -12,7 +13,7 @@ namespace Parsley.Core {
   /// Accumulates points by median
   /// </summary>
   [Serializable]
-  public class MedianPointAccumulator : IPointPerPixelAccumulator, IDeserializationCallback {  
+  public class MedianPointAccumulator : IPointPerPixelAccumulator, ISerializable {  
     private int _max_entries;
     [NonSerialized]
     private DensePixelGrid<PerPixel> _grid;
@@ -25,13 +26,21 @@ namespace Parsley.Core {
       _grid = new DensePixelGrid<PerPixel>();
     }
 
-    public void OnDeserialization(object sender) {
+    public MedianPointAccumulator(SerializationInfo info, StreamingContext context)
+    {
+      _max_entries = info.GetValue<int>("_max_entries");
       _grid = new DensePixelGrid<PerPixel>();
     }
 
+
+    public void GetObjectData(SerializationInfo info, StreamingContext context) {
+      info.AddValue("_max_entries", _max_entries);
+    }
+
+    
     public System.Drawing.Size Size {
       set {
-        _grid = new DensePixelGrid<PerPixel>(value);
+        _grid.Size = value;
       }
     }
 
@@ -64,6 +73,10 @@ namespace Parsley.Core {
       return _grid[pixel].Median();
     }
 
+    public void Reset() {
+      _grid.Reset();
+    }
+
     /// <summary>
     /// Defines the entity stored per pixel
     /// </summary>
@@ -94,5 +107,11 @@ namespace Parsley.Core {
       }
     }
 
+
+    #region ISerializable Member
+
+
+
+    #endregion
   }
 }
