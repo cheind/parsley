@@ -23,5 +23,11 @@ namespace Parsley.Core {
     /// The set of calibrated reference planes
     /// </summary>
     Plane[] ReferencePlanes { get; }
+
+
+    /// <summary>
+    /// Region of scanning interest
+    /// </summary>
+    System.Drawing.Rectangle ROI { get; }
   }
 }
