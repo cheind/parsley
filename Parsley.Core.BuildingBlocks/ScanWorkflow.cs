@@ -21,6 +21,7 @@ namespace Parsley.Core.BuildingBlocks {
     private Core.ILaserLineFilterAlgorithm _line_filter;
     private Core.IPointPerPixelAccumulator _point_accum;
     private Core.ILaserPlaneFilterAlgorithm _plane_filter;
+    [NonSerialized]
     private Core.LaserPlaneFilterAlgorithmContext _context;
 
     public ScanWorkflow() {
@@ -49,6 +50,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Access the scanning region of interest
     /// </summary>
     public System.Drawing.Rectangle ROI {
+      get { return _roi; }
       set { 
         _roi = value;
         _point_accum.Size = _roi.Size;
@@ -170,24 +172,7 @@ namespace Parsley.Core.BuildingBlocks {
       return points.Length > 0;
     }
 
-    /*
-    class VisualizationInfo {
-      private Vector _color;
-      private uint _id;
 
-      public VisualizationInfo(Vector color, uint id) {
-        _color = color;
-        _id = id;
-      }
-
-      public Vector Color {
-        get { return _color; }
-      }
-
-      public uint Id {
-        get { return _id; }
-      }
-    };*/
 
 
   }
