@@ -15,13 +15,16 @@ namespace Parsley {
   public partial class ScanningSlide : FrameGrabberSlide {
     private Parsley.Draw3D.PointCloud _pointcloud;
     private Core.DensePixelGrid<uint> _pixel_point_ids;
-    bool _take_ref_image;
+    bool _take_texture_image;
     bool _update_roi;
+    bool _clear_points;
     System.Drawing.Rectangle _next_roi;
-    Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _ref_image;
+    Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _texture_image;
 
     public ScanningSlide(Context c)
-      : base(c) {
+      : base(c) 
+    {
+      this.InitializeComponent();
       _pointcloud = new Parsley.Draw3D.PointCloud();
       _pixel_point_ids = new Parsley.Core.DensePixelGrid<uint>();
       lock (Context.Viewer) {
@@ -63,9 +66,9 @@ namespace Parsley {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_take_ref_image) {
-        _take_ref_image = false;
-        _ref_image = img.Copy();
+      if (_take_texture_image) {
+        _take_texture_image = false;
+        _texture_image = img.Copy();
         UpdateAllColors();
       }
 
@@ -73,6 +76,12 @@ namespace Parsley {
         _update_roi = false;
         Context.Setup.ScanWorkflow.ROI = _next_roi;
         _pixel_point_ids.Size = _next_roi.Size;
+      }
+
+      if (_clear_points) {
+        _clear_points = false;
+        _pixel_point_ids.Reset();
+        Context.Setup.ScanWorkflow.Reset();
       }
 
       if (Context.Setup.ScanWorkflow.ROI == Rectangle.Empty) {
@@ -97,9 +106,13 @@ namespace Parsley {
     private void UpdateAllColors() {
       for (int i = 0; i < _pixel_point_ids.PixelData.Length; ++i) {
         System.Drawing.Point p = Core.IndexHelper.PixelFromArrayIndex(i, _pixel_point_ids.Size);
+        p = Core.IndexHelper.MakeAbsolute(p, Context.Setup.ScanWorkflow.ROI);
         Vector color = GetPixelColor(ref p);
         // Note: 0 is used as not-set marker
-        _pointcloud.UpdateColor(_pixel_point_ids.PixelData[i] - 1, color);
+        uint id = _pixel_point_ids.PixelData[i];
+        if (id > 0) {
+          _pointcloud.UpdateColor(id - 1, color);
+        }
       }
     }
 
@@ -123,8 +136,8 @@ namespace Parsley {
 
     private Vector GetPixelColor(ref System.Drawing.Point pixel) {
       Vector color;
-      if (_ref_image != null) {
-        Bgr bgr = _ref_image[pixel.Y, pixel.X];
+      if (_texture_image != null) {
+        Bgr bgr = _texture_image[pixel.Y, pixel.X];
         color = new Vector(new double[] { 
                bgr.Red / 255.0, 
                bgr.Green / 255.0, 
@@ -136,6 +149,14 @@ namespace Parsley {
         color = new Vector(new double[] { 0.7, 0.7, 0.7, 1.0 });
       }
       return color;
+    }
+
+    private void _btn_take_texture_image_Click(object sender, EventArgs e) {
+      _take_texture_image = true;
+    }
+
+    private void _btn_clear_points_Click(object sender, EventArgs e) {
+      _clear_points = true;
     }
   }
 }

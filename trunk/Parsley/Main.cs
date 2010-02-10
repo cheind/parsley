@@ -19,8 +19,6 @@ namespace Parsley {
 
     private readonly ILog _logger = LogManager.GetLogger(typeof(Main));
 
-
-    private MainSlide _slide_main;
     private IntrinsicCalibrationSlide _slide_intrinsic_calib;
     private ExtrinsicCalibrationSlide _slide_extrinsic_calib;
     private LaserSetupSlide _slide_laser_setup;
@@ -68,9 +66,6 @@ namespace Parsley {
       }
 
       _slide_welcome = new WelcomeSlide();
-
-      _slide_main = new MainSlide();
-
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
@@ -78,7 +73,6 @@ namespace Parsley {
 
       
       _slide_control.AddSlide(_slide_welcome);
-      _slide_control.AddSlide(_slide_main);
       _slide_control.AddSlide(_slide_scanning);
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
@@ -111,7 +105,7 @@ namespace Parsley {
     }
 
     void _slide_control_SlideChanged(object sender, SlickInterface.SlideChangedArgs e) {
-      _btn_back.Enabled = e.Now != _slide_main;
+      _btn_back.Enabled = _slide_control.HasPrevious;
     }
 
     private void _btn_show_3d_visualization_Click(object sender, EventArgs e) {

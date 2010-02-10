@@ -87,5 +87,10 @@ namespace Parsley {
     void ROIHandler_OnROI(Rectangle r) {
       _on_roi = true;
     }
+
+    private void _btn_clear_extrinsics_Click(object sender, EventArgs e) {
+      Context.Setup.World.ReferencePlanes.Clear();
+      Context.Setup.World.Extrinsics.Clear();
+    }
   }
 }
