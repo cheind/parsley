@@ -19,6 +19,16 @@ namespace Parsley.Core {
     }
 
     /// <summary>
+    /// Convert array index to pixel
+    /// </summary>
+    /// <param name="i">Array index</param>
+    /// <param name="s">Size of image described by array</param>
+    /// <returns>Pixel</returns>
+    public static System.Drawing.Point PixelFromArrayIndex(int i, System.Drawing.Size s) {
+      return new System.Drawing.Point(i % s.Width, i / s.Width);
+    }
+
+    /// <summary>
     /// Make pixel coordinate relative to rectangle frame
     /// </summary>
     /// <param name="pixel">Pixel</param>
