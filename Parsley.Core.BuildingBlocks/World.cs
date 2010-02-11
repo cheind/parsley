@@ -39,6 +39,13 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeCamera() {
+      return false;
+    }
+
+    /// <summary>
     /// Get/set laser and laser extraction algorithms
     /// </summary>
     [Description("Adjust laser settings")]
@@ -46,6 +53,13 @@ namespace Parsley.Core.BuildingBlocks {
     public Laser Laser {
       get { return _laser; }
       set { _laser = value; }
+    }
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeLaser() {
+      return false;
     }
 
     /// <summary>

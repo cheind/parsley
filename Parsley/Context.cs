@@ -47,6 +47,13 @@ namespace Parsley {
     }
 
     /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeSetup() {
+      return false;
+    }
+
+    /// <summary>
     /// Access the frame grabber
     /// </summary>
     [Browsable(false)]

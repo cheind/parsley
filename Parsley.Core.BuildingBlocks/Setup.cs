@@ -31,10 +31,16 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     [Description("Adjust settings of world components")]
     [TypeConverter(typeof(ExpandableObjectConverter))]
-    [DefaultValue(typeof(World), "Parsley.Core.BuildingBlocks.World")]
     public World World {
       get { return _world; }
       set { _world = value; }
+    }
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeWorld() {
+      return false;
     }
 
     /// <summary>
@@ -45,6 +51,14 @@ namespace Parsley.Core.BuildingBlocks {
     public ScanWorkflow ScanWorkflow {
       get { return _wf; }
       set { _wf = value; }
+    }
+
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeScanWorkflow() {
+      return false;
     }
 
     /// <summary>
@@ -59,6 +73,14 @@ namespace Parsley.Core.BuildingBlocks {
       set { _intrinsic_pattern = value; }
     }
 
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeIntrinsicPattern() {
+      return _intrinsic_pattern.GetType() != typeof(Core.CalibrationPatterns.CheckerBoard);
+    }
+
     /// <summary>
     /// Get/set the calibration pattern for the extrinsic camera calibration
     /// </summary>
@@ -69,6 +91,13 @@ namespace Parsley.Core.BuildingBlocks {
     public Core.CalibrationPattern ExtrinsicPattern {
       get { return _extrinsic_pattern; }
       set { _extrinsic_pattern = value; }
+    }
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeExtrinsicPattern() {
+      return _intrinsic_pattern.GetType() != typeof(Core.CalibrationPatterns.CheckerBoard);
     }
 
     /// <summary>
