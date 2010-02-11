@@ -56,6 +56,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <summary>
     /// Access the scanning region of interest
     /// </summary>
+    [DefaultValue("0; 0; 0; 0")]
     public System.Drawing.Rectangle ROI {
       get { return _roi; }
       set { 
@@ -76,6 +77,13 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeLaserLineAlgorithm() {
+      return _line_algorithm.GetType() != typeof(LaserLineAlgorithms.WeightedAverage);
+    }
+
+    /// <summary>
     /// Get/set the algorithm that performs laser line extraction
     /// </summary>
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
@@ -86,6 +94,13 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeLaserLineFilterAlgorithm() {
+      return _line_filter.GetType() != typeof(LaserLineAlgorithms.NoFilter);
+    }
+
+    /// <summary>
     /// Get/set the algorithm that performs laser plane extraction
     /// </summary>
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
@@ -93,6 +108,14 @@ namespace Parsley.Core.BuildingBlocks {
     public ILaserPlaneAlgorithm LaserPlaneAlgorithm {
       get { return _plane_algorithm; }
       set { _plane_algorithm = value; }
+    }
+
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeLaserPlaneAlgorithm() {
+      return _plane_algorithm.GetType() != typeof(LaserPlaneAlgorithms.PlaneRansac);
     }
 
     /// <summary>
@@ -106,6 +129,13 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeLaserPlaneFilterAlgorithm() {
+      return _plane_filter.GetType() != typeof(LaserPlaneAlgorithms.FilterByCameraPlaneAngle);
+    }
+
+    /// <summary>
     /// Get/set the algorithm accumulate points
     /// </summary>
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
@@ -113,6 +143,13 @@ namespace Parsley.Core.BuildingBlocks {
     public IPointPerPixelAccumulator PointAccumulator {
       get { return _point_accum; }
       set { _point_accum = value; }
+    }
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializePointAccumulator() {
+      return _point_accum.GetType() != typeof(MedianPointAccumulator);
     }
 
     /// <summary>
