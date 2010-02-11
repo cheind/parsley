@@ -20,18 +20,18 @@ namespace Parsley {
     private Core.BuildingBlocks.Setup _setup;
     private Core.BuildingBlocks.FrameGrabber _fg;
     private Core.BuildingBlocks.RenderLoop _rl;
-    private UI.Concrete.ROIHandler _roi_handler;
+    private UI.Concrete.EmbeddableStream _es;
 
     public Context(
       Core.BuildingBlocks.Setup setup,
       Core.BuildingBlocks.FrameGrabber fg,
       Core.BuildingBlocks.RenderLoop rl, 
-      UI.Concrete.ROIHandler roi_handler) 
+      UI.Concrete.EmbeddableStream es) 
     {
+      _es = es;
       _setup = setup;
       _fg = fg;
       _rl = rl;
-      _roi_handler = roi_handler;
     }
 
     /// <summary>
@@ -79,11 +79,10 @@ namespace Parsley {
     }
 
     /// <summary>
-    /// Access the entity that manages ROIs
+    /// Get the embeddable stream
     /// </summary>
-    [Browsable(false)]
-    public UI.Concrete.ROIHandler ROIHandler {
-      get { return _roi_handler; }
+    public UI.Concrete.EmbeddableStream EmbeddableStream {
+      get { return _es; }
     }
 
     /// <summary>

@@ -16,11 +16,13 @@ namespace Parsley {
 
     private bool _on_roi;
     private Core.ExtrinsicCalibration _ec;
+    private UI.RectangleInteractor _interactor;
 
     public ExtrinsicCalibrationSlide(Context c)
       : base(c) 
     {
       this.InitializeComponent();
+      _interactor = new Parsley.UI.RectangleInteractor();
       _on_roi = false;
     }
 
@@ -31,8 +33,9 @@ namespace Parsley {
 
     protected override void OnSlidingIn() {
       this.Reset();
+      _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
+      _interactor.UnscaledSize = Context.Setup.World.Camera.FrameSize;
       Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
-      Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       base.OnSlidingIn();
     }
 
@@ -44,7 +47,7 @@ namespace Parsley {
 
     protected override void OnSlidingOut(CancelEventArgs args) {
       Context.PropertyChanged -= new PropertyChangedEventHandler(Context_PropertyChanged);
-      Context.ROIHandler.OnROI -= new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
+      _interactor.ReleaseInteraction();
       base.OnSlidingOut(args);
     }
 
@@ -63,10 +66,16 @@ namespace Parsley {
         return;
       }
 
+      if (_interactor.DraggingState == Parsley.UI.RectangleInteractor.State.Dragging) {
+        img.Draw(_interactor.CurrentRectangle, new Bgr(Color.Green), 2);
+      } else {
+        img.Draw(_interactor.LastCompleteRectangle, new Bgr(Color.Green), 2);
+      }
+
       Core.CalibrationPattern pattern = Context.Setup.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        pattern.FindPattern(gray, Context.ROIHandler.Last);
+        pattern.FindPattern(gray, _interactor.LastCompleteRectangle);
         if (pattern.PatternFound) {
           ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
           double[] deviations;

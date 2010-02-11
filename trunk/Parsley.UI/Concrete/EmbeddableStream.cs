@@ -19,14 +19,12 @@ namespace Parsley.UI.Concrete {
     private Core.BuildingBlocks.FrameGrabber _grabber;
     private Emgu.CV.CvEnum.INTER _interpolation;
     private bool _can_invoke;
-    private ROIHandler _roi_handler;
 
     public EmbeddableStream() {
       InitializeComponent();
       _grabber = null;
       _interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_NN;
       _can_invoke = false;
-      _roi_handler = new ROIHandler(_picture_box);
       this.HandleCreated += new EventHandler(EmbeddableStream_HandleCreated);
       this.HandleDestroyed += new EventHandler(EmbeddableStream_HandleDestroyed);
     }
@@ -58,10 +56,9 @@ namespace Parsley.UI.Concrete {
       get { return _grabber; }
     }
 
-    public ROIHandler ROIHandler {
-      get { return _roi_handler; }
+    public PictureBox PictureBox {
+      get { return _picture_box; }
     }
-
 
     void GrabFrom(Core.BuildingBlocks.FrameGrabber fg) {
       if (fg != null) {
@@ -90,18 +87,9 @@ namespace Parsley.UI.Concrete {
       // that is already blocked. This leads to a deadlock. That is why we use BeginInvoke, which executes
       // the delegate on the GUI thread associated with this control.
       if (_can_invoke) {
-        Rectangle c = _picture_box.ClientRectangle;
-        Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img_copy = img.Resize(c.Width, c.Height, _interpolation);
-        int w = img.Width;
-        int h = img.Height;
+        Rectangle client = this.ClientRectangle;
+        Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img_copy = img.Resize(client.Width, client.Height, _interpolation);
         this.BeginInvoke(new MethodInvoker(delegate {
-          // Update scaling info for back-converting ROI to original image dimensions
-          _roi_handler.Scale = new SizeF((float)c.Width / w, (float)c.Height / h);
-
-          if (_roi_handler.IsDragging) {
-            img_copy.Draw(_roi_handler.Current, new Bgr(Color.Red), 1);
-          }
-          
           // Update image
           Emgu.CV.IImage prev = _picture_box.Image;
           _picture_box.Image = img_copy;

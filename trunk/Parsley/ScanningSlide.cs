@@ -13,6 +13,7 @@ using Emgu.CV.Structure;
 
 namespace Parsley {
   public partial class ScanningSlide : FrameGrabberSlide {
+    private UI.RectangleInteractor _interactor;
     private Parsley.Draw3D.PointCloud _pointcloud;
     private Core.DensePixelGrid<uint> _pixel_point_ids;
     bool _take_texture_image;
@@ -27,13 +28,15 @@ namespace Parsley {
       this.InitializeComponent();
       _pointcloud = new Parsley.Draw3D.PointCloud();
       _pixel_point_ids = new Parsley.Core.DensePixelGrid<uint>();
+      _interactor = new Parsley.UI.RectangleInteractor();
       lock (Context.Viewer) {
         Context.Viewer.Add(_pointcloud);
       }
     }
 
     protected override void OnSlidingIn() {
-      Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
+      _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
+      _interactor.UnscaledSize = Context.Setup.World.Camera.FrameSize;
       Context.Setup.ScanWorkflow.World = Context.Setup.World;
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
@@ -49,7 +52,7 @@ namespace Parsley {
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
-      Context.ROIHandler.OnROI -= new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
+      _interactor.ReleaseInteraction();
       base.OnSlidingOut(args);
     }
 
