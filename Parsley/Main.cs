@@ -56,7 +56,7 @@ namespace Parsley {
       this.AddOwnedForm(_3d_viewer);
       //_3d_viewer.Show();
 
-      _context = new Context(setup, fg, _3d_viewer.RenderLoop, _live_feed.ROIHandler);
+      _context = new Context(setup, fg, _3d_viewer.RenderLoop, _live_feed.EmbeddableStream);
       _properties.Context = _context;
 
       log4net.Appender.IAppender app = 

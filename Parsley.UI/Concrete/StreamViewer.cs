@@ -31,6 +31,10 @@ namespace Parsley.UI.Concrete {
       }
     }
 
+    public EmbeddableStream EmbeddableStream {
+      get { return _display; }
+    }
+
     public Emgu.CV.CvEnum.INTER Interpolation {
       get { return _display.Interpolation; }
       set { _display.Interpolation = value; }
@@ -39,10 +43,6 @@ namespace Parsley.UI.Concrete {
     public Emgu.CV.UI.ImageBox.FunctionalModeOption FunctionalMode {
       get { return _display.FunctionalMode; }
       set { _display.FunctionalMode = value; }
-    }
-
-    public ROIHandler ROIHandler {
-      get { return _display.ROIHandler; }
     }
   }
 }
