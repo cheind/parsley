@@ -43,6 +43,7 @@ namespace Parsley {
       _live_feed.FrameGrabber = fg;
       _live_feed.FrameGrabber.FPS = 30;
       _live_feed.FormClosing += new FormClosingEventHandler(_live_feed_FormClosing);
+      this.AddOwnedForm(_live_feed);
       //_live_feed.Show();
       fg.Start();
 
@@ -52,6 +53,7 @@ namespace Parsley {
       _3d_viewer.AspectRatio = setup.World.Camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
       _3d_viewer.RenderLoop.Start();
+      this.AddOwnedForm(_3d_viewer);
       //_3d_viewer.Show();
 
       _context = new Context(setup, fg, _3d_viewer.RenderLoop, _live_feed.ROIHandler);
@@ -83,17 +85,24 @@ namespace Parsley {
     }
 
     void _3d_viewer_FormClosing(object sender, FormClosingEventArgs e) {
-      e.Cancel = true;
-      _3d_viewer.Hide();
+      // Just hide, don't close except main-form closes
+      if (e.CloseReason != CloseReason.FormOwnerClosing) {
+        e.Cancel = true;
+        _3d_viewer.Hide();
+      }
     }
 
     void _live_feed_FormClosing(object sender, FormClosingEventArgs e) {
-      e.Cancel = true;
-      _live_feed.Hide();
+      // Just hide, don't close except main-form closes
+      if (e.CloseReason != CloseReason.FormOwnerClosing) {
+        e.Cancel = true;
+        _live_feed.Hide();
+      }
     }
 
-
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
+      _3d_viewer.Close();
+      _live_feed.Close();
       _context.FrameGrabber.Dispose();
       _context.Setup.World.Camera.Dispose();
       _context.RenderLoop.Dispose();
