@@ -192,10 +192,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\inc\draw3d\auto_ptr.h"
-			>
-		</File>
-		<File
 			RelativePath=".\inc\draw3d\auto_ptr_osg.h"
 			>
 		</File>
