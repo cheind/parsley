@@ -30,22 +30,30 @@ namespace Parsley {
     }
 
     protected override void OnSlidingIn() {
-      this.OnConfigurationLoaded(this, null);
+      this.Reset();
+      Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
       Context.ROIHandler.OnROI += new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
       base.OnSlidingIn();
     }
 
-    protected override void OnConfigurationLoaded(object sender, EventArgs e) {
+    void Context_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+      if (e.PropertyName == "Setup") {
+        Reset();
+      }
+    }
+
+    protected override void OnSlidingOut(CancelEventArgs args) {
+      Context.PropertyChanged -= new PropertyChangedEventHandler(Context_PropertyChanged);
+      Context.ROIHandler.OnROI -= new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
+      base.OnSlidingOut(args);
+    }
+
+    void Reset() {
       if (!Context.Setup.World.Camera.HasIntrinsics) {
         this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
       } else {
         _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.World.Camera.Intrinsics);
       }
-    }
-
-    protected override void OnSlidingOut(CancelEventArgs args) {
-      Context.ROIHandler.OnROI -= new Parsley.UI.Concrete.ROIHandler.OnROIHandler(ROIHandler_OnROI);
-      base.OnSlidingOut(args);
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
