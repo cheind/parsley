@@ -11,6 +11,7 @@ namespace Parsley.Core {
   /// </summary>
   [Serializable]
   public class Resource : IDisposable {
+    [NonSerialized]
     private bool _disposed;
 
     /// <summary>
