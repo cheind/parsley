@@ -22,7 +22,8 @@ namespace Parsley {
     private void PropertyPane_VisibleChanged(object sender, EventArgs e) {
       if (this.Visible) {
         if (_context != null) {
-          _pg_config.SelectedObject = _context.Setup;
+          //_pg_config.SelectedObject = _context.Setup;
+          _pg_config.SelectedObject = _context;
         }
         this.UpdatePosition();
       }

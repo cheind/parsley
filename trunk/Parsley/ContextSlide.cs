@@ -33,9 +33,6 @@ namespace Parsley {
       InitializeComponent();
       _c = context;
       _logger = LogManager.GetLogger(typeof(ContextSlide));
-      if (_c != null) {
-        _c.OnConfigurationLoaded += new EventHandler<EventArgs>(OnConfigurationLoaded);
-      }
     }
 
     /// <summary>
@@ -43,12 +40,6 @@ namespace Parsley {
     /// </summary>
     public ILog Logger {
       get { return _logger; }
-    }
-
-    /// <summary>
-    /// When the configuration was updated
-    /// </summary>
-    protected virtual void OnConfigurationLoaded(object sender, EventArgs e) {
     }
 
     /// <summary>

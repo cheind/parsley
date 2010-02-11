@@ -30,19 +30,30 @@ namespace Parsley {
 
 
     protected override void OnSlidingIn() {
-      this.OnConfigurationLoaded(this, null);
-      _first_time = true;
+      this.Reset();
+      Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
       base.OnSlidingIn();
+    }
+
+    void Context_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+      if (e.PropertyName == "Setup") {
+        this.Reset();
+      }
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
       _timer_auto.Enabled = false;
+      Context.PropertyChanged -= new PropertyChangedEventHandler(Context_PropertyChanged);
       base.OnSlidingOut(args);
     }
 
-    protected override void OnConfigurationLoaded(object sender, EventArgs e) {
+    /// <summary>
+    /// Reset slide to initial
+    /// </summary>
+    void Reset() {
       _ic = new Parsley.Core.IntrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.World.Camera.FrameSize);
       _ic.ClearViews();
+      _first_time = true;
       _timer_auto.Enabled = false;
       _cb_auto_take.Checked = false;
       _btn_calibrate.Enabled = false;
@@ -53,7 +64,6 @@ namespace Parsley {
       } else {
         this.Logger.Info("Start the calibration process by taking images of your chessboard.");
       }
-      
     }
 
     void _timer_auto_Tick(object sender, EventArgs e) {
