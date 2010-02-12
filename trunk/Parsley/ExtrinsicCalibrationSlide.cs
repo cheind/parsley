@@ -23,6 +23,7 @@ namespace Parsley {
     {
       this.InitializeComponent();
       _interactor = new Parsley.UI.RectangleInteractor();
+      _interactor.OnRectangle += new Parsley.UI.RectangleInteractor.OnRectangleHandler(_interactor_OnRectangle);
       _on_roi = false;
     }
 
@@ -101,7 +102,8 @@ namespace Parsley {
       }
     }
 
-    void ROIHandler_OnROI(Rectangle r) {
+
+    void _interactor_OnRectangle(Rectangle r) {
       _on_roi = true;
     }
 
