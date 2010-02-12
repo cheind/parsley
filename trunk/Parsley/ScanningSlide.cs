@@ -29,10 +29,13 @@ namespace Parsley {
       _pointcloud = new Parsley.Draw3D.PointCloud();
       _pixel_point_ids = new Parsley.Core.DensePixelGrid<uint>();
       _interactor = new Parsley.UI.RectangleInteractor();
+      _interactor.OnRectangle += new Parsley.UI.RectangleInteractor.OnRectangleHandler(_interactor_OnRectangle);
       lock (Context.Viewer) {
         Context.Viewer.Add(_pointcloud);
       }
     }
+
+
 
     protected override void OnSlidingIn() {
       _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
@@ -56,7 +59,7 @@ namespace Parsley {
       base.OnSlidingOut(args);
     }
 
-    void ROIHandler_OnROI(Rectangle r) {
+    void _interactor_OnRectangle(Rectangle r) {
       if (r != Rectangle.Empty) {
         _update_roi = true;
         _next_roi = r;
