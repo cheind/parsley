@@ -81,6 +81,7 @@ namespace Parsley {
     /// <summary>
     /// Get the embeddable stream
     /// </summary>
+    [Browsable(false)]
     public UI.Concrete.EmbeddableStream EmbeddableStream {
       get { return _es; }
     }
