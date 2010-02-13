@@ -16,7 +16,6 @@ namespace Parsley.Core.Addins {
     /// Discovers add-ins from current set of loaded assemblies
     /// </summary>
     public static void Discover() {
-      _addins.Clear();
       foreach (Assembly a in AppDomain.CurrentDomain.GetAssemblies()) {
         foreach (Type t in a.GetExportedTypes()) {
           if (IsAddin(t)) {
@@ -73,7 +72,7 @@ namespace Parsley.Core.Addins {
       try {
         Assembly a = Assembly.LoadFrom(assembly_path);
         foreach (Type t in a.GetExportedTypes()) {
-          if (IsAddin(t)) {
+          if (IsAddin(t) && _addins.Any(ai => ai.Type == t)) {
             _addins.Add(new AddinInfo(t));
           }
         }
