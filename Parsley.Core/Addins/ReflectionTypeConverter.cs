@@ -51,7 +51,7 @@ namespace Parsley.Core.Addins {
     /// Returns whether this object supports a standard set of values that can be picked from a list.
     /// </summary>
     public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) {
-      return true;
+      return Addins.AddinStore.FindAddins(_type_of, ai => ai.DefaultConstructible).Count() > 1;
     }
 
     /// <summary>
