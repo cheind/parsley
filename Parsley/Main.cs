@@ -96,6 +96,7 @@ namespace Parsley {
       if (e.CloseReason != CloseReason.FormOwnerClosing) {
         e.Cancel = true;
         _3d_viewer.Hide();
+        _btn_show_3d_visualization.Checked = false;
       }
     }
 
@@ -104,6 +105,7 @@ namespace Parsley {
       if (e.CloseReason != CloseReason.FormOwnerClosing) {
         e.Cancel = true;
         _live_feed.Hide();
+        _btn_show_camera_live_feed.Checked = false;
       }
     }
 
