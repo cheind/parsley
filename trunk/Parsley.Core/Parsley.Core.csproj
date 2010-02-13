@@ -91,6 +91,7 @@
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
+    <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="IAlgorithmContext.cs" />

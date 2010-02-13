@@ -37,18 +37,26 @@ namespace Parsley.Core {
     /// <param name="planes">Calibrated reference planes</param>
     /// <param name="isect_t">Parametric ray intersection distance</param>
     /// <param name="isect_p">Intersection points (optional).</param>
-    public static void FindEyeRayPlaneIntersections(Ray[] eye_rays, IEnumerable<Plane> planes, ref double[] isect_t, ref Vector[] isect_p) {
+    public static void FindEyeRayPlaneIntersections(Ray[] eye_rays, Plane[] planes, out double[] isect_t, out Vector[] isect_p, out int[] isect_plane_ids) {
       isect_t = new double[eye_rays.Length];
+      isect_p = new Vector[eye_rays.Length];
+      isect_plane_ids = new int[eye_rays.Length];
+
       for (int i = 0; i < eye_rays.Length; ++i) {
         Ray r = eye_rays[i];
         double t = Double.MaxValue;
-        foreach (Plane p in planes) {
+        int id = -1;
+        for (int p = 0; p < planes.Length; ++p) {
           double this_t;
-          Intersection.RayPlane(r, p, out this_t);
-          if (this_t < t) t = this_t;
+          Intersection.RayPlane(r, planes[p], out this_t);
+          if (this_t < t) {
+            t = this_t;
+            id = p;
+          } 
         }
         isect_t[i] = t;
-        if (isect_p != null) isect_p[i] = r.At(t);
+        isect_p[i] = r.At(t);
+        isect_plane_ids[i] = id;
       }
     }
 
