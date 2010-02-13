@@ -51,7 +51,7 @@ namespace Parsley {
     /// Reset slide to initial
     /// </summary>
     void Reset() {
-      _ic = new Parsley.Core.IntrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.World.Camera.FrameSize);
+      _ic = new Parsley.Core.IntrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.Camera.FrameSize);
       _ic.ClearViews();
       _first_time = true;
       _timer_auto.Enabled = false;
@@ -97,9 +97,9 @@ namespace Parsley {
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && Context.Setup.IntrinsicPattern.PatternFound && Context.Setup.World.Camera.HasIntrinsics) {
+      if (_ec != null && Context.Setup.IntrinsicPattern.PatternFound && Context.Setup.Camera.HasIntrinsics) {
         Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(Context.Setup.IntrinsicPattern.ImagePoints);
-        Context.Setup.IntrinsicPattern.DrawCoordinateFrame(img, ecp, Context.Setup.World.Camera.Intrinsics);
+        Context.Setup.IntrinsicPattern.DrawCoordinateFrame(img, ecp, Context.Setup.Camera.Intrinsics);
       }
     }
 
@@ -119,7 +119,7 @@ namespace Parsley {
     void HandleCalibrateRequest() {
       if (_calibrate_request) {
         this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.World.Camera.Intrinsics);
+        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.IntrinsicPattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
         this.Logger.Info("Calibration succeeded");
         this.Invoke((MethodInvoker)delegate {
           _btn_calibrate.Enabled = false;

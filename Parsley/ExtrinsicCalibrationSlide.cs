@@ -17,13 +17,14 @@ namespace Parsley {
     private bool _on_roi;
     private Core.ExtrinsicCalibration _ec;
     private UI.RectangleInteractor _interactor;
+    private Rectangle _r;
 
     public ExtrinsicCalibrationSlide(Context c)
       : base(c) 
     {
       this.InitializeComponent();
       _interactor = new Parsley.UI.RectangleInteractor();
-      _interactor.OnRectangle += new Parsley.UI.RectangleInteractor.OnRectangleHandler(_interactor_OnRectangle);
+      _interactor.InteractionCompleted += new EventHandler<Parsley.UI.InteractionEventArgs>(_interactor_InteractionCompleted);
       _on_roi = false;
     }
 
@@ -35,7 +36,7 @@ namespace Parsley {
     protected override void OnSlidingIn() {
       this.Reset();
       _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
-      _interactor.UnscaledSize = Context.Setup.World.Camera.FrameSize;
+      _interactor.UnscaledSize = Context.Setup.Camera.FrameSize;
       Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
       base.OnSlidingIn();
     }
@@ -53,30 +54,30 @@ namespace Parsley {
     }
 
     void Reset() {
-      if (!Context.Setup.World.Camera.HasIntrinsics) {
+      if (!Context.Setup.Camera.HasIntrinsics) {
         this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
       } else {
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.World.Camera.Intrinsics);
+        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
       }
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       // Constraint checking
-      if (!Context.Setup.World.Camera.HasIntrinsics) {
+      if (!Context.Setup.Camera.HasIntrinsics) {
         _on_roi = false;
         return;
       }
 
-      if (_interactor.DraggingState == Parsley.UI.RectangleInteractor.State.Dragging) {
-        img.Draw(_interactor.CurrentRectangle, new Bgr(Color.Green), 2);
+      if (_interactor.State == Parsley.UI.InteractionState.Interacting) {
+        _interactor.DrawIndicator(_interactor.Current, img);
       } else {
-        img.Draw(_interactor.LastCompleteRectangle, new Bgr(Color.Green), 2);
+        _interactor.DrawIndicator(_r, img);
       }
 
       Core.CalibrationPattern pattern = Context.Setup.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        pattern.FindPattern(gray, _interactor.LastCompleteRectangle);
+        pattern.FindPattern(gray, _r);
         if (pattern.PatternFound) {
           ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
           double[] deviations;
@@ -84,23 +85,29 @@ namespace Parsley {
 
           Core.ExtrinsicCalibration.CalibrationError(
             ecp,
-            Context.Setup.World.Camera.Intrinsics,
+            Context.Setup.Camera.Intrinsics,
             pattern.ImagePoints,
             pattern.ObjectPoints,
             out deviations,
             out points);
-          Context.Setup.World.ReferencePlanes.Add(new Core.Plane(ecp));
-          Context.Setup.World.Extrinsics.Add(ecp);
-          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.Setup.World.ReferencePlanes.Count, deviations.Max()));
+          Context.Setup.ReferencePlanes.Add(new Core.Plane(ecp));
+          Context.Setup.Extrinsics.Add(ecp);
+          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.Setup.ReferencePlanes.Count, deviations.Max()));
         } else {
           this.Logger.Warn("Plane not detected. Please repeat");
         }
         _on_roi = false;
       }
-      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.Setup.World.Extrinsics) {
-        pattern.DrawCoordinateFrame(img, ecp, Context.Setup.World.Camera.Intrinsics);
+      foreach (Emgu.CV.ExtrinsicCameraParameters ecp in Context.Setup.Extrinsics) {
+        pattern.DrawCoordinateFrame(img, ecp, Context.Setup.Camera.Intrinsics);
       }
     }
+
+    void _interactor_InteractionCompleted(object sender, Parsley.UI.InteractionEventArgs e) {
+      _on_roi = true;
+      _r = (Rectangle)e.InteractionResult;
+    }
+
 
 
     void _interactor_OnRectangle(Rectangle r) {
@@ -108,8 +115,8 @@ namespace Parsley {
     }
 
     private void _btn_clear_extrinsics_Click(object sender, EventArgs e) {
-      Context.Setup.World.ReferencePlanes.Clear();
-      Context.Setup.World.Extrinsics.Clear();
+      Context.Setup.ReferencePlanes.Clear();
+      Context.Setup.Extrinsics.Clear();
     }
   }
 }
