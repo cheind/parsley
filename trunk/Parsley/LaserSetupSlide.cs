@@ -18,12 +18,10 @@ using System.Diagnostics;
 namespace Parsley {
   public partial class LaserSetupSlide : FrameGrabberSlide {
     private bool _save_laser_data;
-    private Core.LaserLineAlgorithmContext _context;
 
     public LaserSetupSlide(Context c) : base(c) 
     {
       InitializeComponent();
-      _context = new Parsley.Core.LaserLineAlgorithmContext();
 #if !DEBUG
       this._btn_save_laser_data.Visible = false;
 #endif
@@ -38,16 +36,22 @@ namespace Parsley {
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
-      _context.Image = img;
-      _context.Intrinsics = Context.Setup.Camera.Intrinsics;
+      Core.LaserLineFilterAlgorithmContext c = new Parsley.Core.LaserLineFilterAlgorithmContext();
+      c.Image = img;
+      c.Intrinsics = Context.Setup.Camera.Intrinsics;
       
       using (Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel_image = img[(int)Context.Setup.Laser.Color]) {
-        _context.ChannelImage = channel_image;
+        c.ChannelImage = channel_image;
         System.Drawing.PointF[] laser_points;
-        Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(_context, out laser_points);
+        if (!Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(c, out laser_points))
+          return;
+        c.LaserPoints = laser_points;
+        System.Drawing.PointF[] filtered_points;
+        if (!Context.Setup.ScanWorkflow.LaserLineFilterAlgorithm.FilterLaserLine(c, out filtered_points))
+          return;
 
-        SaveLaserData(laser_points);
-        foreach (System.Drawing.PointF p in laser_points.Where(p => p != PointF.Empty)) {
+        SaveLaserData(filtered_points);
+        foreach (System.Drawing.PointF p in filtered_points.Where(p => p != PointF.Empty)) {
           img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
         }
       }
