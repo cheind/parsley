@@ -1,4 +1,8 @@
-
+/*
+ * Parsley http://parsley.googlecode.com
+ * Copyright (c) 2010, Christoph Heindl. All rights reserved.
+ * Code license:	New BSD License
+ */
 
 #include <draw3d/axis.h>
 #include <osg/Geometry>
