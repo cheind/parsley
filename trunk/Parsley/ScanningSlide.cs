@@ -68,6 +68,7 @@ namespace Parsley {
         _clear_points = false;
         _pixel_point_ids.Reset();
         Context.Setup.ScanWorkflow.Reset();
+        _pointcloud.ClearPoints();
       }
 
       if (Context.Setup.Camera.FrameSize != _pixel_point_ids.Size) {
