@@ -18,6 +18,7 @@ namespace Parsley {
     private Core.ExtrinsicCalibration _ec;
     private UI.RectangleInteractor _interactor;
     private Rectangle _r;
+    private bool _clear_request;
 
     public ExtrinsicCalibrationSlide(Context c)
       : base(c) 
@@ -74,6 +75,12 @@ namespace Parsley {
         _interactor.DrawIndicator(_r, img);
       }
 
+      if (_clear_request) {
+        _clear_request = false;
+        Context.Setup.ReferencePlanes.Clear();
+        Context.Setup.Extrinsics.Clear();
+      }
+
       Core.CalibrationPattern pattern = Context.Setup.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
@@ -92,7 +99,7 @@ namespace Parsley {
             out points);
           Context.Setup.ReferencePlanes.Add(new Core.Plane(ecp));
           Context.Setup.Extrinsics.Add(ecp);
-          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {0:F2}", Context.Setup.ReferencePlanes.Count, deviations.Max()));
+          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {1:F3}", Context.Setup.ReferencePlanes.Count, deviations.Max()));
         } else {
           this.Logger.Warn("Plane not detected. Please repeat");
         }
@@ -115,8 +122,8 @@ namespace Parsley {
     }
 
     private void _btn_clear_extrinsics_Click(object sender, EventArgs e) {
-      Context.Setup.ReferencePlanes.Clear();
-      Context.Setup.Extrinsics.Clear();
+      _clear_request = true;
+
     }
   }
 }
