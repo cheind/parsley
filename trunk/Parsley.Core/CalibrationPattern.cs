@@ -77,14 +77,19 @@ namespace Parsley.Core {
     /// <param name="image_points">Image points relative to original image</param>
     /// <returns></returns>
     public bool FindPattern(Emgu.CV.Image<Gray, byte> img, Rectangle roi, out PointF[] image_points) {
-      Emgu.CV.Image<Gray, byte> selected = img.GetSubRect(roi); // Shares memory with original image
-      bool found = this.FindPattern(selected, out image_points);
-      // Transform points back to original image coordinates
-      PointF origin = roi.Location;
-      for (int i = 0; i < image_points.Length; i++) {
-        image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
+      try {
+        Emgu.CV.Image<Gray, byte> selected = img.GetSubRect(roi); // Shares memory with original image
+        bool found = this.FindPattern(selected, out image_points);
+        // Transform points back to original image coordinates
+        PointF origin = roi.Location;
+        for (int i = 0; i < image_points.Length; i++) {
+          image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
+        }
+        return found;
+      } catch (Emgu.CV.CvException e) {
+        image_points = new PointF[0];
+        return false;
       }
-      return found;
     }
 
     
