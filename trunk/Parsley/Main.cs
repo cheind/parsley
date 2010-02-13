@@ -27,15 +27,16 @@ namespace Parsley {
 
 
     public Main() {
+      // Addin
+      Core.Addins.AddinStore.Discover();
+      Core.Addins.AddinStore.Discover(Environment.CurrentDirectory);
+      Core.Addins.AddinStore.Discover(Environment.CurrentDirectory + @"\plugins");
+
       InitializeComponent();
 
       // Try connect to default cam
       Core.BuildingBlocks.Setup setup = new Parsley.Core.BuildingBlocks.Setup();
-      Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(setup.World.Camera);
-
-      // Addin
-      Core.Addins.AddinStore.Discover();
-      Core.Addins.AddinStore.Discover(Environment.CurrentDirectory + @"\plugins");
+      Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(setup.Camera);
 
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
       _live_feed.Interpolation = Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR;
@@ -50,7 +51,7 @@ namespace Parsley {
       _3d_viewer = new Parsley.UI.Concrete.Draw3DViewer();
       _3d_viewer.FormClosing += new FormClosingEventHandler(_3d_viewer_FormClosing);
       _3d_viewer.RenderLoop.FPS = 30;
-      _3d_viewer.AspectRatio = setup.World.Camera.FrameAspectRatio;
+      _3d_viewer.AspectRatio = setup.Camera.FrameAspectRatio;
       _3d_viewer.IsMaintainingAspectRatio = true;
       _3d_viewer.RenderLoop.Start();
       this.AddOwnedForm(_3d_viewer);
@@ -104,7 +105,7 @@ namespace Parsley {
       _3d_viewer.Close();
       _live_feed.Close();
       _context.FrameGrabber.Dispose();
-      _context.Setup.World.Camera.Dispose();
+      _context.Setup.Camera.Dispose();
       _context.RenderLoop.Dispose();
       _context.Viewer.Dispose();
     }
@@ -160,17 +161,17 @@ namespace Parsley {
         int device_index = -1;
         try {
           _context.FrameGrabber.Stop();
-          device_index = _context.Setup.World.Camera.DeviceIndex;
-          _context.Setup.World.Camera.Dispose(); // Throw old camera away
+          device_index = _context.Setup.Camera.DeviceIndex;
+          _context.Setup.Camera.Dispose(); // Throw old camera away
 
           Core.BuildingBlocks.Setup s = Core.BuildingBlocks.Setup.LoadBinary(_open_dlg.FileName);
-          _context.FrameGrabber.Camera = s.World.Camera;
+          _context.FrameGrabber.Camera = s.Camera;
           _context.Setup = s;
           _logger.Info("Loading Parsley configuration succeeded.");
         } catch (Exception) {
           _logger.Error("Loading Parsley configuration failed.");
-          _context.Setup.World.Camera = new Parsley.Core.BuildingBlocks.Camera(device_index);
-          _context.FrameGrabber.Camera = _context.Setup.World.Camera;
+          _context.Setup.Camera = new Parsley.Core.BuildingBlocks.Camera(device_index);
+          _context.FrameGrabber.Camera = _context.Setup.Camera;
         } finally {
           _context.FrameGrabber.Start();
         }

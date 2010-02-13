@@ -13,11 +13,9 @@ using Emgu.CV.Structure;
 
 namespace Parsley {
   public partial class ScanningSlide : FrameGrabberSlide {
-    private UI.RectangleInteractor _interactor;
     private Parsley.Draw3D.PointCloud _pointcloud;
     private Core.DensePixelGrid<uint> _pixel_point_ids;
     bool _take_texture_image;
-    bool _update_roi;
     bool _clear_points;
     System.Drawing.Rectangle _next_roi;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _texture_image;
@@ -28,22 +26,16 @@ namespace Parsley {
       this.InitializeComponent();
       _pointcloud = new Parsley.Draw3D.PointCloud();
       _pixel_point_ids = new Parsley.Core.DensePixelGrid<uint>();
-      _interactor = new Parsley.UI.RectangleInteractor();
-      _interactor.OnRectangle += new Parsley.UI.RectangleInteractor.OnRectangleHandler(_interactor_OnRectangle);
       lock (Context.Viewer) {
         Context.Viewer.Add(_pointcloud);
       }
     }
 
 
-
     protected override void OnSlidingIn() {
-      _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
-      _interactor.UnscaledSize = Context.Setup.World.Camera.FrameSize;
-      Context.Setup.ScanWorkflow.World = Context.Setup.World;
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
-          Core.BuildingBlocks.Perspective.FromCamera(Context.Setup.World.Camera, 1.0, 5000).ToInterop()
+          Core.BuildingBlocks.Perspective.FromCamera(Context.Setup.Camera, 1.0, 5000).ToInterop()
         );
         Context.Viewer.LookAt(
           new double[] { 0, 0, 0 },
@@ -55,15 +47,7 @@ namespace Parsley {
     }
 
     protected override void OnSlidingOut(CancelEventArgs args) {
-      _interactor.ReleaseInteraction();
       base.OnSlidingOut(args);
-    }
-
-    void _interactor_OnRectangle(Rectangle r) {
-      if (r != Rectangle.Empty) {
-        _update_roi = true;
-        _next_roi = r;
-      }
     }
 
     private ScanningSlide()
@@ -75,13 +59,9 @@ namespace Parsley {
       if (_take_texture_image) {
         _take_texture_image = false;
         _texture_image = img.Copy();
-        UpdateAllColors();
-      }
-
-      if (_update_roi) {
-        _update_roi = false;
-        Context.Setup.ScanWorkflow.ROI = _next_roi;
-        _pixel_point_ids.Size = _next_roi.Size;
+        lock (Context.Viewer) {
+          UpdateAllColors();
+        }
       }
 
       if (_clear_points) {
@@ -90,16 +70,14 @@ namespace Parsley {
         Context.Setup.ScanWorkflow.Reset();
       }
 
-      if (Context.Setup.ScanWorkflow.ROI == Rectangle.Empty) {
-        return;
+      if (Context.Setup.Camera.FrameSize != _pixel_point_ids.Size) {
+        _pixel_point_ids.Size = Context.Setup.Camera.FrameSize;
       }
-
-      img.Draw(Context.Setup.ScanWorkflow.ROI, new Bgr(Color.Green), 1);
 
       Vector[] points;
       System.Drawing.Point[] pixels;
 
-      if (Context.Setup.ScanWorkflow.Process(img, out points, out pixels)) {
+      if (Context.Setup.ScanWorkflow.Process(Context.Setup, img, out points, out pixels)) {
         lock (Context.Viewer) {
           UpdatePoints(points, pixels);
         }
@@ -112,7 +90,8 @@ namespace Parsley {
     private void UpdateAllColors() {
       for (int i = 0; i < _pixel_point_ids.PixelData.Length; ++i) {
         System.Drawing.Point p = Core.IndexHelper.PixelFromArrayIndex(i, _pixel_point_ids.Size);
-        p = Core.IndexHelper.MakeAbsolute(p, Context.Setup.ScanWorkflow.ROI);
+        //we currently use image coordinate system as reference
+        //p = Core.IndexHelper.MakeAbsolute(p, Context.Setup.ScanWorkflow.ROI);
         Vector color = GetPixelColor(ref p);
         // Note: 0 is used as not-set marker
         uint id = _pixel_point_ids.PixelData[i];
@@ -126,8 +105,8 @@ namespace Parsley {
     {
       for (int i = 0; i < points.Length; ++i) {
         System.Drawing.Point pixel = pixels[i];
-        System.Drawing.Point rel_p = Core.IndexHelper.MakeRelative(pixel, Context.Setup.ScanWorkflow.ROI);
-        uint id = _pixel_point_ids[rel_p];
+        //System.Drawing.Point rel_p = Core.IndexHelper.MakeRelative(pixel, Context.Setup.ScanWorkflow.ROI);
+        uint id = _pixel_point_ids[pixel];
         if (id > 0) { // we use default value as not-set
           // Update point
           _pointcloud.UpdatePoint(id - 1, points[i]);
@@ -135,7 +114,7 @@ namespace Parsley {
           Vector color;
           color = GetPixelColor(ref pixel);
           id = _pointcloud.AddPoint(points[i], color);
-          _pixel_point_ids[rel_p] = id + 1; // 0 is used as not-set marker
+          _pixel_point_ids[pixel] = id + 1; // 0 is used as not-set marker
         }
       }
     }
