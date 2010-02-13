@@ -116,31 +116,22 @@ namespace Parsley {
         uint id = _pixel_point_ids[pixel];
         if (id > 0) { // we use default value as not-set
           // Update point
-          _pointcloud.UpdatePoint(id - 1, points[i]);
+          _pointcloud.UpdatePoint(id - 1, points[i].ToInterop());
         } else {
-          Vector color;
-          color = GetPixelColor(ref pixel);
-          id = _pointcloud.AddPoint(points[i], color);
+          id = _pointcloud.AddPoint(points[i].ToInterop(), GetPixelColor(ref pixel));
           _pixel_point_ids[pixel] = id + 1; // 0 is used as not-set marker
         }
       }
     }
 
-    private Vector GetPixelColor(ref System.Drawing.Point pixel) {
-      Vector color;
+    private double[] GetPixelColor(ref System.Drawing.Point pixel) {
       if (_texture_image != null) {
         Bgr bgr = _texture_image[pixel.Y, pixel.X];
-        color = new Vector(new double[] { 
-               bgr.Red / 255.0, 
-               bgr.Green / 255.0, 
-               bgr.Blue / 255.0, 
-               1.0 
-             });
+        return bgr.ToInterop();
       } else {
         // default color
-        color = new Vector(new double[] { 0.7, 0.7, 0.7, 1.0 });
+        return new double[] { 0.7, 0.7, 0.7, 1.0 };
       }
-      return color;
     }
 
     private void _btn_take_texture_image_Click(object sender, EventArgs e) {
