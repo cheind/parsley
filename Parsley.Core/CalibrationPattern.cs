@@ -92,7 +92,7 @@ namespace Parsley.Core {
           image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
         }
         return found;
-      } catch (Emgu.CV.CvException e) {
+      } catch (Emgu.CV.CvException) {
         image_points = new PointF[0];
         return false;
       }
