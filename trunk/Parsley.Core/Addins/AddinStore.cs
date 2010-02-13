@@ -78,8 +78,8 @@ namespace Parsley.Core.Addins {
       try {
         Assembly a = Assembly.LoadFrom(assembly_path);
         foreach (Type t in a.GetExportedTypes()) {
-          if (IsAddin(t) && _addins.Any(ai => ai.Type == t)) {
-            _addins.Add(new AddinInfo(t));
+          if (IsAddin(t) && !_addins.Any(ai => ai.Type == t)) {
+              _addins.Add(new AddinInfo(t));
           }
         }
         _logger.Info(String.Format("'{0}' successfully loaded.", assembly_path));
