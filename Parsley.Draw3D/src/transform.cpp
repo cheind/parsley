@@ -1,4 +1,8 @@
-
+/*
+ * Parsley http://parsley.googlecode.com
+ * Copyright (c) 2010, Christoph Heindl. All rights reserved.
+ * Code license:	New BSD License
+ */
 
 #include <draw3d/transform.h>
 #include <draw3d/convert.h>

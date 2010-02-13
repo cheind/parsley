@@ -1,3 +1,9 @@
+/*
+ * Parsley http://parsley.googlecode.com
+ * Copyright (c) 2010, Christoph Heindl. All rights reserved.
+ * Code license:	New BSD License
+ */
+
 #pragma once
 
 #include <osg/ref_ptr>
