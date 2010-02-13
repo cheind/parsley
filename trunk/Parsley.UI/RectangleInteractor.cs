@@ -10,11 +10,13 @@ namespace Parsley.UI {
   /// <summary>
   /// Interactor to select rectangles from control
   /// </summary>
+  [Core.Addins.Addin]
+  [InteractionResultType(typeof(Rectangle))]
   public class RectangleInteractor : I2DInteractor {
     private Control _target;
-    private State _state;
+    private InteractionState _state;
     private bool _clip_cursor;
-    private Rectangle _current, _last_complete;
+    private Rectangle _current;
     private Size _unscaled_size;
 
     /// <summary>
@@ -22,20 +24,11 @@ namespace Parsley.UI {
     /// </summary>
     public RectangleInteractor() {
       _target = null;
-      _state = State.Idle;
-      _last_complete = _current = Rectangle.Empty;
+      _state = InteractionState.Idle;
+      _current = Rectangle.Empty;
       _unscaled_size = Size.Empty;
       _clip_cursor = false;
     }
-
-    /// <summary>
-    /// Callback handler for rectangles selected by user
-    /// </summary>
-    public delegate void OnRectangleHandler(Rectangle r);
-    /// <summary>
-    /// Raised when user has selected a rectangle
-    /// </summary>
-    public event OnRectangleHandler OnRectangle;
 
     /// <summary>
     /// Interact on target
@@ -58,17 +51,8 @@ namespace Parsley.UI {
     }
 
     /// <summary>
-    /// Get current dragging state
+    /// Get/set unscaled image size
     /// </summary>
-    public State DraggingState {
-      get { return _state; }
-    }
-
-    /// <summary>
-    /// Set/Get unscaled size
-    /// </summary>
-    /// <remarks>This property is useful if the target control displays a possibly scaled version
-    /// of an image. By setting this property you can scale the rectangle to unscaled image dimensions.</remarks>
     public Size UnscaledSize {
       get { return _unscaled_size; }
       set { _unscaled_size = value; }
@@ -83,18 +67,16 @@ namespace Parsley.UI {
     }
 
     /// <summary>
-    /// Get last completed rectangle
+    /// Get current (possibly uncompleted) rectangle
     /// </summary>
-    public Rectangle LastCompleteRectangle {
-      get { return _last_complete; }
+    public object Current {
+      get { return this.RectifyAndScaleRectangle(_current); }
     }
 
     /// <summary>
-    /// Get current (possibly uncompleted) rectangle
+    /// Triggered when rectangle is completed
     /// </summary>
-    public Rectangle CurrentRectangle {
-      get { return this.RectifyAndScaleRectangle(_current); }
-    }
+    public event EventHandler<InteractionEventArgs> InteractionCompleted;
 
     /// <summary>
     /// Modifies rectangle to eliminate negative width/height values and additionally
@@ -129,17 +111,17 @@ namespace Parsley.UI {
     /// <param name="sender">Sender</param>
     /// <param name="e">Events</param>
     void _target_MouseUp(object sender, MouseEventArgs e) {
-      if (e.Button == MouseButtons.Left && _state == State.Dragging) {
+      if (e.Button == MouseButtons.Left && _state == InteractionState.Interacting) {
         if (this.ClipCursorToControl) {
           Cursor.Clip = Rectangle.Empty;
         }
-        _state = State.Idle;
+        _state = InteractionState.Idle;
         Rectangle final = this.RectifyAndScaleRectangle(_current);
-        _last_complete = final;
         _current = Rectangle.Empty;
 
-        OnRectangleHandler c = OnRectangle; // null while firing event
-        if (c != null) { c(final); }
+        if (InteractionCompleted != null) { 
+          InteractionCompleted(this, new InteractionEventArgs(final)); 
+        }
       }
     }
 
@@ -149,7 +131,7 @@ namespace Parsley.UI {
     /// <param name="sender">Sender</param>
     /// <param name="e">Events</param>
     void _target_MouseMove(object sender, MouseEventArgs e) {
-      if (_state == State.Dragging) {
+      if (_state == InteractionState.Interacting) {
         _current.Width = e.X - _current.X;
         _current.Height = e.Y - _current.Y;
       }
@@ -161,21 +143,29 @@ namespace Parsley.UI {
     /// <param name="sender">Sender</param>
     /// <param name="e">Events</param>
     void _target_MouseDown(object sender, MouseEventArgs e) {
-      if (e.Button == MouseButtons.Left && _state == State.Idle) {
+      if (e.Button == MouseButtons.Left && _state == InteractionState.Idle) {
         if (this.ClipCursorToControl) {
           Cursor.Clip = _target.RectangleToScreen(_target.ClientRectangle);
         }
         _current = new Rectangle(e.Location, new Size(0, 0));
-        _state = State.Dragging;
+        _state = InteractionState.Interacting;
       }
     }
 
     /// <summary>
-    /// Defines the Rectangle dragging state
+    /// Get interactor state
     /// </summary>
-    public enum State {
-      Idle = 0,
-      Dragging
+    public InteractionState State {
+      get { return _state; }
+    }
+
+    /// <summary>
+    /// Draw rectangle to image
+    /// </summary>
+    /// <param name="o">Rectangle</param>
+    /// <param name="img">Image</param>
+    public void DrawIndicator(object o, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+      img.Draw((Rectangle)o, new Emgu.CV.Structure.Bgr(Color.Green), 1);
     }
   }
 }
