@@ -58,6 +58,18 @@ namespace Parsley.Core.Addins {
     }
 
     /// <summary>
+    /// Fetch the first attribute of the given type
+    /// </summary>
+    public T Attribute<T>() where T : System.Attribute {
+      System.Attribute a = System.Attribute.GetCustomAttribute(this.Type, typeof(T));
+      if (a != null) {
+        return a as T;
+      } else {
+        return null;
+      }
+    }
+
+    /// <summary>
     /// True if type is default constructible
     /// </summary>
     public bool DefaultConstructible {
