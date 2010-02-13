@@ -69,6 +69,34 @@ namespace Parsley.Core.Extensions {
       return m.CopyToArray();
     }
 
+    /// <summary>
+    /// Convert System.Drawing.Color to double[]
+    /// </summary>
+    /// <param name="c">Color</param>
+    /// <returns>double[]</returns>
+    public static double[] ToInterop(this System.Drawing.Color c) {
+      return new double[] { 
+        c.R / 255.0, 
+        c.G / 255.0, 
+        c.B / 255.0, 
+        c.A / 255.0 };
+    }
+
+    /// <summary>
+    /// Convert Emgu.CV.Structure.Bgr to double[]
+    /// </summary>
+    /// <remarks>Alpha is set to one.</remarks>
+    /// <param name="c">Color</param>
+    /// <returns>double[]</returns>
+    public static double[] ToInterop(this Emgu.CV.Structure.Bgr c) {
+      return new double[] { 
+        c.Red / 255.0, 
+        c.Green / 255.0, 
+        c.Blue / 255.0, 
+        1.0 };
+
+    }
+
 
   }
 }
