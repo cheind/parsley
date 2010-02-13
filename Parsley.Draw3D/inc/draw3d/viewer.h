@@ -31,6 +31,7 @@ namespace Parsley {
       /// Render entire frame
       void Frame();
       bool Add(Node ^node);
+      void SetClearColor(array<double> ^color);
       void SetupPerspectiveProjection(array<double,2> ^matrix);
       void LookAt(array<double> ^eye, array<double> ^center, array<double> ^up);
 

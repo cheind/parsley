@@ -94,6 +94,13 @@ namespace Parsley {
     bool 
     Viewer::Add(Node ^node) {
       return _root->Add(node);
-    } 
+    }
+
+    void
+    Viewer::SetClearColor(array<double> ^color)
+    {
+      osg::Camera *camera = _viewer->getCamera();
+      camera->setClearColor(convert4(color));
+    }
   }
 }
