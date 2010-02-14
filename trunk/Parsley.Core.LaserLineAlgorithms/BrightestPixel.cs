@@ -54,7 +54,12 @@ namespace Parsley.Core.LaserLineAlgorithms {
     }
 
     public bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
-      Emgu.CV.Image<Gray, byte> channel = context.ChannelImage;
+      using (Emgu.CV.Image<Gray, byte> channel = context.Image[(int)context.LaserColor]) {
+        return ExtractPoints(channel, out laser_pos);
+      }
+    } 
+
+    private bool ExtractPoints(Emgu.CV.Image<Gray, byte> channel, out System.Drawing.PointF[] laser_pos) {
       int[] max_intensities = new int[channel.Width];
       float[] range = new float[channel.Width];
       // Note that default float is zero.
@@ -64,7 +69,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
       int stride = d.Length / channel.Height;
       int h = channel.Height; // This one here is a huge, HUGE timesaver!
       int w = channel.Width; // This one here is a huge, HUGE timesaver!
-      
+
       unchecked {
         for (int r = 0; r < h; ++r) {
           int offset = stride * r;
@@ -84,7 +89,6 @@ namespace Parsley.Core.LaserLineAlgorithms {
           }
         }
       }
-
       return true;
     }
   }

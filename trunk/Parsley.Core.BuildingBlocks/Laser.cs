@@ -17,29 +17,20 @@ namespace Parsley.Core.BuildingBlocks {
   /// </summary>
   [Serializable]
   public class Laser {
-    /// <summary>
-    /// Defines the main color channel of the laser.
-    /// Enumeration matches Emgu BGR color format.
-    /// </summary>
-    public enum ColorChannel {
-      Blue = 0,
-      Green = 1,
-      Red = 2
-    }
 
-    private Laser.ColorChannel _color;
+    private Core.ColorChannel _color;
 
     /// <summary>
     /// Instance a default red-light laser
     /// </summary>
     public Laser() {
-      _color = ColorChannel.Red;
+      _color = Core.ColorChannel.Red;
     }
 
     /// <summary>
     /// Get/set the color channel the laser is to find in.
     /// </summary>
-    public ColorChannel Color {
+    public Core.ColorChannel Color {
       get { return _color; }
       set { _color = value; }
     }
