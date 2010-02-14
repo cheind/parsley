@@ -162,7 +162,7 @@ namespace Parsley.Core.BuildingBlocks {
 
       // 1. Update context
       context.Image = image;
-      context.ChannelImage = image[(int)s.Laser.Color];
+      context.LaserColor = s.Laser.Color;
       
       // 2. Extract laser line
       System.Drawing.PointF[] laser_points;

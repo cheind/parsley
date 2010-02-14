@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using Emgu.CV.Structure;
 
 namespace Parsley.Core.LaserLineAlgorithms {
 
@@ -51,18 +52,24 @@ namespace Parsley.Core.LaserLineAlgorithms {
 
       public void Update(double v, double w) {
         weights += w;
-        iwa += (w/weights) * (v - iwa);
+        iwa += (w / weights) * (v - iwa);
       }
     }
 
     public bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
-      Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> channel = context.ChannelImage;
+      using (Emgu.CV.Image<Gray, byte> channel = context.Image[(int)context.LaserColor]) {
+        return ExtractPoints(channel, out laser_pos);
+      }
+    }
+
+
+    private bool ExtractPoints(Emgu.CV.Image<Gray, byte> channel, out System.Drawing.PointF[] laser_pos) {
       IncWeightedAverage[] iwas = new IncWeightedAverage[channel.Width];
 
       // Search per row
       byte[] d = channel.Bytes;
       int stride = d.Length / channel.Height;
-      int h = channel.Height; 
+      int h = channel.Height;
       int w = channel.Width;
 
       // See http://www.cse.iitm.ac.in/~cs670/book/node57.html

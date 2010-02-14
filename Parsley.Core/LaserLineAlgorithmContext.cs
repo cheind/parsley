@@ -11,13 +11,16 @@ using System.Text;
 
 namespace Parsley.Core {
   public class LaserLineAlgorithmContext : AlgorithmContext, ILaserLineAlgorithmContext {
-    private Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> _channel_image;
-
-    public LaserLineAlgorithmContext() { }
+    private ColorChannel _cc;
     
-    public Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> ChannelImage {
-      get { return _channel_image; }
-      set { _channel_image = value; }
+    public LaserLineAlgorithmContext() { }
+
+    /// <summary>
+    /// Access the laser color
+    /// </summary>
+    public ColorChannel LaserColor {
+      get { return _cc; }
+      set { _cc = value; }
     }
 
     
