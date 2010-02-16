@@ -38,7 +38,7 @@ namespace Parsley {
     }
 
 
-    protected override void OnSlidingIn() {
+    protected override void OnSlidingIn(SlickInterface.SlidingEventArgs e) {
       lock (Context.Viewer) {
         Context.Viewer.SetupPerspectiveProjection(
           Core.BuildingBlocks.Perspective.FromCamera(Context.Setup.Camera, 1.0, 5000).ToInterop()
@@ -49,11 +49,7 @@ namespace Parsley {
           new double[] { 0, 1, 0 }
         );
       }
-      base.OnSlidingIn();
-    }
-
-    protected override void OnSlidingOut(CancelEventArgs args) {
-      base.OnSlidingOut(args);
+      base.OnSlidingIn(e);
     }
 
     private ScanningSlide()
