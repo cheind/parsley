@@ -35,10 +35,10 @@ namespace Parsley {
     }
 
 
-    protected override void OnSlidingIn() {
+    protected override void OnSlidingIn(SlickInterface.SlidingEventArgs e) {
       this.Reset();
       Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
-      base.OnSlidingIn();
+      base.OnSlidingIn(e);
     }
 
     void Context_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -47,10 +47,10 @@ namespace Parsley {
       }
     }
 
-    protected override void OnSlidingOut(CancelEventArgs args) {
+    protected override void OnSlidingOut(SlickInterface.SlidingEventArgs e) {
       _timer_auto.Enabled = false;
       Context.PropertyChanged -= new PropertyChangedEventHandler(Context_PropertyChanged);
-      base.OnSlidingOut(args);
+      base.OnSlidingOut(e);
     }
 
     /// <summary>

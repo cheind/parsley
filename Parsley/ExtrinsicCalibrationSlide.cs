@@ -40,12 +40,12 @@ namespace Parsley {
       this.InitializeComponent();
     }
 
-    protected override void OnSlidingIn() {
+    protected override void OnSlidingIn(SlickInterface.SlidingEventArgs e) {
       this.Reset();
       _interactor.InteractOn(Context.EmbeddableStream.PictureBox);
       _interactor.UnscaledSize = Context.Setup.Camera.FrameSize;
       Context.PropertyChanged += new PropertyChangedEventHandler(Context_PropertyChanged);
-      base.OnSlidingIn();
+      base.OnSlidingIn(e);
     }
 
     void Context_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -54,10 +54,10 @@ namespace Parsley {
       }
     }
 
-    protected override void OnSlidingOut(CancelEventArgs args) {
+    protected override void OnSlidingOut(SlickInterface.SlidingEventArgs e) {
       Context.PropertyChanged -= new PropertyChangedEventHandler(Context_PropertyChanged);
       _interactor.ReleaseInteraction();
-      base.OnSlidingOut(args);
+      base.OnSlidingOut(e);
     }
 
     void Reset() {

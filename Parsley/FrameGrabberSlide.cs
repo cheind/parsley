@@ -24,15 +24,15 @@ namespace Parsley {
       InitializeComponent();
     }
 
-    protected override void OnSlidingIn() {
+    protected override void OnSlidingIn(SlickInterface.SlidingEventArgs e) {
       this.Context.FrameGrabber.OnFramePrepend += new Parsley.Core.BuildingBlocks.FrameGrabber.OnFrameHandler(this.OnFrame);
       this.Context.FrameGrabber.Start();
-      base.OnSlidingIn();
+      base.OnSlidingIn(e);
     }
 
-    protected override void OnSlidingOut(CancelEventArgs args) {
+    protected override void OnSlidingOut(SlickInterface.SlidingEventArgs e) {
       this.Context.FrameGrabber.OnFramePrepend -= new Parsley.Core.BuildingBlocks.FrameGrabber.OnFrameHandler(this.OnFrame);
-      base.OnSlidingOut(args);
+      base.OnSlidingOut(e);
     }
 
     protected virtual void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) { }

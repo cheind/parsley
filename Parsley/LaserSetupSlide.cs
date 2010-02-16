@@ -30,10 +30,6 @@ namespace Parsley {
     public LaserSetupSlide() :base(null) {
     }
 
-    protected override void OnSlidingIn() {
-      base.OnSlidingIn();
-    }
-
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
       Core.LaserLineFilterAlgorithmContext c = new Parsley.Core.LaserLineFilterAlgorithmContext();
