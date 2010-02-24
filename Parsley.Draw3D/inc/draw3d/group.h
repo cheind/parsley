@@ -19,6 +19,7 @@ namespace Parsley {
     public ref class Group : public NodeT<osg::Group> {
     public:
       bool Add(Node ^node);
+      bool Remove(Node ^node);
     };
     
   }

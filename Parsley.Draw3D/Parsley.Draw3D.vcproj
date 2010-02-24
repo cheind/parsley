@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib osgGA.lib osg.lib osgViewer.lib  OpenThreads.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib osgGA.lib osgDB.lib osg.lib osgViewer.lib OpenThreads.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"
@@ -134,7 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib osgGA.lib osg.lib osgViewer.lib  OpenThreads.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib osgGA.lib osgDB.lib osg.lib osgViewer.lib OpenThreads.lib $(NOINHERIT)"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"
@@ -217,6 +217,10 @@
 		</File>
 		<File
 			RelativePath=".\inc\draw3d\group.h"
+			>
+		</File>
+		<File
+			RelativePath=".\src\node.cpp"
 			>
 		</File>
 		<File
