@@ -14,5 +14,10 @@ namespace Parsley {
     Group::Add(Node ^node) { 
       return osg()->addChild(node->node().get());
     }
+
+    bool
+    Group::Remove(Node ^node) {
+        return osg()->removeChild(node->node().get());
+    }
   }
 }

@@ -17,6 +17,9 @@ namespace Parsley {
       Node() : _osg(new osg::Node()) {}
       Node(osg::Node *native) : _osg(native) {}
       auto_ptr_osg<osg::Node> node() { return _osg; }
+
+      static Node^ ReadFromFile(System::String ^filepath);
+
     private:
       auto_ptr_osg<osg::Node> _osg;
     };
