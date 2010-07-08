@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>The extrinsic camera calibration is used to find the orientation between the camera and reference planes.
+
+As with the intrinsic camera calibration, the extrinsic calibration uses a calibration pattern that is detected by the camera. You can choose and set the calibration pattern using the settings on the right.
+
+In contrast to the instrinsic camera calibration, the camera position and the position of the references planes have to be fixed. Moving the camera or the reference planes during or after the extrinsic calibration will result in distored 3D models.</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="_btn_clear_extrinsics.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
+        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOwQAA
+        DsEBuJFr7QAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAEAAAABAAXMatwwAAABl0RVh0Q29tbWVu
+        dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
+        MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
+        lwAAA5tJREFUOE+Nk11MmmcYht8m3bKlZgfLtmTJstU1qxrT1ljF2g0qiIUuopm19eeAOlKLGP+mVOsY
+        KApVERwKqPyIQCXiR630KwqNA2tZl84ydWrrysHaZWo6XNI1dhsC3/sOu4MuW5b0OXqSJ/d13wf3A0Bs
+        vGsCoNU5dmk8zDz7cnGFzc+ja30F5133+TT3D017dLNFbPPN2nz9dHnc+LwAZDDidmR/z4NtGwgE8Zeu
+        LPCZHVdTlqR4ekg8Tvm1zpxIfDlNX9fMUjD1TPaa3lMWGPPVNjoDDUkrSMAOooF3fkHdAPRN0cGgrzSn
+        13l6TWxjREsuvo8ajKnwrHw/ZMv2EZ04iVB7SVHb/KmwevrkI5X7xF3nEn9xapnf/fU90xvA7e+JVzg+
+        cYhHGZFz/ZmwSnMYntcfgZ9K02Gr7RjEFkuJPjcrZP+e/aTrCjOkxPO2xrzV9y03uAHnLckQGHBy4psu
+        HbjLlsSjEtEHiKdIgdV9adGGIRLRPPwRMeg5HbHcOPfU6OX8dlZ87I8OLPvPzsuUh81WUqjfXewG+B0h
+        XTaWj5e3JW9x5AmoUpFK8FSxFBiJEOhpoRZzduSMJBFyje/CSkUG0ayjPhVaUn6v1x1EPRMFXtCF5d4R
+        GRmPq2WU8AUdGXIkabBEtRfV6mIJtLQIv5scbjQcIep1+2GjIY0oE2ZE2odzInpHMRSbWAbQPppHrVKQ
+        29pNpX6R+TCq70mHfF0GEpizoMBwPFrTkQlFQ9Sw0PQhrBpMhjxlMpKNnUBDXxVGB7xFUmCwmIHmRwBs
+        MxfKm0YORoSXUqHYcjwstDCIz4epUKgmQw3GhDJr7hOxKft260jahtbL+ll1vfCWeba0/lkXbq7qAD5t
+        fFs5wVpuxhKQZJROtFhpUIpTkSLmNjyRH8a/qftOOkL3DEx+PIkvVZC9q5rXXIvS3c8AkfAGQAtot2aS
+        1anxnlw1XGVfrx1IiDaNpCM5loV09sJ5/z1VgtZTcGhmg5u0o0Fo+3kbA+tBgC1xgWtRvQfznWnBXJ+V
+        DU5yzDXKQ0GxKQkZnFkawAFgdUP7XPTvDaF10Dr1OpjbrHnV/6D/lbkVfVGXlbZc0f0WsnppCpC543r7
+        /wH/vMz+xAFTC5VHlRjDypW/ud1/je5AyPfyJlK8GGBuKx98+7Duvb7LuXVfGBI3Da6jqpVHbXFBdPHF
+        AAghcIAXe7RxJqXXThH12nP2IRTa9RjJ/wP4C6Vm2iyIu/axAAAAAElFTkSuQmCC
+</value>
+  </data>
+</root>

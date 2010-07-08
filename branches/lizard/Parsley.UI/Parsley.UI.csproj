@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Parsley.UI</RootNamespace>
+    <AssemblyName>Parsley.UI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Emgu.CV, Version=2.0.1.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Emgu\Emgu.CV.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Emgu.CV.UI, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Emgu\Emgu.CV.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Emgu.Util, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Emgu\Emgu.Util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Parsley.Draw3D, Version=1.0.3672.23790, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\bin\Parsley.Draw3D.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AspectRatioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AspectRatioForm.Designer.cs">
+      <DependentUpon>AspectRatioForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Concrete\Draw3DViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Concrete\Draw3DViewer.Designer.cs">
+      <DependentUpon>Draw3DViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Concrete\EmbeddableStream.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Concrete\EmbeddableStream.Designer.cs">
+      <DependentUpon>EmbeddableStream.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Concrete\StreamViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Concrete\StreamViewer.Designer.cs">
+      <DependentUpon>StreamViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="I2DInteractor.cs" />
+    <Compile Include="ParsleyButtonSmall.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ParsleyButtonSmall.Designer.cs">
+      <DependentUpon>ParsleyButtonSmall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParsleyButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ParsleyButton.Designer.cs">
+      <DependentUpon>ParsleyButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParsleySlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ParsleySlide.Designer.cs">
+      <DependentUpon>ParsleySlide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RectangleInteractor.cs" />
+    <Compile Include="WrapLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AspectRatioForm.resx">
+      <DependentUpon>AspectRatioForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Concrete\Draw3DViewer.resx">
+      <DependentUpon>Draw3DViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Concrete\EmbeddableStream.resx">
+      <DependentUpon>EmbeddableStream.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Concrete\StreamViewer.resx">
+      <DependentUpon>StreamViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParsleyButtonSmall.resx">
+      <DependentUpon>ParsleyButtonSmall.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParsleyButton.resx">
+      <DependentUpon>ParsleyButton.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParsleySlide.resx">
+      <DependentUpon>ParsleySlide.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WrapLabel.resx">
+      <DependentUpon>WrapLabel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parsley.Core.BuildingBlocks\Parsley.Core.BuildingBlocks.csproj">
+      <Project>{65C11622-0F30-4E58-A81F-E47F750933EE}</Project>
+      <Name>Parsley.Core.BuildingBlocks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Parsley.Core\Parsley.Core.csproj">
+      <Project>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</Project>
+      <Name>Parsley.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SlickInterface\SlickInterface.csproj">
+      <Project>{9708F1BC-959D-4539-82DB-0FB96B879AD4}</Project>
+      <Name>SlickInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\parsley24.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
