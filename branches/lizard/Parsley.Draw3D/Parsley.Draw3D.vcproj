@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib osgGA.lib osgDB.lib osg.lib osgViewer.lib OpenThreads.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib osgGAd.lib osgDBd.lib osgd.lib osgViewerd.lib OpenThreadsd.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"

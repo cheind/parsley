@@ -29,6 +29,8 @@ namespace Parsley {
       void UpdateColor(unsigned id, array<double>^ color);
       /// Clear points
       void ClearPoints();
+      //print the point data to console
+      void PrintData();
     private:
       auto_ptr_osg<osg::Geometry> _geometry;
       auto_ptr_osg<osg::Vec3Array> _vertices;

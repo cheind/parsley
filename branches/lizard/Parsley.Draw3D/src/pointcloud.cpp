@@ -4,6 +4,8 @@
  * Code license:	New BSD License
  */
 
+#include <fstream>
+#include <iostream>
 #include <draw3d/pointcloud.h>
 #include <draw3d/convert.h>
 #include <osg/Geometry>
@@ -64,6 +66,35 @@ namespace Parsley {
       _vertices->clear();
       _colors->clear();
       _primitives->clear();
+    }
+
+    void PointCloud::PrintData()
+    {
+      std::ofstream f_target;
+      
+      f_target.open("pointcloud_data.txt");
+      
+      if(!f_target)
+      {
+        std::cout << "Error opening file: " << std::endl;
+      }
+      else 
+      {
+        f_target << "NrOfPoints " << _vertices->size() << std::endl;
+        f_target << "EOH ------" << std::endl;
+        for(int i = 0; i < _vertices->size(); i++) {
+//          f_target << "(" << i << ")";
+//          f_target.width(10);
+          f_target << _vertices->at(i).x() << " ";
+          
+//          f_target.width(10);
+          f_target << _vertices->at(i).y() << " ";
+
+//          f_target.width(10);
+          f_target << _vertices->at(i).z() << std::endl;
+        }
+        f_target.close();
+      }
     }
   }
 }
