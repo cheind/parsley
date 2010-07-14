@@ -1,7 +1,7 @@
 #summary Notices on extrinsic camera calibration
 #labels Phase-Implementation
 
-Extrinsic calibration through checkerboard detection works, but requires a lot of 'black' color that prevents the laser to be detected.
+Extrinsic calibration through checkerboard detection works, but requires a lot of 'black' color that prevents the laser from being detected.
 
 Alternatively we could 
  * use a checkerboard pattern with fewer fields
