@@ -30,6 +30,7 @@ namespace Parsley {
     private LaserSetupSlide _slide_laser_setup;
     private WelcomeSlide _slide_welcome;
     private ScanningSlide _slide_scanning;
+    private ImageAlgorithmTestSlide _slide_image_algorithm_test;
 
 
     public Main() {
@@ -79,6 +80,7 @@ namespace Parsley {
       _slide_extrinsic_calib = new ExtrinsicCalibrationSlide(_context);
       _slide_laser_setup = new LaserSetupSlide(_context);
       _slide_scanning = new ScanningSlide(_context);
+      _slide_image_algorithm_test = new ImageAlgorithmTestSlide(_context);
 
       
       _slide_control.AddSlide(_slide_welcome);
@@ -86,6 +88,7 @@ namespace Parsley {
       _slide_control.AddSlide(_slide_intrinsic_calib);
       _slide_control.AddSlide(_slide_extrinsic_calib);
       _slide_control.AddSlide(_slide_laser_setup);
+      _slide_control.AddSlide(_slide_image_algorithm_test);
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_welcome;
@@ -207,6 +210,10 @@ namespace Parsley {
 
     private void _btn_scanning_Click(object sender, EventArgs e) {
       _slide_control.ForwardTo<ScanningSlide>();
+    }
+
+    private void _btn_image_algorithm_test_Click(object sender, EventArgs e) {
+      _slide_control.ForwardTo<ImageAlgorithmTestSlide>();
     }
 
 

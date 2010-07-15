@@ -43,9 +43,10 @@
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
+      this._btn_scanning = new System.Windows.Forms.ToolStripButton();
       this._status_strip = new System.Windows.Forms.StatusStrip();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
-      this._btn_scanning = new System.Windows.Forms.ToolStripButton();
+      this._btn_image_algorithm_test = new System.Windows.Forms.ToolStripMenuItem();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
       this._ts_container.TopToolStripPanel.SuspendLayout();
@@ -203,7 +204,8 @@
       this.x.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._btn_intrinsic_calibration,
             this._btn_extrinsic_calibration,
-            this._btn_laser_configuration});
+            this._btn_laser_configuration,
+            this._btn_image_algorithm_test});
       this.x.Image = global::Parsley.Properties.Resources.package_graphics;
       this.x.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.x.Name = "x";
@@ -263,6 +265,16 @@
       this._btn_show_3d_visualization.Text = "toolStripButton1";
       this._btn_show_3d_visualization.Click += new System.EventHandler(this._btn_show_3d_visualization_Click);
       // 
+      // _btn_scanning
+      // 
+      this._btn_scanning.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this._btn_scanning.Image = ((System.Drawing.Image)(resources.GetObject("_btn_scanning.Image")));
+      this._btn_scanning.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this._btn_scanning.Name = "_btn_scanning";
+      this._btn_scanning.Size = new System.Drawing.Size(23, 22);
+      this._btn_scanning.Text = "toolStripButton1";
+      this._btn_scanning.Click += new System.EventHandler(this._btn_scanning_Click);
+      // 
       // _status_strip
       // 
       this._status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -281,15 +293,12 @@
       this._status_label.Size = new System.Drawing.Size(127, 17);
       this._status_label.Text = "Welcome to Parsley";
       // 
-      // _btn_scanning
+      // _btn_image_algorithm_test
       // 
-      this._btn_scanning.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this._btn_scanning.Image = ((System.Drawing.Image)(resources.GetObject("_btn_scanning.Image")));
-      this._btn_scanning.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this._btn_scanning.Name = "_btn_scanning";
-      this._btn_scanning.Size = new System.Drawing.Size(23, 22);
-      this._btn_scanning.Text = "toolStripButton1";
-      this._btn_scanning.Click += new System.EventHandler(this._btn_scanning_Click);
+      this._btn_image_algorithm_test.Name = "_btn_image_algorithm_test";
+      this._btn_image_algorithm_test.Size = new System.Drawing.Size(222, 22);
+      this._btn_image_algorithm_test.Text = "Image Algorithm Test";
+      this._btn_image_algorithm_test.Click += new System.EventHandler(this._btn_image_algorithm_test_Click);
       // 
       // Main
       // 
@@ -345,6 +354,7 @@
     private System.Windows.Forms.ToolStripMenuItem _btn_extrinsic_calibration;
     private System.Windows.Forms.ToolStripMenuItem _btn_laser_configuration;
     private System.Windows.Forms.ToolStripButton _btn_scanning;
+    private System.Windows.Forms.ToolStripMenuItem _btn_image_algorithm_test;
   }
 }
 
