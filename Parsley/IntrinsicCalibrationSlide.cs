@@ -79,7 +79,6 @@ namespace Parsley {
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
       Core.CalibrationPattern pattern = this.Context.Setup.IntrinsicPattern;
       Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-      gray._EqualizeHist();
       pattern.FindPattern(gray);
       this.UpdateStatusDisplay(pattern.PatternFound);
       this.HandleCalibrateRequest();
