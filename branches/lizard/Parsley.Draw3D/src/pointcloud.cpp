@@ -10,6 +10,7 @@
 #include <draw3d/convert.h>
 #include <osg/Geometry>
 #include <osg/Geode>
+#include <msclr\marshal_cppstd.h> 
 
 namespace Parsley {
   namespace Draw3D {
@@ -68,33 +69,26 @@ namespace Parsley {
       _primitives->clear();
     }
 
-    void PointCloud::PrintData()
+    void PointCloud::SaveAsCSV(System::String ^filename, System::String ^delimiter)
     {
       std::ofstream f_target;
-      
-      f_target.open("pointcloud_data.txt");
-      
-      if(!f_target)
-      {
-        std::cout << "Error opening file: " << std::endl;
-      }
-      else 
-      {
-        f_target << "NrOfPoints " << _vertices->size() << std::endl;
-        f_target << "EOH ------" << std::endl;
-        for(int i = 0; i < _vertices->size(); i++) {
-//          f_target << "(" << i << ")";
-//          f_target.width(10);
-          f_target << _vertices->at(i).x() << " ";
-          
-//          f_target.width(10);
-          f_target << _vertices->at(i).y() << " ";
 
-//          f_target.width(10);
-          f_target << _vertices->at(i).z() << std::endl;
+      msclr::interop::marshal_context context; 
+      std::wstring myfilename = context.marshal_as<std::wstring>(filename); 
+      std::string mydelimiter = context.marshal_as<std::string>(delimiter); 
+      
+      f_target.open(myfilename.c_str());
+      if (f_target) {
+        for(unsigned i = 0; i < _vertices->size(); i++) {
+          f_target << _vertices->at(i).x() << mydelimiter
+                   << _vertices->at(i).y() << mydelimiter
+                   << _vertices->at(i).z() << mydelimiter
+                   << _colors->at(i).x() << mydelimiter
+                   << _colors->at(i).y() << mydelimiter
+                   << _colors->at(i).z() << std::endl;
         }
-        f_target.close();
       }
+      f_target.close();
     }
   }
 }
