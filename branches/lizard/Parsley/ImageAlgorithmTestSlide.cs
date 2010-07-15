@@ -47,6 +47,7 @@ namespace Parsley {
         Core.Addins.AddinInfo info = _cmb_algorithm.SelectedItem as Core.Addins.AddinInfo;
         if (info != null) {
           _algorithm = Core.Addins.AddinStore.CreateInstance(info) as Core.IImageAlgorithm;
+          _property_grid.SelectedObject = _algorithm;
         }
       }
     }
