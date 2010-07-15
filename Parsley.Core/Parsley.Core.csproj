@@ -95,6 +95,7 @@
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="IAlgorithmContext.cs" />
+    <Compile Include="IImageAlgorithm.cs" />
     <Compile Include="ILaserLineAlgorithm.cs" />
     <Compile Include="ILaserLineAlgorithmContext.cs" />
     <Compile Include="ILaserLineFilterAlgorithm.cs" />
