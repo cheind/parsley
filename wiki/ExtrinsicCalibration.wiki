@@ -1,9 +1,11 @@
 #summary Notices on extrinsic camera calibration
 #labels Phase-Implementation
 
-Extrinsic calibration through checkerboard detection works, but requires a lot of 'black' color that prevents the laser from being detected.
+Currently two kind of patterns for extrinsic calibration are supported.
+ * Checkerboard pattern
+ * Circle pattern
 
-Alternatively we could 
- * use a checkerboard pattern with fewer fields
- * instead of filled fields use border-filled fields
- * use [http://users.dsic.upv.es/~fjabad/research/material/iciar2004.pdf one circle]
+==Circle Pattern==
+Circles become ellipses under perspective detection. The pattern detection is therefore based on ellipses. To detect the ellipses and bring them into correspondence with the calibrator we can do the following:
+ * order the ellipses based on their distance from the image origin and top-left calibrator circle. This has the disadvantage that a special pattern is required to avoid ambiguities.
+ * Order them as described in [http://www.springerlink.com/content/88887008437r1543/ Robust detection and ordering of ellipses on a calibration pattern].
