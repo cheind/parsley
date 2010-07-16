@@ -52,7 +52,7 @@ namespace Parsley.Core {
     /// Goodness of fit
     /// </summary>
     /// <remarks>The rating is in the range of [0,inf] and
-    /// describes the median distance from the contour points to 
+    /// describes the average distance from the contour points to 
     /// the fitted ellipse.</remarks>
     public double Rating {
       get { return _rating; }
@@ -95,7 +95,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Detect ellipses in image
     /// </summary>
-    /// <param name="image">Image to process</param>
+    /// <param name="image">Binary image with white foreground</param>
     /// <returns>List of ellipses found</returns>
     public DetectedEllipse[] DetectEllipses(Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> image) {
       List<DetectedEllipse> ellipses = new List<DetectedEllipse>();
@@ -137,7 +137,7 @@ namespace Parsley.Core {
     /// Evaluate goodness of fit.
     /// </summary>
     /// <remarks>
-    /// Calculates the median distance of all contour points to the ellipse. The distance of point to
+    /// Calculates the average distance of all contour points to the ellipse. The distance of point to
     /// an ellipse is given by calculating the point on the ellipse that is closest to the query. This calculation
     /// is performed by transforming the point into a coordinate system where the ellipse is in main-pose
     /// (x-axis points toward a, y-axis points toward b, the origin is the center of the ellipse). Additionally,
@@ -189,6 +189,7 @@ namespace Parsley.Core {
       Matrix inv = m.Inverse();
       List<double> distances = new List<double>();
 
+      double avg_distance = 0.0;
       foreach (System.Drawing.Point p in c) {
         // Bring the point into the ellipse coordinate frame
         Vector x = p.ToParsley().ToHomogeneous(1.0);
@@ -199,10 +200,9 @@ namespace Parsley.Core {
         // Transform the closest point back
         Vector closest_in_world = (m.Multiply(closest.ToHomogeneous(1.0).ToColumnMatrix())).GetColumnVector(0);
         // Calculate the squared distance between the query and the point.
-        distances.Add((closest_in_world - x).ToNonHomogeneous().SquaredNorm());
+        avg_distance += (closest_in_world - x).ToNonHomogeneous().SquaredNorm();
       }
-
-      return Math.Sqrt(distances.Median());
+      return Math.Sqrt(avg_distance / c.Count());
     }
   }
 }
