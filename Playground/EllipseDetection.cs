@@ -70,6 +70,11 @@ namespace Playground {
           Ellipse final_ellipse = new Ellipse(box);
 
           Matrix m = Matrix.Identity(3,3);
+          double a = final_ellipse.MCvBox2D.size.Width;
+          double b = final_ellipse.MCvBox2D.size.Height;
+          double s = a / b;
+          Matrix scale = Matrix.Identity(3,3);
+          scale[0, 0] = s;
           double angle = final_ellipse.MCvBox2D.angle / 180 * Math.PI;
           m[0, 0] = Math.Cos(angle);
           m[0, 1] = -Math.Sin(angle);
@@ -77,22 +82,32 @@ namespace Playground {
           m[1, 0] = Math.Sin(angle);
           m[1, 1] = Math.Cos(angle);
           m[1,2] = final_ellipse.MCvBox2D.center.Y;
-          
-          Matrix inv = m.Inverse();
-          double a = final_ellipse.MCvBox2D.size.Width;
-          double b = final_ellipse.MCvBox2D.size.Height;
 
-          if (a < b) {
-            double tmp = a;
-            a = b;
-            a = tmp;
-          }
+          m = scale * m;
+          Matrix inv = m.Inverse();
           List<double> ratings = new List<double>();
+          
+
+          double width = image.Width;
+          double height = image.Height;
+          
           foreach (System.Drawing.PointF p in mypoints) {
             Vector x = new Vector(new double[]{p.X, p.Y, 1});
-            Matrix r = inv.Multiply(x.ToColumnMatrix());
+            Vector r = (inv.Multiply(x.ToColumnMatrix())).GetColumnVector(0).Normalize();
+            Vector closest = r * a;
 
-            ratings.Add(Math.Abs((Math.Pow(r[0, 0] / a, 2) + Math.Pow(r[1, 0] / b, 2)) - 1));
+            Vector closest_in_world = (m.Multiply(closest.ToColumnMatrix())).GetColumnVector(0);
+
+
+            System.Drawing.Point mypoint = new System.Drawing.Point((int)closest_in_world[0], (int)closest_in_world[1]);
+            if (mypoint.X >= 0 && mypoint.Y >= 0 && mypoint.X < width && mypoint.Y < height) {
+              image[mypoint.Y, mypoint.X] = new Bgr(0, 0, 255);
+              image[(int)p.Y, (int)p.X] = new Bgr(0, 255, 255);
+            }
+
+            Vector distance_in_world = closest_in_world - x;
+
+            ratings.Add(distance_in_world.Norm());
           }
 
           ratings.Sort();
@@ -102,6 +117,7 @@ namespace Playground {
           } else {
             rating = ratings[(ratings.Count+1)/2];
           }
+          //Console.WriteLine(rating);
           if (rating < _distance_threshold) {
             ellipses.Add(final_ellipse);
           }
