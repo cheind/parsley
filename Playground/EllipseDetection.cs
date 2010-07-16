@@ -14,10 +14,14 @@ namespace Playground {
 
     private int _threshold;
     private int _min_contour_count;
+    private double _distance_threshold;
+
+
 
     public EllipseDetection() {
       _threshold = 40;
       _min_contour_count = 40;
+      _distance_threshold = 0.3;
     }
 
     /// <summary>
@@ -36,6 +40,11 @@ namespace Playground {
     public int MinContourCount {
       get { return _min_contour_count; }
       set { _min_contour_count = value; }
+    }
+
+    public double MedianDistanceThreshold {
+      get { return _distance_threshold; }
+      set { _distance_threshold = value; }
     }
     
     public void ProcessImage(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> image) {
@@ -61,15 +70,15 @@ namespace Playground {
           Ellipse final_ellipse = new Ellipse(box);
 
           Matrix m = Matrix.Identity(3,3);
-          m[0,0] = Math.Cos(final_ellipse.MCvBox2D.angle);
-          m[0,1] = -Math.Sin(final_ellipse.MCvBox2D.angle);
+          double angle = final_ellipse.MCvBox2D.angle / 180 * Math.PI;
+          m[0, 0] = Math.Cos(angle);
+          m[0, 1] = -Math.Sin(angle);
           m[0,2] = final_ellipse.MCvBox2D.center.X;
-          m[1,0] = Math.Sin(final_ellipse.MCvBox2D.angle);
-          m[1,1] = Math.Cos(final_ellipse.MCvBox2D.angle);
+          m[1, 0] = Math.Sin(angle);
+          m[1, 1] = Math.Cos(angle);
           m[1,2] = final_ellipse.MCvBox2D.center.Y;
           
           Matrix inv = m.Inverse();
-          double rating = 0.0;
           double a = final_ellipse.MCvBox2D.size.Width;
           double b = final_ellipse.MCvBox2D.size.Height;
 
@@ -78,14 +87,22 @@ namespace Playground {
             a = b;
             a = tmp;
           }
+          List<double> ratings = new List<double>();
           foreach (System.Drawing.PointF p in mypoints) {
             Vector x = new Vector(new double[]{p.X, p.Y, 1});
             Matrix r = inv.Multiply(x.ToColumnMatrix());
 
-            rating += Math.Abs((Math.Pow(r[0,0]/a, 2) + Math.Pow(r[1,0]/b, 2)) - 1);
+            ratings.Add(Math.Abs((Math.Pow(r[0, 0] / a, 2) + Math.Pow(r[1, 0] / b, 2)) - 1));
           }
-          Console.WriteLine(rating);
-          if (rating < 50) {
+
+          ratings.Sort();
+          double rating;
+          if (ratings.Count % 2 == 0) {
+            rating = (ratings[ratings.Count/2] + ratings[ratings.Count/2+1]) * 0.5;
+          } else {
+            rating = ratings[(ratings.Count+1)/2];
+          }
+          if (rating < _distance_threshold) {
             ellipses.Add(final_ellipse);
           }
           
@@ -93,7 +110,6 @@ namespace Playground {
         }
         c = c.HNext;
       }
-
       
       ellipses.Sort(
         (a, b) => {
