@@ -17,6 +17,7 @@ namespace Parsley.Core.Tests {
   [TestFixture]
   public class BrightestPixelLLE {
 
+    /*
     [Test]
     public void ImageA() {
       System.Drawing.Bitmap b = new System.Drawing.Bitmap(@"../Parsley.Core.Tests/etc/brightest_lle/a.bmp");
@@ -39,6 +40,6 @@ namespace Parsley.Core.Tests {
       Assert.AreEqual(9, laser_pos[7]);
       Assert.AreEqual(9, laser_pos[8]);
       Assert.AreEqual(9, laser_pos[9]);
-    }
+    }*/
   }
 }
