@@ -39,6 +39,18 @@ namespace Parsley.Core.Extensions {
     }
 
     /// <summary>
+    /// Convert System.Drawing.Point to MathNet.Numerics.LinearAlgebra.Vector
+    /// </summary>
+    /// <param name="p">System.Drawing.Point to convert</param>
+    /// <returns>MathNet.Numerics.LinearAlgebra.Vector</returns>
+    public static MathNet.Numerics.LinearAlgebra.Vector ToParsley(this System.Drawing.Point p) {
+      MathNet.Numerics.LinearAlgebra.Vector v = new MathNet.Numerics.LinearAlgebra.Vector(2);
+      v[0] = p.X;
+      v[1] = p.Y;
+      return v;
+    }
+
+    /// <summary>
     /// Convert Emgu.CV.Matrix to MathNet.Numerics.LinearAlgebra.Matrix
     /// </summary>
     /// <param name="m"> Emgu.CV.Matrix</param>
