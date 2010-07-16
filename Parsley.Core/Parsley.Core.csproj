@@ -91,8 +91,10 @@
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
+    <Compile Include="Extensions\HomogeneousCoordinates.cs" />
     <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
+    <Compile Include="Extensions\Statistics.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="IAlgorithmContext.cs" />
     <Compile Include="IImageAlgorithm.cs" />
