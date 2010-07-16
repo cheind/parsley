@@ -89,6 +89,7 @@
     <Compile Include="AlgorithmContext.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
+    <Compile Include="EllipseDetector.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
     <Compile Include="Extensions\HomogeneousCoordinates.cs" />
