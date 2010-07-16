@@ -16,10 +16,14 @@ using System.ComponentModel;
 namespace Parsley.Core.CalibrationPatterns {
 
   /// <summary>
-  /// Represents calibration pattern based on circles
+  /// Represents calibration pattern based on circles.
   /// </summary>
   /// <remarks>
-  /// 
+  /// Circles become ellipses under perspective projection (except when the view is orthogonal to the circle). 
+  /// Therefore this algorithm searches for ellipses instead of circles. The pattern is assumed to be a rectangular
+  /// composition of circles of the same radius.
+  /// First the input image is thresholded to become a binary image of black and white pixels. Next, the contours of
+  /// the image are extracted and an ellipse is fit to each contour.
   /// </remarks>
   [Serializable]
   [Parsley.Core.Addins.Addin]
@@ -42,8 +46,7 @@ namespace Parsley.Core.CalibrationPatterns {
     /// Default circles constructor
     /// </summary>
     public Circles()
-      : this(2, 2, 100, 80) 
-    {}
+      : this(2, 2, 100, 80) { }
 
     /// <summary>
     /// Get/set the number of circles in x and y
@@ -119,43 +122,37 @@ namespace Parsley.Core.CalibrationPatterns {
     /// <param name="img">Image to search pattern for</param>
     /// <param name="image_points">Detected centers</param>
     /// <returns>True if pattern was found, false otherwise</returns>
-    public override bool FindPattern(Emgu.CV.Image<Gray, byte> img, out System.Drawing.PointF[] image_points)
-    {
-      try {
-        Emgu.CV.Image<Gray, byte> gray = img.Convert<Gray, byte>();
-        gray._ThresholdBinary(new Gray(_threshold), new Gray(255.0));
-        gray._Not(); // TODO document
-        Emgu.CV.Contour<System.Drawing.Point> c = gray.FindContours();
+    public override bool FindPattern(Emgu.CV.Image<Gray, byte> img, out System.Drawing.PointF[] image_points) {
+      Emgu.CV.Image<Gray, byte> gray = img.Convert<Gray, byte>();
+      gray._ThresholdBinary(new Gray(_threshold), new Gray(255.0));
+      gray._Not(); // Circles are black, black is considered backgroud, therefore flip.
+      Emgu.CV.Contour<System.Drawing.Point> c = gray.FindContours();
 
-        List<System.Drawing.PointF> centers = new List<System.Drawing.PointF>();
+      List<System.Drawing.PointF> centers = new List<System.Drawing.PointF>();
 
-        while (c != null) {
-          if (c.Count() >= _min_contour_count) {
-            System.Drawing.PointF[] mypoints = Array.ConvertAll(
-              c.ToArray<System.Drawing.Point>(),
-              value => new System.Drawing.PointF(value.X, value.Y)
-            );
+      while (c != null) {
+        if (c.Count() >= _min_contour_count) {
+          System.Drawing.PointF[] mypoints = Array.ConvertAll(
+            c.ToArray<System.Drawing.Point>(),
+            value => new System.Drawing.PointF(value.X, value.Y)
+          );
 
-            Ellipse e = Emgu.CV.PointCollection.EllipseLeastSquareFitting(mypoints);
-            centers.Add(e.MCvBox2D.center);
-          }
-          c = c.HNext;
+          Ellipse e = Emgu.CV.PointCollection.EllipseLeastSquareFitting(mypoints);
+          centers.Add(e.MCvBox2D.center);
         }
-
-        centers.Sort(
-          (a, b) => {
-            double dista = a.X * a.X + a.Y * a.Y;
-            double distb = b.X * b.X + b.Y * b.Y;
-            return dista.CompareTo(distb);
-          }
-        );
-
-        image_points = centers.ToArray();
-        return centers.Count == (_number_circle_centers.Height * _number_circle_centers.Width);
-      } catch (Emgu.CV.CvException) {
-        image_points = new System.Drawing.PointF[0];
-        return false;
+        c = c.HNext;
       }
+
+      centers.Sort(
+        (a, b) => {
+          double dista = a.X * a.X + a.Y * a.Y;
+          double distb = b.X * b.X + b.Y * b.Y;
+          return dista.CompareTo(distb);
+        }
+      );
+
+      image_points = centers.ToArray();
+      return centers.Count == (_number_circle_centers.Height * _number_circle_centers.Width);
     }
   }
 }
