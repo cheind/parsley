@@ -5,15 +5,16 @@
  */
 
 #include <draw3d/node.h>
+#include <draw3d/marshal.h>
 #include <osgDB/ReadFile>
-#include <msclr\marshal_cppstd.h>
 #include <string>
 
 namespace Parsley {
   namespace Draw3D {
 
     Node^ Node::ReadFromFile(System::String ^filepath) {
-      std::string fs = msclr::interop::marshal_as<std::string>(filepath);
+      std::string fs;
+      marshal(filepath, fs);
       osg::Node *n = osgDB::readNodeFile(fs);
       if (n != 0) {
         return gcnew Node(n);

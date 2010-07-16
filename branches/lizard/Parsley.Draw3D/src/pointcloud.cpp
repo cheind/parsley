@@ -10,7 +10,7 @@
 #include <draw3d/convert.h>
 #include <osg/Geometry>
 #include <osg/Geode>
-#include <msclr\marshal_cppstd.h> 
+#include <draw3d/marshal.h>
 
 namespace Parsley {
   namespace Draw3D {
@@ -73,9 +73,11 @@ namespace Parsley {
     {
       std::ofstream f_target;
 
-      msclr::interop::marshal_context context; 
-      std::wstring myfilename = context.marshal_as<std::wstring>(filename); 
-      std::string mydelimiter = context.marshal_as<std::string>(delimiter); 
+      std::wstring myfilename;
+      marshal(filename, myfilename);
+      
+      std::string mydelimiter;
+      marshal(delimiter, mydelimiter);
       
       f_target.open(myfilename.c_str());
       if (f_target) {

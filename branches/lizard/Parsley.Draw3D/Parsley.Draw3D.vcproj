@@ -185,6 +185,11 @@
 			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
+		<AssemblyReference
+			RelativePath="mscorlib.dll"
+			AssemblyName="mscorlib, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=IA64"
+			MinFrameworkVersion="131072"
+		/>
 	</References>
 	<Files>
 		<File
@@ -217,6 +222,10 @@
 		</File>
 		<File
 			RelativePath=".\inc\draw3d\group.h"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\marshal.h"
 			>
 		</File>
 		<File
