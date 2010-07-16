@@ -54,7 +54,7 @@
       // 
       this._property_grid.Location = new System.Drawing.Point(6, 94);
       this._property_grid.Name = "_property_grid";
-      this._property_grid.Size = new System.Drawing.Size(252, 253);
+      this._property_grid.Size = new System.Drawing.Size(415, 253);
       this._property_grid.TabIndex = 16;
       this._property_grid.ToolbarVisible = false;
       // 
