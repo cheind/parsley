@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="EllipseDetection.cs" />
     <Compile Include="FilterHoleBoundaries.cs" />
+    <Compile Include="OrderedEllipseDetection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

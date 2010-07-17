@@ -41,12 +41,12 @@ namespace Playground {
       set { _min_contour_count = value; }
     }
 
-    public double MedianDistanceThreshold {
+    public double MeanDistanceThreshold {
       get { return _distance_threshold; }
       set { _distance_threshold = value; }
     }
 
-    public void ProcessImage(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> image) {
+    public virtual void ProcessImage(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> image) {
       Emgu.CV.Image<Gray, byte> gray = image.Convert<Gray, byte>();
       gray._ThresholdBinary(new Gray(_threshold), new Gray(255.0));
       gray._Not();
