@@ -19,9 +19,9 @@ namespace Parsley.Core {
   /// Contains a single fitted ellipse.
   /// </summary>
   public struct DetectedEllipse {
-    public Emgu.CV.Contour<System.Drawing.Point> _contour;
-    public Emgu.CV.Structure.Ellipse _ellipse;
-    public double _rating;
+    private Emgu.CV.Contour<System.Drawing.Point> _contour;
+    private Emgu.CV.Structure.Ellipse _ellipse;
+    private double _rating;
 
     /// <summary>
     /// Construct from values.
