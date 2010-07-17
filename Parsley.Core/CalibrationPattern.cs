@@ -123,19 +123,7 @@ namespace Parsley.Core {
       Emgu.CV.ExtrinsicCameraParameters ecp,
       Emgu.CV.IntrinsicCameraParameters icp) 
     {
-      float extension = img.Width / 10;
-      PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
-        new MCvPoint3D32f[] { 
-          new MCvPoint3D32f(0, 0, 0),
-          new MCvPoint3D32f(extension, 0, 0),
-          new MCvPoint3D32f(0, extension, 0),
-          new MCvPoint3D32f(0, 0, extension),
-        },
-        ecp, icp);
-
-      img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 2);
-      img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 2);
-      img.Draw(new LineSegment2DF(coords[0], coords[3]), new Bgr(System.Drawing.Color.Blue), 2);
+      Drawing.DrawCoordinateFrame(img, ecp, icp);
     }
 
     /// <summary>
