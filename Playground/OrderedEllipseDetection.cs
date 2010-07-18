@@ -40,8 +40,24 @@ namespace Playground {
           ellipses.Where(e => { return e.Rating < this.MeanDistanceThreshold; })
         );
 
+      
+      List <System.Drawing.Point> seeds = new List<System.Drawing.Point>();
       foreach (Parsley.Core.DetectedEllipse e in finals) {
         image.Draw(e.Ellipse, new Bgr(System.Drawing.Color.Green), 2);
+        seeds.Add(new System.Drawing.Point((int)e.Ellipse.MCvBox2D.center.X, (int)e.Ellipse.MCvBox2D.center.Y));
+      }
+
+      Parsley.Core.SeededBlobDetector d = new Parsley.Core.SeededBlobDetector();
+      Parsley.Core.Blob[] blobs = d.DetectBlobs(
+        gray,
+        (from, to) => { return gray[to].Intensity == 255; },
+        seeds.ToArray());
+
+      foreach (Parsley.Core.Blob b in blobs) {
+        System.Console.WriteLine(b.Pixels.Length);
+        /*foreach (System.Drawing.Point p in b.Pixels) {
+          image[p] = new Bgr(System.Drawing.Color.Red);
+        }*/
       }
 
       int pattern_size_x = 4;
