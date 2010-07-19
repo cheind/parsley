@@ -81,7 +81,10 @@ namespace Parsley.Core.CalibrationPatterns {
     [DefaultValue(80)]
     public float CenterDistanceY {
       get { return _distance_y; }
-      set { _distance_y = value; }
+      set { 
+        _distance_y = value;
+        this.ObjectPoints = GenerateObjectCenters();
+      }
     }
 
     /// <summary>
@@ -91,7 +94,10 @@ namespace Parsley.Core.CalibrationPatterns {
     [Description("Distance between circle centers in x")]
     public float CenterDistanceX {
       get { return _distance_x; }
-      set { _distance_x = value; }
+      set { 
+        _distance_x = value;
+        this.ObjectPoints = GenerateObjectCenters();
+      }
     }
 
     /// <summary>
