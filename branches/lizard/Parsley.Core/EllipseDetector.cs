@@ -132,24 +132,12 @@ namespace Parsley.Core {
       return new Emgu.CV.Structure.Ellipse(box);
     }
 
-
     /// <summary>
-    /// Evaluate goodness of fit.
+    /// Get the affine matrix ellipse frame. Frame is with respect to world frame and
+    /// scales the ellipse to become a circle of radius b, where b is the height of
+    /// the rotated rect that contains the ellipse.
     /// </summary>
-    /// <remarks>
-    /// Calculates the average distance of all contour points to the ellipse. The distance of point to
-    /// an ellipse is given by calculating the point on the ellipse that is closest to the query. This calculation
-    /// is performed by transforming the point into a coordinate system where the ellipse is in main-pose
-    /// (x-axis points toward a, y-axis points toward b, the origin is the center of the ellipse). Additionally,
-    /// the coordinate system is crafted in such a way (non-uniform scaling) that the ellipse becomes a circle.
-    /// Then, the closest point is simply the closest point on the circle. This point is transformed back into 
-    /// the world coordinate system where the distance between the query and the returned point is computed.
-    /// </remarks>
-    /// <param name="e">Ellipse</param>
-    /// <param name="c">Contour points</param>
-    /// <returns>Goodness of fit</returns>
-    private double GoodnessOfFit(Emgu.CV.Structure.Ellipse e, Emgu.CV.Contour<System.Drawing.Point> c) {
-
+    public static Matrix GetAffineFrame(Emgu.CV.Structure.Ellipse e) {
       // The required scaling is given by the ratio of the extensions
       // of the ellipse main axes.
 
@@ -186,6 +174,27 @@ namespace Parsley.Core {
       // to the world (image) coordinate frame is given by
       Matrix m = translation * rotation * scale;
 
+      return m;
+    }
+
+
+    /// <summary>
+    /// Evaluate goodness of fit.
+    /// </summary>
+    /// <remarks>
+    /// Calculates the average distance of all contour points to the ellipse. The distance of point to
+    /// an ellipse is given by calculating the point on the ellipse that is closest to the query. This calculation
+    /// is performed by transforming the point into a coordinate system where the ellipse is in main-pose
+    /// (x-axis points toward a, y-axis points toward b, the origin is the center of the ellipse). Additionally,
+    /// the coordinate system is crafted in such a way (non-uniform scaling) that the ellipse becomes a circle.
+    /// Then, the closest point is simply the closest point on the circle. This point is transformed back into 
+    /// the world coordinate system where the distance between the query and the returned point is computed.
+    /// </remarks>
+    /// <param name="e">Ellipse</param>
+    /// <param name="c">Contour points</param>
+    /// <returns>Goodness of fit</returns>
+    private double GoodnessOfFit(Emgu.CV.Structure.Ellipse e, Emgu.CV.Contour<System.Drawing.Point> c) {
+      Matrix m = EllipseDetector.GetAffineFrame(e);
       Matrix inv = m.Inverse();
       List<double> distances = new List<double>();
 
@@ -196,7 +205,7 @@ namespace Parsley.Core {
         Vector r = (inv.Multiply(x.ToColumnMatrix())).GetColumnVector(0);
         // Find the closest point on the circle to r
         // From the above scaling construction the resulting circle has radius b
-        Vector closest = r.ToNonHomogeneous().Normalize().Scale(b);
+        Vector closest = r.ToNonHomogeneous().Normalize().Scale(e.MCvBox2D.size.Height);
         // Transform the closest point back
         Vector closest_in_world = (m.Multiply(closest.ToHomogeneous(1.0).ToColumnMatrix())).GetColumnVector(0);
         // Calculate the squared distance between the query and the point.
