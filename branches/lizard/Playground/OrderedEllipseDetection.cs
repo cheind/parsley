@@ -47,17 +47,17 @@ namespace Playground {
         seeds.Add(new System.Drawing.Point((int)e.Ellipse.MCvBox2D.center.X, (int)e.Ellipse.MCvBox2D.center.Y));
       }
 
-      Parsley.Core.SeededBlobDetector d = new Parsley.Core.SeededBlobDetector();
-      Parsley.Core.Blob[] blobs = d.DetectBlobs(
+      
+      Parsley.Core.RegionGrowing d = new Parsley.Core.RegionGrowing();
+      Parsley.Core.Region[] blobs = d.FindRegions(
         gray,
         (from, to) => { return gray[to].Intensity == 255; },
         seeds.ToArray());
 
-      foreach (Parsley.Core.Blob b in blobs) {
-        System.Console.WriteLine(b.Pixels.Length);
-        /*foreach (System.Drawing.Point p in b.Pixels) {
+      foreach (Parsley.Core.Region b in blobs) {
+        foreach (System.Drawing.Point p in b.Pixels) {
           image[p] = new Bgr(System.Drawing.Color.Red);
-        }*/
+        }
       }
 
       int pattern_size_x = 4;
@@ -116,7 +116,7 @@ namespace Playground {
       }
       // Reestimate calibration
       //FindCalibration(final_object_points.ToArray(), final_image_points.ToArray(), out icp, out ecp, image.Size);
-
+      Parsley.Core.Drawing.DrawCoordinateFrame(image, ecp, icp);
       Bgr bgr = new Bgr(System.Drawing.Color.Green);
       MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 0.8, 0.8);
       int count = 1;
