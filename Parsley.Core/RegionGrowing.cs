@@ -12,55 +12,56 @@ using System.Text;
 namespace Parsley.Core {
 
   /// <summary>
-  /// Binary image blob
+  /// Segmented region
   /// </summary>
-  public struct Blob {
-    private System.Drawing.Point[] _pixels;
+  public struct Region {
+    private IEnumerable<System.Drawing.Point> _pixels;
 
 
-    public Blob(System.Drawing.Point[] pixels) {
+    public Region(IEnumerable<System.Drawing.Point> pixels) {
       _pixels = pixels;
     }
 
     /// <summary>
     /// Access the pixels belonging to the blob
     /// </summary>
-    public System.Drawing.Point[] Pixels {
-      get { return _pixels.ToArray(); }
+    public IEnumerable<System.Drawing.Point> Pixels {
+      get { return _pixels; }
     }
   }
 
   /// <summary>
-  /// Detect blobs in binary images.
+  /// Detect blobs in images by recursive region growing.
   /// </summary>
-  /// <remarks>
-  /// This algorithm takes as input a binary image and detects blobs by
-  /// recursive growing from seeds.
-  /// </remarks>
-  public class SeededBlobDetector {
+  public class RegionGrowing {
 
     /// <summary>
     /// Default constructor
     /// </summary>
-    public SeededBlobDetector() {}
+    public RegionGrowing() {}
 
-    public Blob[] DetectBlobs(
+    /// <summary>
+    /// Find regions in image.
+    /// </summary>
+    /// <param name="image">Gray-scaled image</param>
+    /// <param name="grow_predicate">Grow predicate</param>
+    /// <param name="seeds">Seeds to grow from</param>
+    /// <returns>Segmented regions</returns>
+    public Region[] FindRegions(
       Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> image,
       Func<System.Drawing.Point, System.Drawing.Point, bool> grow_predicate,
       System.Drawing.Point[] seeds) 
     {
       System.Drawing.Rectangle r = new System.Drawing.Rectangle(System.Drawing.Point.Empty, image.Size);
       // Disjoint-Set datastructure to record each pixel
-      int[] djs = new int[r.Width * r.Height];
-      for (int i = 0; i < djs.Length; ++i) {
-        djs[i] = -1; // -1 is uninitialized
-      }
+      DisjointSet ds = new DisjointSet(new DisjointSet.DenseContainer());
+      ds.Initialize(r.Width * r.Height);
       // Init seeds
       Stack<System.Drawing.Point> stack = new Stack<System.Drawing.Point>();
       foreach (System.Drawing.Point s in seeds) {
-        if (r.Contains(s)) {
+        if (r.Contains(s) && grow_predicate(new System.Drawing.Point(-1, -1), s)) {
           int id = IndexHelper.ArrayIndexFromPixel(s, r.Size);
-          djs[id] = id;
+          ds.MakeSet(id);
           stack.Push(s);
         }
       }
@@ -68,56 +69,31 @@ namespace Parsley.Core {
       while (stack.Count > 0) {
         System.Drawing.Point p = stack.Pop();
         int id_p = IndexHelper.ArrayIndexFromPixel(p, r.Size);
-        int p_root = FindRoot(djs, id_p);
+        int p_root = ds.FindRoot(id_p);
         // Fetch neighbors
         System.Drawing.Point[] neighbors = GetNeighbors(p, r.Size);
         foreach (System.Drawing.Point n in neighbors) {
           if (grow_predicate(p, n)) {
             int id_n = IndexHelper.ArrayIndexFromPixel(n, r.Size);
-            if (djs[id_n] == -1) {
-              djs[id_n] = p_root;
+            if (ds.FindRoot(id_n) == -1) {
+              ds.Set(id_n, p_root);
               stack.Push(n);
             } else {
               // Merge
-              int n_root = FindRoot(djs, id_n);
-              djs[n_root] = p_root;
+              ds.Merge(id_n, p_root);
             }
-            
           }
         }
       }
-
-      // Relabel all to flatten list
-      for (int i = 0; i < djs.Length; ++i) {
-        djs[i] = FindRoot(djs, djs[i]);
-      }
       
-      // Find the number of blobs
-      IEnumerable<int> roots = djs.Where(value => { return value > -1 && FindRoot(djs, value) == value; });
-      List<Blob> blobs = new List<Blob>();
-      for (int i = 0; i < djs.Length; ++i) {
-        if (djs[i] > 0 && FindRoot(djs, i) == i) {
-          List<System.Drawing.Point> pixels = new List<System.Drawing.Point>();
-          for (int j = 0; j < djs.Length; ++j) {
-            if (djs[j] == i) {
-              pixels.Add(IndexHelper.PixelFromArrayIndex(j, r.Size));
-            }
-          }
-          blobs.Add(new Blob(pixels.ToArray()));
-        }
+      List<Region> blobs = new List<Region>();
+      foreach (List<int> e in ds.FindSetElements(ds.Roots)) {
+        List<System.Drawing.Point> pixels = e.ConvertAll<System.Drawing.Point>(
+          value => { return IndexHelper.PixelFromArrayIndex(value, r.Size); }
+        );
+        blobs.Add(new Region(pixels));
       }
-      
       return blobs.ToArray();
-    }
-
-    private int FindRoot(int[] djs, int id_p) {
-      if (id_p == -1) {
-        return -1;
-      } else if (djs[id_p] == id_p) {
-        return id_p;
-      } else {
-        return FindRoot(djs, djs[id_p]);
-      }
     }
 
     private System.Drawing.Point[] GetNeighbors(System.Drawing.Point p, System.Drawing.Size size) {
