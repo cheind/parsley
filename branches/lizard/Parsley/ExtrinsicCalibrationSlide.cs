@@ -21,7 +21,6 @@ namespace Parsley {
   public partial class ExtrinsicCalibrationSlide : FrameGrabberSlide {
 
     private bool _on_roi;
-    private Core.ExtrinsicCalibration _ec;
     private UI.RectangleInteractor _interactor;
     private Rectangle _r;
     private bool _clear_request;
@@ -63,8 +62,6 @@ namespace Parsley {
     void Reset() {
       if (!Context.Setup.Camera.HasIntrinsics) {
         this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
-      } else {
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
       }
     }
 
@@ -93,7 +90,8 @@ namespace Parsley {
         try {
           pattern.FindPattern(gray, _r);
           if (pattern.PatternFound) {
-            ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
+            Parsley.Core.ExtrinsicCalibration ec = new Parsley.Core.ExtrinsicCalibration(pattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
+            ExtrinsicCameraParameters ecp = ec.Calibrate(pattern.ImagePoints);
             double[] deviations;
             Vector[] points;
 
