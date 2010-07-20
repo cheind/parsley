@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="Parsley.Draw3D"
 	ProjectGUID="{6B03DE61-527A-441C-A7E6-8C1CB433EA63}"
 	RootNamespace="ParsleyDraw3D"
@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="User32.lib osgGA.lib osgDB.lib osg.lib osgViewer.lib OpenThreads.lib $(NOINHERIT)"
+				AdditionalDependencies="User32.lib osgGAd.lib osgDBd.lib osgd.lib osgViewerd.lib OpenThreadsd.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\ThirdParty\OpenSceneGraph\lib"
 				GenerateDebugInformation="true"
@@ -87,7 +87,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\bin&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)\..\bin&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -160,7 +160,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\bin&quot;"
+				CommandLine="copy &quot;$(TargetPath)&quot; &quot;$(ProjectDir)\..\bin&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -183,6 +183,11 @@
 		<AssemblyReference
 			RelativePath="System.Windows.Forms.dll"
 			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
+			MinFrameworkVersion="131072"
+		/>
+		<AssemblyReference
+			RelativePath="mscorlib.dll"
+			AssemblyName="mscorlib, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=IA64"
 			MinFrameworkVersion="131072"
 		/>
 	</References>
@@ -217,6 +222,10 @@
 		</File>
 		<File
 			RelativePath=".\inc\draw3d\group.h"
+			>
+		</File>
+		<File
+			RelativePath=".\inc\draw3d\marshal.h"
 			>
 		</File>
 		<File

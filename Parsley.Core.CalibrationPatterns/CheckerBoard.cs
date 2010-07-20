@@ -97,8 +97,10 @@ namespace Parsley.Core.CalibrationPatterns {
     /// <returns>True if pattern was found, false otherwise</returns>
     public override bool FindPattern(Emgu.CV.Image<Gray, byte> img, out System.Drawing.PointF[] image_points)
     {
+      Emgu.CV.Image<Gray, byte> my_img = img.Copy();
+      my_img._EqualizeHist();
       bool found = Emgu.CV.CameraCalibration.FindChessboardCorners(
-        img,
+        my_img,
         _inner_corners,
         Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH | 
         Emgu.CV.CvEnum.CALIB_CB_TYPE.FILTER_QUADS |
@@ -107,7 +109,7 @@ namespace Parsley.Core.CalibrationPatterns {
       );
 
       if (found) {
-        img.FindCornerSubPix(
+        my_img.FindCornerSubPix(
           new System.Drawing.PointF[][] { image_points },
           new System.Drawing.Size(5, 5),
           new System.Drawing.Size(-1, -1),

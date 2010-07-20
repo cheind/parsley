@@ -21,7 +21,6 @@ namespace Parsley {
   public partial class ExtrinsicCalibrationSlide : FrameGrabberSlide {
 
     private bool _on_roi;
-    private Core.ExtrinsicCalibration _ec;
     private UI.RectangleInteractor _interactor;
     private Rectangle _r;
     private bool _clear_request;
@@ -63,8 +62,6 @@ namespace Parsley {
     void Reset() {
       if (!Context.Setup.Camera.HasIntrinsics) {
         this.Logger.Error("An intrinsic calibration is required to perform extrinsic calibration.");
-      } else {
-        _ec = new Parsley.Core.ExtrinsicCalibration(Context.Setup.ExtrinsicPattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
       }
     }
 
@@ -90,24 +87,29 @@ namespace Parsley {
       Core.CalibrationPattern pattern = Context.Setup.ExtrinsicPattern;
       if (_on_roi) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        pattern.FindPattern(gray, _r);
-        if (pattern.PatternFound) {
-          ExtrinsicCameraParameters ecp = _ec.Calibrate(pattern.ImagePoints);
-          double[] deviations;
-          Vector[] points;
+        try {
+          pattern.FindPattern(gray, _r);
+          if (pattern.PatternFound) {
+            Parsley.Core.ExtrinsicCalibration ec = new Parsley.Core.ExtrinsicCalibration(pattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
+            ExtrinsicCameraParameters ecp = ec.Calibrate(pattern.ImagePoints);
+            double[] deviations;
+            Vector[] points;
 
-          Core.ExtrinsicCalibration.CalibrationError(
-            ecp,
-            Context.Setup.Camera.Intrinsics,
-            pattern.ImagePoints,
-            pattern.ObjectPoints,
-            out deviations,
-            out points);
-          Context.Setup.ReferencePlanes.Add(new Core.Plane(ecp));
-          Context.Setup.Extrinsics.Add(ecp);
-          this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {1:F3}", Context.Setup.ReferencePlanes.Count, deviations.Max()));
-        } else {
-          this.Logger.Warn("Plane not detected. Please repeat");
+            Core.ExtrinsicCalibration.CalibrationError(
+              ecp,
+              Context.Setup.Camera.Intrinsics,
+              pattern.ImagePoints,
+              pattern.ObjectPoints,
+              out deviations,
+              out points);
+            Context.Setup.ReferencePlanes.Add(new Core.Plane(ecp));
+            Context.Setup.Extrinsics.Add(ecp);
+            this.Logger.Info(String.Format("Plane #{0} detected. Maximum error {1:F3}", Context.Setup.ReferencePlanes.Count, deviations.Max()));
+          } else {
+            this.Logger.Warn("Plane not detected. Please repeat");
+          }
+        } catch (System.Exception e) {
+          this.Logger.Warn(String.Format("Failed to determine extrinsic calibration: {0}", e.Message));
         }
         _on_roi = false;
       }

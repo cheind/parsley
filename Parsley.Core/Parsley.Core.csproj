@@ -89,12 +89,18 @@
     <Compile Include="AlgorithmContext.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
+    <Compile Include="DisjointSet.cs" />
+    <Compile Include="Drawing.cs" />
+    <Compile Include="EllipseDetector.cs" />
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
+    <Compile Include="Extensions\HomogeneousCoordinates.cs" />
     <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
+    <Compile Include="Extensions\Statistics.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="IAlgorithmContext.cs" />
+    <Compile Include="IImageAlgorithm.cs" />
     <Compile Include="ILaserLineAlgorithm.cs" />
     <Compile Include="ILaserLineAlgorithmContext.cs" />
     <Compile Include="ILaserLineFilterAlgorithm.cs" />
@@ -118,6 +124,7 @@
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ray.cs" />
+    <Compile Include="RegionGrowing.cs" />
     <Compile Include="Resource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
