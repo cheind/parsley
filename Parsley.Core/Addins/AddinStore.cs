@@ -82,11 +82,11 @@ namespace Parsley.Core.Addins {
               _addins.Add(new AddinInfo(t));
           }
         }
-        _logger.Info(String.Format("'{0}' successfully loaded.", assembly_path));
+        _logger.Debug(String.Format("'{0}' successfully loaded.", assembly_path));
       } catch (System.BadImageFormatException) {
-        _logger.Warn(String.Format("'{0}' is not a valid assembly.", assembly_path));
+        _logger.Debug(String.Format("'{0}' is not a valid assembly.", assembly_path));
       } catch (System.IO.FileLoadException) {
-        _logger.Info(String.Format("'{0}' already loaded.", assembly_path));
+        _logger.Debug(String.Format("'{0}' already loaded.", assembly_path));
       } catch (System.TypeLoadException) {
         _logger.Warn(String.Format("Type load exception during loading of '{0}' occurred.", assembly_path));
       }
