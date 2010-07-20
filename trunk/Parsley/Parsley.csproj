@@ -130,6 +130,12 @@
     <Compile Include="LaserSetupSlide.Designer.cs">
       <DependentUpon>LaserSetupSlide.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logging\LogFileDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logging\LogFileDisplay.Designer.cs">
+      <DependentUpon>LogFileDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logging\StatusStripAppender.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -153,6 +159,9 @@
     <EmbeddedResource Include="LaserSetupSlide.resx">
       <DependentUpon>LaserSetupSlide.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logging\LogFileDisplay.resx">
+      <DependentUpon>LogFileDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

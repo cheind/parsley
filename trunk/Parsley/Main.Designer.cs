@@ -27,7 +27,6 @@
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._ts_container = new System.Windows.Forms.ToolStripContainer();
-      this._properties = new Parsley.PropertyPane();
       this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this._btn_settings = new System.Windows.Forms.ToolStripButton();
@@ -40,13 +39,14 @@
       this._btn_intrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_extrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_laser_configuration = new System.Windows.Forms.ToolStripMenuItem();
+      this._btn_image_algorithm_test = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
       this._btn_scanning = new System.Windows.Forms.ToolStripButton();
       this._status_strip = new System.Windows.Forms.StatusStrip();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
-      this._btn_image_algorithm_test = new System.Windows.Forms.ToolStripMenuItem();
+      this._properties = new Parsley.PropertyPane();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
       this._ts_container.TopToolStripPanel.SuspendLayout();
@@ -92,15 +92,6 @@
       this._ts_container.TopToolStripPanel.BackColor = System.Drawing.Color.White;
       this._ts_container.TopToolStripPanel.Controls.Add(this.toolStrip2);
       this._ts_container.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      // 
-      // _properties
-      // 
-      this._properties.Location = new System.Drawing.Point(122, 10);
-      this._properties.MinimumSize = new System.Drawing.Size(367, 0);
-      this._properties.Name = "_properties";
-      this._properties.Size = new System.Drawing.Size(367, 366);
-      this._properties.TabIndex = 3;
-      this._properties.Visible = false;
       // 
       // _slide_control
       // 
@@ -157,7 +148,7 @@
       this.toolStrip2.Location = new System.Drawing.Point(3, 0);
       this.toolStrip2.Name = "toolStrip2";
       this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.toolStrip2.Size = new System.Drawing.Size(219, 25);
+      this.toolStrip2.Size = new System.Drawing.Size(188, 25);
       this.toolStrip2.TabIndex = 5;
       // 
       // _btn_back
@@ -236,6 +227,13 @@
       this._btn_laser_configuration.Text = "Laser Configuration";
       this._btn_laser_configuration.Click += new System.EventHandler(this._btn_laser_configuration_Click);
       // 
+      // _btn_image_algorithm_test
+      // 
+      this._btn_image_algorithm_test.Name = "_btn_image_algorithm_test";
+      this._btn_image_algorithm_test.Size = new System.Drawing.Size(222, 22);
+      this._btn_image_algorithm_test.Text = "Image Algorithm Test";
+      this._btn_image_algorithm_test.Click += new System.EventHandler(this._btn_image_algorithm_test_Click);
+      // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -282,23 +280,29 @@
       this._status_strip.Location = new System.Drawing.Point(0, 411);
       this._status_strip.Name = "_status_strip";
       this._status_strip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+      this._status_strip.ShowItemToolTips = true;
       this._status_strip.Size = new System.Drawing.Size(513, 22);
       this._status_strip.SizingGrip = false;
       this._status_strip.TabIndex = 4;
       // 
       // _status_label
       // 
+      this._status_label.AutoToolTip = true;
       this._status_label.Image = global::Parsley.Properties.Resources.ok;
       this._status_label.Name = "_status_label";
       this._status_label.Size = new System.Drawing.Size(127, 17);
       this._status_label.Text = "Welcome to Parsley";
+      this._status_label.ToolTipText = "Click to show complete log";
+      this._status_label.Click += new System.EventHandler(this._status_label_Click);
       // 
-      // _btn_image_algorithm_test
+      // _properties
       // 
-      this._btn_image_algorithm_test.Name = "_btn_image_algorithm_test";
-      this._btn_image_algorithm_test.Size = new System.Drawing.Size(222, 22);
-      this._btn_image_algorithm_test.Text = "Image Algorithm Test";
-      this._btn_image_algorithm_test.Click += new System.EventHandler(this._btn_image_algorithm_test_Click);
+      this._properties.Location = new System.Drawing.Point(122, 10);
+      this._properties.MinimumSize = new System.Drawing.Size(367, 0);
+      this._properties.Name = "_properties";
+      this._properties.Size = new System.Drawing.Size(367, 366);
+      this._properties.TabIndex = 3;
+      this._properties.Visible = false;
       // 
       // Main
       // 

@@ -216,6 +216,11 @@ namespace Parsley {
       _slide_control.ForwardTo<ImageAlgorithmTestSlide>();
     }
 
+    private void _status_label_Click(object sender, EventArgs e) {
+      Logging.LogFileDisplay lfd = new Parsley.Logging.LogFileDisplay();
+      lfd.Show(this);
+    }
+
 
   }
 }
