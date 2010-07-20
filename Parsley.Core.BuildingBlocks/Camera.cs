@@ -44,11 +44,15 @@ namespace Parsley.Core.BuildingBlocks {
       int dev_id = (int)info.GetValue("device_index", typeof(int));
       _intrinsics = (Emgu.CV.IntrinsicCameraParameters)info.GetValue("intrinsic", typeof(Emgu.CV.IntrinsicCameraParameters));
       this.DeviceIndex = dev_id;
+      System.Drawing.Size last_frame_size = (System.Drawing.Size)info.GetValue("last_frame_size", typeof(System.Drawing.Size));
+      this.FrameWidth = last_frame_size.Width;
+      this.FrameHeight = last_frame_size.Height;
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
       info.AddValue("device_index", _device_index);
       info.AddValue("intrinsic", _intrinsics);
+      info.AddValue("last_frame_size", this.FrameSize);
     }
 
 
@@ -111,7 +115,8 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     [Description("The width of the camera frame in pixels.")]
     public int FrameWidth {
-      get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 0);}
+      get { return (int)GetPropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, 0);}
+      set { SetProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_WIDTH, value); }
     }
 
     /// <summary>
@@ -119,7 +124,8 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     [Description("The height of the camera frame in pixels.")]
     public int FrameHeight {
-      get { return (int)PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 0); }
+      get { return (int)GetPropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, 0); }
+      set { SetProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT, value); }
     }
 
     /// <summary>
@@ -157,7 +163,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// <param name="prop"> property name</param>
     /// <param name="def">default to use if not connected</param>
     /// <returns>value or default</returns>
-    double PropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP prop, double def) {
+    double GetPropertyOrDefault(Emgu.CV.CvEnum.CAP_PROP prop, double def) {
       double value = def;
       lock (this) {
         if (IsConnected) {
@@ -165,6 +171,18 @@ namespace Parsley.Core.BuildingBlocks {
         } 
       }
       return value;
+    }
+
+    private void SetProperty(Emgu.CV.CvEnum.CAP_PROP prop, int v)
+    {
+      double value = v;
+      lock (this)
+      {
+        if (IsConnected)
+        {
+          _device.SetCaptureProperty(prop, value);
+        }
+      }
     }
 
     protected override void DisposeManaged() {
