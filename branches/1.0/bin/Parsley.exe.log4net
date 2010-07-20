@@ -1,0 +1,27 @@
+<!--Parsley logging configuration -->
+<log4net>
+    <appender name="StatusStripAppender" type="Parsley.Logging.StatusStripAppender">
+    <filter type="log4net.Filter.LevelRangeFilter">
+      <levelMin value="INFO" />
+      <levelMax value="FATAL" />
+    </filter>
+    </appender>
+
+    <appender name="FileAppender" type="log4net.Appender.FileAppender">
+      <param name="File" value="Parsley.log.txt" />
+      <param name="AppendToFile" value="false" />
+      <layout type="log4net.Layout.PatternLayout">
+            <conversionPattern value="%d %-5level %logger - %message%newline" />
+      </layout>
+    </appender>
+    
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="FileAppender" />
+    </root>
+    
+    <logger name="Parsley">
+      <level value="Info" />
+      <appender-ref ref="StatusStripAppender" />
+    </logger>
+</log4net>
