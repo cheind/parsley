@@ -26,6 +26,8 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScanningSlide));
       this._btn_take_texture_image = new Parsley.UI.ParsleyButtonSmall();
       this._btn_clear_points = new Parsley.UI.ParsleyButtonSmall();
+      this._btn_save_points = new Parsley.UI.ParsleyButtonSmall();
+      this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -70,10 +72,35 @@
       this._btn_clear_points.UseVisualStyleBackColor = true;
       this._btn_clear_points.Click += new System.EventHandler(this._btn_clear_points_Click);
       // 
+      // _btn_save_points
+      // 
+      this._btn_save_points.BackColor = System.Drawing.Color.White;
+      this._btn_save_points.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_save_points.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_save_points.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_save_points.ForeColor = System.Drawing.Color.Black;
+      this._btn_save_points.Image = ((System.Drawing.Image)(resources.GetObject("_btn_save_points.Image")));
+      this._btn_save_points.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_points.Location = new System.Drawing.Point(4, 214);
+      this._btn_save_points.Name = "_btn_save_points";
+      this._btn_save_points.Size = new System.Drawing.Size(142, 27);
+      this._btn_save_points.TabIndex = 16;
+      this._btn_save_points.Text = "Save Points";
+      this._btn_save_points.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_points.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_save_points.UseVisualStyleBackColor = true;
+      this._btn_save_points.Click += new System.EventHandler(this._btn_save_points_Click);
+      // 
+      // saveFileDialog1
+      // 
+      this.saveFileDialog1.Filter = "\"CSV files|*.csv\"";
+      this.saveFileDialog1.Title = "Select CSV File Destination";
+      // 
       // ScanningSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_save_points);
       this.Controls.Add(this._btn_clear_points);
       this.Controls.Add(this._btn_take_texture_image);
       this.Name = "ScanningSlide";
@@ -81,6 +108,7 @@
       this.Controls.SetChildIndex(this._btn_take_texture_image, 0);
       this.Controls.SetChildIndex(this.growLabel1, 0);
       this.Controls.SetChildIndex(this._btn_clear_points, 0);
+      this.Controls.SetChildIndex(this._btn_save_points, 0);
       this.ResumeLayout(false);
 
     }
@@ -89,5 +117,7 @@
 
     private Parsley.UI.ParsleyButtonSmall _btn_take_texture_image;
     private Parsley.UI.ParsleyButtonSmall _btn_clear_points;
+    private Parsley.UI.ParsleyButtonSmall _btn_save_points;
+    private System.Windows.Forms.SaveFileDialog saveFileDialog1;
   }
 }

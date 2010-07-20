@@ -84,14 +84,19 @@ namespace Parsley.Core {
     /// <returns></returns>
     public bool FindPattern(Emgu.CV.Image<Gray, byte> img, Rectangle roi, out PointF[] image_points) {
       try {
-        Emgu.CV.Image<Gray, byte> selected = img.GetSubRect(roi); // Shares memory with original image
-        bool found = this.FindPattern(selected, out image_points);
-        // Transform points back to original image coordinates
-        PointF origin = roi.Location;
-        for (int i = 0; i < image_points.Length; i++) {
-          image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
+        if (!roi.IsEmpty) {
+          Emgu.CV.Image<Gray, byte> selected = img.GetSubRect(roi); // Shares memory with original image
+          bool found = this.FindPattern(selected, out image_points);
+          // Transform points back to original image coordinates
+          PointF origin = roi.Location;
+          for (int i = 0; i < image_points.Length; i++) {
+            image_points[i] = new PointF(image_points[i].X + origin.X, image_points[i].Y + origin.Y);
+          }
+          return found;
+        } else {
+          image_points = new PointF[0];
+          return false;
         }
-        return found;
       } catch (Emgu.CV.CvException) {
         image_points = new PointF[0];
         return false;
@@ -118,19 +123,7 @@ namespace Parsley.Core {
       Emgu.CV.ExtrinsicCameraParameters ecp,
       Emgu.CV.IntrinsicCameraParameters icp) 
     {
-      float extension = img.Width / 10;
-      PointF[] coords = Emgu.CV.CameraCalibration.ProjectPoints(
-        new MCvPoint3D32f[] { 
-          new MCvPoint3D32f(0, 0, 0),
-          new MCvPoint3D32f(extension, 0, 0),
-          new MCvPoint3D32f(0, extension, 0),
-          new MCvPoint3D32f(0, 0, extension),
-        },
-        ecp, icp);
-
-      img.Draw(new LineSegment2DF(coords[0], coords[1]), new Bgr(System.Drawing.Color.Red), 2);
-      img.Draw(new LineSegment2DF(coords[0], coords[2]), new Bgr(System.Drawing.Color.Green), 2);
-      img.Draw(new LineSegment2DF(coords[0], coords[3]), new Bgr(System.Drawing.Color.Blue), 2);
+      Drawing.DrawCoordinateFrame(img, ecp, icp);
     }
 
     /// <summary>

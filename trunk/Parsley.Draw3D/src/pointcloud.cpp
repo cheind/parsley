@@ -4,10 +4,13 @@
  * Code license:	New BSD License
  */
 
+#include <fstream>
+#include <iostream>
 #include <draw3d/pointcloud.h>
 #include <draw3d/convert.h>
 #include <osg/Geometry>
 #include <osg/Geode>
+#include <draw3d/marshal.h>
 
 namespace Parsley {
   namespace Draw3D {
@@ -64,6 +67,30 @@ namespace Parsley {
       _vertices->clear();
       _colors->clear();
       _primitives->clear();
+    }
+
+    void PointCloud::SaveAsCSV(System::String ^filename, System::String ^delimiter)
+    {
+      std::ofstream f_target;
+
+      std::wstring myfilename;
+      marshal(filename, myfilename);
+      
+      std::string mydelimiter;
+      marshal(delimiter, mydelimiter);
+      
+      f_target.open(myfilename.c_str());
+      if (f_target) {
+        for(unsigned i = 0; i < _vertices->size(); i++) {
+          f_target << _vertices->at(i).x() << mydelimiter
+                   << _vertices->at(i).y() << mydelimiter
+                   << _vertices->at(i).z() << mydelimiter
+                   << _colors->at(i).x() << mydelimiter
+                   << _colors->at(i).y() << mydelimiter
+                   << _colors->at(i).z() << std::endl;
+        }
+      }
+      f_target.close();
     }
   }
 }

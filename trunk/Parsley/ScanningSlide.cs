@@ -23,7 +23,6 @@ namespace Parsley {
     private Core.DensePixelGrid<uint> _pixel_point_ids;
     bool _take_texture_image;
     bool _clear_points;
-    System.Drawing.Rectangle _next_roi;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _texture_image;
 
     public ScanningSlide(Context c)
@@ -136,6 +135,14 @@ namespace Parsley {
 
     private void _btn_clear_points_Click(object sender, EventArgs e) {
       _clear_points = true;
+    }
+
+    private void _btn_save_points_Click(object sender, EventArgs e)
+    {
+      if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+      {
+        _pointcloud.SaveAsCSV(saveFileDialog1.FileName, " ");
+      }
     }
   }
 }
