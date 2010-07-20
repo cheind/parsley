@@ -13,6 +13,7 @@
       <layout type="log4net.Layout.PatternLayout">
             <conversionPattern value="%d %-5level %logger - %message%newline" />
       </layout>
+      <lockingmodel type="log4net.Appender.FileAppender+MinimalLock"/>
     </appender>
     
     <root>
