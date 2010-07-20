@@ -17,14 +17,30 @@ using Parsley.Core.Extensions;
 namespace Parsley.Core.CalibrationPatterns {
 
   /// <summary>
-  /// Represents calibration pattern based on circles.
+  /// A calibration pattern based on a rectangular assembly of circles.
   /// </summary>
   /// <remarks>
-  /// Circles become ellipses under perspective projection (except when the view is orthogonal to the circle). 
-  /// Therefore this algorithm searches for ellipses instead of circles. The pattern is assumed to be a rectangular
-  /// composition of circles of the same radius.
-  /// First the input image is thresholded to become a binary image of black and white pixels. Next, the contours of
-  /// the image are extracted and an ellipse is fit to each contour.
+  /// The pattern offers a unique orientation through the four corner circles that contain special markings.
+  /// These markers need to be detected by the algorithm, or the calibration will fail. 
+  /// 
+  /// First, the algorithm detects all visible ellipses (since circles become ellipses under perspective projection).
+  /// The ellipses are filtered through rating them by the average distance of ellipse-contour points to the fitted
+  /// ellipses. Then, the remaining ellipses are searched for the four special marker ellipses. If found, an initial
+  /// calibration (intrinsic and extrinsic) is computed from the marker ellipse centers and the corresponding 
+  /// object points. Next, the remaining ellipse centers are forcast by projecting the associated object centers
+  /// into image coordinates. When the projected centers are close to detected image ellipse centers a correspondence
+  /// is generated. Finally, the image centers of the detected ellipse centers that were brought into correspondence
+  /// are returned.
+  /// 
+  /// The marker ellipses, circles with a varying count of white rectangular shapes in it, are found by counting the
+  /// varying number of black/white transitions. In detail, for each ellipse that passed the initial tests, a coordinate 
+  /// frame is generated in which the ellipse is transformed into a circle (through scaling) with radius b located at 
+  /// the origin. In this frame user-defined number of points on a circle with radius b/2 are generated in counter-clockwise
+  /// order and backtransformed into the image coordinate system. Then, a simple counter tracks the number of black/white
+  /// changes while the intensity of each pixel in turn is analysed. 
+  /// 
+  /// The algorithm itself could cope with missing (non-marker) ellipses, but currently fails, because of design limitations
+  /// of its base-class.
   /// </remarks>
   [Serializable]
   [Parsley.Core.Addins.Addin]
@@ -37,9 +53,16 @@ namespace Parsley.Core.CalibrationPatterns {
     private int _number_circle_points;
     private float _ellipse_distance;
 
+    /// <summary>
+    /// Construct from parameters
+    /// </summary>
+    /// <param name="ncircles_x">Number of circles in x-direction</param>
+    /// <param name="ncircles_y">Number of circles in y-direction</param>
+    /// <param name="distance_x">Distance of circle-centers in x direction</param>
+    /// <param name="distance_y">Distance of circle-centers in y direction</param>
     public Circles(int ncircles_x, int ncircles_y, float distance_x, float distance_y) {
       _mean_distance_threshold = 1.0f;
-      _number_circle_points = 30;
+      _number_circle_points = 60;
       _ellipse_distance = 10;
       _distance_x = distance_x;
       _distance_y = distance_y;
@@ -101,18 +124,21 @@ namespace Parsley.Core.CalibrationPatterns {
     }
 
     /// <summary>
-    /// Set the threshold for blackness
+    /// Set the threshold for blackness, used to binarize the input image.
+    /// All values less-than or equal to the treshold are made black, all others
+    /// white.
     /// </summary>
-    [Description("Set the threshold for blackness")]
+    [Description("Set the threshold for blackness, used to binarize the input image." + 
+                 " All values less-than or equal to the treshold are made black, all others white")]
     public int BinaryThreshold {
       get { return _binary_threshold; }
       set { _binary_threshold = value; }
     }
 
     /// <summary>
-    /// Set minimum number of contour points for ellipse filter
+    /// Set minimum number of contour points to attempt an ellipse fit
     /// </summary>
-    [Description("Set minimum number of contour points for ellipse filter")]
+    [Description("Set minimum number of contour points to attempt an ellipse fit")]
     public int MinimumContourCount {
       get { return _min_contour_count; }
       set { _min_contour_count = value; }
@@ -130,7 +156,7 @@ namespace Parsley.Core.CalibrationPatterns {
     /// <summary>
     /// Number of circle points for transition detection
     /// </summary>
-    [Description("Number of circle points for transition detection")]
+    [Description("Number of circle points to generate for transition detection")]
     public int NumberOfCirclePoints {
       get { return _number_circle_points; }
       set { _number_circle_points = value; }
@@ -217,23 +243,33 @@ namespace Parsley.Core.CalibrationPatterns {
 
       image_points =
         expected_image_points.Select(
-          e => { return NearestEllipse(finals, e); }
+          e => { return NearestEllipseCenter(finals, e); }
         ).Where(
           ne => { return Math.Sqrt(ne.dist2) < _ellipse_distance; }
         ).Select(
           ne => { return ne.center; }
         ).ToArray();
 
+      // currently we need to detect all requested ellipses.
       return image_points.Length == _number_circle_centers.Width * _number_circle_centers.Height;
 
     }
 
+    /// <summary>
+    /// Result of a query to NearestEllipseResult
+    /// </summary>
     struct NearestEllipseResult {
       public System.Drawing.PointF center;
       public double dist2;
     };
 
-    private NearestEllipseResult NearestEllipse(List<DetectedEllipse> finals, System.Drawing.PointF ex) {
+    /// <summary>
+    /// Find the nearest ellipse-center to a query point in image space.
+    /// </summary>
+    /// <param name="finals">List of ellipses to test</param>
+    /// <param name="ex">Query point</param>
+    /// <returns>Nearest result</returns>
+    private NearestEllipseResult NearestEllipseCenter(List<DetectedEllipse> finals, System.Drawing.PointF ex) {
       NearestEllipseResult ner = new NearestEllipseResult();
       ner.dist2 = Double.MaxValue;
       foreach (DetectedEllipse de in finals) {
@@ -247,7 +283,16 @@ namespace Parsley.Core.CalibrationPatterns {
       return ner;
     }
 
+    /// <summary>
+    /// Generate a intrinsic/extrinsic calibration from an initial set of four marker points.
+    /// </summary>
+    /// <param name="finals">List of ellipses</param>
+    /// <param name="marker_ids">Ellipse ids of detected marker-ellipses</param>
+    /// <param name="icp">Resulting intrinsic calibration</param>
+    /// <param name="ecp">Resulting extrinsic calibration</param>
+    /// <param name="size">Image size</param>
     private void ApproximatePlane(List<DetectedEllipse> finals, int[] marker_ids, out Emgu.CV.IntrinsicCameraParameters icp, out Emgu.CV.ExtrinsicCameraParameters ecp, System.Drawing.Size size) {
+      // Currently the marker points correspond to corner points in the rectangular pattern.
       Vector[] object_points = new Vector[] {
         this.ObjectPoints[0], 
         this.ObjectPoints[_number_circle_centers.Width - 1],
@@ -264,6 +309,13 @@ namespace Parsley.Core.CalibrationPatterns {
       ecp = ec.Calibrate(image_points);
     }
 
+    /// <summary>
+    /// Find the marker ellipses.
+    /// </summary>
+    /// <param name="gray">Binary image</param>
+    /// <param name="finals">List of ellipses</param>
+    /// <param name="ids">Resulting ids of marker ellipses, ordered by the number of transitions descending</param>
+    /// <returns>True if all marker ellipses where found, false otherwise</returns>
     private bool FindMarkerEllipses(Emgu.CV.Image<Gray, byte> gray, List<DetectedEllipse> finals, out int[] ids) {
       ids = new int[4] { -1, -1, -1, -1};
 
@@ -291,6 +343,13 @@ namespace Parsley.Core.CalibrationPatterns {
       return ids.Count(value => { return (value > -1); }) == 4;
     }
 
+    /// <summary>
+    /// Count the number of black/white transitions for a single ellipse
+    /// </summary>
+    /// <param name="e">Ellipse</param>
+    /// <param name="matrix">Affine ellipse frame that transforms the ellipse to a circle located at origin</param>
+    /// <param name="gray">Binary image</param>
+    /// <returns>The number of black/white transitions found</returns>
     private int CountBinaryTransitions(DetectedEllipse e, Matrix matrix, Emgu.CV.Image<Gray, byte> gray) {
       // Generate points on circle
       double r = e.Ellipse.MCvBox2D.size.Height * 0.5;
