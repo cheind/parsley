@@ -15,6 +15,7 @@ using System.Windows.Forms;
 
 using Parsley.Core.Extensions;
 using log4net;
+using System.IO;
 
 namespace Parsley {
   public partial class Main : Form {
@@ -22,6 +23,7 @@ namespace Parsley {
     private Context _context;
     private UI.Concrete.StreamViewer _live_feed;
     private UI.Concrete.Draw3DViewer _3d_viewer;
+    private Settings _settings;
 
     private readonly ILog _logger = LogManager.GetLogger(typeof(Main));
 
@@ -41,8 +43,27 @@ namespace Parsley {
 
       InitializeComponent();
 
-      // Try connect to default cam
-      Core.BuildingBlocks.Setup setup = new Parsley.Core.BuildingBlocks.Setup();
+      log4net.Appender.IAppender app =
+        LogManager.GetRepository().GetAppenders().FirstOrDefault(x => x is Logging.StatusStripAppender);
+      if (app != null) {
+        Logging.StatusStripAppender ssa = app as Logging.StatusStripAppender;
+        ssa.StatusStrip = _status_strip;
+        ssa.ToolStripStatusLabel = _status_label;
+      }
+
+
+      Core.BuildingBlocks.Setup setup = null;
+      try {
+        if (File.Exists(@"CurrentParsley.cfg")) {
+          setup = Core.BuildingBlocks.Setup.LoadBinary(@"CurrentParsley.cfg");
+          _logger.Info("Last Parsley configuration successfully loaded.");
+        } else {
+          setup = new Parsley.Core.BuildingBlocks.Setup();
+        }
+      } catch (System.Exception) {
+        setup = new Parsley.Core.BuildingBlocks.Setup();
+        _logger.Info("Last Parsley configuration failed to load properly. Using default one.");
+      }
       Core.BuildingBlocks.FrameGrabber fg = new Parsley.Core.BuildingBlocks.FrameGrabber(setup.Camera);
 
       _live_feed = new Parsley.UI.Concrete.StreamViewer();
@@ -65,15 +86,13 @@ namespace Parsley {
       //_3d_viewer.Show();
 
       _context = new Context(setup, fg, _3d_viewer.RenderLoop, _live_feed.EmbeddableStream);
-      _properties.Context = _context;
 
-      log4net.Appender.IAppender app = 
-        LogManager.GetRepository().GetAppenders().FirstOrDefault(x => x is Logging.StatusStripAppender);
-      if (app != null) {
-        Logging.StatusStripAppender ssa = app as Logging.StatusStripAppender;
-        ssa.StatusStrip = _status_strip;
-        ssa.ToolStripStatusLabel = _status_label;
-      }
+      _settings = new Settings(_context);
+      _settings.FormClosing += new FormClosingEventHandler(_settings_FormClosing);
+      _settings.PropertyGrid.PropertyValueChanged += new PropertyValueChangedEventHandler(PropertyGrid_PropertyValueChanged);
+      this.AddOwnedForm(_settings);
+
+
 
       _slide_welcome = new WelcomeSlide();
       _slide_intrinsic_calib = new IntrinsicCalibrationSlide(_context);
@@ -92,6 +111,19 @@ namespace Parsley {
 
       _slide_control.SlideChanged += new EventHandler<SlickInterface.SlideChangedArgs>(_slide_control_SlideChanged);
       _slide_control.Selected = _slide_welcome;
+    }
+
+    void PropertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e) {
+      // In case a property changed due to user input, we save the configuration
+      Core.BuildingBlocks.Setup.SaveBinary(@"CurrentParsley.cfg", _context.Setup);
+    }
+
+    void _settings_FormClosing(object sender, FormClosingEventArgs e) {
+      // Just hide, don't close except main-form closes
+      if (e.CloseReason != CloseReason.FormOwnerClosing) {
+        e.Cancel = true;
+        _settings.Hide();
+      }
     }
 
     void _3d_viewer_FormClosing(object sender, FormClosingEventArgs e) {
@@ -154,19 +186,6 @@ namespace Parsley {
       _slide_control.ForwardTo<IntrinsicCalibrationSlide>();
     }
 
-    private void _btn_settings_Click(object sender, EventArgs e) {
-      if (_btn_settings.Checked) {
-        _properties.Show();
-        _properties.BringToFront();
-      } else {
-        _properties.Hide();
-      }
-    }
-
-    private void Main_Resize(object sender, EventArgs e) {
-      _properties.UpdatePosition();
-    }
-
     private void _btn_load_configuration_Click(object sender, EventArgs e) {
       if (_open_dlg.ShowDialog(this) == DialogResult.OK) {
         int device_index = -1;
@@ -219,6 +238,10 @@ namespace Parsley {
     private void _status_label_Click(object sender, EventArgs e) {
       Logging.LogFileDisplay lfd = new Parsley.Logging.LogFileDisplay();
       lfd.Show(this);
+    }
+
+    private void _btn_options_Click(object sender, EventArgs e) {
+      _settings.Show();
     }
 
 

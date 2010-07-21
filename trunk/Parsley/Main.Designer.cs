@@ -27,13 +27,11 @@
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._ts_container = new System.Windows.Forms.ToolStripContainer();
-      this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStrip2 = new System.Windows.Forms.ToolStrip();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this._status_strip = new System.Windows.Forms.StatusStrip();
-      this._btn_settings = new System.Windows.Forms.ToolStripButton();
       this._btn_back = new System.Windows.Forms.ToolStripButton();
       this._btn_load_configuration = new System.Windows.Forms.ToolStripButton();
       this._btn_save_configuration = new System.Windows.Forms.ToolStripButton();
@@ -46,12 +44,12 @@
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
-      this._properties = new Parsley.PropertyPane();
+      this._btn_options = new System.Windows.Forms.ToolStripMenuItem();
+      this._slide_control = new SlickInterface.SlideControl();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
       this._ts_container.TopToolStripPanel.SuspendLayout();
       this._ts_container.SuspendLayout();
-      this.toolStrip1.SuspendLayout();
       this.toolStrip2.SuspendLayout();
       this._status_strip.SuspendLayout();
       this.SuspendLayout();
@@ -71,10 +69,9 @@
       // _ts_container.ContentPanel
       // 
       this._ts_container.ContentPanel.BackColor = System.Drawing.Color.White;
-      this._ts_container.ContentPanel.Controls.Add(this._properties);
       this._ts_container.ContentPanel.Controls.Add(this._slide_control);
-      this._ts_container.ContentPanel.Padding = new System.Windows.Forms.Padding(10);
-      this._ts_container.ContentPanel.Size = new System.Drawing.Size(489, 373);
+      this._ts_container.ContentPanel.Padding = new System.Windows.Forms.Padding(10, 10, 0, 10);
+      this._ts_container.ContentPanel.Size = new System.Drawing.Size(513, 373);
       this._ts_container.Dock = System.Windows.Forms.DockStyle.Fill;
       this._ts_container.LeftToolStripPanelVisible = false;
       this._ts_container.Location = new System.Drawing.Point(0, 0);
@@ -83,6 +80,7 @@
       // _ts_container.RightToolStripPanel
       // 
       this._ts_container.RightToolStripPanel.Controls.Add(this.toolStrip1);
+      this._ts_container.RightToolStripPanelVisible = false;
       this._ts_container.Size = new System.Drawing.Size(513, 411);
       this._ts_container.TabIndex = 3;
       this._ts_container.Text = "toolStripContainer1";
@@ -93,28 +91,14 @@
       this._ts_container.TopToolStripPanel.Controls.Add(this.toolStrip2);
       this._ts_container.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
       // 
-      // _slide_control
-      // 
-      this._slide_control.BackColor = System.Drawing.Color.White;
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(10, 10);
-      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(469, 353);
-      this._slide_control.SlideSpeed = 250;
-      this._slide_control.TabIndex = 1;
-      // 
       // toolStrip1
       // 
       this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.None;
       this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
       this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-      this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._btn_settings});
       this.toolStrip1.Location = new System.Drawing.Point(0, 43);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(24, 77);
+      this.toolStrip1.Size = new System.Drawing.Size(26, 102);
       this.toolStrip1.TabIndex = 0;
       // 
       // toolStrip2
@@ -161,19 +145,6 @@
       this._status_strip.SizingGrip = false;
       this._status_strip.TabIndex = 4;
       // 
-      // _btn_settings
-      // 
-      this._btn_settings.CheckOnClick = true;
-      this._btn_settings.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this._btn_settings.Image = global::Parsley.Properties.Resources.agt_utilities;
-      this._btn_settings.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this._btn_settings.Name = "_btn_settings";
-      this._btn_settings.Size = new System.Drawing.Size(22, 72);
-      this._btn_settings.Text = "Settings";
-      this._btn_settings.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical90;
-      this._btn_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-      this._btn_settings.Click += new System.EventHandler(this._btn_settings_Click);
-      // 
       // _btn_back
       // 
       this._btn_back.Image = global::Parsley.Properties.Resources.previous;
@@ -213,7 +184,8 @@
             this._btn_intrinsic_calibration,
             this._btn_extrinsic_calibration,
             this._btn_laser_configuration,
-            this._btn_image_algorithm_test});
+            this._btn_image_algorithm_test,
+            this._btn_options});
       this.x.Image = global::Parsley.Properties.Resources.package_graphics;
       this.x.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.x.Name = "x";
@@ -297,14 +269,24 @@
       this._status_label.ToolTipText = "Click to show complete log";
       this._status_label.Click += new System.EventHandler(this._status_label_Click);
       // 
-      // _properties
+      // _btn_options
       // 
-      this._properties.Location = new System.Drawing.Point(122, 10);
-      this._properties.MinimumSize = new System.Drawing.Size(367, 0);
-      this._properties.Name = "_properties";
-      this._properties.Size = new System.Drawing.Size(367, 366);
-      this._properties.TabIndex = 3;
-      this._properties.Visible = false;
+      this._btn_options.Name = "_btn_options";
+      this._btn_options.Size = new System.Drawing.Size(222, 22);
+      this._btn_options.Text = "Options";
+      this._btn_options.Click += new System.EventHandler(this._btn_options_Click);
+      // 
+      // _slide_control
+      // 
+      this._slide_control.BackColor = System.Drawing.Color.White;
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(10, 10);
+      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(503, 353);
+      this._slide_control.SlideSpeed = 0;
+      this._slide_control.TabIndex = 1;
       // 
       // Main
       // 
@@ -317,7 +299,6 @@
       this.Name = "Main";
       this.Text = "Welcome to Parsely!";
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-      this.Resize += new System.EventHandler(this.Main_Resize);
       this._ts_container.ContentPanel.ResumeLayout(false);
       this._ts_container.RightToolStripPanel.ResumeLayout(false);
       this._ts_container.RightToolStripPanel.PerformLayout();
@@ -325,8 +306,6 @@
       this._ts_container.TopToolStripPanel.PerformLayout();
       this._ts_container.ResumeLayout(false);
       this._ts_container.PerformLayout();
-      this.toolStrip1.ResumeLayout(false);
-      this.toolStrip1.PerformLayout();
       this.toolStrip2.ResumeLayout(false);
       this.toolStrip2.PerformLayout();
       this._status_strip.ResumeLayout(false);
@@ -352,8 +331,6 @@
     private System.Windows.Forms.ToolStripButton _btn_show_camera_live_feed;
     private System.Windows.Forms.ToolStripButton _btn_show_3d_visualization;
     private System.Windows.Forms.ToolStrip toolStrip1;
-    private System.Windows.Forms.ToolStripButton _btn_settings;
-    private PropertyPane _properties;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     private System.Windows.Forms.StatusStrip _status_strip;
     private System.Windows.Forms.ToolStripStatusLabel _status_label;
@@ -361,6 +338,7 @@
     private System.Windows.Forms.ToolStripMenuItem _btn_laser_configuration;
     private System.Windows.Forms.ToolStripButton _btn_scanning;
     private System.Windows.Forms.ToolStripMenuItem _btn_image_algorithm_test;
+    private System.Windows.Forms.ToolStripMenuItem _btn_options;
   }
 }
 
