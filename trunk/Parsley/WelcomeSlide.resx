@@ -120,6 +120,6 @@
   <data name="richTextBox1.Text" xml:space="preserve">
     <value>Parsley is an open source initiative to build a low-cost 3D scanner. With Parsley you can create your own 3D models easily by scanning them from your desktop.
 
-Parsley requires a webcam and a line-laser to work. Please find more information on hardware requirements and setup instructions on http://parsley.googlecode.com</value>
+Parsley requires a webcam and a plane-laser to work. Please find more information on hardware requirements and setup instructions on http://parsley.googlecode.com</value>
   </data>
 </root>
