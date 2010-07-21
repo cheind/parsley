@@ -31,10 +31,10 @@
       // 
       this._pg_config.Dock = System.Windows.Forms.DockStyle.Fill;
       this._pg_config.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this._pg_config.Location = new System.Drawing.Point(0, 21);
+      this._pg_config.Location = new System.Drawing.Point(10, 40);
       this._pg_config.Name = "_pg_config";
       this._pg_config.PropertySort = System.Windows.Forms.PropertySort.NoSort;
-      this._pg_config.Size = new System.Drawing.Size(367, 406);
+      this._pg_config.Size = new System.Drawing.Size(474, 377);
       this._pg_config.TabIndex = 3;
       this._pg_config.ToolbarVisible = false;
       // 
@@ -44,13 +44,12 @@
       this.growLabel1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.growLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(129)))), ((int)(((byte)(41)))));
       this.growLabel1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.growLabel1.Location = new System.Drawing.Point(0, 0);
-      this.growLabel1.MinimumSize = new System.Drawing.Size(0, 20);
+      this.growLabel1.Location = new System.Drawing.Point(10, 10);
+      this.growLabel1.MinimumSize = new System.Drawing.Size(0, 30);
       this.growLabel1.Name = "growLabel1";
-      this.growLabel1.Size = new System.Drawing.Size(367, 21);
+      this.growLabel1.Size = new System.Drawing.Size(474, 30);
       this.growLabel1.TabIndex = 14;
-      this.growLabel1.Text = "Properties";
-      this.growLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.growLabel1.Text = "List of Parsley Options";
       // 
       // PropertyPane
       // 
@@ -60,7 +59,8 @@
       this.Controls.Add(this.growLabel1);
       this.MinimumSize = new System.Drawing.Size(367, 0);
       this.Name = "PropertyPane";
-      this.Size = new System.Drawing.Size(367, 427);
+      this.Padding = new System.Windows.Forms.Padding(10);
+      this.Size = new System.Drawing.Size(494, 427);
       this.VisibleChanged += new System.EventHandler(this.PropertyPane_VisibleChanged);
       this.ResumeLayout(false);
 
