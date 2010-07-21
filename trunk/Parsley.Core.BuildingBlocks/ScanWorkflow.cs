@@ -203,10 +203,14 @@ namespace Parsley.Core.BuildingBlocks {
         if (_roi.Contains(p)) {
           Core.Ray r = context.EyeRays[i];
           if (Core.Intersection.RayPlane(r, filtered_laser_plane, out t)) {
-            System.Drawing.Point in_roi = Core.IndexHelper.MakeRelative(p, _roi);
-            my_pixels.Add(p);
-            _point_accum.Accumulate(in_roi, r, t);
-            my_points.Add(_point_accum.Extract(in_roi));
+
+            if (this.PointInsideOfReferenceArea(context.ReferencePlanes, r, t))
+            {
+              System.Drawing.Point in_roi = Core.IndexHelper.MakeRelative(p, _roi);
+              my_pixels.Add(p);
+              _point_accum.Accumulate(in_roi, r, t);
+              my_points.Add(_point_accum.Extract(in_roi));
+            }
           }
         }
       }
@@ -214,6 +218,20 @@ namespace Parsley.Core.BuildingBlocks {
       points = my_points.ToArray();
       pixels = my_pixels.ToArray();
       return points.Length > 0;
+    }
+
+    private bool PointInsideOfReferenceArea(Plane[] referencePlanes, Core.Ray r, double t)
+    {
+      Vector my3DPoint = r.At(t);
+      double minDistanceToReferencePlane = -10;
+
+      for (int i = 0; i < referencePlanes.Length; i++)
+      {
+        if (referencePlanes[i].SignedDistanceTo(my3DPoint) >= minDistanceToReferencePlane)
+          return false;
+      }
+
+      return true;
     }
   }
 }
