@@ -151,6 +151,8 @@ namespace Parsley {
       _context.Setup.Camera.Dispose();
       _context.RenderLoop.Dispose();
       _context.Viewer.Dispose();
+      // Make sure to save the configuration
+      Core.BuildingBlocks.Setup.SaveBinary(@"CurrentParsley.cfg", _context.Setup);
     }
 
     private void _btn_back_Click(object sender, EventArgs e) {
