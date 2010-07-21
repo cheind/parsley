@@ -93,11 +93,10 @@ namespace Parsley {
       for (int i = 0; i < _pixel_point_ids.PixelData.Length; ++i) {
         System.Drawing.Point p = Core.IndexHelper.PixelFromArrayIndex(i, _pixel_point_ids.Size);
         //we currently use image coordinate system as reference
-        //p = Core.IndexHelper.MakeAbsolute(p, Context.Setup.ScanWorkflow.ROI);
-        Vector color = GetPixelColor(ref p);
         // Note: 0 is used as not-set marker
         uint id = _pixel_point_ids.PixelData[i];
         if (id > 0) {
+          double[] color = GetPixelColor(ref p);
           _pointcloud.UpdateColor(id - 1, color);
         }
       }
@@ -121,6 +120,8 @@ namespace Parsley {
 
     private double[] GetPixelColor(ref System.Drawing.Point pixel) {
       if (_texture_image != null) {
+        // Uncomment the following line and comment the line thereafter.
+        // Bgr bgr = _texture_image.Data[pixel.Y, pixel.X, 0];
         Bgr bgr = _texture_image[pixel.Y, pixel.X];
         return bgr.ToInterop();
       } else {

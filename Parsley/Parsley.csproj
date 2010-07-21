@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4C98E003-741C-4C11-9030-3CCAAB7CAA66}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -95,31 +95,37 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="ContextSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ContextSlide.Designer.cs">
       <DependentUpon>ContextSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="ExtrinsicCalibrationSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ExtrinsicCalibrationSlide.Designer.cs">
       <DependentUpon>ExtrinsicCalibrationSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="FrameGrabberSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="FrameGrabberSlide.Designer.cs">
       <DependentUpon>FrameGrabberSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageAlgorithmTestSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ImageAlgorithmTestSlide.Designer.cs">
       <DependentUpon>ImageAlgorithmTestSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="IntrinsicCalibrationSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="IntrinsicCalibrationSlide.Designer.cs">
       <DependentUpon>IntrinsicCalibrationSlide.cs</DependentUpon>
     </Compile>
     <Compile Include="LaserSetupSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="LaserSetupSlide.Designer.cs">
       <DependentUpon>LaserSetupSlide.cs</DependentUpon>
@@ -204,6 +210,7 @@
       <DependentUpon>PropertyPane.cs</DependentUpon>
     </Compile>
     <Compile Include="ScanningSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ScanningSlide.Designer.cs">
       <DependentUpon>ScanningSlide.cs</DependentUpon>
@@ -215,6 +222,7 @@
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="WelcomeSlide.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="WelcomeSlide.Designer.cs">
       <DependentUpon>WelcomeSlide.cs</DependentUpon>
