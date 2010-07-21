@@ -12,6 +12,7 @@ using System.Text;
 using MathNet.Numerics.LinearAlgebra;
 using System.Runtime.Serialization;
 using Parsley.Core.Extensions;
+using System.ComponentModel;
 
 namespace Parsley.Core {
 
@@ -60,6 +61,7 @@ namespace Parsley.Core {
       }
     }
 
+    [Browsable(false)]
     public IEnumerable<Vector> Points {
       get {
         foreach (PerPixel pp in _grid.PixelData) {
