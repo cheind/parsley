@@ -144,6 +144,13 @@ namespace Parsley.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap record {
+            get {
+                object obj = ResourceManager.GetObject("record", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap xine {
             get {
                 object obj = ResourceManager.GetObject("xine", resourceCulture);
