@@ -27,6 +27,7 @@
       this._save_dialog = new System.Windows.Forms.SaveFileDialog();
       this._open_dlg = new System.Windows.Forms.OpenFileDialog();
       this._ts_container = new System.Windows.Forms.ToolStripContainer();
+      this._slide_control = new SlickInterface.SlideControl();
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.toolStrip2 = new System.Windows.Forms.ToolStrip();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -40,12 +41,11 @@
       this._btn_extrinsic_calibration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_laser_configuration = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_image_algorithm_test = new System.Windows.Forms.ToolStripMenuItem();
+      this._btn_options = new System.Windows.Forms.ToolStripMenuItem();
       this._btn_scanning = new System.Windows.Forms.ToolStripButton();
       this._btn_show_camera_live_feed = new System.Windows.Forms.ToolStripButton();
       this._btn_show_3d_visualization = new System.Windows.Forms.ToolStripButton();
       this._status_label = new System.Windows.Forms.ToolStripStatusLabel();
-      this._btn_options = new System.Windows.Forms.ToolStripMenuItem();
-      this._slide_control = new SlickInterface.SlideControl();
       this._ts_container.ContentPanel.SuspendLayout();
       this._ts_container.RightToolStripPanel.SuspendLayout();
       this._ts_container.TopToolStripPanel.SuspendLayout();
@@ -90,6 +90,18 @@
       this._ts_container.TopToolStripPanel.BackColor = System.Drawing.Color.White;
       this._ts_container.TopToolStripPanel.Controls.Add(this.toolStrip2);
       this._ts_container.TopToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+      // 
+      // _slide_control
+      // 
+      this._slide_control.BackColor = System.Drawing.Color.White;
+      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
+      this._slide_control.Location = new System.Drawing.Point(10, 10);
+      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
+      this._slide_control.Name = "_slide_control";
+      this._slide_control.Selected = null;
+      this._slide_control.Size = new System.Drawing.Size(503, 353);
+      this._slide_control.SlideSpeed = 0;
+      this._slide_control.TabIndex = 1;
       // 
       // toolStrip1
       // 
@@ -184,8 +196,8 @@
             this._btn_intrinsic_calibration,
             this._btn_extrinsic_calibration,
             this._btn_laser_configuration,
-            this._btn_image_algorithm_test,
-            this._btn_options});
+            this._btn_options,
+            this._btn_image_algorithm_test});
       this.x.Image = global::Parsley.Properties.Resources.package_graphics;
       this.x.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.x.Name = "x";
@@ -224,6 +236,14 @@
       this._btn_image_algorithm_test.Size = new System.Drawing.Size(222, 22);
       this._btn_image_algorithm_test.Text = "Image Algorithm Test";
       this._btn_image_algorithm_test.Click += new System.EventHandler(this._btn_image_algorithm_test_Click);
+      // 
+      // _btn_options
+      // 
+      this._btn_options.Image = global::Parsley.Properties.Resources.appointment;
+      this._btn_options.Name = "_btn_options";
+      this._btn_options.Size = new System.Drawing.Size(222, 22);
+      this._btn_options.Text = "Options";
+      this._btn_options.Click += new System.EventHandler(this._btn_options_Click);
       // 
       // _btn_scanning
       // 
@@ -264,29 +284,10 @@
       this._status_label.AutoToolTip = true;
       this._status_label.Image = global::Parsley.Properties.Resources.ok;
       this._status_label.Name = "_status_label";
-      this._status_label.Size = new System.Drawing.Size(127, 17);
+      this._status_label.Size = new System.Drawing.Size(127, 16);
       this._status_label.Text = "Welcome to Parsley";
       this._status_label.ToolTipText = "Click to show complete log";
       this._status_label.Click += new System.EventHandler(this._status_label_Click);
-      // 
-      // _btn_options
-      // 
-      this._btn_options.Name = "_btn_options";
-      this._btn_options.Size = new System.Drawing.Size(222, 22);
-      this._btn_options.Text = "Options";
-      this._btn_options.Click += new System.EventHandler(this._btn_options_Click);
-      // 
-      // _slide_control
-      // 
-      this._slide_control.BackColor = System.Drawing.Color.White;
-      this._slide_control.Dock = System.Windows.Forms.DockStyle.Fill;
-      this._slide_control.Location = new System.Drawing.Point(10, 10);
-      this._slide_control.Margin = new System.Windows.Forms.Padding(0);
-      this._slide_control.Name = "_slide_control";
-      this._slide_control.Selected = null;
-      this._slide_control.Size = new System.Drawing.Size(503, 353);
-      this._slide_control.SlideSpeed = 0;
-      this._slide_control.TabIndex = 1;
       // 
       // Main
       // 
