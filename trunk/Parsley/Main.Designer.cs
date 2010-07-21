@@ -132,10 +132,11 @@
             this.toolStripSeparator1,
             this._btn_show_camera_live_feed,
             this._btn_show_3d_visualization});
-      this.toolStrip2.Location = new System.Drawing.Point(3, 0);
+      this.toolStrip2.Location = new System.Drawing.Point(0, 0);
       this.toolStrip2.Name = "toolStrip2";
       this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.toolStrip2.Size = new System.Drawing.Size(405, 38);
+      this.toolStrip2.Size = new System.Drawing.Size(513, 38);
+      this.toolStrip2.Stretch = true;
       this.toolStrip2.TabIndex = 5;
       // 
       // toolStripSeparator2
