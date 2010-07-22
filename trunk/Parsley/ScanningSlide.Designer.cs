@@ -93,8 +93,9 @@
       // 
       // saveFileDialog1
       // 
-      this.saveFileDialog1.Filter = "\"CSV files|*.csv\"";
+      this.saveFileDialog1.Filter = "CSV files|*.csv";
       this.saveFileDialog1.Title = "Select CSV File Destination";
+      this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
       // 
       // ScanningSlide
       // 

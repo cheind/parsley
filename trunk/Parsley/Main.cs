@@ -147,12 +147,13 @@ namespace Parsley {
     private void Main_FormClosing(object sender, FormClosingEventArgs e) {
       _3d_viewer.Close();
       _live_feed.Close();
+      // Make sure to save the configuration
+      Core.BuildingBlocks.Setup.SaveBinary(@"CurrentParsley.cfg", _context.Setup);
+
       _context.FrameGrabber.Dispose();
       _context.Setup.Camera.Dispose();
       _context.RenderLoop.Dispose();
       _context.Viewer.Dispose();
-      // Make sure to save the configuration
-      Core.BuildingBlocks.Setup.SaveBinary(@"CurrentParsley.cfg", _context.Setup);
     }
 
     private void _btn_back_Click(object sender, EventArgs e) {
