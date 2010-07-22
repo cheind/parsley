@@ -29,7 +29,7 @@ namespace Parsley.Core {
     /// Construct empty accumulator
     /// </summary>
     public MedianPointAccumulator() {
-      _max_entries = 100;
+      _max_entries = 1000;
       _grid = new DensePixelGrid<PerPixel>();
     }
 
