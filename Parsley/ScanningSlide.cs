@@ -121,7 +121,7 @@ namespace Parsley {
     private double[] GetPixelColor(ref System.Drawing.Point pixel) {
       if (_texture_image != null) {
         // Uncomment the following line and comment the line thereafter.
-        // Bgr bgr = _texture_image.Data[pixel.Y, pixel.X, 0];
+        //Bgr bgr = _texture_image.Data[pixel.Y, pixel.X];
         Bgr bgr = _texture_image[pixel.Y, pixel.X];
         return bgr.ToInterop();
       } else {
@@ -144,6 +144,11 @@ namespace Parsley {
       {
         _pointcloud.SaveAsCSV(saveFileDialog1.FileName, " ");
       }
+    }
+
+    private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+    {
+
     }
   }
 }
