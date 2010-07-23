@@ -19,6 +19,7 @@ namespace Parsley.Core {
   /// <summary>
   /// Accumulates points by median
   /// </summary>
+  [Parsley.Core.Addins.Addin]
   [Serializable]
   public class MedianPointAccumulator : IPointPerPixelAccumulator, ISerializable {  
     private int _max_entries;
