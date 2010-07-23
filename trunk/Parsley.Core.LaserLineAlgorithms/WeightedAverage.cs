@@ -51,6 +51,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
       public bool stop;
 
       public void Update(double v, double w) {
+        // See http://www-uxsup.csx.cam.ac.uk/~fanf2/hermes/doc/antiforgery/stats.pdf
         weights += w;
         iwa += (w / weights) * (v - iwa);
       }
