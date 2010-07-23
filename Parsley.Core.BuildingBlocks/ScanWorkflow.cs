@@ -28,6 +28,7 @@ namespace Parsley.Core.BuildingBlocks {
     private Core.ILaserLineFilterAlgorithm _line_filter;
     private Core.IPointPerPixelAccumulator _point_accum;
     private Core.ILaserPlaneFilterAlgorithm _plane_filter;
+    private double _minimumDistanceToReferencePlane;
 
     public ScanWorkflow() {
       _line_algorithm = new LaserLineAlgorithms.WeightedAverage(220);
@@ -35,6 +36,7 @@ namespace Parsley.Core.BuildingBlocks {
       _plane_algorithm = new LaserPlaneAlgorithms.PlaneRansac();
       _plane_filter = new LaserPlaneAlgorithms.FilterByCameraPlaneAngle();
       _point_accum = new MedianPointAccumulator();
+      _minimumDistanceToReferencePlane = -10;
     }
 
     public void OnDeserialization(object sender) {
@@ -136,6 +138,16 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
+    /// Set minimum distance from detected points to the reference planes 
+    /// </summary>
+    [Description("Set minimum distance from detected points to the reference planes")]
+    public double MinimumDistanceToReferencePlane
+    {
+      get { return _minimumDistanceToReferencePlane; }
+      set { _minimumDistanceToReferencePlane = value; }
+    }
+
+    /// <summary>
     /// Reset workflow
     /// </summary>
     public void Reset() {
@@ -223,11 +235,10 @@ namespace Parsley.Core.BuildingBlocks {
     private bool PointInsideOfReferenceArea(Plane[] referencePlanes, Core.Ray r, double t)
     {
       Vector my3DPoint = r.At(t);
-      double minDistanceToReferencePlane = -10;
 
       for (int i = 0; i < referencePlanes.Length; i++)
       {
-        if (referencePlanes[i].SignedDistanceTo(my3DPoint) >= minDistanceToReferencePlane)
+        if (referencePlanes[i].SignedDistanceTo(my3DPoint) >= _minimumDistanceToReferencePlane)
           return false;
       }
 
