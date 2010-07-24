@@ -87,7 +87,8 @@ namespace Parsley.Core {
     }
 
     public void Reset() {
-      _grid.Reset();
+      if (_grid != null)
+        _grid.Reset();
     }
 
     /// <summary>
