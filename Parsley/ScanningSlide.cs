@@ -120,8 +120,6 @@ namespace Parsley {
 
     private double[] GetPixelColor(ref System.Drawing.Point pixel) {
       if (_texture_image != null) {
-        // Uncomment the following line and comment the line thereafter.
-        //Bgr bgr = _texture_image.Data[pixel.Y, pixel.X];
         Bgr bgr = _texture_image[pixel.Y, pixel.X];
         return bgr.ToInterop();
       } else {
