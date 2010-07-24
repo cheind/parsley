@@ -57,14 +57,20 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
     }
 
-    public bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos) {
-      using (Emgu.CV.Image<Gray, byte> channel = context.Image[(int)context.LaserColor]) {
-        return ExtractPoints(channel, out laser_pos);
+    public bool FindLaserLine(Dictionary<string, object> values) {
+      Bookmarks b = new Bookmarks(values);
+      Emgu.CV.Image<Bgr, byte> image = b.Image;
+      int laser_color = (int)b.LaserColor;
+
+      using (Emgu.CV.Image<Gray, byte> channel = image[laser_color]) {
+        List<System.Drawing.PointF> pixels = ExtractPoints(channel);
+        b.LaserPixel = pixels;
+        return pixels.Count > 0;
       }
     }
 
 
-    private bool ExtractPoints(Emgu.CV.Image<Gray, byte> channel, out System.Drawing.PointF[] laser_pos) {
+    private List<System.Drawing.PointF> ExtractPoints(Emgu.CV.Image<Gray, byte> channel) {
       IncWeightedAverage[] iwas = new IncWeightedAverage[channel.Width];
 
       // Search per row
@@ -90,14 +96,14 @@ namespace Parsley.Core.LaserLineAlgorithms {
         }
       }
 
-      // Update output: set -1 for invalid laser line poses
-      laser_pos = new System.Drawing.PointF[w];
+      List<System.Drawing.PointF> pixels = new List<System.Drawing.PointF>();
       for (int i = 0; i < w; ++i) {
         if (iwas[i].iwa > 0) {
-          laser_pos[i] = new System.Drawing.PointF(i, (float)iwas[i].iwa);
+          pixels.Add(new System.Drawing.PointF(i, (float)iwas[i].iwa));
         }
       }
-      return true;
+
+      return pixels;
     }
   }
 }

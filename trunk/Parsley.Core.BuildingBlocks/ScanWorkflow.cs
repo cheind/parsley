@@ -163,79 +163,71 @@ namespace Parsley.Core.BuildingBlocks {
     /// <param name="points">Found points</param>
     /// <param name="pixels">Corresponding pixels for each point</param>
     /// <returns>True if successful, false otherwise</returns>
-    public bool Process(Setup s, Emgu.CV.Image<Bgr, byte> image, out Vector[] points, out System.Drawing.Point[] pixels) {
-      points = null;
+    public bool Process(
+      Setup s, Emgu.CV.Image<Bgr, byte> image, 
+      out List<Vector> points, out List<System.Drawing.Point> pixels)
+    {
       pixels = null;
-
-      Core.LaserPlaneFilterAlgorithmContext context = new LaserPlaneFilterAlgorithmContext();
-      context.Intrinsics = s.Camera.Intrinsics;
-      context.ROI = _roi;
-      context.ReferencePlanes = s.ReferencePlanes.ToArray();
-
-
-      // 1. Update context
-      context.Image = image;
-      context.LaserColor = s.Laser.Color;
+      points = null;
+      // 1. Update values needed by algorithms
       
-      // 2. Extract laser line
-      System.Drawing.PointF[] laser_points;
-      if (!_line_algorithm.FindLaserLine(context, out laser_points)) return false;
-      context.LaserPoints = laser_points;
+      Dictionary<string, object> values = new Dictionary<string, object>();
+      Bookmarks b = new Bookmarks(values);
 
+      b.ROI = _roi;
+      b.ReferencePlanes = s.ReferencePlanes;
+      b.Image = image;
+      b.LaserColor = s.Laser.Color;
+            
+      // 2. Extract laser line
+      if (!_line_algorithm.FindLaserLine(b.Values)) return false;
       // 3. Filter laser points
-      System.Drawing.PointF[] filtered_laser_points;
-      if (!_line_filter.FilterLaserLine(context, out filtered_laser_points)) return false;
-      context.ValidLaserPoints = filtered_laser_points.Where(p => p != System.Drawing.PointF.Empty).ToArray();
-      if (context.ValidLaserPoints.Length < 3) return false;
+      if (!_line_filter.FilterLaserLine(b.Values)) return false;
+      if (b.LaserPixel.Count < 3) return false;
 
       // 4. Detect laser plane
-      context.EyeRays = Core.Ray.EyeRays(context.Intrinsics, context.ValidLaserPoints);
-
-      Core.Plane laser_plane;
-      if (!_plane_algorithm.FindLaserPlane(context, out laser_plane)) return false;
-      context.LaserPlane = laser_plane;
+      List<Ray> eye_rays = new List<Ray>(Core.Ray.EyeRays(s.Camera.Intrinsics, b.LaserPixel.ToArray()));
+      b.EyeRays = eye_rays;
+      if (!_plane_algorithm.FindLaserPlane(b.Values)) return false;
 
       // 5. Filter laser plane
-      Core.Plane filtered_laser_plane;
-      if (!_plane_filter.FilterLaserPlane(context, out filtered_laser_plane)) {
-        Console.WriteLine("filtered" + filtered_laser_plane.Normal);
-        return false;
-      }
+      if (!_plane_filter.FilterLaserPlane(b.Values)) return false;
 
       // 6. Extract relevant points in ROI
-      List<System.Drawing.Point> my_pixels = new List<System.Drawing.Point>();
-      List<Vector> my_points = new List<Vector>();
+      pixels = new List<System.Drawing.Point>();
+      points = new List<Vector>();
 
-      for (int i = 0; i < context.ValidLaserPoints.Length; ++i) {
+      List<System.Drawing.PointF> laser_pixel = b.LaserPixel;
+      Plane laser_plane = b.LaserPlane;
+      List<Plane> reference_planes = b.ReferencePlanes;
+      for (int i = 0; i < laser_pixel.Count; ++i) {
         // Round to nearest pixel
-        System.Drawing.Point p = context.ValidLaserPoints[i].ToNearestPoint();
+        System.Drawing.Point p = laser_pixel[i].ToNearestPoint();
 
         double t;
         if (_roi.Contains(p)) {
-          Core.Ray r = context.EyeRays[i];
-          if (Core.Intersection.RayPlane(r, filtered_laser_plane, out t)) {
+          Core.Ray r = eye_rays[i];
+          if (Core.Intersection.RayPlane(r, laser_plane, out t)) {
 
-            if (this.PointInsideOfReferenceArea(context.ReferencePlanes, r, t))
+            if (this.PointInsideOfReferenceArea(reference_planes, r, t))
             {
               System.Drawing.Point in_roi = Core.IndexHelper.MakeRelative(p, _roi);
-              my_pixels.Add(p);
+              pixels.Add(p);
               _point_accum.Accumulate(in_roi, r, t);
-              my_points.Add(_point_accum.Extract(in_roi));
+              points.Add(_point_accum.Extract(in_roi));
             }
           }
         }
       }
 
-      points = my_points.ToArray();
-      pixels = my_pixels.ToArray();
-      return points.Length > 0;
+      return points.Count > 0;
     }
 
-    private bool PointInsideOfReferenceArea(Plane[] referencePlanes, Core.Ray r, double t)
+    private bool PointInsideOfReferenceArea(List<Plane> referencePlanes, Core.Ray r, double t)
     {
       Vector my3DPoint = r.At(t);
 
-      for (int i = 0; i < referencePlanes.Length; i++)
+      for (int i = 0; i < referencePlanes.Count; i++)
       {
         if (referencePlanes[i].SignedDistanceTo(my3DPoint) >= _minimumDistanceToReferencePlane)
           return false;

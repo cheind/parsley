@@ -76,8 +76,8 @@ namespace Parsley {
         _pixel_point_ids.Size = Context.Setup.Camera.FrameSize;
       }
 
-      Vector[] points;
-      System.Drawing.Point[] pixels;
+      List<Vector> points;
+      List<System.Drawing.Point> pixels;
 
       if (Context.Setup.ScanWorkflow.Process(Context.Setup, img, out points, out pixels)) {
         lock (Context.Viewer) {
@@ -102,9 +102,9 @@ namespace Parsley {
       }
     }
 
-    private void UpdatePoints(Vector[] points, System.Drawing.Point[] pixels)
+    private void UpdatePoints(List<Vector> points, List<System.Drawing.Point> pixels)
     {
-      for (int i = 0; i < points.Length; ++i) {
+      for (int i = 0; i < points.Count; ++i) {
         System.Drawing.Point pixel = pixels[i];
         //System.Drawing.Point rel_p = Core.IndexHelper.MakeRelative(pixel, Context.Setup.ScanWorkflow.ROI);
         uint id = _pixel_point_ids[pixel];

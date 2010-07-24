@@ -20,8 +20,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
 
     public NoFilter() {}
 
-    public bool FilterLaserLine(ILaserLineFilterAlgorithmContext context, out System.Drawing.PointF[] filtered_positions) {
-      filtered_positions = context.LaserPoints;
+    public bool FilterLaserLine(Dictionary<string, object> values) {
       return true;
     }
 

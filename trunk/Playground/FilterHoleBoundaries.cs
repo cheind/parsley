@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace Playground {
 
+  /*
   [Parsley.Core.Addins.Addin]
   public class FilterHoleBoundaries : Parsley.Core.ILaserLineFilterAlgorithm {
     public FilterHoleBoundaries() { }
@@ -29,4 +30,5 @@ namespace Playground {
       return true;
     }
   }
+   */
 }

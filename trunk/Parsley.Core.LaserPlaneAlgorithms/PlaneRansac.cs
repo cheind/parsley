@@ -85,22 +85,26 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     /// <param name="context">Context</param>
     /// <param name="plane">Found plane</param>
     /// <returns>Success</returns>
-    public bool FindLaserPlane(ILaserPlaneAlgorithmContext context, out Plane plane) {
-      Ray[] rays;
+    public bool FindLaserPlane(Dictionary<string, object> values) {
+      Bookmarks b = new Bookmarks(values);
+
+      List<System.Drawing.PointF> laser_pixels = b.LaserPixel;
+      List<Ray> eye_rays = b.EyeRays;
+      System.Drawing.Rectangle roi = b.ROI;
+
+      List<Ray> rays;
       if (_only_out_of_roi) {
-        List<Core.Ray> outside_rays = new List<Ray>();
-        for (int i = 0; i < context.ValidLaserPoints.Length; ++i) {
-          if (!context.ROI.Contains(context.ValidLaserPoints[i])) {
-            outside_rays.Add(context.EyeRays[i]);
+        rays = new List<Ray>();
+        for (int i = 0; i < laser_pixels.Count; ++i) {
+          if (!roi.Contains(laser_pixels[i])) {
+            rays.Add(eye_rays[i]);
           }
         }
-        rays = outside_rays.ToArray();
       } else {
-        rays = context.EyeRays;
+        rays = eye_rays;
       }
 
-      if (rays.Length == 0) {
-        plane = null;
+      if (rays.Count == 0) {
         return false;
       }
 
@@ -108,21 +112,21 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
       double[] ts;
       int[] plane_ids;
 
-      Core.Intersection.FindEyeRayPlaneIntersections(rays, context.ReferencePlanes, out ts, out isect, out plane_ids);
+      List<Plane> reference_planes = b.ReferencePlanes;
+      Core.Intersection.FindEyeRayPlaneIntersections(
+        rays.ToArray(), 
+        reference_planes.ToArray(), 
+        out ts, out isect, out plane_ids);
 
       Ransac<PlaneModel> ransac = new Ransac<PlaneModel>(isect);
-      int min_consensus = (int)Math.Max(rays.Length * _min_consensus_precent, context.Image.Width * 0.05);
-      _constraint.Context = context;
+      int min_consensus = (int)Math.Max(rays.Count * _min_consensus_precent, b.Image.Width * 0.05);
+      _constraint.Values = values;
       Ransac<PlaneModel>.Hypothesis h = ransac.Run(_max_iterations, _plane_accurracy, min_consensus, _constraint);
 
-      // Make sure that at least consensus set was formed from at least two different planes
-
-
-      if (h != null/* && h.ConsensusIds.Select(element => plane_ids[element]).Distinct().Count() > 1*/) {
-        plane = h.Model.Plane;
+      if (h != null) {
+        b.LaserPlane = h.Model.Plane;
         return true;
       } else {
-        plane = null;
         return false;
       }
     }

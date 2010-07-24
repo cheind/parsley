@@ -19,10 +19,9 @@ namespace Parsley.Core {
     /// <summary>
     /// Filter laser-plane
     /// </summary>
-    /// <param name="context"> Dectected laser-plane</param>
-    /// <param name="filtered_plane">Possibly modified laser-plane</param>
+    /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
     /// <returns>True if filter succeeded, false otherwise</returns>
-    bool FilterLaserPlane(ILaserPlaneFilterAlgorithmContext context, out Plane filtered_plane);
+    bool FilterLaserPlane(Dictionary<string, object> values);
 
   }
 }
