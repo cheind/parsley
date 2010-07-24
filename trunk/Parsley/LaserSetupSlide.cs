@@ -15,6 +15,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 
+using Parsley.Core.Extensions;
+
 namespace Parsley {
   public partial class LaserSetupSlide : FrameGrabberSlide {
     private bool _save_laser_data;
@@ -48,7 +50,7 @@ namespace Parsley {
 
       SaveLaserData(filtered_points);
       foreach (System.Drawing.PointF p in filtered_points.Where(p => p != PointF.Empty)) {
-        img[(int)p.Y, (int)p.X] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
+        img[p.ToNearestPoint()] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
       }
     }
 

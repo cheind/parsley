@@ -10,7 +10,14 @@ using System.Linq;
 using System.Text;
 
 namespace Parsley.Core.Extensions {
-  public static class Rectangle {
+  public static class RectangleExtensions {
+
+    /// <summary>
+    /// True if point is contained in rectangle, false otherwise.
+    /// </summary>
+    /// <param name="r">Rectangle</param>
+    /// <param name="p">Point</param>
+    /// <returns>True if point is contained in rectangle, false otherwise</returns>
     public static bool Contains(this System.Drawing.Rectangle r, System.Drawing.PointF p ) {
       return
         p.X >= r.X && p.X <= (r.X + r.Width) &&

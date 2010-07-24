@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -95,6 +95,7 @@
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
     <Compile Include="Extensions\HomogeneousCoordinates.cs" />
+    <Compile Include="Extensions\PointF.cs" />
     <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
     <Compile Include="Extensions\Statistics.cs" />

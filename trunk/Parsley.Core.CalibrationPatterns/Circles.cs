@@ -362,7 +362,7 @@ namespace Parsley.Core.CalibrationPatterns {
       for (double t = 0; t <= 2 * Math.PI; t += t_step) {
         Vector v = new Vector(new double[] { r * Math.Cos(t), r * Math.Sin(t), 1.0 });
         Vector x = matrix.Multiply(v.ToColumnMatrix()).GetColumnVector(0);
-        System.Drawing.Point p = new System.Drawing.Point((int)x[0], (int)x[1]);
+        System.Drawing.Point p = new System.Drawing.Point((int)Math.Round(x[0]), (int)Math.Round(x[1]));
         if (rect.Contains(p)) {
           if (t == 0) {
             last_intensity = gray[p].Intensity;
