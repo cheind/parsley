@@ -9,11 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
-
-using Emgu.CV.Structure;
-using MathNet.Numerics.LinearAlgebra;
 using System.Runtime.Serialization;
 using System.Drawing;
+
+using Parsley.Core.Extensions;
+using Emgu.CV.Structure;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Parsley.Core.BuildingBlocks {
   
@@ -207,9 +208,7 @@ namespace Parsley.Core.BuildingBlocks {
 
       for (int i = 0; i < context.ValidLaserPoints.Length; ++i) {
         // Round to nearest pixel
-        System.Drawing.Point p = new System.Drawing.Point(
-          (int)context.ValidLaserPoints[i].X,
-          (int)context.ValidLaserPoints[i].Y);
+        System.Drawing.Point p = context.ValidLaserPoints[i].ToNearestPoint();
 
         double t;
         if (_roi.Contains(p)) {

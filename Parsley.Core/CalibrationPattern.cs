@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
+using Parsley.Core.Extensions;
 using MathNet.Numerics.LinearAlgebra;
 using Emgu.CV.Structure;
 using System.ComponentModel;
@@ -139,7 +140,8 @@ namespace Parsley.Core {
       int count = 1;
       foreach (PointF point in image_points) {
         img.Draw(new CircleF(point, 4), bgr, 2);
-        img.Draw(count.ToString(), ref f, new System.Drawing.Point((int)point.X + 5, (int)point.Y - 5), bgr);
+        Point p = point.ToNearestPoint();
+        img.Draw(count.ToString(), ref f, new System.Drawing.Point(p.X + 5, p.Y - 5), bgr);
         count++;
       }
     }
