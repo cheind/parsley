@@ -23,9 +23,9 @@ namespace Parsley.Core {
     /// Find laser-plane through detected laser-points.
     /// </summary>
     /// <remarks>Method is only invoked when at least 3 laser_points have been detected.</remarks>
-    /// <param name="context">Input context</param>
+    /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
     /// <returns>True on success, false otherwise</returns>
-    bool FindLaserPlane(ILaserPlaneAlgorithmContext context, out Plane plane);
+    bool FindLaserPlane(Dictionary<string, object> values);
 
   }
 }

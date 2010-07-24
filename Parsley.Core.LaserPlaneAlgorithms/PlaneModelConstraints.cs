@@ -19,7 +19,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   /// </summary>
   public interface IPlaneRansacConstraint : IRansacModelConstraint {
     [Browsable(false)]
-    Core.ILaserPlaneAlgorithmContext Context {
+    Dictionary<string, object> Values {
       set;
     }
   };
@@ -31,18 +31,19 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   [Serializable]
   public class RejectParallelPlanes : IPlaneRansacConstraint {
     [NonSerialized]
-    private Core.ILaserPlaneAlgorithmContext _context;
+    private Bookmarks _b;
 
     public RejectParallelPlanes() { }
 
-    ILaserPlaneAlgorithmContext IPlaneRansacConstraint.Context {
-      set { _context = value; }
+    public Dictionary<string, object> Values {
+      set { _b = new Bookmarks(value); }
     }
 
     public bool Test(IRansacModel model) {
+      
       PlaneModel r = model as PlaneModel;
       bool no_parallel_found = true;
-      foreach (Plane p in _context.ReferencePlanes) {
+      foreach (Plane p in _b.ReferencePlanes) {
         double d = Vector.ScalarProduct(r.Plane.Normal, p.Normal);
         if ((1.0 - Math.Abs(d)) < 1e-2) {
           no_parallel_found = false;

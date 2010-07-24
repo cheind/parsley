@@ -34,28 +34,23 @@ namespace Parsley {
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
-      Core.LaserLineFilterAlgorithmContext c = new Parsley.Core.LaserLineFilterAlgorithmContext();
-      c.Image = img;
-      c.Intrinsics = Context.Setup.Camera.Intrinsics;
-      c.LaserColor = Context.Setup.Laser.Color;
+      Dictionary<string, object> values = new Dictionary<string, object>();
+      Core.Bookmarks b = new Parsley.Core.Bookmarks(values);
 
-      System.Drawing.PointF[] laser_points;
-      if (!Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(c, out laser_points))
-        return;
-      c.LaserPoints = laser_points;
+      b.Image = img;
+      b.LaserColor = Context.Setup.Laser.Color;
+           
+      if (!Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(values)) return;
+      if (!Context.Setup.ScanWorkflow.LaserLineFilterAlgorithm.FilterLaserLine(values)) return;
 
-      System.Drawing.PointF[] filtered_points;
-      if (!Context.Setup.ScanWorkflow.LaserLineFilterAlgorithm.FilterLaserLine(c, out filtered_points))
-        return;
-
-      SaveLaserData(filtered_points);
-      foreach (System.Drawing.PointF p in filtered_points.Where(p => p != PointF.Empty)) {
+      SaveLaserData(b.LaserPixel);
+      foreach (System.Drawing.PointF p in b.LaserPixel) {
         img[p.ToNearestPoint()] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
       }
     }
 
     [Conditional("DEBUG")]
-    void SaveLaserData(System.Drawing.PointF[] laser_points) {
+    void SaveLaserData(List<System.Drawing.PointF> laser_points) {
       if (_save_laser_data) {
         _save_laser_data = false;
         using (TextWriter tw = new StreamWriter(string.Format("laser_{0}.txt", Guid.NewGuid()))) {

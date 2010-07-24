@@ -14,11 +14,9 @@ namespace Parsley.Core {
   public interface ILaserLineFilterAlgorithm {
 
     /// <summary>
-    /// Filter laser-line and return a list of filtered positions
+    /// Filter laser-point pixels.
     /// </summary>
-    /// <remarks>Filter algorithms do not delete previous laser positions, but mark unwanted positions as invalid (PointF.Empty)</remarks>
-    /// <param name="context">Algorithm Context</param>
-    /// <param name="filtered_positions">Filtered output</param>
-    bool FilterLaserLine(ILaserLineFilterAlgorithmContext context, out System.Drawing.PointF[] filtered_positions);
+    /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
+    bool FilterLaserLine(Dictionary<string, object> values);
   }
 }

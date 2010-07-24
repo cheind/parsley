@@ -28,7 +28,7 @@ namespace Parsley.Core {
     /// <summary>
     /// Find laser line.
     /// </summary>
-    /// <param name="channel">Image to search in.</param>
-    bool FindLaserLine(ILaserLineAlgorithmContext context, out System.Drawing.PointF[] laser_pos);
+    /// <param name="values">Dictionary of string/object values</param>
+    bool FindLaserLine(Dictionary<string, object> values);
   }
 }

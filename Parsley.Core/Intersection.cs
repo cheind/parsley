@@ -65,6 +65,5 @@ namespace Parsley.Core {
         isect_plane_ids[i] = id;
       }
     }
-
   }
 }
