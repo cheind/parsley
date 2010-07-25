@@ -98,7 +98,6 @@
     <Compile Include="Extensions\PointF.cs" />
     <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
-    <Compile Include="Extensions\Statistics.cs" />
     <Compile Include="ExtrinsicCalibration.cs" />
     <Compile Include="IImageAlgorithm.cs" />
     <Compile Include="ILaserLineAlgorithm.cs" />
