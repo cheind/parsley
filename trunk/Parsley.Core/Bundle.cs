@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace Parsley.Core {
+
+  /// <summary>
+  /// Associative container where items are indexed through a string.
+  /// </summary>
   public class Bundle {
     private Dictionary<string, object> _map;
 
