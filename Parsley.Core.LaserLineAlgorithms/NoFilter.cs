@@ -20,7 +20,7 @@ namespace Parsley.Core.LaserLineAlgorithms {
 
     public NoFilter() {}
 
-    public bool FilterLaserLine(Dictionary<string, object> values) {
+    public bool FilterLaserLine(Bundle bundle) {
       return true;
     }
 

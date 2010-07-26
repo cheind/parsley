@@ -34,17 +34,17 @@ namespace Parsley {
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) 
     {
-      Dictionary<string, object> values = new Dictionary<string, object>();
-      Core.Bookmarks b = new Parsley.Core.Bookmarks(values);
+      Core.Bundle b = new Parsley.Core.Bundle();
+      Core.BundleBookmarks bb = new Parsley.Core.BundleBookmarks(b);
 
-      b.Image = img;
-      b.LaserColor = Context.Setup.Laser.Color;
+      bb.Image = img;
+      bb.LaserColor = Context.Setup.Laser.Color;
            
-      if (!Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(values)) return;
-      if (!Context.Setup.ScanWorkflow.LaserLineFilterAlgorithm.FilterLaserLine(values)) return;
+      if (!Context.Setup.ScanWorkflow.LaserLineAlgorithm.FindLaserLine(bb.Bundle)) return;
+      if (!Context.Setup.ScanWorkflow.LaserLineFilterAlgorithm.FilterLaserLine(bb.Bundle)) return;
 
-      SaveLaserData(b.LaserPixel);
-      foreach (System.Drawing.PointF p in b.LaserPixel) {
+      SaveLaserData(bb.LaserPixel);
+      foreach (System.Drawing.PointF p in bb.LaserPixel) {
         img[p.ToNearestPoint()] = new Emgu.CV.Structure.Bgr(System.Drawing.Color.Green);
       }
     }

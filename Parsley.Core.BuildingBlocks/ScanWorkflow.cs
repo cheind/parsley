@@ -170,36 +170,36 @@ namespace Parsley.Core.BuildingBlocks {
       pixels = null;
       points = null;
       // 1. Update values needed by algorithms
-      
-      Dictionary<string, object> values = new Dictionary<string, object>();
-      Bookmarks b = new Bookmarks(values);
 
-      b.ROI = _roi;
-      b.ReferencePlanes = s.ReferencePlanes;
-      b.Image = image;
-      b.LaserColor = s.Laser.Color;
+      Bundle b = new Bundle();
+      BundleBookmarks bb = new BundleBookmarks(b);
+
+      bb.ROI = _roi;
+      bb.ReferencePlanes = s.ReferencePlanes;
+      bb.Image = image;
+      bb.LaserColor = s.Laser.Color;
             
       // 2. Extract laser line
-      if (!_line_algorithm.FindLaserLine(b.Values)) return false;
+      if (!_line_algorithm.FindLaserLine(bb.Bundle)) return false;
       // 3. Filter laser points
-      if (!_line_filter.FilterLaserLine(b.Values)) return false;
-      if (b.LaserPixel.Count < 3) return false;
+      if (!_line_filter.FilterLaserLine(bb.Bundle)) return false;
+      if (bb.LaserPixel.Count < 3) return false;
 
       // 4. Detect laser plane
-      List<Ray> eye_rays = new List<Ray>(Core.Ray.EyeRays(s.Camera.Intrinsics, b.LaserPixel.ToArray()));
-      b.EyeRays = eye_rays;
-      if (!_plane_algorithm.FindLaserPlane(b.Values)) return false;
+      List<Ray> eye_rays = new List<Ray>(Core.Ray.EyeRays(s.Camera.Intrinsics, bb.LaserPixel.ToArray()));
+      bb.EyeRays = eye_rays;
+      if (!_plane_algorithm.FindLaserPlane(bb.Bundle)) return false;
 
       // 5. Filter laser plane
-      if (!_plane_filter.FilterLaserPlane(b.Values)) return false;
+      if (!_plane_filter.FilterLaserPlane(bb.Bundle)) return false;
 
       // 6. Extract relevant points in ROI
       pixels = new List<System.Drawing.Point>();
       points = new List<Vector>();
 
-      List<System.Drawing.PointF> laser_pixel = b.LaserPixel;
-      Plane laser_plane = b.LaserPlane;
-      List<Plane> reference_planes = b.ReferencePlanes;
+      List<System.Drawing.PointF> laser_pixel = bb.LaserPixel;
+      Plane laser_plane = bb.LaserPlane;
+      List<Plane> reference_planes = bb.ReferencePlanes;
       for (int i = 0; i < laser_pixel.Count; ++i) {
         // Round to nearest pixel
         System.Drawing.Point p = laser_pixel[i].ToNearestPoint();

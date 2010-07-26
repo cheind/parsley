@@ -57,8 +57,8 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
     }
 
-    public bool FindLaserLine(Dictionary<string, object> values) {
-      Bookmarks b = new Bookmarks(values);
+    public bool FindLaserLine(Bundle bundle) {
+      BundleBookmarks b = new BundleBookmarks(bundle);
       Emgu.CV.Image<Bgr, byte> image = b.Image;
       int laser_color = (int)b.LaserColor;
 

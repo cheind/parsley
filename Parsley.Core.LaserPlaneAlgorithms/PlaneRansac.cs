@@ -85,8 +85,8 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     /// <param name="context">Context</param>
     /// <param name="plane">Found plane</param>
     /// <returns>Success</returns>
-    public bool FindLaserPlane(Dictionary<string, object> values) {
-      Bookmarks b = new Bookmarks(values);
+    public bool FindLaserPlane(Bundle bundle) {
+      BundleBookmarks b = new BundleBookmarks(bundle);
 
       List<System.Drawing.PointF> laser_pixels = b.LaserPixel;
       List<Ray> eye_rays = b.EyeRays;
@@ -120,7 +120,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
 
       Ransac<PlaneModel> ransac = new Ransac<PlaneModel>(isect);
       int min_consensus = (int)Math.Max(rays.Count * _min_consensus_precent, b.Image.Width * 0.05);
-      _constraint.Values = values;
+      _constraint.Bundle = bundle;
       Ransac<PlaneModel>.Hypothesis h = ransac.Run(_max_iterations, _plane_accurracy, min_consensus, _constraint);
 
       if (h != null) {
