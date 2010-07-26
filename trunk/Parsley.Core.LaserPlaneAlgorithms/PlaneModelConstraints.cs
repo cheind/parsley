@@ -19,7 +19,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   /// </summary>
   public interface IPlaneRansacConstraint : IRansacModelConstraint {
     [Browsable(false)]
-    Dictionary<string, object> Values {
+    Bundle Bundle {
       set;
     }
   };
@@ -31,12 +31,12 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
   [Serializable]
   public class RejectParallelPlanes : IPlaneRansacConstraint {
     [NonSerialized]
-    private Bookmarks _b;
+    private BundleBookmarks _b;
 
     public RejectParallelPlanes() { }
 
-    public Dictionary<string, object> Values {
-      set { _b = new Bookmarks(value); }
+    public Bundle Bundle {
+      set { _b = new BundleBookmarks(value); }
     }
 
     public bool Test(IRansacModel model) {

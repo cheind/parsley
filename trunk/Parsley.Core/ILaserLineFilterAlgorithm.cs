@@ -16,7 +16,6 @@ namespace Parsley.Core {
     /// <summary>
     /// Filter laser-point pixels.
     /// </summary>
-    /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
-    bool FilterLaserLine(Dictionary<string, object> values);
+    bool FilterLaserLine(Bundle bundle);
   }
 }

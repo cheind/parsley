@@ -28,7 +28,6 @@ namespace Parsley.Core {
     /// <summary>
     /// Find laser line.
     /// </summary>
-    /// <param name="values">Dictionary of string/object values</param>
-    bool FindLaserLine(Dictionary<string, object> values);
+    bool FindLaserLine(Bundle bundle);
   }
 }

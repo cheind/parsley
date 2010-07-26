@@ -25,7 +25,7 @@ namespace Parsley.Core {
     /// <remarks>Method is only invoked when at least 3 laser_points have been detected.</remarks>
     /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
     /// <returns>True on success, false otherwise</returns>
-    bool FindLaserPlane(Dictionary<string, object> values);
+    bool FindLaserPlane(Bundle bundle);
 
   }
 }

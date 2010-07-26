@@ -19,9 +19,8 @@ namespace Parsley.Core {
     /// <summary>
     /// Filter laser-plane
     /// </summary>
-    /// <param name="values">Knowledge about the current frame encoded as string/object pairs</param>
     /// <returns>True if filter succeeded, false otherwise</returns>
-    bool FilterLaserPlane(Dictionary<string, object> values);
+    bool FilterLaserPlane(Bundle bundle);
 
   }
 }

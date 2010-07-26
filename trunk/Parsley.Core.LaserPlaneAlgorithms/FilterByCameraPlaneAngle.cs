@@ -47,8 +47,8 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
     /// <param name="context">Context</param>
     /// <param name="filtered_plane">Laser-plane as given in context</param>
     /// <returns>True if angle between camera and laser is greater-equal to minimum angle specified, false otherwise</returns>
-    public bool FilterLaserPlane(Dictionary<string, object> values) {
-      Bookmarks b = new Bookmarks(values);
+    public bool FilterLaserPlane(Bundle bundle) {
+      BundleBookmarks b = new BundleBookmarks(bundle);
       return Math.Abs(Vector.ScalarProduct(_camera_view_direction, b.LaserPlane.Normal)) >= _angle_proj_cos;
     }
 

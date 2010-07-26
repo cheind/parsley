@@ -86,7 +86,8 @@
     <Compile Include="Addins\AddinInfo.cs" />
     <Compile Include="Addins\AddinStore.cs" />
     <Compile Include="Addins\ReflectionTypeConverter.cs" />
-    <Compile Include="Bookmarks.cs" />
+    <Compile Include="Bundle.cs" />
+    <Compile Include="BundleBookmarks.cs" />
     <Compile Include="Calibration.cs" />
     <Compile Include="CalibrationPattern.cs" />
     <Compile Include="ColorChannel.cs" />
