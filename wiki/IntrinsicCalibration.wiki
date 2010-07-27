@@ -1,4 +1,4 @@
-#Summary General description of the Intrinsic Calibration and how to perform it using Parsley.
+#summary General description of the Intrinsic Calibration and how to perform it using Parsley.
 
 = Introduction =
 
