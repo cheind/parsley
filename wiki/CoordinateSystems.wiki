@@ -32,4 +32,12 @@ When viewed from the top, so that the top-left field is black, then the x-axis p
 
 http://parsley.googlecode.com/svn/trunk/doc/frames/ChessboardCS.png
 
-The chessboard coordinate system can be found by estimating a transformation that aligns the corner points express in the chessboard coordinate system with corner points detected in the image coordinate system. This calibration is called extrinsic calibration.
+The chessboard coordinate system can be found by estimating a transformation that aligns the corner points expressed in the chessboard coordinate system with corner points detected in the image coordinate system. This calibration is called extrinsic calibration.
+
+= Circle Pattern Coordinate System =
+Another pattern which can be used for intrinsic or extrinsic camera calibration is the circle pattern. Since the circles turn into ellipses, because of perspective distortion, when the pattern is viewed from different camera positions, a robust ellipse detection algorithm is needed in order to achieve proper pattern detection.
+The correct position of the coordinate systems' origin can be found by sorting the ellipses in an rotation-invariant, unique order. Based on the white markers - located in the center of the ellipses - the number of white-black transitions, which are registered when following an ellipse shaped path within the ellipse, can be used to rank the detected ellipses in descending order.
+
+http://parsley.googlecode.com/svn/trunk/doc/frames/CircleCS.png
+
+Finally, the coordinate system can be fit into the center of the ellipse, which contains the marker with the highest number of white-black transitions. With reference to the given pattern example, the coordinate system is located in the center point of the ellipse, next to the top-left corner of the pattern. The orientation of the coordinate axes corresponds to the orientation of the chessboard coordinate system.
