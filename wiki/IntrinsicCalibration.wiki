@@ -1,0 +1,6 @@
+= Introduction =
+
+Camera calibration is used to determine a set of parameters which are used to describe the mapping between the 3D environment and the produced 2D camera image.
+These parameters can be subdivided into two groups.
+* The Intrinsic Camera Parameters describe the internal geometry of a camera including radial and tangential distortion coefficients.
+* The Extrinsic Camera Parameters describe the relation between the 3D camera coordinate system (located in the projection center) and a given world coordinate system (position and orientation).
