@@ -12,4 +12,6 @@ The following chapter describes how to perform the intrinsic calibration with Pa
 
 = Intrinsic Calibration =
 Intrinsic Camera Parameters define the internal geometry of the camera. This parameter set includes the focal lengths, the principal point (image center) and the distortion coefficients (see [http://code.google.com/p/parsley/wiki/CoordinateSystems Camera Coordinate System]). 
-These parameters are independent of the camera position and orientation relative to the world coordinate system.
+These parameters are independent of the camera position and orientation relative to the world coordinate system. The intrinsic calibration is used to reduce/eliminate the lense distortion. It is obvious that the extrinsic calibration *depends* on the results and the accuracy of the intrinsic calibration, since small distortion is essential for estimating the coordinate transformation matrix (combined rotation of translation) properly.
+
+== Camera setup and intrinsic calibration settings ==
