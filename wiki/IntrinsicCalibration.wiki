@@ -1,4 +1,4 @@
-#summary General description of the Intrinsic Calibration and how to perform it using Parsley.
+#summary General description of the Intrinsic Calibration and how to perform it using Parsley
 
 = Introduction =
 
@@ -11,4 +11,5 @@ These parameters can be subdivided into two groups.
 The following chapter describes how to perform the intrinsic calibration with Parsley.
 
 = Intrinsic Calibration =
-Intrinsic Camera Parameters 
+Intrinsic Camera Parameters define the internal geometry of the camera. This parameter set includes the focal lengths, the principal point (image center) and the distortion coefficients (see [http://code.google.com/p/parsley/wiki/CoordinateSystems Camera Coordinate System]). 
+These parameters are independent of the camera position and orientation relative to the world coordinate system.
