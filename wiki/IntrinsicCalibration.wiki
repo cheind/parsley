@@ -12,13 +12,32 @@ The following chapter describes how to perform the intrinsic calibration with Pa
 
 = Intrinsic Calibration =
 Intrinsic Camera Parameters define the internal geometry of the camera. This parameter set includes the focal lengths, the principal point (image center) and the distortion coefficients (see [http://code.google.com/p/parsley/wiki/CoordinateSystems Camera Coordinate System]). 
-These parameters are independent of the camera position and orientation relative to the world coordinate system. The intrinsic calibration is used to reduce/eliminate the lense distortion. It is obvious that the extrinsic calibration *depends* on the results and the accuracy of the intrinsic calibration, since small distortion is essential for estimating the coordinate transformation matrix (combined rotation and translation between world coordinate system and camera 3d coordinate system) properly.
+These parameters are independent of the camera position and orientation relative to the world coordinate system. The intrinsic calibration is used to reduce/eliminate the lense distortion. It is obvious that the extrinsic calibration *depends* on the results and the accuracy of the intrinsic calibration, since small distortion is essential for estimating the coordinate transformation matrix (combined rotation and translation between world  and camera 3d coordinate system) properly.
 
 == Camera setup ==
 
-In order to avoid the activation of the auto focusing functionality of the camera permanently, i.e. during changes of the lighting conditions or changes of the distance to the object of interest, use the [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap] software to deactivate _auto focusing_ and _auto exposure time_ functionalities.
+In order to avoid the activation of the auto focusing functionality of the camera permanently, e.g. during changes of the lighting conditions or changes of the distance to the object of interest, use the [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap] software to deactivate _auto focusing_ and _auto exposure time_ functionalities.
 Furthermore, make sure that the camera provides a frame rate of at least *15 fps*. If necessary, reduce the camera resolution to improve the frame rate.
 
 == Intrinsic calibration settings in Parsley ==
 After changing the camera hardware settings successfully we need to set up Parsley before the intrinsic calibration can be performed.
 Firstly, go to the Parsley _Options_ menu using the _Setup_ tab. Secondly, the calibration pattern type needs to be chosen. Currently, Parsley supports *Chessboard* patterns and *Circle* patterns for the camera calibration.
+
+For the use of the chessboard pattern the below-mentioned parameters need to be set.
+ * _Size_ defines the number of inner corners per row and column on the pattern.
+ * _SizeOfSquare_ defines the size of the pattern's squares in the given unit (e.g. mm).
+
+Using the circle pattern requires the following parameter settings.
+ * _Size_ defines the number of circle centers per row and column on the pattern.
+ * _CenterDistanceX_ defines the spacing between two circle centers in x-direction.
+ * _CenterDistanceY_ defines the spacing between two circle centers in y-direction.
+ * _BinaryThreshold_ sets the threshold which is used to create a binary image. Pixels with color values less or equal than the threshold will be set to black, all other pixels to white.
+ * _MinimumContourCount_ sets the minimum number of detected contour points, necessary to attempt an ellipse fit.
+ * _MeanDistanceThreshold_ defines the average allowed distance of contour points to the fitted ellipse.
+ * _NumberOfCirclePoints_ sets the number of points of the elliptic path which is used to count the white-black pixel color transitions within the *marker ellipses*.
+ * _MaximumEllipseDistance_ defines the maximum spacing between the detected ellipse center and the expected ellipse center.
+
+Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 20mm, Size = 2;2, CenterDistanceX = 130, CenterDistanceY = 100), are:
+|| *Parameter* || *Value* || *Unit* || *Description*||
+|| BinaryThreshold || 30 - 100 || color value || depends very much on the lighting conditions ||
+|| MinimumContourCount || 40 || number of points || if the angle between camera vision range and the pattern becomes too sharp  
