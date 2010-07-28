@@ -143,6 +143,12 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="PatternDesignerSlide.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PatternDesignerSlide.Designer.cs">
+      <DependentUpon>PatternDesignerSlide.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ExtrinsicCalibrationSlide.resx">
@@ -168,6 +174,9 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PatternDesignerSlide.resx">
+      <DependentUpon>PatternDesignerSlide.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

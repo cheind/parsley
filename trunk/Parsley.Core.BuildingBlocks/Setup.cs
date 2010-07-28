@@ -19,23 +19,19 @@ namespace Parsley.Core.BuildingBlocks {
   public class Setup {
     private BuildingBlocks.Camera _camera;
     private BuildingBlocks.Laser _laser;
-    private List<Core.Plane> _reference_planes;
-    private List<Emgu.CV.ExtrinsicCameraParameters> _extrinsics;
+    private BuildingBlocks.ReferenceBody _reference_body;
+    private BuildingBlocks.RotaryPositioner _rotary_positioner;
     private ScanWorkflow _wf;
-    private Core.CalibrationPattern _intrinsic_pattern;
-    private Core.CalibrationPattern _extrinsic_pattern;
 
     /// <summary>
     /// Construct default setup
     /// </summary>
     public Setup() {
       _wf = new ScanWorkflow();
-      _intrinsic_pattern = new Core.CalibrationPatterns.CheckerBoard(9, 6, 25.0f);
-      _extrinsic_pattern = new Core.CalibrationPatterns.CheckerBoard(9, 6, 10.0f);
       _camera = new Camera(0);
       _laser = new Laser();
-      _reference_planes = new List<Plane>();
-      _extrinsics = new List<Emgu.CV.ExtrinsicCameraParameters>();
+      _reference_body = new ReferenceBody();
+      _rotary_positioner = new RotaryPositioner();
     }
 
     /// <summary>
@@ -54,45 +50,6 @@ namespace Parsley.Core.BuildingBlocks {
     /// </summary>
     public bool ShouldSerializeScanWorkflow() {
       return false;
-    }
-
-    /// <summary>
-    /// Get/set the calibration pattern for the intrinsic camera calibration
-    /// </summary>
-    [Description("Choose the calibration pattern for the intrinsic camera calibration")]
-    [Category("Calibration")]
-    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
-    [RefreshProperties(RefreshProperties.All)]
-    public Core.CalibrationPattern IntrinsicPattern {
-      get { return _intrinsic_pattern; }
-      set { _intrinsic_pattern = value; }
-    }
-
-
-    /// <summary>
-    /// Used instead of DefaultValueAttribute
-    /// </summary>
-    public bool ShouldSerializeIntrinsicPattern() {
-      return _intrinsic_pattern.GetType() != typeof(Core.CalibrationPatterns.CheckerBoard);
-    }
-
-    /// <summary>
-    /// Get/set the calibration pattern for the extrinsic camera calibration
-    /// </summary>
-    [Description("Choose the calibration pattern for the extrinsic camera calibration")]
-    [Category("Calibration")]
-    [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
-    [RefreshProperties(RefreshProperties.All)]
-    public Core.CalibrationPattern ExtrinsicPattern {
-      get { return _extrinsic_pattern; }
-      set { _extrinsic_pattern = value; }
-    }
-
-    /// <summary>
-    /// Used instead of DefaultValueAttribute
-    /// </summary>
-    public bool ShouldSerializeExtrinsicPattern() {
-      return _intrinsic_pattern.GetType() != typeof(Core.CalibrationPatterns.CheckerBoard);
     }
 
     /// <summary>
@@ -130,20 +87,41 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     /// <summary>
-    /// Get the recorded reference planes
+    /// Reference body
     /// </summary>
-    [Browsable(false)]
-    public List<Plane> ReferencePlanes {
-      get { return _reference_planes; }
+    [Description("Setup the reference body.")]
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public BuildingBlocks.ReferenceBody ReferenceBody {
+      get { return _reference_body; }
+      set { _reference_body = value; }
+    }
+
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeReferenceBody() {
+      return false;
     }
 
     /// <summary>
-    /// Get the recorded reference planes
+    /// Rotarty positioner
     /// </summary>
-    [Browsable(false)]
-    public List<Emgu.CV.ExtrinsicCameraParameters> Extrinsics {
-      get { return _extrinsics; }
+    [Description("Setup the rotary positioner if available.")]
+    [TypeConverter(typeof(ExpandableObjectConverter))]
+    public BuildingBlocks.RotaryPositioner RotaryPositioner {
+      get { return _rotary_positioner; }
+      set { _rotary_positioner = value; }
     }
+
+
+    /// <summary>
+    /// Used instead of DefaultValueAttribute
+    /// </summary>
+    public bool ShouldSerializeRotaryPositioner() {
+      return false;
+    }
+
 
     /// <summary>
     /// Load setup from file

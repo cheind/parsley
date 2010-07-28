@@ -29,6 +29,8 @@
       this._btn_take_image = new Parsley.UI.ParsleyButtonSmall();
       this.growLabel3 = new Parsley.UI.GrowLabel();
       this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+      this._btn_load_pattern = new Parsley.UI.ParsleyButtonSmall();
+      this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -38,7 +40,7 @@
       // _cb_auto_take
       // 
       this._cb_auto_take.AutoSize = true;
-      this._cb_auto_take.Location = new System.Drawing.Point(149, 215);
+      this._cb_auto_take.Location = new System.Drawing.Point(152, 268);
       this._cb_auto_take.Name = "_cb_auto_take";
       this._cb_auto_take.Size = new System.Drawing.Size(118, 19);
       this._cb_auto_take.TabIndex = 9;
@@ -55,9 +57,9 @@
       this._btn_calibrate.ForeColor = System.Drawing.Color.Black;
       this._btn_calibrate.Image = ((System.Drawing.Image)(resources.GetObject("_btn_calibrate.Image")));
       this._btn_calibrate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_calibrate.Location = new System.Drawing.Point(3, 279);
+      this._btn_calibrate.Location = new System.Drawing.Point(6, 332);
       this._btn_calibrate.Name = "_btn_calibrate";
-      this._btn_calibrate.Size = new System.Drawing.Size(142, 27);
+      this._btn_calibrate.Size = new System.Drawing.Size(102, 27);
       this._btn_calibrate.TabIndex = 14;
       this._btn_calibrate.Text = "Calibrate";
       this._btn_calibrate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -74,9 +76,9 @@
       this._btn_take_image.ForeColor = System.Drawing.Color.Black;
       this._btn_take_image.Image = ((System.Drawing.Image)(resources.GetObject("_btn_take_image.Image")));
       this._btn_take_image.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_take_image.Location = new System.Drawing.Point(1, 210);
+      this._btn_take_image.Location = new System.Drawing.Point(4, 263);
       this._btn_take_image.Name = "_btn_take_image";
-      this._btn_take_image.Size = new System.Drawing.Size(142, 27);
+      this._btn_take_image.Size = new System.Drawing.Size(104, 27);
       this._btn_take_image.TabIndex = 15;
       this._btn_take_image.Text = "Take Image";
       this._btn_take_image.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -89,7 +91,7 @@
       this.growLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.growLabel3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this.growLabel3.Location = new System.Drawing.Point(0, 249);
+      this.growLabel3.Location = new System.Drawing.Point(3, 302);
       this.growLabel3.Name = "growLabel3";
       this.growLabel3.Size = new System.Drawing.Size(392, 15);
       this.growLabel3.TabIndex = 16;
@@ -108,10 +110,35 @@
       this.richTextBox1.TabIndex = 17;
       this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
       // 
+      // _btn_load_pattern
+      // 
+      this._btn_load_pattern.BackColor = System.Drawing.Color.White;
+      this._btn_load_pattern.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_load_pattern.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_load_pattern.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_load_pattern.ForeColor = System.Drawing.Color.Black;
+      this._btn_load_pattern.Image = ((System.Drawing.Image)(resources.GetObject("_btn_load_pattern.Image")));
+      this._btn_load_pattern.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_load_pattern.Location = new System.Drawing.Point(4, 210);
+      this._btn_load_pattern.Name = "_btn_load_pattern";
+      this._btn_load_pattern.Size = new System.Drawing.Size(104, 27);
+      this._btn_load_pattern.TabIndex = 18;
+      this._btn_load_pattern.Text = "Load Pattern";
+      this._btn_load_pattern.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_load_pattern.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_load_pattern.UseVisualStyleBackColor = true;
+      this._btn_load_pattern.Click += new System.EventHandler(this._btn_load_pattern_Click);
+      // 
+      // openFileDialog1
+      // 
+      this.openFileDialog1.FileName = "openFileDialog1";
+      this.openFileDialog1.Filter = "Pattern Files|*.pattern";
+      // 
       // IntrinsicCalibrationSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_load_pattern);
       this.Controls.Add(this.richTextBox1);
       this.Controls.Add(this.growLabel3);
       this.Controls.Add(this._btn_take_image);
@@ -125,6 +152,7 @@
       this.Controls.SetChildIndex(this._btn_take_image, 0);
       this.Controls.SetChildIndex(this.growLabel3, 0);
       this.Controls.SetChildIndex(this.richTextBox1, 0);
+      this.Controls.SetChildIndex(this._btn_load_pattern, 0);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -137,5 +165,7 @@
     private Parsley.UI.ParsleyButtonSmall _btn_take_image;
     private Parsley.UI.GrowLabel growLabel3;
     private System.Windows.Forms.RichTextBox richTextBox1;
+    private Parsley.UI.ParsleyButtonSmall _btn_load_pattern;
+    private System.Windows.Forms.OpenFileDialog openFileDialog1;
   }
 }

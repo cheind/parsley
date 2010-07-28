@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="_btn_calibrate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="_btn_save_pattern.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
-        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvAAA
-        DrwBlbxySQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAEAAAABAAXMatwwAAABl0RVh0Q29tbWVu
+        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOwAAA
+        DsABataJCQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAEAAAABAAXMatwwAAABl0RVh0Q29tbWVu
         dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
         MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
         lwAAA5tJREFUOE+Nk11MmmcYht8m3bKlZgfLtmTJstU1qxrT1ljF2g0qiIUuopm19eeAOlKLGP+mVOsY
@@ -143,64 +143,7 @@
         AAghcIAXe7RxJqXXThH12nP2IRTa9RjJ/wP4C6Vm2iyIu/axAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="_btn_take_image.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
-        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvAAA
-        DrwBlbxySQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAEAAAABAAXMatwwAAABl0RVh0Q29tbWVu
-        dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
-        MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
-        lwAAA5tJREFUOE+Nk11MmmcYht8m3bKlZgfLtmTJstU1qxrT1ljF2g0qiIUuopm19eeAOlKLGP+mVOsY
-        KApVERwKqPyIQCXiR630KwqNA2tZl84ydWrrysHaZWo6XNI1dhsC3/sOu4MuW5b0OXqSJ/d13wf3A0Bs
-        vGsCoNU5dmk8zDz7cnGFzc+ja30F5133+TT3D017dLNFbPPN2nz9dHnc+LwAZDDidmR/z4NtGwgE8Zeu
-        LPCZHVdTlqR4ekg8Tvm1zpxIfDlNX9fMUjD1TPaa3lMWGPPVNjoDDUkrSMAOooF3fkHdAPRN0cGgrzSn
-        13l6TWxjREsuvo8ajKnwrHw/ZMv2EZ04iVB7SVHb/KmwevrkI5X7xF3nEn9xapnf/fU90xvA7e+JVzg+
-        cYhHGZFz/ZmwSnMYntcfgZ9K02Gr7RjEFkuJPjcrZP+e/aTrCjOkxPO2xrzV9y03uAHnLckQGHBy4psu
-        HbjLlsSjEtEHiKdIgdV9adGGIRLRPPwRMeg5HbHcOPfU6OX8dlZ87I8OLPvPzsuUh81WUqjfXewG+B0h
-        XTaWj5e3JW9x5AmoUpFK8FSxFBiJEOhpoRZzduSMJBFyje/CSkUG0ayjPhVaUn6v1x1EPRMFXtCF5d4R
-        GRmPq2WU8AUdGXIkabBEtRfV6mIJtLQIv5scbjQcIep1+2GjIY0oE2ZE2odzInpHMRSbWAbQPppHrVKQ
-        29pNpX6R+TCq70mHfF0GEpizoMBwPFrTkQlFQ9Sw0PQhrBpMhjxlMpKNnUBDXxVGB7xFUmCwmIHmRwBs
-        MxfKm0YORoSXUqHYcjwstDCIz4epUKgmQw3GhDJr7hOxKft260jahtbL+ll1vfCWeba0/lkXbq7qAD5t
-        fFs5wVpuxhKQZJROtFhpUIpTkSLmNjyRH8a/qftOOkL3DEx+PIkvVZC9q5rXXIvS3c8AkfAGQAtot2aS
-        1anxnlw1XGVfrx1IiDaNpCM5loV09sJ5/z1VgtZTcGhmg5u0o0Fo+3kbA+tBgC1xgWtRvQfznWnBXJ+V
-        DU5yzDXKQ0GxKQkZnFkawAFgdUP7XPTvDaF10Dr1OpjbrHnV/6D/lbkVfVGXlbZc0f0WsnppCpC543r7
-        /wH/vMz+xAFTC5VHlRjDypW/ud1/je5AyPfyJlK8GGBuKx98+7Duvb7LuXVfGBI3Da6jqpVHbXFBdPHF
-        AAghcIAXe7RxJqXXThH12nP2IRTa9RjJ/wP4C6Vm2iyIu/axAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="richTextBox1.Text" xml:space="preserve">
-    <value>The instrinsic calibration uses a known calibration pattern to calculate camera parameters. The calibration pattern can be loaded using the button "Load Pattern" below.
-
-To start the calibration, show the calibration pattern to the camera in different angles and from various distances. When the pattern is detected, take an image or use the auto-take image mechanism.
-
-During the intrinsic calibration the calibration pattern or the camera can move freely. Note however, that modifying the camera focus during or after intrinsic calibration will result in distorted 3D models.</value>
-  </data>
-  <data name="_btn_load_pattern.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7O
-        HOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAAOvAAA
-        DrwBlbxySQAAAAZiS0dEAAAAAAAA+UO7fwAAAAl2cEFnAAAAEAAAABAAXMatwwAAABl0RVh0Q29tbWVu
-        dABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAldEVYdGNyZWF0ZS1kYXRlADIwMTAtMDEtMDlUMTU6NTY6
-        MTErMDE6MDA90yijAAAAJXRFWHRtb2RpZnktZGF0ZQAyMDEwLTAxLTA5VDE1OjU2OjExKzAxOjAwYmJe
-        lwAAA5tJREFUOE+Nk11MmmcYht8m3bKlZgfLtmTJstU1qxrT1ljF2g0qiIUuopm19eeAOlKLGP+mVOsY
-        KApVERwKqPyIQCXiR630KwqNA2tZl84ydWrrysHaZWo6XNI1dhsC3/sOu4MuW5b0OXqSJ/d13wf3A0Bs
-        vGsCoNU5dmk8zDz7cnGFzc+ja30F5133+TT3D017dLNFbPPN2nz9dHnc+LwAZDDidmR/z4NtGwgE8Zeu
-        LPCZHVdTlqR4ekg8Tvm1zpxIfDlNX9fMUjD1TPaa3lMWGPPVNjoDDUkrSMAOooF3fkHdAPRN0cGgrzSn
-        13l6TWxjREsuvo8ajKnwrHw/ZMv2EZ04iVB7SVHb/KmwevrkI5X7xF3nEn9xapnf/fU90xvA7e+JVzg+
-        cYhHGZFz/ZmwSnMYntcfgZ9K02Gr7RjEFkuJPjcrZP+e/aTrCjOkxPO2xrzV9y03uAHnLckQGHBy4psu
-        HbjLlsSjEtEHiKdIgdV9adGGIRLRPPwRMeg5HbHcOPfU6OX8dlZ87I8OLPvPzsuUh81WUqjfXewG+B0h
-        XTaWj5e3JW9x5AmoUpFK8FSxFBiJEOhpoRZzduSMJBFyje/CSkUG0ayjPhVaUn6v1x1EPRMFXtCF5d4R
-        GRmPq2WU8AUdGXIkabBEtRfV6mIJtLQIv5scbjQcIep1+2GjIY0oE2ZE2odzInpHMRSbWAbQPppHrVKQ
-        29pNpX6R+TCq70mHfF0GEpizoMBwPFrTkQlFQ9Sw0PQhrBpMhjxlMpKNnUBDXxVGB7xFUmCwmIHmRwBs
-        MxfKm0YORoSXUqHYcjwstDCIz4epUKgmQw3GhDJr7hOxKft260jahtbL+ll1vfCWeba0/lkXbq7qAD5t
-        fFs5wVpuxhKQZJROtFhpUIpTkSLmNjyRH8a/qftOOkL3DEx+PIkvVZC9q5rXXIvS3c8AkfAGQAtot2aS
-        1anxnlw1XGVfrx1IiDaNpCM5loV09sJ5/z1VgtZTcGhmg5u0o0Fo+3kbA+tBgC1xgWtRvQfznWnBXJ+V
-        DU5yzDXKQ0GxKQkZnFkawAFgdUP7XPTvDaF10Dr1OpjbrHnV/6D/lbkVfVGXlbZc0f0WsnppCpC543r7
-        /wH/vMz+xAFTC5VHlRjDypW/ud1/je5AyPfyJlK8GGBuKx98+7Duvb7LuXVfGBI3Da6jqpVHbXFBdPHF
-        AAghcIAXe7RxJqXXThH12nP2IRTa9RjJ/wP4C6Vm2iyIu/axAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
 </root>
