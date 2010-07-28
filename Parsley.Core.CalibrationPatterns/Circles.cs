@@ -45,6 +45,15 @@ namespace Parsley.Core.CalibrationPatterns {
   [Serializable]
   [Parsley.Core.Addins.Addin]
   public class Circles : CalibrationPattern {
+
+    /// <summary>
+    /// Defines the position of the origin of the object points
+    /// </summary>
+    public enum EOriginPosition {
+      TopLeft,
+      Center
+    };
+    
     private System.Drawing.Size _number_circle_centers;
     private float _distance_x, _distance_y;
     private int _binary_threshold;
@@ -52,6 +61,7 @@ namespace Parsley.Core.CalibrationPatterns {
     private float _mean_distance_threshold;
     private int _number_circle_points;
     private float _ellipse_distance;
+    private EOriginPosition _origin_position;
 
     /// <summary>
     /// Construct from parameters
@@ -69,6 +79,7 @@ namespace Parsley.Core.CalibrationPatterns {
       _number_circle_centers = new System.Drawing.Size(ncircles_x, ncircles_y);
       _binary_threshold = 40;
       _min_contour_count = 40;
+      _origin_position = EOriginPosition.TopLeft;
       this.ObjectPoints = GenerateObjectCenters();
     }
 
@@ -171,6 +182,15 @@ namespace Parsley.Core.CalibrationPatterns {
       set { _ellipse_distance = value; }
     }
 
+    [Description("Set the position of the origin")]
+    public EOriginPosition OriginPosition {
+      get { return _origin_position; }
+      set { 
+        _origin_position = value;
+        this.ObjectPoints = GenerateObjectCenters();
+      }
+    }
+
     /// <summary>
     /// Generate reference points
     /// </summary>
@@ -183,6 +203,16 @@ namespace Parsley.Core.CalibrationPatterns {
           centers.Add(new Vector(new double[] { x * _distance_x, y * _distance_y, 0 }));
         }
       }
+
+      if (_origin_position == EOriginPosition.Center) {
+        Vector trans = Vector.Zeros(3);
+        trans[0] = ((_number_circle_centers.Width - 1) * _distance_x) * 0.5;
+        trans[1] = ((_number_circle_centers.Height - 1) * _distance_y) * 0.5;
+        foreach (Vector v in centers) {
+          v.SubtractInplace(trans);
+        }
+      }
+      
       return centers.ToArray();
     }
 
