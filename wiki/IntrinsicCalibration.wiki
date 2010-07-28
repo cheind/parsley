@@ -12,6 +12,13 @@ The following chapter describes how to perform the intrinsic calibration with Pa
 
 = Intrinsic Calibration =
 Intrinsic Camera Parameters define the internal geometry of the camera. This parameter set includes the focal lengths, the principal point (image center) and the distortion coefficients (see [http://code.google.com/p/parsley/wiki/CoordinateSystems Camera Coordinate System]). 
-These parameters are independent of the camera position and orientation relative to the world coordinate system. The intrinsic calibration is used to reduce/eliminate the lense distortion. It is obvious that the extrinsic calibration *depends* on the results and the accuracy of the intrinsic calibration, since small distortion is essential for estimating the coordinate transformation matrix (combined rotation of translation) properly.
+These parameters are independent of the camera position and orientation relative to the world coordinate system. The intrinsic calibration is used to reduce/eliminate the lense distortion. It is obvious that the extrinsic calibration *depends* on the results and the accuracy of the intrinsic calibration, since small distortion is essential for estimating the coordinate transformation matrix (combined rotation and translation between world coordinate system and camera 3d coordinate system) properly.
 
-== Camera setup and intrinsic calibration settings ==
+== Camera setup ==
+
+In order to avoid the activation of the auto focusing functionality of the camera permanently, i.e. during changes of the lighting conditions or changes of the distance to the object of interest, use the [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap] software to deactivate _auto focusing_ and _auto exposure time_ functionalities.
+Furthermore, make sure that the camera provides a frame rate of at least *15 fps*. If necessary, reduce the camera resolution to improve the frame rate.
+
+== Intrinsic calibration settings in Parsley ==
+After changing the camera hardware settings successfully we need to set up Parsley before the intrinsic calibration can be performed.
+Firstly, go to the Parsley _Options_ menu using the _Setup_ tab. Secondly, the calibration pattern type needs to be chosen. Currently, Parsley supports *Chessboard* patterns and *Circle* patterns for the camera calibration.
