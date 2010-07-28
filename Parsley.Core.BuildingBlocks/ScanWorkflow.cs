@@ -175,7 +175,7 @@ namespace Parsley.Core.BuildingBlocks {
       BundleBookmarks bb = new BundleBookmarks(b);
 
       bb.ROI = _roi;
-      bb.ReferencePlanes = s.ReferencePlanes;
+      bb.ReferencePlanes = s.ReferenceBody.Planes;
       bb.Image = image;
       bb.LaserColor = s.Laser.Color;
             
@@ -219,6 +219,8 @@ namespace Parsley.Core.BuildingBlocks {
           }
         }
       }
+
+      s.RotaryPositioner.TransformPoints(points);
 
       return points.Count > 0;
     }
