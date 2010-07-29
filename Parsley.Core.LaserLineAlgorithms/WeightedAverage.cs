@@ -19,13 +19,25 @@ namespace Parsley.Core.LaserLineAlgorithms {
   [Serializable]
   [Addins.Addin]
   public class WeightedAverage : ILaserLineAlgorithm {
+
+    /// <summary>
+    /// Search direction in image
+    /// </summary>
+    public enum ESearchDirection
+    {
+      TopDown,
+      BottomUp
+    };
+
     private int _threshold;
+    private ESearchDirection _search_direction;
 
     /// <summary>
     /// Initialize with no threshold
     /// </summary>
     public WeightedAverage() {
       _threshold = 220;
+      _search_direction = ESearchDirection.TopDown;
     }
 
     /// <summary>
@@ -43,6 +55,16 @@ namespace Parsley.Core.LaserLineAlgorithms {
     public int IntensityThreshold {
       get { return _threshold; }
       set { _threshold = value; }
+    }
+
+    /// <summary>
+    /// Defines the search direction
+    /// </summary>
+    [Description("Defines the search direction")]
+    public ESearchDirection SearchDirection
+    {
+      get { return _search_direction; }
+      set { _search_direction = value; }
     }
 
     struct IncWeightedAverage {
@@ -81,18 +103,18 @@ namespace Parsley.Core.LaserLineAlgorithms {
 
       // See http://www.cse.iitm.ac.in/~cs670/book/node57.html
 
-      unchecked {
-        for (int r = 0; r < h; ++r) {
-          int offset = stride * r;
-          for (int c = 0; c < w; ++c) {
-            byte i = d[offset + c];
-            if (i < _threshold) {
-              iwas[c].stop |= iwas[c].weights > 0;
-            } else {
-              if (!iwas[c].stop)
-                iwas[c].Update(r, i);
-            }
-          }
+      if (_search_direction == ESearchDirection.TopDown)
+      {
+        for (int r = 0; r < h; ++r)
+        {
+          ProcessRow(iwas, d, stride, w, r);
+        }
+      }
+      else
+      {
+        for (int r = h - 1; r >= 0; --r)
+        {
+          ProcessRow(iwas, d, stride, w, r);
         }
       }
 
@@ -104,6 +126,20 @@ namespace Parsley.Core.LaserLineAlgorithms {
       }
 
       return pixels;
+    }
+
+    private void ProcessRow(IncWeightedAverage[] iwas, byte[] d, int stride, int w, int r)
+    {
+      int offset = stride * r;
+      for (int c = 0; c < w; ++c) {
+        byte i = d[offset + c];
+        if (i < _threshold) {
+          iwas[c].stop |= iwas[c].weights > 0;
+        } else {
+          if (!iwas[c].stop)
+            iwas[c].Update(r, i);
+        }
+      }
     }
   }
 }
