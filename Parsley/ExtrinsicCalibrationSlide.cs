@@ -117,12 +117,10 @@ namespace Parsley {
     }
 
     void _interactor_InteractionCompleted(object sender, Parsley.UI.InteractionEventArgs e) {
+      _last_detected_plane = null;
+      _last_error = Double.MaxValue;
       _on_roi = true;
       _r = (Rectangle)e.InteractionResult;
-    }
-
-    void _interactor_OnRectangle(Rectangle r) {
-      _on_roi = true;
     }
 
     private void _btn_load_pattern_Click(object sender, EventArgs e) {
