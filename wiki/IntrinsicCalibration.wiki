@@ -25,17 +25,17 @@ Firstly, go to the Parsley _Options_ menu using the _Setup_ tab. Secondly, the c
 
 For the use of the chessboard pattern the below-mentioned parameters need to be set.
  * _Size_ defines the number of inner corners per row and column on the pattern.
- * _SizeOfSquare_ defines the size of the pattern's squares in the given unit (e.g. mm).
+ * _!SizeOfSquare_ defines the size of the pattern's squares in the given unit (e.g. mm).
 
 Using the circle pattern requires the following parameter settings.
  * _Size_ defines the number of circle centers per row and column on the pattern.
  * _CenterDistanceX_ defines the spacing between two circle centers in x-direction.
  * _CenterDistanceY_ defines the spacing between two circle centers in y-direction.
- * _BinaryThreshold_ sets the threshold which is used to create a binary image. Pixels with color values less or equal than the threshold will be set to black, all other pixels to white.
- * _MinimumContourCount_ sets the minimum number of detected contour points, necessary to attempt an ellipse fit.
- * _MeanDistanceThreshold_ defines the average allowed distance of contour points to the fitted ellipse.
- * _NumberOfCirclePoints_ sets the number of points of the elliptic path which is used to count the white-black pixel color transitions within the *marker ellipses*.
- * _MaximumEllipseDistance_ defines the maximum spacing between the detected ellipse center and the expected ellipse center.
+ * _!BinaryThreshold_ sets the threshold which is used to create a binary image. Pixels with color values less or equal than the threshold will be set to black, all other pixels to white.
+ * _!MinimumContourCount_ sets the minimum number of detected contour points, necessary to attempt an ellipse fit.
+ * _!MeanDistanceThreshold_ defines the average allowed distance of contour points to the fitted ellipse.
+ * _!NumberOfCirclePoints_ sets the number of points of the elliptic path which is used to count the white-black pixel color transitions within the *marker ellipses*.
+ * _!MaximumEllipseDistance_ defines the maximum spacing between the detected ellipse center and the expected ellipse center.
 
 Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 20mm, Size = 2;2, CenterDistanceX = 130, CenterDistanceY = 100), are:
 || *Parameter* || *Value* || *Unit* || *Description*||
