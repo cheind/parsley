@@ -10,20 +10,38 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using log4net;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace Parsley {
-  public partial class PatternDesignerSlide : UI.ParsleySlide {
+  public partial class PatternDesignerSlide : FrameGrabberSlide {
     private readonly ILog _logger = LogManager.GetLogger(typeof(PatternDesignerSlide));
 
-    Core.CalibrationPattern _pattern;
+    private Core.CalibrationPattern _pattern;
 
-    public PatternDesignerSlide() {
+    public PatternDesignerSlide(Context c)
+      : base(c) 
+    {
       InitializeComponent();
-
       foreach (Core.Addins.AddinInfo info in Core.Addins.AddinStore.FindAddins(typeof(Core.CalibrationPattern))) {
         _cmb_patterns.Items.Add(info);
       }
+    }
 
+    private PatternDesignerSlide() : base(null) {
+      InitializeComponent();
+    }
+
+    protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
+
+      Core.CalibrationPattern p = _pattern;
+      if (p != null) {
+        Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
+        p.FindPattern(gray);
+        p.DrawPattern(img, p.ImagePoints, p.PatternFound);
+      }
+
+      base.OnFrame(fp, img);
     }
 
     private void _cmb_patterns_SelectedIndexChanged(object sender, EventArgs e) {
