@@ -45,14 +45,6 @@ namespace Parsley.Core.CalibrationPatterns {
   [Serializable]
   [Parsley.Core.Addins.Addin]
   public class Circles : CalibrationPattern {
-
-    /// <summary>
-    /// Defines the position of the origin of the object points
-    /// </summary>
-    public enum EOriginPosition {
-      TopLeft,
-      Center
-    };
     
     private System.Drawing.Size _number_circle_centers;
     private float _distance_x, _distance_y;
@@ -61,7 +53,7 @@ namespace Parsley.Core.CalibrationPatterns {
     private float _mean_distance_threshold;
     private int _number_circle_points;
     private float _ellipse_distance;
-    private EOriginPosition _origin_position;
+    private Vector _translation;
 
     /// <summary>
     /// Construct from parameters
@@ -79,7 +71,7 @@ namespace Parsley.Core.CalibrationPatterns {
       _number_circle_centers = new System.Drawing.Size(ncircles_x, ncircles_y);
       _binary_threshold = 40;
       _min_contour_count = 40;
-      _origin_position = EOriginPosition.TopLeft;
+      _translation = Vector.Zeros(3);
       this.ObjectPoints = GenerateObjectCenters();
     }
 
@@ -182,14 +174,25 @@ namespace Parsley.Core.CalibrationPatterns {
       set { _ellipse_distance = value; }
     }
 
-    [Description("Set the position of the origin")]
-    public EOriginPosition OriginPosition {
-      get { return _origin_position; }
-      set { 
-        _origin_position = value;
-        this.ObjectPoints = GenerateObjectCenters();
-      }
+
+    public double X
+    {
+      get { return _translation[0]; }
+      set { _translation[0] = value; this.ObjectPoints = GenerateObjectCenters(); }
     }
+
+    public double Y
+    {
+      get { return _translation[1]; }
+      set { _translation[1] = value; this.ObjectPoints = GenerateObjectCenters(); }
+    }
+
+    public double Z
+    {
+      get { return _translation[2]; }
+      set { _translation[2] = value; this.ObjectPoints = GenerateObjectCenters(); }
+    }
+
 
     /// <summary>
     /// Generate reference points
@@ -204,13 +207,9 @@ namespace Parsley.Core.CalibrationPatterns {
         }
       }
 
-      if (_origin_position == EOriginPosition.Center) {
-        Vector trans = Vector.Zeros(3);
-        trans[0] = ((_number_circle_centers.Width - 1) * _distance_x) * 0.5;
-        trans[1] = ((_number_circle_centers.Height - 1) * _distance_y) * 0.5;
-        foreach (Vector v in centers) {
-          v.SubtractInplace(trans);
-        }
+      foreach (Vector v in centers)
+      {
+        v.AddInplace(_translation);
       }
       
       return centers.ToArray();
