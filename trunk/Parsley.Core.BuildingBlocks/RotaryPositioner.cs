@@ -69,7 +69,7 @@ namespace Parsley.Core.BuildingBlocks {
     }
 
     [Editor(typeof(ExtrinsicTypeEditor),
-    typeof(System.Drawing.Design.UITypeEditor))]
+            typeof(System.Drawing.Design.UITypeEditor))]
     public Emgu.CV.ExtrinsicCameraParameters RotaryPose {
       get {
         return _ecp;
