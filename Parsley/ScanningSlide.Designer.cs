@@ -28,6 +28,8 @@
       this._btn_clear_points = new Parsley.UI.ParsleyButtonSmall();
       this._btn_save_points = new Parsley.UI.ParsleyButtonSmall();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+      this._nrc_angle = new System.Windows.Forms.NumericUpDown();
+      ((System.ComponentModel.ISupportInitialize)(this._nrc_angle)).BeginInit();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -97,10 +99,25 @@
       this.saveFileDialog1.Title = "Select CSV File Destination";
       this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
       // 
+      // _nrc_angle
+      // 
+      this._nrc_angle.DecimalPlaces = 2;
+      this._nrc_angle.Location = new System.Drawing.Point(231, 154);
+      this._nrc_angle.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+      this._nrc_angle.Name = "_nrc_angle";
+      this._nrc_angle.Size = new System.Drawing.Size(120, 23);
+      this._nrc_angle.TabIndex = 17;
+      this._nrc_angle.ValueChanged += new System.EventHandler(this._nrc_angle_ValueChanged);
+      // 
       // ScanningSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._nrc_angle);
       this.Controls.Add(this._btn_save_points);
       this.Controls.Add(this._btn_clear_points);
       this.Controls.Add(this._btn_take_texture_image);
@@ -110,6 +127,8 @@
       this.Controls.SetChildIndex(this.growLabel1, 0);
       this.Controls.SetChildIndex(this._btn_clear_points, 0);
       this.Controls.SetChildIndex(this._btn_save_points, 0);
+      this.Controls.SetChildIndex(this._nrc_angle, 0);
+      ((System.ComponentModel.ISupportInitialize)(this._nrc_angle)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -120,5 +139,6 @@
     private Parsley.UI.ParsleyButtonSmall _btn_clear_points;
     private Parsley.UI.ParsleyButtonSmall _btn_save_points;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+    private System.Windows.Forms.NumericUpDown _nrc_angle;
   }
 }
