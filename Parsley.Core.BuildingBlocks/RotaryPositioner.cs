@@ -15,30 +15,26 @@ namespace Parsley.Core.BuildingBlocks {
 
   [Serializable]
   public class RotaryPositioner : ISerializable {
-    private Matrix _ecp;
+    Emgu.CV.ExtrinsicCameraParameters _ecp;
     private Matrix _final;
     private double _angle_degrees;
-    private string _ecp_filename;
 
     public RotaryPositioner() {
       _final = Matrix.Identity(4, 4);
-      _ecp = Matrix.Identity(4,4);
-      _ecp_filename = "not-set";
+      _ecp = null;
     }
 
     public RotaryPositioner(SerializationInfo info, StreamingContext context)
     {
-      _ecp = Matrix.Create((double[][])info.GetValue("ecp", typeof(double[][])));
+      _ecp = (Emgu.CV.ExtrinsicCameraParameters)info.GetValue("ecp",  typeof(Emgu.CV.ExtrinsicCameraParameters));
       _final = Matrix.Create((double[][])info.GetValue("final", typeof(double[][])));
       _angle_degrees = (double)info.GetValue("angle", typeof(double));
-      _ecp_filename = (string)info.GetValue("filename", typeof(string));
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
-      info.AddValue("ecp", _ecp.GetArray());
+      info.AddValue("ecp", _ecp);
       info.AddValue("final", _final.GetArray());
       info.AddValue("angle", _angle_degrees);
-      info.AddValue("filename", _ecp_filename);
     }
 
     public double Angle {
@@ -57,54 +53,35 @@ namespace Parsley.Core.BuildingBlocks {
       rz[1, 0] = -Math.Sin(angle_rad);
       rz[1, 1] = Math.Cos(angle_rad);
 
-      _final = _ecp * rz * _ecp.Inverse();
-    }
-
-    [Editor(typeof(ExtrinsicsFileNameEditor),
-    typeof(System.Drawing.Design.UITypeEditor))]
-    public string RotaryPose {
-      get {
-        return _ecp_filename;
-      }
-      set {
-        Emgu.CV.ExtrinsicCameraParameters ecp = LoadExtrinsics(value);
-        if (ecp != null) {
-          _ecp_filename = value;
-          _ecp = Matrix.Identity(4, 4);
-          for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 4; ++j) {
-              _ecp[i, j] = ecp.ExtrinsicMatrix[i, j];
-            }
+      Matrix e;
+      if (_ecp == null) {
+        e = Matrix.Identity(4, 4);
+      } else {
+        e = Matrix.Identity(4, 4);
+        for (int i = 0; i < 3; ++i) {
+          for (int j = 0; j < 4; ++j) {
+            e[i, j] = _ecp.ExtrinsicMatrix[i, j];
           }
         }
+      }
+
+      _final = e * rz * e.Inverse();
+    }
+
+    [Editor(typeof(ExtrinsicTypeEditor),
+    typeof(System.Drawing.Design.UITypeEditor))]
+    public Emgu.CV.ExtrinsicCameraParameters RotaryPose {
+      get {
+        return _ecp;
+      }
+      set {
+        _ecp = value;
       }
     }
 
     public void TransformPoints(List<Vector> points) {
       for (int i = 0; i < points.Count; ++i) {
         points[i] = _final.Multiply(points[i].ToHomogeneous(1).ToColumnMatrix()).GetColumnVector(0).ToNonHomogeneous();
-      }
-    }
-
-
-    private Emgu.CV.ExtrinsicCameraParameters LoadExtrinsics(string filename) {
-      Emgu.CV.ExtrinsicCameraParameters ecp = null;
-      try {
-        using (Stream s = File.Open(filename, FileMode.Open)) {
-          if (s != null) {
-            IFormatter formatter = new BinaryFormatter();
-            ecp = formatter.Deserialize(s) as Emgu.CV.ExtrinsicCameraParameters;
-            s.Close();
-          }
-        }
-      } catch (Exception) { }
-      return ecp;
-    }
-
-    internal class ExtrinsicsFileNameEditor : System.Windows.Forms.Design.FileNameEditor {
-      protected override void InitializeDialog(OpenFileDialog openFileDialog) {
-        base.InitializeDialog(openFileDialog);
-        openFileDialog.Filter = "Extrinsic Files|*.ecp";
       }
     }
   }
