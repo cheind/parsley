@@ -102,7 +102,6 @@ namespace Parsley {
               _last_detected_plane = ecp;
               _last_error = max_error;
               this.Logger.Info(String.Format("Extrinsics successfully calculated. Maximum error {0:F3}", _last_error));
-              _on_roi = false;
             }
           } else {
             this.Logger.Warn("Pattern not found.");
