@@ -25,6 +25,7 @@ namespace Parsley {
     private readonly ILog _logger = LogManager.GetLogger(typeof(PatternDesignerSlide));
 
     private Core.IntrinsicCalibration _ic;
+    private Emgu.CV.IntrinsicCameraParameters _icp;
     private Core.ExtrinsicCalibration _ec; // used for illustration of coordinate frame only.
     private Core.CalibrationPattern _pattern;
     private bool _take_image_request;
@@ -64,11 +65,6 @@ namespace Parsley {
       _btn_calibrate.Enabled = false;
       _btn_take_image.Enabled = true;
       _calibrate_request = false;
-      if (this.Context.FrameGrabber.Camera.HasIntrinsics) {
-        this.Logger.Info("The camera already has a calibration. You can restart the calibration process by taking images.");
-      } else {
-        this.Logger.Info("Start the calibration process by taking images of your chessboard.");
-      }
     }
 
     void _timer_auto_Tick(object sender, EventArgs e) {
@@ -76,14 +72,15 @@ namespace Parsley {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_pattern != null) {
+      Core.CalibrationPattern pattern = _pattern;
+      if (pattern != null) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        _pattern.FindPattern(gray);
-        this.UpdateStatusDisplay(_pattern.PatternFound);
+        pattern.FindPattern(gray);
+        this.UpdateStatusDisplay(pattern.PatternFound);
         this.HandleCalibrateRequest();
         this.HandleTakeImageRequest();
         this.DrawCoordinateFrame(img);
-        _pattern.DrawPattern(img, _pattern.ImagePoints, _pattern.PatternFound);
+        pattern.DrawPattern(img, pattern.ImagePoints, pattern.PatternFound);
       }
     }
 
@@ -102,16 +99,18 @@ namespace Parsley {
     }
 
     void DrawCoordinateFrame(Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-      if (_ec != null && _pattern.PatternFound && Context.Setup.Camera.HasIntrinsics) {
+      Emgu.CV.IntrinsicCameraParameters icp = _icp;
+      if (_ec != null && _pattern.PatternFound && icp != null) {
         Emgu.CV.ExtrinsicCameraParameters ecp = _ec.Calibrate(_pattern.ImagePoints);
-        _pattern.DrawCoordinateFrame(img, ecp, Context.Setup.Camera.Intrinsics);
+        _pattern.DrawCoordinateFrame(img, ecp, icp);
       }
     }
 
     void HandleTakeImageRequest() {
+      Core.CalibrationPattern pattern = _pattern;
       if (_take_image_request) {
-        if (_pattern.PatternFound) {
-          _ic.AddView(_pattern.ImagePoints);
+        if (pattern.PatternFound) {
+          _ic.AddView(pattern.ImagePoints);
           this.Logger.Info(String.Format("You have successfully acquired {0} calibration images.", _ic.Views.Count));
           this.Invoke((MethodInvoker)delegate {  
             _btn_calibrate.Enabled = _ic.Views.Count > 2 && !_cb_auto_take.Checked;
@@ -122,9 +121,10 @@ namespace Parsley {
     }
 
     void HandleCalibrateRequest() {
+      Core.CalibrationPattern pattern = _pattern;
       if (_calibrate_request) {
-        this.Context.FrameGrabber.Camera.Intrinsics = _ic.Calibrate();
-        _ec = new Parsley.Core.ExtrinsicCalibration(_pattern.ObjectPoints, Context.Setup.Camera.Intrinsics);
+        _icp = _ic.Calibrate();
+        _ec = new Parsley.Core.ExtrinsicCalibration(pattern.ObjectPoints, _icp);
         this.Logger.Info("Calibration succeeded");
         this.Invoke((MethodInvoker)delegate {
           _btn_calibrate.Enabled = false;
@@ -165,9 +165,22 @@ namespace Parsley {
             IFormatter formatter = new BinaryFormatter();
             _pattern = formatter.Deserialize(s) as Core.CalibrationPattern;
             _ic = new Parsley.Core.IntrinsicCalibration(_pattern.ObjectPoints, Context.Setup.Camera.FrameSize);
-            
             s.Close();
+            this.Reset();
             _logger.Info(String.Format("Calibration pattern {0} successfully loaded.", new FileInfo(openFileDialog1.FileName).Name));
+          }
+        }
+      }
+    }
+
+    private void _btn_save_calibration_Click(object sender, EventArgs e) {
+      if (_icp != null && saveFileDialog1.ShowDialog() == DialogResult.OK) {
+        using (Stream s = File.OpenWrite(saveFileDialog1.FileName)) {
+          if (s != null) {
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(s, _icp);
+            s.Close();
+            _logger.Info("Intrinsics successfully saved.");
           }
         }
       }

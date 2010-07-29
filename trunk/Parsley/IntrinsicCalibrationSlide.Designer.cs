@@ -31,6 +31,8 @@
       this.richTextBox1 = new System.Windows.Forms.RichTextBox();
       this._btn_load_pattern = new Parsley.UI.ParsleyButtonSmall();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+      this._btn_save_calibration = new Parsley.UI.ParsleyButtonSmall();
+      this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -134,10 +136,34 @@
       this.openFileDialog1.FileName = "openFileDialog1";
       this.openFileDialog1.Filter = "Pattern Files|*.pattern";
       // 
+      // _btn_save_calibration
+      // 
+      this._btn_save_calibration.BackColor = System.Drawing.Color.White;
+      this._btn_save_calibration.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this._btn_save_calibration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this._btn_save_calibration.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this._btn_save_calibration.ForeColor = System.Drawing.Color.Black;
+      this._btn_save_calibration.Image = ((System.Drawing.Image)(resources.GetObject("_btn_save_calibration.Image")));
+      this._btn_save_calibration.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_calibration.Location = new System.Drawing.Point(114, 332);
+      this._btn_save_calibration.Name = "_btn_save_calibration";
+      this._btn_save_calibration.Size = new System.Drawing.Size(119, 27);
+      this._btn_save_calibration.TabIndex = 19;
+      this._btn_save_calibration.Text = "Save Calibration";
+      this._btn_save_calibration.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this._btn_save_calibration.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this._btn_save_calibration.UseVisualStyleBackColor = true;
+      this._btn_save_calibration.Click += new System.EventHandler(this._btn_save_calibration_Click);
+      // 
+      // saveFileDialog1
+      // 
+      this.saveFileDialog1.Filter = "Intrinsic Files|*.icp";
+      // 
       // IntrinsicCalibrationSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this._btn_save_calibration);
       this.Controls.Add(this._btn_load_pattern);
       this.Controls.Add(this.richTextBox1);
       this.Controls.Add(this.growLabel3);
@@ -153,6 +179,7 @@
       this.Controls.SetChildIndex(this.growLabel3, 0);
       this.Controls.SetChildIndex(this.richTextBox1, 0);
       this.Controls.SetChildIndex(this._btn_load_pattern, 0);
+      this.Controls.SetChildIndex(this._btn_save_calibration, 0);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -167,5 +194,7 @@
     private System.Windows.Forms.RichTextBox richTextBox1;
     private Parsley.UI.ParsleyButtonSmall _btn_load_pattern;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private Parsley.UI.ParsleyButtonSmall _btn_save_calibration;
+    private System.Windows.Forms.SaveFileDialog saveFileDialog1;
   }
 }
