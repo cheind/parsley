@@ -39,11 +39,11 @@ Using the circle pattern requires the following parameter settings.
 
 Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 20mm, Size = 2;2, CenterDistanceX = 130, CenterDistanceY = 100), are:
 || *Parameter* || *Value* || *Unit* || *Description*||
-|| BinaryThreshold || 30 - 100 || color value || depends very much on the lighting conditions ||
-|| MinimumContourCount || 40 || number of points || the more the angle between camera vision range and the pattern becomes sharp, the more decreases the number of contour points (perspective distortion) ||
-|| MeanDistanceThreshold || 1 || length || demands high quality ellipse fitting algorithm||
-|| NumberOfCirclePoints || 50 - 100 (for resolution 960x720) || number of points || rising camera resolution leads to a rising need of circle points for a successfull detection ||
-|| MaximumEllipseDistance || 10 || length || use small values, since the distance between expected ellipse centers to the detected ellipse centers should be short ||
+|| !BinaryThreshold || 30 - 100 || color value || depends very much on the lighting conditions ||
+|| !MinimumContourCount || 40 || number of points || the more the angle between camera vision range and the pattern becomes sharp, the more decreases the number of contour points (perspective distortion) ||
+|| !MeanDistanceThreshold || 1 || length || demands high quality ellipse fitting algorithm||
+|| !NumberOfCirclePoints || 50 - 100 (for resolution 960x720) || number of points || rising camera resolution leads to a rising need of circle points for a successfull detection ||
+|| !MaximumEllipseDistance || 10 || length || use small values, since the distance between expected ellipse centers to the detected ellipse centers should be short ||
 
 Note, that changes in the Options menu will be safed automatically in the Parsley configuration file.
 == Execution of the intrinsic calibration ==
