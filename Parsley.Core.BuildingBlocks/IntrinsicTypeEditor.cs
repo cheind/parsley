@@ -13,12 +13,12 @@ using System.ComponentModel;
 namespace Parsley.Core.BuildingBlocks {
 
   /// <summary>
-  /// Type editor to load extrinsics from file and assign them to properties.
+  /// Type editor to load intrinsics from file and assign them to properties.
   /// </summary>
   [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-  public class ExtrinsicTypeEditor : UITypeEditor {
+  public class IntrinsicTypeEditor : UITypeEditor {
 
-    public ExtrinsicTypeEditor() {
+    public IntrinsicTypeEditor() {
     }
 
     public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context) {
@@ -37,19 +37,19 @@ namespace Parsley.Core.BuildingBlocks {
 
       
       using (OpenFileDialog ofd = new OpenFileDialog()) {
-        ofd.Filter = "Extrinsic Files|*.ecp";
+        ofd.Filter = "Intrinsic Files|*.icp";
         if (ofd.ShowDialog() == DialogResult.OK) {
-          Emgu.CV.ExtrinsicCameraParameters ecp = null;
+          Emgu.CV.IntrinsicCameraParameters icp = null;
           try {
             using (Stream s = File.Open(ofd.FileName, FileMode.Open)) {
               if (s != null) {
                 IFormatter formatter = new BinaryFormatter();
-                ecp = formatter.Deserialize(s) as Emgu.CV.ExtrinsicCameraParameters;
+                icp = formatter.Deserialize(s) as Emgu.CV.IntrinsicCameraParameters;
                 s.Close();
               }
             }
-          } catch (Exception) { }
-          return ecp;
+          } catch (Exception) {}
+          return icp;
         } else {
           return value;
         }

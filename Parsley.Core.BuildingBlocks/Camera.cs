@@ -62,7 +62,11 @@ namespace Parsley.Core.BuildingBlocks {
     public Camera() : this(-1) {
     }
 
-    [Browsable(false)]
+    /// <summary>
+    /// Access intrinsic camera parameters.
+    /// </summary>
+    [Editor(typeof(IntrinsicTypeEditor),
+        typeof(System.Drawing.Design.UITypeEditor))]
     public Emgu.CV.IntrinsicCameraParameters Intrinsics {
       get { return _intrinsics; }
       set { _intrinsics = value; }
@@ -76,6 +80,10 @@ namespace Parsley.Core.BuildingBlocks {
       get { return _device_index > -1;}
     }
 
+    /// <summary>
+    /// True if camera has intrinsic parameters assigned
+    /// </summary>
+    [Browsable(false)]
     public bool HasIntrinsics {
       get { return _intrinsics != null; }
     }

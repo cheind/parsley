@@ -91,6 +91,7 @@
     <Compile Include="ExtrinsicTypeEditor.cs" />
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
+    <Compile Include="IntrinsicTypeEditor.cs" />
     <Compile Include="ReferenceBody.cs" />
     <Compile Include="RotaryPositioner.cs" />
     <Compile Include="ScanWorkflow.cs" />
