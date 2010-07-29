@@ -101,7 +101,7 @@ namespace Parsley {
       _slide_laser_setup = new LaserSetupSlide(_context);
       _slide_scanning = new ScanningSlide(_context);
       _slide_image_algorithm_test = new ImageAlgorithmTestSlide(_context);
-      _slide_pattern_designer = new PatternDesignerSlide();
+      _slide_pattern_designer = new PatternDesignerSlide(_context);
 
       
       _slide_control.AddSlide(_slide_welcome);
