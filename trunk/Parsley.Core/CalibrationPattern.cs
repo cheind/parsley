@@ -134,6 +134,9 @@ namespace Parsley.Core {
     /// <param name="image_points">Image center points.</param>
     /// <param name="pattern_found">If true green indicators are drawn, red ones otherwise.</param>
     public virtual void DrawPattern(Emgu.CV.Image<Bgr, Byte> img, PointF[] image_points, bool pattern_found) {
+      if (image_points == null)
+        return;
+
       System.Drawing.Color color = pattern_found ? System.Drawing.Color.Green : System.Drawing.Color.Red;
       Bgr bgr = new Bgr(color);
       MCvFont f = new MCvFont(Emgu.CV.CvEnum.FONT.CV_FONT_HERSHEY_PLAIN, 0.8, 0.8);
