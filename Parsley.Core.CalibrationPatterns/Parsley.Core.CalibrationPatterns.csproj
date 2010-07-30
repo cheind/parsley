@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="CheckerBoard.cs" />
     <Compile Include="Circles.cs" />
+    <Compile Include="Marker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
