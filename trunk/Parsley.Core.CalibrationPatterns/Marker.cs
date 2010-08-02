@@ -11,6 +11,7 @@ using Emgu.CV.CvEnum;
 using System.ComponentModel;
 using MathNet.Numerics.LinearAlgebra;
 using System.Drawing.Design;
+using System.Runtime.Serialization;
 
 namespace Parsley.Core.CalibrationPatterns {
 
@@ -35,7 +36,7 @@ namespace Parsley.Core.CalibrationPatterns {
   /// </remarks>
   [Serializable]
   [Parsley.Core.Addins.Addin]
-  public class Marker : Core.CalibrationPattern {
+  public class Marker : Core.CalibrationPattern, ISerializable {
     private Image<Bgr, byte> _marker;
     private Image<Gray, byte> _binary_marker, _warped, _tmp;
     private int _marker_size;
@@ -62,6 +63,28 @@ namespace Parsley.Core.CalibrationPatterns {
       _contour_storage = new MemStorage();
       _sync = new object();
       this.ObjectPoints = UpdateObjectPoints();
+    }
+
+    public Marker(SerializationInfo info, StreamingContext context)
+    {
+      _marker = (Image<Bgr, byte>)info.GetValue("marker", typeof(Image<Bgr, byte>));
+      _marker_size = 0;
+      _marker_length = (double)info.GetValue("markerLength", typeof(double));
+      _max_error_normed = (double)info.GetValue("maxError", typeof(double));
+      _binary_threshold = (int)info.GetValue("binaryThreshold", typeof(int));
+      
+      _sync = new object();
+      _warp_matrix = new Matrix<double>(3, 3);
+      _contour_storage = new MemStorage();
+      UpdateMarker();
+      this.ObjectPoints = UpdateObjectPoints();
+    }
+
+    public void GetObjectData(SerializationInfo info, StreamingContext context) {
+      info.AddValue("marker", _marker);
+      info.AddValue("markerLength", _marker_length);
+      info.AddValue("maxError", _max_error_normed);
+      info.AddValue("binaryThreshold", _binary_threshold);
     }
 
     /// <summary>
