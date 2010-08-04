@@ -14,7 +14,8 @@ using System.Windows.Forms;
 namespace Parsley.Core.BuildingBlocks {
 
   [Serializable]
-  public class RotaryPositioner : ISerializable {
+  [Parsley.Core.Addins.Addin]
+  public class RotaryPositioner : ISerializable, Parsley.Core.IPositioner {
     Emgu.CV.ExtrinsicCameraParameters _ecp;
     private Matrix _final;
     private double _angle_degrees;
@@ -70,7 +71,7 @@ namespace Parsley.Core.BuildingBlocks {
 
     [Editor(typeof(ExtrinsicTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
-    public Emgu.CV.ExtrinsicCameraParameters RotaryPose {
+    public Emgu.CV.ExtrinsicCameraParameters PositionerPose {
       get {
         return _ecp;
       }
