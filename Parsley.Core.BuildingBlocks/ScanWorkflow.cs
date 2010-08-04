@@ -220,8 +220,7 @@ namespace Parsley.Core.BuildingBlocks {
         }
       }
 
-      s.RotaryPositioner.TransformPoints(points);
-
+      s.Positioner.TransformPoints(points);
       return points.Count > 0;
     }
 
