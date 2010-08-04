@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{65C11622-0F30-4E58-A81F-E47F750933EE}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -92,6 +92,8 @@
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
     <Compile Include="IntrinsicTypeEditor.cs" />
+    <Compile Include="MarkerPositioner.cs" />
+    <Compile Include="PatternTypeEditor.cs" />
     <Compile Include="ReferenceBody.cs" />
     <Compile Include="RotaryPositioner.cs" />
     <Compile Include="ScanWorkflow.cs" />
