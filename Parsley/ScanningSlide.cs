@@ -50,7 +50,7 @@ namespace Parsley {
           new double[] { 0, 1, 0 }
         );
 
-        _nrc_angle.Value = (decimal)this.Context.Setup.RotaryPositioner.Angle;
+        _nrc_angle.Value = (decimal)this.Context.Setup.Positioner.Angle;
       }
       base.OnSlidingIn(e);
     }
@@ -80,7 +80,7 @@ namespace Parsley {
       if (_angle_changed)
       {
         _angle_changed = false;
-        Context.Setup.RotaryPositioner.Angle = _angle;
+        Context.Setup.Positioner.Angle = _angle;
         _pixel_point_ids.Reset();
         Context.Setup.ScanWorkflow.Reset();
       }
