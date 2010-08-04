@@ -72,7 +72,7 @@ namespace Parsley.Core.CalibrationPatterns {
       _marker_length = (double)info.GetValue("markerLength", typeof(double));
       _max_error_normed = (double)info.GetValue("maxError", typeof(double));
       _binary_threshold = (int)info.GetValue("binaryThreshold", typeof(int));
-      
+
       _sync = new object();
       _warp_matrix = new Matrix<double>(3, 3);
       _contour_storage = new MemStorage();
@@ -143,8 +143,8 @@ namespace Parsley.Core.CalibrationPatterns {
       return new Vector[] {
         new Vector(new double[]{0.0, 0.0, 0.0}),
         new Vector(new double[]{_marker_length, 0.0, 0.0}),
-        new Vector(new double[]{_marker_length, _marker_length, 0.0}),
-        new Vector(new double[]{0.0, _marker_length, 0.0})
+        new Vector(new double[]{0, _marker_length, 0.0}),
+        new Vector(new double[]{_marker_length, _marker_length, 0.0})
       };
     }
 
