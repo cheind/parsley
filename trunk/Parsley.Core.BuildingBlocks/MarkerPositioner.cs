@@ -98,7 +98,7 @@ namespace Parsley.Core.BuildingBlocks
         if (_pattern.ImagePoints != null && _first == true)
           _first = false;
         else
-          _logger.Warn("FinImagePoints: Pattern not found.");
+          _logger.Warn("FindImagePoints: Pattern not found.");
       }
     }
 
@@ -172,8 +172,10 @@ namespace Parsley.Core.BuildingBlocks
     {
       System.Drawing.PointF[] currentImagePoints;
       List<Vector> currentTransformed = null;
-      if (_initialCornerPoints.Count == 4)
+      if (_ecp != null && _pattern != null)
       {
+        List<Vector> ecp_source_corners = new List<Vector>(_pattern.ObjectPoints);
+
         Emgu.CV.Image<Gray, Byte> gray_img = _mycam.Frame().Convert<Gray, Byte>();
 
         // find the current maker corner points (image points)
@@ -188,7 +190,7 @@ namespace Parsley.Core.BuildingBlocks
           // transform the current-cornerpoints into the marker coordinate system
           currentTransformed = TransformToMarkerCoordinates(currentImagePoints);
           // find the affine transformation between initial marker coordinate system and the shifted system
-          _warp_matrix = FindAffineTransformation(_initialCornerPoints, currentTransformed);
+          _warp_matrix = FindAffineTransformation(ecp_source_corners, currentTransformed);
         }
         //now calculate the final transformation matrix
         _final = _extrinsicMatrix * _warp_matrix * _extrinsicMatrix.Inverse();
@@ -308,7 +310,6 @@ namespace Parsley.Core.BuildingBlocks
       set
       {
         _ecp = value;
-        _first = true;
         ExtractExctrinsicMatrix();
       }
     }
@@ -328,9 +329,6 @@ namespace Parsley.Core.BuildingBlocks
       set
       {
         _pattern = value;
-        _first = true;
-        FindImagePoints();
-        _initialCornerPoints = TransformToMarkerCoordinates(_pattern.ImagePoints);
       }
     }
 
@@ -344,11 +342,6 @@ namespace Parsley.Core.BuildingBlocks
       set
       {
         _angle_degrees = value;
-        if (_first == true)
-        {
-          FindImagePoints();
-          _initialCornerPoints = TransformToMarkerCoordinates(_pattern.ImagePoints);
-        }
         UpdateTransformation();
       }
     }
