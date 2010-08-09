@@ -176,6 +176,10 @@ namespace Parsley.Core.BuildingBlocks {
 
       bb.ROI = _roi;
       bb.ReferencePlanes = s.ReferenceBody.Planes;
+      
+      if (s.Positioner.PositionerPose != null)
+        bb.ReferencePlanes.Add(new Plane(s.Positioner.PositionerPose));
+      
       bb.Image = image;
       bb.LaserColor = s.Laser.Color;
             
