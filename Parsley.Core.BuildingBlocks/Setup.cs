@@ -21,7 +21,7 @@ namespace Parsley.Core.BuildingBlocks {
     private BuildingBlocks.Laser _laser;
     private BuildingBlocks.ReferenceBody _reference_body;
     //private BuildingBlocks.RotaryPositioner _rotary_positioner;
-    private Parsley.Core.IPositioner _positioner;
+    private IPositioner _positioner;
     private ScanWorkflow _wf;
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace Parsley.Core.BuildingBlocks {
       _camera = new Camera(0);
       _laser = new Laser();
       _reference_body = new ReferenceBody();
-      _positioner = new MarkerPositioner(_camera);
+      _positioner = new MarkerPositioner();
     }
 
     /// <summary>
@@ -111,7 +111,7 @@ namespace Parsley.Core.BuildingBlocks {
     [Description("Setup the positioner if available.")]
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
-    public Parsley.Core.IPositioner Positioner {
+    public IPositioner Positioner {
       get { return _positioner; }
       set { _positioner = value; }
     }
@@ -121,7 +121,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// Used instead of DefaultValueAttribute
     /// </summary>
     public bool ShouldSerializePositioner() {
-      return _positioner.GetType() != typeof(MarkerPositioner);
+      return false;
     }
 
 
