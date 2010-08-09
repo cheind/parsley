@@ -27,6 +27,7 @@ namespace Parsley {
     private readonly ILog _logger = LogManager.GetLogger(typeof(PatternDesignerSlide));
     private Core.CalibrationPattern _pattern;
     private ExtrinsicCameraParameters _last_detected_plane;
+    private Matrix _plane_shift;
     private UI.RectangleInteractor _interactor;
     private Rectangle _r;
     private bool _on_roi;
@@ -40,6 +41,7 @@ namespace Parsley {
       _interactor = new Parsley.UI.RectangleInteractor();
       _interactor.InteractionCompleted += new EventHandler<Parsley.UI.InteractionEventArgs>(_interactor_InteractionCompleted);
       _on_roi = false;
+      _plane_shift = Matrix.Identity(4, 4);
     }
 
     private ExtrinsicCalibrationSlide() : base(null) 
@@ -88,7 +90,7 @@ namespace Parsley {
             ExtrinsicCameraParameters ecp = ec.Calibrate(_pattern.ImagePoints);
             double[] deviations;
             Vector[] points;
-
+            
             Core.ExtrinsicCalibration.CalibrationError(
               ecp,
               Context.Setup.Camera.Intrinsics,
@@ -138,9 +140,15 @@ namespace Parsley {
     }
 
     private void _btn_save_extrinsics_Click(object sender, EventArgs e) {
-      if (_last_detected_plane != null && saveFileDialog1.ShowDialog() == DialogResult.OK) {
-        using (Stream s = File.OpenWrite(saveFileDialog1.FileName)) {
-          if (s != null) {
+
+      _last_detected_plane = CalculateShiftedECP();
+
+      if (_last_detected_plane != null && saveFileDialog1.ShowDialog() == DialogResult.OK)
+      {
+        using (Stream s = File.OpenWrite(saveFileDialog1.FileName))
+        {
+          if (s != null)
+          {
             IFormatter formatter = new BinaryFormatter();
             formatter.Serialize(s, _last_detected_plane);
             s.Close();
@@ -148,6 +156,40 @@ namespace Parsley {
           }
         }
       }
+      else
+        _logger.Warn("Error saving Extrinsics.");
+    }
+
+    private ExtrinsicCameraParameters CalculateShiftedECP()
+    {
+      if (_last_detected_plane != null && _plane_shift != null)
+      {
+        RotationVector3D r_Vector = new RotationVector3D();
+        Matrix<double> modified_ROTMatrix, modified_Translation;
+        Matrix<double> jacobian = new Matrix<double>(3, 9);
+        Matrix extrinsic_Mat = Parsley.Core.Extensions.ConvertToParsley.ToParsley(_last_detected_plane.ExtrinsicMatrix);
+        Matrix help_matrix = Matrix.Identity(4, 4);
+
+        help_matrix.SetMatrix(0, 2, 0, 3, extrinsic_Mat);
+        help_matrix = help_matrix.Multiply(_plane_shift);
+        modified_ROTMatrix = Parsley.Core.Extensions.ConvertFromParsley.ToEmgu(help_matrix.GetMatrix(0, 2, 0, 2));
+        modified_Translation = Parsley.Core.Extensions.ConvertFromParsley.ToEmgu(help_matrix.GetMatrix(0, 2, 3, 3));
+
+
+        CvInvoke.cvRodrigues2(modified_ROTMatrix.Ptr, r_Vector.Ptr, jacobian.Ptr);
+
+        return (new ExtrinsicCameraParameters(r_Vector, modified_Translation));
+      }
+      else
+      {
+        _logger.Warn("No plane has been detected yet.");
+        return null;
+      }
+    }
+
+    private void numeric_field_translation_ValueChanged(object sender, EventArgs e)
+    {
+      _plane_shift[2, 3] = (double)numeric_field_translation.Value;
     }
   }
 }
