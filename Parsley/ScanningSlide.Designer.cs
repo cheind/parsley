@@ -28,8 +28,7 @@
       this._btn_clear_points = new Parsley.UI.ParsleyButtonSmall();
       this._btn_save_points = new Parsley.UI.ParsleyButtonSmall();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-      this._nrc_angle = new System.Windows.Forms.NumericUpDown();
-      ((System.ComponentModel.ISupportInitialize)(this._nrc_angle)).BeginInit();
+      this.btn_update_transformation = new Parsley.UI.ParsleyButtonSmall();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -99,25 +98,30 @@
       this.saveFileDialog1.Title = "Select CSV File Destination";
       this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
       // 
-      // _nrc_angle
+      // btn_update_transformation
       // 
-      this._nrc_angle.DecimalPlaces = 2;
-      this._nrc_angle.Location = new System.Drawing.Point(231, 154);
-      this._nrc_angle.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-      this._nrc_angle.Name = "_nrc_angle";
-      this._nrc_angle.Size = new System.Drawing.Size(120, 23);
-      this._nrc_angle.TabIndex = 17;
-      this._nrc_angle.ValueChanged += new System.EventHandler(this._nrc_angle_ValueChanged);
+      this.btn_update_transformation.BackColor = System.Drawing.Color.White;
+      this.btn_update_transformation.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+      this.btn_update_transformation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+      this.btn_update_transformation.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btn_update_transformation.ForeColor = System.Drawing.Color.Black;
+      this.btn_update_transformation.Image = ((System.Drawing.Image)(resources.GetObject("btn_update_transformation.Image")));
+      this.btn_update_transformation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btn_update_transformation.Location = new System.Drawing.Point(4, 102);
+      this.btn_update_transformation.Name = "btn_update_transformation";
+      this.btn_update_transformation.Size = new System.Drawing.Size(142, 40);
+      this.btn_update_transformation.TabIndex = 17;
+      this.btn_update_transformation.Text = "Update Positioner Transformation";
+      this.btn_update_transformation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btn_update_transformation.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+      this.btn_update_transformation.UseVisualStyleBackColor = true;
+      this.btn_update_transformation.Click += new System.EventHandler(this.btn_update_transformation_Click);
       // 
       // ScanningSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this._nrc_angle);
+      this.Controls.Add(this.btn_update_transformation);
       this.Controls.Add(this._btn_save_points);
       this.Controls.Add(this._btn_clear_points);
       this.Controls.Add(this._btn_take_texture_image);
@@ -127,8 +131,7 @@
       this.Controls.SetChildIndex(this.growLabel1, 0);
       this.Controls.SetChildIndex(this._btn_clear_points, 0);
       this.Controls.SetChildIndex(this._btn_save_points, 0);
-      this.Controls.SetChildIndex(this._nrc_angle, 0);
-      ((System.ComponentModel.ISupportInitialize)(this._nrc_angle)).EndInit();
+      this.Controls.SetChildIndex(this.btn_update_transformation, 0);
       this.ResumeLayout(false);
 
     }
@@ -139,6 +142,6 @@
     private Parsley.UI.ParsleyButtonSmall _btn_clear_points;
     private Parsley.UI.ParsleyButtonSmall _btn_save_points;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-    private System.Windows.Forms.NumericUpDown _nrc_angle;
+    private Parsley.UI.ParsleyButtonSmall btn_update_transformation;
   }
 }

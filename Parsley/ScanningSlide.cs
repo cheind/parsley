@@ -23,8 +23,7 @@ namespace Parsley {
     private Core.DensePixelGrid<uint> _pixel_point_ids;
     bool _take_texture_image;
     bool _clear_points;
-    bool _angle_changed;
-    double _angle;
+    bool _update_positioner_transformation;
     Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> _texture_image;
 
     public ScanningSlide(Context c)
@@ -49,8 +48,6 @@ namespace Parsley {
           new double[] { 0, 0, 400 },
           new double[] { 0, 1, 0 }
         );
-
-        _nrc_angle.Value = (decimal)this.Context.Setup.Positioner.Angle;
       }
       base.OnSlidingIn(e);
     }
@@ -77,10 +74,10 @@ namespace Parsley {
       }
 
 
-      if (_angle_changed)
+      if (_update_positioner_transformation)
       {
-        _angle_changed = false;
-        Context.Setup.Positioner.Angle = _angle;
+        _update_positioner_transformation = false;
+        Context.Setup.Positioner.UpdateTransformation(Context.Setup.Camera);
         _pixel_point_ids.Reset();
         Context.Setup.ScanWorkflow.Reset();
       }
@@ -162,10 +159,9 @@ namespace Parsley {
 
     }
 
-    private void _nrc_angle_ValueChanged(object sender, EventArgs e)
+    private void btn_update_transformation_Click(object sender, EventArgs e)
     {
-      _angle = (double)_nrc_angle.Value;
-      _angle_changed = true;
+      _update_positioner_transformation = true;
     }
   }
 }
