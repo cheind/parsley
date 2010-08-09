@@ -92,6 +92,7 @@
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
     <Compile Include="IntrinsicTypeEditor.cs" />
+    <Compile Include="IPositioner.cs" />
     <Compile Include="MarkerPositioner.cs" />
     <Compile Include="PatternTypeEditor.cs" />
     <Compile Include="ReferenceBody.cs" />

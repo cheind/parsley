@@ -111,7 +111,6 @@
     <Compile Include="Intersection.cs" />
     <Compile Include="IntrinsicCalibration.cs" />
     <Compile Include="IPointPerPixelAccumulator.cs" />
-    <Compile Include="IPositioner.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="MeanPointAccumulator.cs" />
     <Compile Include="MedianPointAccumulator.cs" />
