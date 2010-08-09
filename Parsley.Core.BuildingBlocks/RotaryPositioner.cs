@@ -10,12 +10,13 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using Emgu.CV.Structure;
 
 namespace Parsley.Core.BuildingBlocks {
 
   [Serializable]
   [Parsley.Core.Addins.Addin]
-  public class RotaryPositioner : ISerializable, Parsley.Core.IPositioner {
+  public class RotaryPositioner : ISerializable, IPositioner {
     Emgu.CV.ExtrinsicCameraParameters _ecp;
     private Matrix _final;
     private double _angle_degrees;
@@ -42,11 +43,11 @@ namespace Parsley.Core.BuildingBlocks {
       get { return _angle_degrees; }
       set {
         _angle_degrees = value;
-        UpdateTransformation();
       }
     }
 
-    private void UpdateTransformation() {
+    public void UpdateTransformation(Camera the_cam)
+    {
       double angle_rad = _angle_degrees / 180.0 * Math.PI;
       Matrix rz = Matrix.Identity(4, 4);
       rz[0, 0] = Math.Cos(angle_rad);
