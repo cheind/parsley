@@ -120,7 +120,9 @@
   <data name="richTextBox1.Text" xml:space="preserve">
     <value>The extrinsic camera calibration is used to find the orientation between the camera and reference planes.
 
-As with the intrinsic camera calibration, the extrinsic calibration uses a calibration pattern that is detected by the camera. You can choose and set the calibration pattern using the button "Load Pattern".</value>
+As with the intrinsic camera calibration, the extrinsic calibration uses a calibration pattern that is detected by the camera. You can choose and set the calibration pattern using the button "Load Pattern".
+
+In case you need to shift the detected plane in z - direction, use the numeric field to set the displacement (unit: Length) from the originally found plane.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="_btn_load_pattern.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

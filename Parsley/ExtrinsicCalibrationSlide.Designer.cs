@@ -29,6 +29,8 @@
       this._btn_save_extrinsics = new Parsley.UI.ParsleyButtonSmall();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
       this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+      this.numeric_field_translation = new System.Windows.Forms.NumericUpDown();
+      ((System.ComponentModel.ISupportInitialize)(this.numeric_field_translation)).BeginInit();
       this.SuspendLayout();
       // 
       // growLabel1
@@ -44,7 +46,7 @@
       this.richTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
       this.richTextBox1.Location = new System.Drawing.Point(4, 33);
       this.richTextBox1.Name = "richTextBox1";
-      this.richTextBox1.Size = new System.Drawing.Size(410, 106);
+      this.richTextBox1.Size = new System.Drawing.Size(410, 145);
       this.richTextBox1.TabIndex = 14;
       this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
       // 
@@ -57,7 +59,7 @@
       this._btn_load_pattern.ForeColor = System.Drawing.Color.Black;
       this._btn_load_pattern.Image = ((System.Drawing.Image)(resources.GetObject("_btn_load_pattern.Image")));
       this._btn_load_pattern.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_load_pattern.Location = new System.Drawing.Point(4, 145);
+      this._btn_load_pattern.Location = new System.Drawing.Point(4, 201);
       this._btn_load_pattern.Name = "_btn_load_pattern";
       this._btn_load_pattern.Size = new System.Drawing.Size(117, 27);
       this._btn_load_pattern.TabIndex = 16;
@@ -76,7 +78,7 @@
       this._btn_save_extrinsics.ForeColor = System.Drawing.Color.Black;
       this._btn_save_extrinsics.Image = ((System.Drawing.Image)(resources.GetObject("_btn_save_extrinsics.Image")));
       this._btn_save_extrinsics.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      this._btn_save_extrinsics.Location = new System.Drawing.Point(4, 178);
+      this._btn_save_extrinsics.Location = new System.Drawing.Point(4, 322);
       this._btn_save_extrinsics.Name = "_btn_save_extrinsics";
       this._btn_save_extrinsics.Size = new System.Drawing.Size(117, 27);
       this._btn_save_extrinsics.TabIndex = 17;
@@ -95,10 +97,25 @@
       // 
       this.saveFileDialog1.Filter = "Extrinsic Files|*.ecp";
       // 
+      // numeric_field_translation
+      // 
+      this.numeric_field_translation.DecimalPlaces = 2;
+      this.numeric_field_translation.Location = new System.Drawing.Point(4, 251);
+      this.numeric_field_translation.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+      this.numeric_field_translation.Name = "numeric_field_translation";
+      this.numeric_field_translation.Size = new System.Drawing.Size(117, 23);
+      this.numeric_field_translation.TabIndex = 18;
+      this.numeric_field_translation.ValueChanged += new System.EventHandler(this.numeric_field_translation_ValueChanged);
+      // 
       // ExtrinsicCalibrationSlide
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.numeric_field_translation);
       this.Controls.Add(this._btn_save_extrinsics);
       this.Controls.Add(this._btn_load_pattern);
       this.Controls.Add(this.richTextBox1);
@@ -109,6 +126,8 @@
       this.Controls.SetChildIndex(this.growLabel1, 0);
       this.Controls.SetChildIndex(this._btn_load_pattern, 0);
       this.Controls.SetChildIndex(this._btn_save_extrinsics, 0);
+      this.Controls.SetChildIndex(this.numeric_field_translation, 0);
+      ((System.ComponentModel.ISupportInitialize)(this.numeric_field_translation)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -120,5 +139,6 @@
     private Parsley.UI.ParsleyButtonSmall _btn_save_extrinsics;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
     private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+    private System.Windows.Forms.NumericUpDown numeric_field_translation;
   }
 }
