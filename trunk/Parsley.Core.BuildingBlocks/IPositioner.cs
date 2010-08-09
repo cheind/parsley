@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MathNet.Numerics.LinearAlgebra;
+using Emgu.CV.Structure;
 
-namespace Parsley.Core
+namespace Parsley.Core.BuildingBlocks
 {
   public interface IPositioner
   {
@@ -17,10 +18,6 @@ namespace Parsley.Core
       set;
     }
 
-    double Angle
-    {
-      get;
-      set;
-    }
+    void UpdateTransformation(Camera the_cam);
   }
 }
