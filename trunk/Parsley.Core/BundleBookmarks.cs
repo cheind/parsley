@@ -30,8 +30,8 @@ namespace Parsley.Core {
       set { _b.Store("image", value); }
     }
 
-    public List<Plane> ReferencePlanes {
-      get { return _b.Fetch<List<Plane>>("reference_planes"); }
+    public IList<Plane> ReferencePlanes {
+      get { return _b.Fetch<IList<Plane>>("reference_planes"); }
       set { _b.Store("reference_planes", value); }
     }
 
