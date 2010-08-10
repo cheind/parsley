@@ -177,14 +177,12 @@ namespace Parsley.Core.BuildingBlocks {
       bb.ROI = _roi;
       bb.ReferencePlanes = s.ReferenceBody.Planes;
       
-      if (s.Positioner.PositionerPose != null)
-        bb.ReferencePlanes.Add(new Plane(s.Positioner.PositionerPose));
-      
       bb.Image = image;
       bb.LaserColor = s.Laser.Color;
             
       // 2. Extract laser line
       if (!_line_algorithm.FindLaserLine(bb.Bundle)) return false;
+
       // 3. Filter laser points
       if (!_line_filter.FilterLaserLine(bb.Bundle)) return false;
       if (bb.LaserPixel.Count < 3) return false;
@@ -203,7 +201,7 @@ namespace Parsley.Core.BuildingBlocks {
 
       List<System.Drawing.PointF> laser_pixel = bb.LaserPixel;
       Plane laser_plane = bb.LaserPlane;
-      List<Plane> reference_planes = bb.ReferencePlanes;
+      IList<Plane> reference_planes = bb.ReferencePlanes;
       for (int i = 0; i < laser_pixel.Count; ++i) {
         // Round to nearest pixel
         System.Drawing.Point p = laser_pixel[i].ToNearestPoint();
@@ -213,7 +211,7 @@ namespace Parsley.Core.BuildingBlocks {
           Core.Ray r = eye_rays[i];
           if (Core.Intersection.RayPlane(r, laser_plane, out t)) {
 
-            if (this.PointInsideOfReferenceArea(reference_planes, r, t))
+            if (this.PointInsideOfReferenceVolume(reference_planes, r, t))
             {
               System.Drawing.Point in_roi = Core.IndexHelper.MakeRelative(p, _roi);
               pixels.Add(p);
@@ -228,7 +226,7 @@ namespace Parsley.Core.BuildingBlocks {
       return points.Count > 0;
     }
 
-    private bool PointInsideOfReferenceArea(List<Plane> referencePlanes, Core.Ray r, double t)
+    private bool PointInsideOfReferenceVolume(IList<Plane> referencePlanes, Core.Ray r, double t)
     {
       Vector my3DPoint = r.At(t);
 
