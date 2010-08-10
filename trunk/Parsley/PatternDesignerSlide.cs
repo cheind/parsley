@@ -33,12 +33,24 @@ namespace Parsley {
     }
 
     protected override void OnFrame(Parsley.Core.BuildingBlocks.FrameGrabber fp, Emgu.CV.Image<Emgu.CV.Structure.Bgr, byte> img) {
-
+      Parsley.Core.ExtrinsicCalibration ec;
+      ExtrinsicCameraParameters ecp;
+      bool pattern_found = false;
       Core.CalibrationPattern p = _pattern;
       if (p != null) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
-        p.FindPattern(gray);
+        pattern_found = p.FindPattern(gray);
         p.DrawPattern(img, p.ImagePoints, p.PatternFound);
+
+        // if pattern has been found ==> find extrinsics and draw the corresponding coordinate frame 
+        if (pattern_found)
+        {
+          ec = new Parsley.Core.ExtrinsicCalibration(p.ObjectPoints, Context.Setup.Camera.Intrinsics);
+          ecp = ec.Calibrate(p.ImagePoints);
+          
+          if(ecp != null)
+            Core.Drawing.DrawCoordinateFrame(img, ecp, Context.Setup.Camera.Intrinsics);
+        }
       }
 
       base.OnFrame(fp, img);
