@@ -39,6 +39,10 @@ namespace Parsley.Core.BuildingBlocks {
       info.AddValue("angle", _angle_degrees);
     }
 
+
+    /// <summary>
+    /// Set/Get the angular position of the positioner in degrees unit.
+    /// </summary>
     public double Angle {
       get { return _angle_degrees; }
       set {
@@ -46,6 +50,19 @@ namespace Parsley.Core.BuildingBlocks {
       }
     }
 
+
+    /// <summary>
+    /// Calculates the transformation matrix.
+    /// Firstly, the transformation matrix for a common rotation around the z-axis is created, 
+    /// using the desired angular position, stored in _angle_degrees.
+    /// Secondly, the extrinsic matrix (of the intial positioner pose [extrinsic calibration) is
+    /// extracted into a 4x4-matrix.
+    /// Finally, the final transformation matrix is calculated:
+    /// * transform the points of the camera coordinate system, into the positioner system.
+    /// * perform the rotation.
+    /// * transform back to the camera coordinate system.
+    /// </summary>
+    /// <param name="the_cam"></param>
     public void UpdateTransformation(Camera the_cam)
     {
       double angle_rad = _angle_degrees / 180.0 * Math.PI;
@@ -81,6 +98,11 @@ namespace Parsley.Core.BuildingBlocks {
       }
     }
 
+    /// <summary>
+    /// Transforms 3D-Points from the Camera Coordinate System into the Marker Coordinate System
+    /// The transformation matrix "_final" is calculated in "UpdateTransformation"
+    /// </summary>
+    /// <param name="points"> List of Vectors, containing the 3d points which should be transformed</param>
     public void TransformPoints(List<Vector> points) {
       for (int i = 0; i < points.Count; ++i) {
         points[i] = _final.Multiply(points[i].ToHomogeneous(1).ToColumnMatrix()).GetColumnVector(0).ToNonHomogeneous();

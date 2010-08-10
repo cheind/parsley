@@ -73,7 +73,7 @@ namespace Parsley {
         _pointcloud.ClearPoints();
       }
 
-
+      // Update the transformation between positioner coordinate system and camera coordinate system
       if (_update_positioner_transformation)
       {
         _update_positioner_transformation = false;
