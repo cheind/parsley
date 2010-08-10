@@ -53,7 +53,6 @@ namespace Parsley.Core.CalibrationPatterns {
     private float _mean_distance_threshold;
     private int _number_circle_points;
     private float _ellipse_distance;
-    private Vector _translation;
 
     /// <summary>
     /// Construct from parameters
@@ -71,7 +70,6 @@ namespace Parsley.Core.CalibrationPatterns {
       _number_circle_centers = new System.Drawing.Size(ncircles_x, ncircles_y);
       _binary_threshold = 40;
       _min_contour_count = 40;
-      _translation = Vector.Zeros(3);
       this.ObjectPoints = GenerateObjectCenters();
     }
 
@@ -175,25 +173,6 @@ namespace Parsley.Core.CalibrationPatterns {
     }
 
 
-    public double X
-    {
-      get { return _translation[0]; }
-      set { _translation[0] = value; this.ObjectPoints = GenerateObjectCenters(); }
-    }
-
-    public double Y
-    {
-      get { return _translation[1]; }
-      set { _translation[1] = value; this.ObjectPoints = GenerateObjectCenters(); }
-    }
-
-    public double Z
-    {
-      get { return _translation[2]; }
-      set { _translation[2] = value; this.ObjectPoints = GenerateObjectCenters(); }
-    }
-
-
     /// <summary>
     /// Generate reference points
     /// </summary>
@@ -205,11 +184,6 @@ namespace Parsley.Core.CalibrationPatterns {
         for (int x = 0; x < _number_circle_centers.Width; x++) {
           centers.Add(new Vector(new double[] { x * _distance_x, y * _distance_y, 0 }));
         }
-      }
-
-      foreach (Vector v in centers)
-      {
-        v.AddInplace(_translation);
       }
       
       return centers.ToArray();
