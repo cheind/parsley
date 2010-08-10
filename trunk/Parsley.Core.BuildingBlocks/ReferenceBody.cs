@@ -19,7 +19,9 @@ namespace Parsley.Core.BuildingBlocks {
       _planes = new List<Plane>();
       _planes.Add(null);
       _planes.Add(null);
+      _planes.Add(null);
       _ecps = new List<Emgu.CV.ExtrinsicCameraParameters>();
+      _ecps.Add(null);
       _ecps.Add(null);
       _ecps.Add(null);
     }
@@ -28,8 +30,8 @@ namespace Parsley.Core.BuildingBlocks {
     /// Get the recorded reference planes
     /// </summary>
     [Browsable(false)]
-    public List<Plane> Planes {
-      get { return _planes; }
+    public IList<Plane> Planes {
+      get { return _planes.AsReadOnly(); }
     }
 
     [Editor(typeof(ExtrinsicTypeEditor),
@@ -56,6 +58,24 @@ namespace Parsley.Core.BuildingBlocks {
         if (value != null) {
           _ecps[1] = value;
           _planes[1] = new Plane(value);
+        }
+      }
+    }
+
+    [Editor(typeof(ExtrinsicTypeEditor),
+            typeof(System.Drawing.Design.UITypeEditor))]
+    public Emgu.CV.ExtrinsicCameraParameters GroundPlane
+    {
+      get
+      {
+        return _ecps[2];
+      }
+      set
+      {
+        if (value != null)
+        {
+          _ecps[2] = value;
+          _planes[2] = new Plane(value);
         }
       }
     }
