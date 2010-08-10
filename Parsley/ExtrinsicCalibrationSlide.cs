@@ -141,6 +141,7 @@ namespace Parsley {
 
     private void _btn_save_extrinsics_Click(object sender, EventArgs e) {
 
+      //save modified extrinsic camera parameters
       _last_detected_plane = CalculateShiftedECP();
 
       if (_last_detected_plane != null && saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -160,6 +161,24 @@ namespace Parsley {
         _logger.Warn("Error saving Extrinsics.");
     }
 
+
+    /// <summary>
+    /// Calculates the "shifted" Extrinsic Camera Parameters in order to obtain a shifted plane.
+    /// This is done by multiplying the Extrinsic Matrix by the _plane_shift transformation matrix.
+    /// The extrinsic Calibration Slide is used to save the extrinsics for different patterns. Because of that,
+    /// the modified extrinsic need to be created and saved. 
+    /// Since an ExtrinsicCameraParameters Object holds the
+    /// members "ExtrinsicMatrix" (Type: Matrix), "RotationVector" (Type: RotationVector3D, which represents the
+    /// rotational Part of the Extrinsic Matrix, and "TranslationVector" (Type: Matrix, which represents the
+    /// translational Part of the Extrinsic Matrix), a conversion of the RotationalMatrix into a RotationVector3D and
+    /// the extraction of the translational vector is neccessary.
+    /// 
+    /// The Method "cvRodrigues2" is used to convert a rotational Matrix (3x3-matrix) into a RotationVector3D and vice versa.
+    /// Additionally the function expects an empty 3x9-matrix to store some partial derivatives (we do not use them!).
+    /// Using the resulting RotationVector3D and the translational vector (corresponds to the fourth column of the combined
+    /// rotational and translational matrix), the modified extrinsics can be created using the given object constructor.
+    /// </summary>
+    /// <returns></returns>
     private ExtrinsicCameraParameters CalculateShiftedECP()
     {
       if (_last_detected_plane != null && _plane_shift != null)
@@ -170,12 +189,16 @@ namespace Parsley {
         Matrix extrinsic_Mat = Parsley.Core.Extensions.ConvertToParsley.ToParsley(_last_detected_plane.ExtrinsicMatrix);
         Matrix help_matrix = Matrix.Identity(4, 4);
 
+        //copy the 3x4 extrinsic matrix into the 4x4 matrix, at the given position (initial row, end row, initial column, end column, Matrix)
         help_matrix.SetMatrix(0, 2, 0, 3, extrinsic_Mat);
+        //multiply with shift-matrix
         help_matrix = help_matrix.Multiply(_plane_shift);
+        //extract rotationalMatrix and convert it to Emgu Matrix type (same parameters as SetMatrix)
         modified_ROTMatrix = Parsley.Core.Extensions.ConvertFromParsley.ToEmgu(help_matrix.GetMatrix(0, 2, 0, 2));
+        //extract translational vector
         modified_Translation = Parsley.Core.Extensions.ConvertFromParsley.ToEmgu(help_matrix.GetMatrix(0, 2, 3, 3));
 
-
+        //convert the rotational matrix into the RotationVector3D (r_Vector)
         CvInvoke.cvRodrigues2(modified_ROTMatrix.Ptr, r_Vector.Ptr, jacobian.Ptr);
 
         return (new ExtrinsicCameraParameters(r_Vector, modified_Translation));
@@ -187,6 +210,15 @@ namespace Parsley {
       }
     }
 
+    /// <summary>
+    /// Updates the coordinate transformation matrix (to shift the detected plane),
+    /// when the value of the Numeric Input Fiels is changed.
+    /// The matrix _plane_shift represents a common coordinate translation in z- direction.
+    /// Value > 0: Plane is shifted in positive z-direction.
+    /// Observe, that _plane_shift is 4x4 matrix. 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void numeric_field_translation_ValueChanged(object sender, EventArgs e)
     {
       _plane_shift[2, 3] = (double)numeric_field_translation.Value;

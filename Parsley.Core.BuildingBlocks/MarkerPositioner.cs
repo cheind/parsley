@@ -55,6 +55,7 @@ namespace Parsley.Core.BuildingBlocks
 
     /// <summary>
     /// Transforms 3D-Points from the Camera Coordinate System into the Marker Coordinate System
+    /// The transformation matrix "_final" is calculated in "UpdateTransformation"
     /// </summary>
     /// <param name="points"> List of Vectors, containing the 3d points which should be transformed</param>
     public void TransformPoints(List<Vector> points)
@@ -65,7 +66,8 @@ namespace Parsley.Core.BuildingBlocks
     }
 
     /// <summary>
-    /// Extracts the extrinsic matrix from the cameras' extrinsic parameters 
+    /// Extracts the extrinsic matrix from the cameras' extrinsic parameters
+    /// The values of the extrinsic matrix are extracted into a 4x4 Matrix.
     /// </summary>
     private Matrix ExtractExctrinsicMatrix(ExtrinsicCameraParameters ecp)
     {
@@ -86,6 +88,18 @@ namespace Parsley.Core.BuildingBlocks
     /// <summary>
     /// Calculates the transformation matrix, which is used to transform the 3d-object points, which were scanned with reference
     /// to the moved marker coordinate system, back to the initial marker system and henceforth back to the camera system.
+    /// The camera object is needed in order to gain the current camera frame. Furthermore, the cameras' intrinsics are needed
+    /// to perform an extrinsic calibration.
+    /// 
+    /// The transformation matrix is calculated as follows:
+    /// * All scanned points are referenced to the camera coordinate system.
+    /// * _extrinsicMatrix describes the transformation between initial detected marker system and camera system.
+    /// * extrinsicM2 describes the transformation between moved marker system and camera system.
+    /// * Since the position of the scanned object, relative to the marker does not change, all points in the camera system
+    ///   can be represented in a common coordinate system by using the inverse transformation "inv(extrinsicM2)".
+    /// * Because the points should be represented in the camera system, they need to be tranformed back into the camera system
+    ///   using the transformation "_extrinsicMatrix".
+    /// * Therefore the final transformation matrix can be calculated from _final = _extrinsicMatrix * inv(extrinsicM2)
     /// </summary>
     public void UpdateTransformation(Camera the_cam)
     {
@@ -98,7 +112,7 @@ namespace Parsley.Core.BuildingBlocks
         Emgu.CV.Image<Gray, Byte> gray_img = the_cam.Frame().Convert<Gray, Byte>();
         System.Drawing.PointF[] currentImagePoints;
 
-        // find the current maker corner points (image points)
+        // find the current maker corner points (image points) in the given pattern
         if (!_pattern.FindPattern(gray_img, out currentImagePoints))
         {
           // if pattern can't be found: use identity warp matrix
@@ -106,12 +120,14 @@ namespace Parsley.Core.BuildingBlocks
         }
         else
         {
+          //find the extrinsic, which describe the transformation between current marker coordinate system and camera coordinate system.
           ec_moved = new ExtrinsicCalibration(_pattern.ObjectPoints, the_cam.Intrinsics);
           ecp_moved = ec_moved.Calibrate(currentImagePoints);
         }
 
         if (ecp_moved != null)
         {
+          //if the extrinsics have been found correctly, extract the extrinsic matrix
           extrinsicM2 = ExtractExctrinsicMatrix(ecp_moved);
           _logger.Info("UpdateTransformation: Transformation found.");
         }
