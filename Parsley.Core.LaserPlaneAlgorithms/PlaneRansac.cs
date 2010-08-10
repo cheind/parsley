@@ -112,7 +112,7 @@ namespace Parsley.Core.LaserPlaneAlgorithms {
       double[] ts;
       int[] plane_ids;
 
-      List<Plane> reference_planes = b.ReferencePlanes;
+      IList<Plane> reference_planes = b.ReferencePlanes;
       Core.Intersection.FindEyeRayPlaneIntersections(
         rays.ToArray(), 
         reference_planes.ToArray(), 
