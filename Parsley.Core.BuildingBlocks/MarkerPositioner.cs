@@ -24,6 +24,7 @@ namespace Parsley.Core.BuildingBlocks
     private Matrix _extrinsicMatrix;
     private Matrix _final;
     private readonly ILog _logger;
+    private double _angle_degrees;
 
     /// <summary>
     /// Default Constructor
@@ -35,6 +36,7 @@ namespace Parsley.Core.BuildingBlocks
       _pattern = null;
       _extrinsicMatrix = Matrix.Identity(4, 4);
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
+      _angle_degrees = 0;
     }
 
     public MarkerPositioner(SerializationInfo info, StreamingContext context)
@@ -184,6 +186,17 @@ namespace Parsley.Core.BuildingBlocks
       {
         _pattern = value;
       }
+    }
+
+    /// <summary>
+    /// Set/Get the angular position of the positioner in degrees unit.
+    /// </summary>
+    [Browsable(false)]
+    public double Angle
+    {
+      get { return _angle_degrees; }
+      set {_angle_degrees = value;}
+      
     }
   }
 }
