@@ -63,7 +63,7 @@ namespace Parsley.Core.BuildingBlocks {
     /// * transform back to the camera coordinate system.
     /// </summary>
     /// <param name="the_cam"></param>
-    public void UpdateTransformation(Camera the_cam)
+    public bool UpdateTransformation(Camera the_cam)
     {
       double angle_rad = _angle_degrees / 180.0 * Math.PI;
       Matrix rz = Matrix.Identity(4, 4);
@@ -85,6 +85,8 @@ namespace Parsley.Core.BuildingBlocks {
       }
 
       _final = e * rz * e.Inverse();
+
+      return true;
     }
 
     [Editor(typeof(ExtrinsicTypeEditor),
