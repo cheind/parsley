@@ -26,5 +26,15 @@ namespace Parsley.Core.BuildingBlocks
     /// </summary>
     /// <param name="the_cam"></param>
     bool UpdateTransformation(Camera the_cam);
+
+    /// <summary>
+    /// Needed for RotaryPositioner.
+    /// If a MarkerPositioner is used, this member should be ignored;
+    /// </summary>
+    double Angle
+    {
+      get;
+      set;
+    }
   }
 }
