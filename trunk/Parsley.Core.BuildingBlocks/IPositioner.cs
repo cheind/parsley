@@ -25,6 +25,6 @@ namespace Parsley.Core.BuildingBlocks
     /// Updates the Point transformation matrix.
     /// </summary>
     /// <param name="the_cam"></param>
-    void UpdateTransformation(Camera the_cam);
+    bool UpdateTransformation(Camera the_cam);
   }
 }

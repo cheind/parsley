@@ -101,11 +101,12 @@ namespace Parsley.Core.BuildingBlocks
     ///   using the transformation "_extrinsicMatrix".
     /// * Therefore the final transformation matrix can be calculated from _final = _extrinsicMatrix * inv(extrinsicM2)
     /// </summary>
-    public void UpdateTransformation(Camera the_cam)
+    public bool UpdateTransformation(Camera the_cam)
     {
       Matrix extrinsicM2 = Matrix.Identity(4, 4);
       ExtrinsicCameraParameters ecp_moved = null;
       ExtrinsicCalibration ec_moved = null;
+      bool ret_value = true;
 
       if (_ecp != null && _pattern != null)
       {
@@ -117,6 +118,7 @@ namespace Parsley.Core.BuildingBlocks
         {
           // if pattern can't be found: use identity warp matrix
           _logger.Warn("UpdateTransformation: Pattern not found.");
+          ret_value = false;
         }
         else
         {
@@ -132,11 +134,19 @@ namespace Parsley.Core.BuildingBlocks
           _logger.Info("UpdateTransformation: Transformation found.");
         }
         else
+        {
           _logger.Warn("UpdateTransformation: Extrinsics of moved marker system not found.");
-        
+          ret_value = false;
+        }
         //now calculate the final transformation matrix
         _final = _extrinsicMatrix * extrinsicM2.Inverse();
       }
+      else
+      {
+        ret_value = false;
+        _logger.Warn("UpdateTransformation: No Pattern or no Positioner Extrinsics have been chosen.");
+      }
+      return ret_value;
     }
 
     /// <summary>
