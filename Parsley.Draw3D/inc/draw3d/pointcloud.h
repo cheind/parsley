@@ -31,6 +31,10 @@ namespace Parsley {
       void ClearPoints();
       // Save pointcloud as six-dimensional CSV
       void SaveAsCSV(System::String ^filename, System::String ^delimiter);
+
+      cli::array<double,1> ^PointCloud::ReturnPointAtIndex(unsigned id);
+
+      unsigned PointCloud::NumberOfPoints();
     private:
       auto_ptr_osg<osg::Geometry> _geometry;
       auto_ptr_osg<osg::Vec3Array> _vertices;

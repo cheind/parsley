@@ -92,5 +92,22 @@ namespace Parsley {
       }
       f_target.close();
     }
+
+    cli::array<double,1> ^PointCloud::ReturnPointAtIndex(unsigned id)
+    {
+      cli::array<double,1> ^point_data = gcnew array<double, 1>(3);
+      if(id < _vertices->size())
+      {
+        point_data[0] = _vertices->at(id).x();
+        point_data[1] = _vertices->at(id).y();
+        point_data[2] = _vertices->at(id).z();
+      }
+      return point_data;
+    }
+
+    unsigned PointCloud::NumberOfPoints()
+    {
+      return _vertices->size();
+    }
   }
 }
