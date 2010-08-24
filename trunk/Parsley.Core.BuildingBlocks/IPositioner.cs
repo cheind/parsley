@@ -15,7 +15,7 @@ namespace Parsley.Core.BuildingBlocks
     /// <param name="points"></param>
     void TransformPoints(List<Vector> points);
 
-    Emgu.CV.ExtrinsicCameraParameters PositionerPose
+    Emgu.CV.ExtrinsicCameraParameters PositionerPoseA
     {
       get;
       set;

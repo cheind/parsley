@@ -91,7 +91,7 @@ namespace Parsley.Core.BuildingBlocks {
 
     [Editor(typeof(ExtrinsicTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
-    public Emgu.CV.ExtrinsicCameraParameters PositionerPose {
+    public Emgu.CV.ExtrinsicCameraParameters PositionerPoseA {
       get {
         return _ecp;
       }
