@@ -43,7 +43,7 @@ namespace Parsley {
         p.DrawPattern(img, p.ImagePoints, p.PatternFound);
 
         // if pattern has been found ==> find extrinsics and draw the corresponding coordinate frame 
-        if (pattern_found)
+        if (pattern_found == true && Context.Setup.Camera.Intrinsics != null)
         {
           ec = new Parsley.Core.ExtrinsicCalibration(p.ObjectPoints, Context.Setup.Camera.Intrinsics);
           ecp = ec.Calibrate(p.ImagePoints);
