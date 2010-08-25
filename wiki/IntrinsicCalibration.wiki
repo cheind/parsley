@@ -21,7 +21,7 @@ Furthermore, make sure that the camera provides a frame rate of at least *15 fps
 
 == Intrinsic calibration settings in Parsley ==
 After changing the camera hardware settings successfully we need to set up Parsley before the intrinsic calibration can be performed.
-Firstly, go to the Parsley _Options_ menu using the _Setup_ tab. Secondly, the calibration pattern type needs to be chosen. Currently, Parsley supports *Chessboard* patterns and *Circle* patterns for the camera calibration.
+Firstly, go to the Parsley *!PatternEditor* menu using the _Setup_ tab. The !PatternEditor is used to create a pattern set, which is needed to perform intrinsic calibration and extrinsic calibration as well. Currently Parsley supports *Chessboard*, *Circle* and *Marker* patterns.
 
 For the use of the chessboard pattern the below-mentioned parameters need to be set.
  * _Size_ defines the number of inner corners per row and column on the pattern.
@@ -37,16 +37,31 @@ Using the circle pattern requires the following parameter settings.
  * _!NumberOfCirclePoints_ sets the number of points of the elliptic path which is used to count the white-black pixel color transitions within the *marker ellipses*.
  * _!MaximumEllipseDistance_ defines the maximum spacing between the detected ellipse center and the expected ellipse center.
 
+Setting up a marker based pattern requires parameters as follows.
+ * _!BinaryThreshold_ sets the threshold which is used to create a binary image. Pixels with color values less or equal than the threshold will be set to black, all other pixels to white.
+ * _!MarkerImage_ determines, which marker image should be found.
+ * _!MarkerLength_ defines the size of the square marker in millimeters (standard value: 50mm).
+ * _!MaximumErrorNormed_ sets the maximum allowed error value for the pattern detection (reasonable value: 0.4).
+
+For the intrinsic calibration, we recommend to use either chessboard patterns or circle patterns, since marker based patterns only permit *one* marker printed on the calibration plane.  
+
 Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 20mm, Size = 2;2, CenterDistanceX = 130, CenterDistanceY = 100), are:
 || *Parameter* || *Value* || *Unit* || *Description*||
 || !BinaryThreshold || 30 - 100 || color value || depends very much on the lighting conditions ||
 || !MinimumContourCount || 40 || number of points || the more the angle between camera vision range and the pattern becomes sharp, the more decreases the number of contour points (perspective distortion) ||
 || !MeanDistanceThreshold || 1 || length || demands high quality ellipse fitting algorithm||
-|| !NumberOfCirclePoints || 50 - 100 (for resolution 960x720) || number of points || rising camera resolution leads to a rising need of circle points for a successfull detection ||
+|| !NumberOfCirclePoints || 50 - 100 (for resolution 960x720) || number of points || rising camera resolution leads to a rising need of circle points for a successful detection ||
 || !MaximumEllipseDistance || 10 || length || use small values, since the distance between expected ellipse centers to the detected ellipse centers should be short ||
 
 Note, that changes in the Options menu will be safed automatically in the Parsley configuration file.
 == Execution of the intrinsic calibration ==
 Finally, after setting the configuration parameters, the intrinsic calibration can be performed using the _Intrinsic Camera Calibration_ slide of the _Setup_ tab.
 
-In order to gain satisfying calibration results, several pictures of the choosen calibration pattern, taken from different viewing angles, are needed. Additionally it's recommended that the patten fits the major part of the cameras vision range, to include the border areas (where camera lens distortions are mainly visible) in the calibration process.
+In order to gain satisfying calibration results, several pictures of the choosen calibration pattern, taken from different viewing angles, are needed. Additionally it's recommended that the patten fits the major part of the cameras vision range, to include the border areas (where camera lens distortions are mainly visible) in the calibration process (e.g. use a circle pattern with 5x4 circles printed onto the calibration plane).
+
+After taking about ten pictures from different viewing angles (either using the *Auto take image* functionality or taking the pictures manually), the intrinsic calibration can be performed by hitting the button _Calibrate_. If the calibration has been performed successfully, save the calibration data.
+
+Now the intrinsic calibration can be finished by setting the camera intrinsics property, using the _Parsley Options_ in the _Setup_ menu.
+== Troubleshooting and hints regarding the Intrinsic Calibration Process ==
+ * Before starting with the intrinsic calibration make sure, that any _auto focusing_ and _auto exposure_ functionalities are deactivated (use [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap]). Otherwise, if the camera changes its focusing settings, after the intrinsic calibration has been performed, you need to repeat the calibration.
+ * If the chosen calibration pattern cannot be found during the calibration image taking process, try to change the pattern settings (using the _!PatternEditor_). This problem might occur due to changing lighting conditions.
