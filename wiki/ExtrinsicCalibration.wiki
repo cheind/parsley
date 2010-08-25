@@ -1,5 +1,28 @@
-#summary Notices on extrinsic camera calibration
-#labels Phase-Implementation
+#summary General description of the Extrinsic Calibration and how to perform it using Parsley
+#labels Phase-Deploy
+
+= Introduction =
+Camera calibration is used to determine a set of parameters which are used to describe the mapping between the 3D environment and the produced 2D camera image.
+These parameters can be subdivided into two groups.
+ * The Intrinsic Camera Parameters describe the internal geometry of a camera including radial and tangential distortion coefficients.
+ * The Extrinsic Camera Parameters describe the relation between the 3D camera coordinate system (located in the projection center) and a given world coordinate system (position and orientation).
+The following chapter describes how to perform the extrinsic calibration with Parsley.
+
+= Extrinsic Calibration =
+Extrinsic Camera Parameters define the relationship between 3D camera coordinate system and a given world coordinate system, using a simple coordinate transformation matrix. This *transformation matrix* consists of two submatrices, as they are, the _rotation matrix_ and the _translation matrix_.
+Note, that the extrinsic camera paramters depend on the intrinsic camera calibration, which means that the intrinsic calibration needs to be performed in advance (see [http://code.google.com/p/parsley/wiki/IntrinsicCalibration Intrinsic Calibration]).
+
+For the scanning process it is obligatory to define at least two reference planes of the test setup. If necessary also the ground plane of the test setup can be defined as a reference planem, e.g. if you use a *Marker* or *Rotary Positioner*. Therefore, we need to perform the extrinsic calibration for every reference plane we would like to define (these planes define the *reference body*).
+
+After the extrinsic calibration has been performed, the cameras position relative to the test setup must not change anymore. Otherwise the calibration has to be repeated.
+
+== Extrinsic calibration settings in Parsley ==
+Similar to the intrinsic calibration, the _!PatternEditor_ can be used in order to create the needed calibration patterns. As a reasonable pattern for the extrinsic calibration one can choose a circle pattern with following parameters:
+ * Circle diameter: 20 mm
+ * Circle distance in X direction: 130 mm
+ * Circle distance in Y direction: 100 mm
+ * Pattern size: 2;2
+
 
 Currently two kind of patterns for extrinsic calibration are supported.
  * Checkerboard pattern
