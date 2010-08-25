@@ -41,3 +41,15 @@ The correct position of the coordinate systems' origin can be found by sorting t
 http://parsley.googlecode.com/svn/trunk/doc/frames/CircleCS.png
 
 Finally, the coordinate system can be fit into the center of the ellipse, which contains the marker with the highest number of white-black transitions. With reference to the given pattern example, the coordinate system is located in the center point of the ellipse, next to the top-left corner of the pattern. The orientation of the coordinate axes corresponds to the orientation of the chessboard coordinate system.
+
+= Marker Pattern Coordinate System =
+Marker tracking is based on known square shapes, which consist of a thick black boarder and a non-symmetric black/white coloured interior. Hereby, the pattern which should be found in the camera frame is provided as an ordinary png-image.
+
+http://parsley.googlecode.com/svn/trunk/doc/frames/MarkerCS.png
+
+In order to find a possible marker, the camera image needs to be binarized and inverted, firstly. Secondly, a contour finding algorithm is used to extract contour points at black/white boarders in the image. After fitting polynom lines through the contours, only poly-lines containing four vertices can be treated as potential markers. 
+Using a perspective transformation (EmguCV algorithm), the pixels, located inside of the possible marker boarders (poly-lines), can be projected to a square image with the same size as the given marker reference image. This is done for every possible marker.
+Finally, the warped image can be matched with the marker image, considering four different orientation possibilities (0°, 90°, 180°, 270°) of the markers' interior shape.
+If a best fitting position can be found, which means that the normed sum of squared pixel intensity differences is less than a given error value, the corner points of the marker can be ordered according to the found orientation.
+
+The advantage of marker detection is, that only one marker is needed in order to find the orientation of the pattern. Especially for object tracking, like it is needed to find the current orientation of a marker bases positioner, using these patterns has turned out to be very useful.
