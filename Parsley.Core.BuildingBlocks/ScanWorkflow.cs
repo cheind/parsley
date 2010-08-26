@@ -1,6 +1,8 @@
 ﻿/*
  * Parsley http://parsley.googlecode.com
- * Copyright (c) 2010, Christoph Heindl. All rights reserved.
+ * Copyright (c) 2010, Christoph Heindl
+ * Copyright (c) 2010, Matthias Plasch
+ * All rights reserved.
  * Code license:	New BSD License
  */
 
