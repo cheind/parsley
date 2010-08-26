@@ -44,14 +44,4 @@ After the extrinsic calibration has been performed for every reference plane, th
 == Troubleshooting and hints regarding the Extrinsic Calibration Process ==
  * Resonable calibration error values are smaller than a value of e = 0.2.
  * In case of too high error values, make sure that the pattern has been configured correctly (dimensions, pattern shape size,...). Furthermore, try to eliminate a possible unevenness of the printed pattern (e.g. glue the printed patterns on a stable surface like a stiff plastic plate).
- * Avoid any percussion during the calibration process, because this might lead to a changing position of the camera relative to the reference body.
-
-
-Currently two kind of patterns for extrinsic calibration are supported.
- * Checkerboard pattern
- * Circle pattern
-
-==Circle Pattern==
-Circles become ellipses under perspective detection. The pattern detection is therefore based on ellipses. To detect the ellipses and bring them into correspondence with the calibrator we can do the following:
- * order the ellipses based on their distance from the image origin and top-left calibrator circle. This has the disadvantage that a special pattern is required to avoid ambiguities.
- * Order them as described in [http://www.springerlink.com/content/88887008437r1543/ Robust detection and ordering of ellipses on a calibration pattern].
+ * Avoid any percussion during the calibration process, because this might lead to a changing position of the camera relative to the reference body (repetition of calibration will be necessary).
