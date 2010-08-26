@@ -1,0 +1,5 @@
+#summary Introduction to the Parsley Options Menu - How to set up Parsley for the 3D-Scan.
+
+= Introduction =
+This wiki page deals with the Parsley options which need to be set up before starting a new 3D scan. The _Parsley Options_ menu can be split up into the settings categories below:
+ * _!ScanWorkflow_ contains the settings for the scanning process, such as _!LaserLineAlgorithms_, _!PlaneDetectionAlgorithms_, _!ROI_ (region of interest) and _!PointAccumulator_ types.
