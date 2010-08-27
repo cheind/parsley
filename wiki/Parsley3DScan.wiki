@@ -3,7 +3,7 @@
 After the Parsley Options and _!ScanWorkflow_ parameters have been adjusted (see [http://code.google.com/p/parsley/wiki/ParsleyOptionsMenu ParsleySetup]), a 3D object scan can be performed.
 
 = How to perform a 3D object scan =
-When switching to the _!Record_ tab, four *main functionalities* of the Parsley _!ScanWorkflow_ can be recognized:
+When switching to the _Record_ tab, four *main functionalities* of the Parsley _!ScanWorkflow_ can be recognized:
  * _Update Positioner Transformation_: By activating this button, the *transformation matrix*, which is needed to transform the captured 3D points to the correct location in the camera coordinate system, will be updated according to the new orientation of the positioner. Therefore, this function must be activated everytime after the positioners' orientation has changed. Otherwise, the scanned 3D points will not appear at the correct position.
  * _Take Texture Image_: Updates the color of the 3D points, which have been captured from the current view so far, using a texture image of the object. We recommend to update the texture everytime after the *transformation matrix* have been updated successfully.
  * _Clear Points_: Deletes the points which are stored in the pointcloud.
