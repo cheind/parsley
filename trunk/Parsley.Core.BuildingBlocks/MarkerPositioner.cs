@@ -148,7 +148,7 @@ namespace Parsley.Core.BuildingBlocks
         foundA = _pattern_A.FindPattern(gray_img, out currentImagePointsA);
         foundB = _pattern_B.FindPattern(gray_img, out currentImagePointsB);
 
-        if (foundA == true || (foundA == true && foundB == true))
+        if (foundA == true)
         {
           // transformation based on pattern A
           ec_moved = new ExtrinsicCalibration(_pattern_A.ObjectPoints, the_cam.Intrinsics);
@@ -167,8 +167,7 @@ namespace Parsley.Core.BuildingBlocks
             ret_value = false;
           }
         }
-        else
-          if (foundB == true && foundA == false)
+        else if (foundB == true)
           {
             // transformation based on pattern B
             ec_moved = new ExtrinsicCalibration(_pattern_B.ObjectPoints, the_cam.Intrinsics);
