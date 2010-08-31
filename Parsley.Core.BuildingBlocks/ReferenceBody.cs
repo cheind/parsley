@@ -22,6 +22,7 @@ namespace Parsley.Core.BuildingBlocks {
   public class ReferenceBody {
     List<Plane> _planes;
     List<Emgu.CV.ExtrinsicCameraParameters> _ecps;
+    int _numberOfReferencePlanes;
 
     public ReferenceBody() {
       _planes = new List<Plane>();
@@ -32,13 +33,24 @@ namespace Parsley.Core.BuildingBlocks {
       _ecps.Add(null);
       _ecps.Add(null);
       _ecps.Add(null);
+
+      _numberOfReferencePlanes = 2;
     }
 
     /// <summary>
     /// Get the recorded reference planes
     /// </summary>
     [Browsable(false)]
-    public IList<Plane> Planes {
+    public IList<Plane> ReferencePlanes {
+      get {
+        List<Plane> temp = _planes.GetRange(0, _numberOfReferencePlanes); 
+        return temp.AsReadOnly(); 
+      }
+    }
+
+    [Browsable(false)]
+    public IList<Plane> AllPlanes
+    {
       get { return _planes.AsReadOnly(); }
     }
 
@@ -76,14 +88,33 @@ namespace Parsley.Core.BuildingBlocks {
     {
       get
       {
+        if (_ecps.Count == 2)
+        {
+          _ecps.Add(null);
+          _planes.Add(null);
+        }
         return _ecps[2];
       }
       set
       {
-        if (value != null)
-        {
+        if(value != null)
           _ecps[2] = value;
           _planes[2] = new Plane(value);
+      }
+    }
+
+    public int NumberOfReferencePlanes
+    {
+      get
+      {
+        return _numberOfReferencePlanes;
+      }
+
+      set
+      {
+        if (value >= 2 && value < 4)
+        {
+          _numberOfReferencePlanes = value;
         }
       }
     }

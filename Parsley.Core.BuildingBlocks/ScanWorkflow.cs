@@ -177,7 +177,7 @@ namespace Parsley.Core.BuildingBlocks {
       BundleBookmarks bb = new BundleBookmarks(b);
 
       bb.ROI = _roi;
-      bb.ReferencePlanes = s.ReferenceBody.Planes;
+      bb.ReferencePlanes = s.ReferenceBody.ReferencePlanes;
       
       bb.Image = image;
       bb.LaserColor = s.Laser.Color;
@@ -203,7 +203,8 @@ namespace Parsley.Core.BuildingBlocks {
 
       List<System.Drawing.PointF> laser_pixel = bb.LaserPixel;
       Plane laser_plane = bb.LaserPlane;
-      IList<Plane> reference_planes = bb.ReferencePlanes;
+      IList<Plane> reference_planes = s.ReferenceBody.AllPlanes;
+
       for (int i = 0; i < laser_pixel.Count; ++i) {
         // Round to nearest pixel
         System.Drawing.Point p = laser_pixel[i].ToNearestPoint();
