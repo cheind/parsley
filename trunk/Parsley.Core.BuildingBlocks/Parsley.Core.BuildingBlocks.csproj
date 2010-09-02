@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="CompositePattern.cs" />
     <Compile Include="ExtrinsicTypeEditor.cs" />
     <Compile Include="FixedTimeStep.cs" />
     <Compile Include="FrameGrabber.cs" />
