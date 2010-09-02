@@ -28,11 +28,8 @@ namespace Parsley.Core.BuildingBlocks
   public class MarkerPositioner : IPositioner, ISerializable{
 
     private Emgu.CV.ExtrinsicCameraParameters _ecp_A;
-    private Emgu.CV.ExtrinsicCameraParameters _ecp_B;
-    private Parsley.Core.CalibrationPattern _pattern_A;
-    private Parsley.Core.CalibrationPattern _pattern_B;
+    private Parsley.Core.BuildingBlocks.CompositePattern _cpattern;
     private Matrix _extrinsicMatrix_A;
-    private Matrix _extrinsicMatrix_B;
     private Matrix _final;
     private readonly ILog _logger;
     private double _angle_degrees;
@@ -44,11 +41,8 @@ namespace Parsley.Core.BuildingBlocks
     public MarkerPositioner() {
       _final = Matrix.Identity(4, 4);
       _ecp_A = null;
-      _ecp_B = null;
-      _pattern_A = null;
-      _pattern_B = null;
+      _cpattern = null;
       _extrinsicMatrix_A = Matrix.Identity(4, 4);
-      _extrinsicMatrix_B = Matrix.Identity(4, 4);
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
       _angle_degrees = 0;
     }
@@ -56,22 +50,17 @@ namespace Parsley.Core.BuildingBlocks
     public MarkerPositioner(SerializationInfo info, StreamingContext context)
     {
       _ecp_A = (Emgu.CV.ExtrinsicCameraParameters)info.GetValue("ecpA",  typeof(Emgu.CV.ExtrinsicCameraParameters));
-      _ecp_B = (Emgu.CV.ExtrinsicCameraParameters)info.GetValue("ecpB", typeof(Emgu.CV.ExtrinsicCameraParameters));
       _final = Matrix.Create((double[][])info.GetValue("final", typeof(double[][])));
-      _pattern_A = (Parsley.Core.CalibrationPattern)info.GetValue("patternA", typeof(Parsley.Core.CalibrationPattern));
-      _pattern_B = (Parsley.Core.CalibrationPattern)info.GetValue("patternB", typeof(Parsley.Core.CalibrationPattern));
+      _cpattern = (Parsley.Core.BuildingBlocks.CompositePattern)info.GetValue("patternC", typeof(Parsley.Core.CalibrationPattern));
 
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
       _extrinsicMatrix_A = ExtractExctrinsicMatrix(_ecp_A);
-      _extrinsicMatrix_B = ExtractExctrinsicMatrix(_ecp_B);
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
       info.AddValue("ecpA", _ecp_A);
-      info.AddValue("ecpB", _ecp_B);
       info.AddValue("final", _final.GetArray());
-      info.AddValue("patternA", _pattern_A);
-      info.AddValue("patternB", _pattern_B);
+      info.AddValue("patternC", _cpattern);
     }
 
     /// <summary>
@@ -130,7 +119,6 @@ namespace Parsley.Core.BuildingBlocks
     /// </summary>
     public bool UpdateTransformation(Camera the_cam)
     {
-      Matrix extrinsicM2 = Matrix.Identity(4, 4);
       Matrix extrinsicM1 = Matrix.Identity(4, 4);
       ExtrinsicCameraParameters ecp_moved = null;
       ExtrinsicCalibration ec_moved = null;
@@ -138,27 +126,26 @@ namespace Parsley.Core.BuildingBlocks
       bool foundA = false;
       bool foundB = false;
 
-      if (_ecp_A != null && _ecp_B != null && _pattern_A != null && _pattern_B != null)
+      if (_ecp_A != null && _cpattern != null)
       {
         Emgu.CV.Image<Gray, Byte> gray_img = the_cam.Frame().Convert<Gray, Byte>();
         System.Drawing.PointF[] currentImagePointsA;
         System.Drawing.PointF[] currentImagePointsB;
 
         //try to find both marker patterns
-        foundA = _pattern_A.FindPattern(gray_img, out currentImagePointsA);
-        foundB = _pattern_B.FindPattern(gray_img, out currentImagePointsB);
+        foundA = _cpattern.PatternA.FindPattern(gray_img, out currentImagePointsA);
+        foundB = _cpattern.PatternB.FindPattern(gray_img, out currentImagePointsB);
 
         if (foundA == true)
         {
           // transformation based on pattern A
-          ec_moved = new ExtrinsicCalibration(_pattern_A.ObjectPoints, the_cam.Intrinsics);
+          ec_moved = new ExtrinsicCalibration(_cpattern.PatternA.ObjectPoints, the_cam.Intrinsics);
           ecp_moved = ec_moved.Calibrate(currentImagePointsA);
 
           if (ecp_moved != null)
           {
             //extract current extrinsic matrix and use initial extrinsic matrix A
-            extrinsicM2 = ExtractExctrinsicMatrix(ecp_moved);
-            extrinsicM1 = _extrinsicMatrix_A;
+            extrinsicM1 = ExtractExctrinsicMatrix(ecp_moved);
             _logger.Info("UpdateTransformation: Transformation found.");
           }
           else
@@ -170,14 +157,13 @@ namespace Parsley.Core.BuildingBlocks
         else if (foundB == true)
           {
             // transformation based on pattern B
-            ec_moved = new ExtrinsicCalibration(_pattern_B.ObjectPoints, the_cam.Intrinsics);
+            ec_moved = new ExtrinsicCalibration(_cpattern.PatternB.ObjectPoints, the_cam.Intrinsics);
             ecp_moved = ec_moved.Calibrate(currentImagePointsB);
 
             if (ecp_moved != null)
             {
               //extract current extrinsic matrix and use initial extrinsic matrix B
-              extrinsicM2 = ExtractExctrinsicMatrix(ecp_moved);
-              extrinsicM1 = _extrinsicMatrix_B;
+              extrinsicM1 = ExtractExctrinsicMatrix(ecp_moved) * _cpattern.TransformationMatrixBA;
               _logger.Info("UpdateTransformation: Transformation found.");
             }
             else
@@ -194,7 +180,7 @@ namespace Parsley.Core.BuildingBlocks
           }
 
         //now calculate the final transformation matrix
-        _final = extrinsicM1 * extrinsicM2.Inverse();
+        _final = _extrinsicMatrix_A * extrinsicM1.Inverse();
       }
       else
       {
@@ -224,25 +210,6 @@ namespace Parsley.Core.BuildingBlocks
     }
 
     /// <summary>
-    /// Set, Get the extrinsic parameters using a file dialog.
-    /// If set: extract the new extrinsic matrix for pattern B
-    /// </summary>
-    [Editor(typeof(ExtrinsicTypeEditor),
-            typeof(System.Drawing.Design.UITypeEditor))]
-    public Emgu.CV.ExtrinsicCameraParameters PositionerPoseB
-    {
-      get
-      {
-        return _ecp_B;
-      }
-      set
-      {
-        _ecp_B = value;
-        _extrinsicMatrix_B = ExtractExctrinsicMatrix(_ecp_B);
-      }
-    }
-
-    /// <summary>
     /// Sets / Gets the used pattern using a file dialog.
     /// Pattern A is used as the main pattern of the positioner.
     /// If this pattern hides behind the scanning object,
@@ -250,38 +217,15 @@ namespace Parsley.Core.BuildingBlocks
     /// </summary>
     [Editor(typeof(PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
-    public Parsley.Core.CalibrationPattern PositionerPatternA
+    public Parsley.Core.BuildingBlocks.CompositePattern PositionerCompositePattern
     {
       get
       {
-        return _pattern_A;
+        return _cpattern;
       }
       set
       {
-        _pattern_A = value;
-      }
-    }
-
-    /// <summary>
-    /// Sets / Gets the used pattern using a file dialog.
-    /// The pattern B is needed to allow 3D scanning in a 360degree range.
-    /// If only one pattern would be used, scanning in an angular range of
-    /// 0... 360 degree wouldn't be possible, since the marker will be hidden,
-    /// at least in one scanning position, by the object.
-    /// Note, that additionally to the pattern, the Extrinsic Matrix to
-    /// the given marker coordinate system is needed.
-    /// </summary>
-    [Editor(typeof(PatternTypeEditor),
-            typeof(System.Drawing.Design.UITypeEditor))]
-    public Parsley.Core.CalibrationPattern PositionerPatternB
-    {
-      get
-      {
-        return _pattern_B;
-      }
-      set
-      {
-        _pattern_B = value;
+        _cpattern = value;
       }
     }
 
@@ -293,7 +237,6 @@ namespace Parsley.Core.BuildingBlocks
     {
       get { return _angle_degrees; }
       set {_angle_degrees = value;}
-      
     }
   }
 }
