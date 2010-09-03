@@ -22,6 +22,7 @@ namespace Parsley.Core {
   /// </summary>
   [Serializable]
   public abstract class CalibrationPattern {
+    private Emgu.CV.IntrinsicCameraParameters _icp;
     private Vector[] _object_points;
     [NonSerialized]
     private PointF[] _image_points;
@@ -53,6 +54,13 @@ namespace Parsley.Core {
     [Browsable(false)]
     public bool PatternFound {
       get { return _pattern_found; }
+    }
+
+    [Browsable(false)]
+    public Emgu.CV.IntrinsicCameraParameters IntrinsicParameters
+    {
+      get { return _icp; }
+      set { _icp = value; }
     }
 
     /// <summary>
