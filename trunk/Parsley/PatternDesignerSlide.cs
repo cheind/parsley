@@ -71,6 +71,9 @@ namespace Parsley {
         if (info != null) {
           _pattern = Core.Addins.AddinStore.CreateInstance(info) as Core.CalibrationPattern;
           _pg.SelectedObject = _pattern;
+
+          if(Context.Setup.Camera.HasIntrinsics)
+            _pattern.IntrinsicParameters = Context.Setup.Camera.Intrinsics;
         }
       }
     }

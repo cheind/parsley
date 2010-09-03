@@ -85,6 +85,8 @@ namespace Parsley {
 
       if (_on_roi && _pattern != null) {
         Image<Gray, Byte> gray = img.Convert<Gray, Byte>();
+        _pattern.IntrinsicParameters = Context.Setup.Camera.Intrinsics;
+
         try {
           _pattern.FindPattern(gray, _r);
           if (_pattern.PatternFound) {
