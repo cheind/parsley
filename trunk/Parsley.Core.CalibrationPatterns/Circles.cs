@@ -162,7 +162,7 @@ namespace Parsley.Core.CalibrationPatterns {
       get { return _number_circle_points; }
       set { _number_circle_points = value; }
     }
-
+    
     /// <summary>
     /// Maximum allowed distance between detected ellipse and expected ellipse.
     /// </summary>
