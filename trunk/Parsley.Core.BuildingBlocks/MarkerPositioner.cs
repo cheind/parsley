@@ -28,11 +28,12 @@ namespace Parsley.Core.BuildingBlocks
   public class MarkerPositioner : IPositioner, ISerializable{
 
     private Emgu.CV.ExtrinsicCameraParameters _ecp_A;
-    private Parsley.Core.BuildingBlocks.CompositePattern _cpattern;
+    private Parsley.Core.CalibrationPatterns.CompositePattern _cpattern;
     private Matrix _extrinsicMatrix_A;
     private Matrix _final;
     private readonly ILog _logger;
     private double _angle_degrees;
+    private bool _firstCallUpdateTransformation;
 
     /// <summary>
     /// Default Constructor
@@ -45,16 +46,18 @@ namespace Parsley.Core.BuildingBlocks
       _extrinsicMatrix_A = Matrix.Identity(4, 4);
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
       _angle_degrees = 0;
+      _firstCallUpdateTransformation = true;
     }
 
     public MarkerPositioner(SerializationInfo info, StreamingContext context)
     {
       _ecp_A = (Emgu.CV.ExtrinsicCameraParameters)info.GetValue("ecpA",  typeof(Emgu.CV.ExtrinsicCameraParameters));
       _final = Matrix.Create((double[][])info.GetValue("final", typeof(double[][])));
-      _cpattern = (Parsley.Core.BuildingBlocks.CompositePattern)info.GetValue("patternC", typeof(Parsley.Core.CalibrationPattern));
+      _cpattern = (Parsley.Core.CalibrationPatterns.CompositePattern)info.GetValue("patternC", typeof(Parsley.Core.CalibrationPattern));
 
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
       _extrinsicMatrix_A = ExtractExctrinsicMatrix(_ecp_A);
+      _firstCallUpdateTransformation = true;
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
@@ -120,74 +123,90 @@ namespace Parsley.Core.BuildingBlocks
     public bool UpdateTransformation(Camera the_cam)
     {
       Matrix extrinsicM1 = Matrix.Identity(4, 4);
-      ExtrinsicCameraParameters ecp_moved = null;
-      ExtrinsicCalibration ec_moved = null;
-      bool ret_value = true;
-      bool foundA = false;
-      bool foundB = false;
+      ExtrinsicCameraParameters ecp_pattern = null;
+      ExtrinsicCalibration ec_pattern = null;
+      Emgu.CV.Image<Gray, Byte> gray_img = null;
+      System.Drawing.PointF[] currentImagePoints;
+
+      //first call: calculate intrinsics for initial position
+      if (_firstCallUpdateTransformation == true && _cpattern != null)
+      {
+         gray_img = the_cam.Frame().Convert<Gray, Byte>();
+         _cpattern.IntrinsicParameters = the_cam.Intrinsics;
+
+         if (_cpattern.FindPattern(gray_img, out currentImagePoints))
+         {
+           try
+           {
+             ec_pattern = new ExtrinsicCalibration(_cpattern.ObjectPoints, the_cam.Intrinsics);
+             ecp_pattern = ec_pattern.Calibrate(currentImagePoints);
+
+             if (ecp_pattern != null)
+             {
+               _ecp_A = ecp_pattern;
+               _extrinsicMatrix_A = ExtractExctrinsicMatrix(_ecp_A);
+
+               _logger.Info("Initial Position found.");
+               _firstCallUpdateTransformation = false;
+             }
+           }
+           catch (Exception e)
+           {
+             _logger.Warn("Initial Position - Caught Exception: {0}.", e);
+             _firstCallUpdateTransformation = true;
+             _ecp_A = null;
+             return false; 
+           }
+         }
+         else
+         {
+           _logger.Warn("Pattern not found.");
+           _firstCallUpdateTransformation = true;
+           _ecp_A = null;
+
+           return false; 
+         }
+      }
 
       if (_ecp_A != null && _cpattern != null)
       {
-        Emgu.CV.Image<Gray, Byte> gray_img = the_cam.Frame().Convert<Gray, Byte>();
-        System.Drawing.PointF[] currentImagePointsA;
-        System.Drawing.PointF[] currentImagePointsB;
+        gray_img = the_cam.Frame().Convert<Gray, Byte>();
 
-        //try to find both marker patterns
-        foundA = _cpattern.PatternA.FindPattern(gray_img, out currentImagePointsA);
-        foundB = _cpattern.PatternB.FindPattern(gray_img, out currentImagePointsB);
-
-        if (foundA == true)
+        //try to find composite pattern
+        if (_cpattern.FindPattern(gray_img, out currentImagePoints))
         {
           // transformation based on pattern A
-          ec_moved = new ExtrinsicCalibration(_cpattern.PatternA.ObjectPoints, the_cam.Intrinsics);
-          ecp_moved = ec_moved.Calibrate(currentImagePointsA);
+          ec_pattern = new ExtrinsicCalibration(_cpattern.ObjectPoints, the_cam.Intrinsics);
+          ecp_pattern = ec_pattern.Calibrate(currentImagePoints);
 
-          if (ecp_moved != null)
+          if (ecp_pattern != null)
           {
             //extract current extrinsic matrix and use initial extrinsic matrix A
-            extrinsicM1 = ExtractExctrinsicMatrix(ecp_moved);
+            extrinsicM1 = ExtractExctrinsicMatrix(ecp_pattern);
             _logger.Info("UpdateTransformation: Transformation found.");
           }
           else
           {
             _logger.Warn("UpdateTransformation: Extrinsics of moved marker system not found.");
-            ret_value = false;
+            return false;
           }
         }
-        else if (foundB == true)
-          {
-            // transformation based on pattern B
-            ec_moved = new ExtrinsicCalibration(_cpattern.PatternB.ObjectPoints, the_cam.Intrinsics);
-            ecp_moved = ec_moved.Calibrate(currentImagePointsB);
-
-            if (ecp_moved != null)
-            {
-              //extract current extrinsic matrix and use initial extrinsic matrix B
-              extrinsicM1 = ExtractExctrinsicMatrix(ecp_moved) * _cpattern.TransformationMatrixBA;
-              _logger.Info("UpdateTransformation: Transformation found.");
-            }
-            else
-            {
-              _logger.Warn("UpdateTransformation: Extrinsics of moved marker system not found.");
-              ret_value = false;
-            }
-          }
-          else
-          {
-            // if pattern can't be found: use identity warp matrix
-            _logger.Warn("UpdateTransformation: Pattern not found.");
-            ret_value = false;
-          }
+        else
+        {
+          // if pattern can't be found: use identity warp matrix
+          _logger.Warn("UpdateTransformation: Pattern not found.");
+          return false;
+        }
 
         //now calculate the final transformation matrix
         _final = _extrinsicMatrix_A * extrinsicM1.Inverse();
+        return true;
       }
       else
       {
-        ret_value = false;
-        _logger.Warn("UpdateTransformation: No Pattern or no Positioner Extrinsics have been chosen.");
+        _logger.Warn("UpdateTransformation: No Pattern has been chosen.");
+        return false;
       }
-      return ret_value;
     }
 
     /// <summary>
@@ -198,15 +217,8 @@ namespace Parsley.Core.BuildingBlocks
             typeof(System.Drawing.Design.UITypeEditor))]
     public Emgu.CV.ExtrinsicCameraParameters PositionerPoseA
     {
-      get
-      {
-        return _ecp_A;
-      }
-      set
-      {
-        _ecp_A = value;
-        _extrinsicMatrix_A = ExtractExctrinsicMatrix(_ecp_A);
-      }
+      get { return _ecp_A; }
+      set { _ecp_A = value; }
     }
 
     /// <summary>
@@ -215,9 +227,9 @@ namespace Parsley.Core.BuildingBlocks
     /// If this pattern hides behind the scanning object,
     /// pattern B can be used to find the affine transformation.
     /// </summary>
-    [Editor(typeof(PatternTypeEditor),
+    [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
-    public Parsley.Core.BuildingBlocks.CompositePattern PositionerCompositePattern
+    public Parsley.Core.CalibrationPatterns.CompositePattern PositionerCompositePattern
     {
       get
       {
@@ -226,6 +238,7 @@ namespace Parsley.Core.BuildingBlocks
       set
       {
         _cpattern = value;
+        _firstCallUpdateTransformation = true;
       }
     }
 
