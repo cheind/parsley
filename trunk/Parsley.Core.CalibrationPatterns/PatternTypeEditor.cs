@@ -10,13 +10,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.ComponentModel;
 
-namespace Parsley.Core.BuildingBlocks
+namespace Parsley.Core.CalibrationPatterns
 {
   /// <summary>
   /// Type editor to load pattern from file and assign them to properties.
   /// </summary>
   [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-  class PatternTypeEditor : UITypeEditor
+  public class PatternTypeEditor : UITypeEditor
   {
     public PatternTypeEditor()
     {

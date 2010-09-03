@@ -57,6 +57,10 @@
       <HintPath>..\ThirdParty\Emgu\Emgu.Util.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\Log4Net\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MathNet.Iridium, Version=2008.8.16.470, Culture=neutral, PublicKeyToken=c061a3ec32cc0c6f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\MathNet\MathNet.Iridium.dll</HintPath>
@@ -67,6 +71,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -79,7 +84,9 @@
   <ItemGroup>
     <Compile Include="CheckerBoard.cs" />
     <Compile Include="Circles.cs" />
+    <Compile Include="CompositePattern.cs" />
     <Compile Include="Marker.cs" />
+    <Compile Include="PatternTypeEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

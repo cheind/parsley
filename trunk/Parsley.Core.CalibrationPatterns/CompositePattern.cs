@@ -5,8 +5,10 @@ using System.Text;
 using MathNet.Numerics.LinearAlgebra;
 using System.ComponentModel;
 using System.Runtime.Serialization;
+using log4net;
+using Parsley.Core.Extensions;
 
-namespace Parsley.Core.BuildingBlocks
+namespace Parsley.Core.CalibrationPatterns
 {
   [Serializable]
   [Parsley.Core.Addins.Addin]
@@ -19,6 +21,7 @@ namespace Parsley.Core.BuildingBlocks
     double _translationY;
     double _translationZ;
     Matrix _transformationBToA;
+    private readonly ILog _logger;
 
 
     public CompositePattern()
@@ -30,6 +33,7 @@ namespace Parsley.Core.BuildingBlocks
       _translationY = 0;
       _translationZ = 0;
       _transformationBToA = Matrix.Identity(4, 4);
+      _logger = LogManager.GetLogger(typeof(CompositePattern));
     }
 
     public CompositePattern(SerializationInfo info, StreamingContext context)
@@ -42,6 +46,7 @@ namespace Parsley.Core.BuildingBlocks
       _translationZ = (double)info.GetValue("translationZ", typeof(double));
 
       SetTransformationMatrixBA();
+      _logger = LogManager.GetLogger(typeof(CompositePattern));
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
@@ -54,15 +59,19 @@ namespace Parsley.Core.BuildingBlocks
     }
 
 
-    [Editor(typeof(Parsley.Core.BuildingBlocks.PatternTypeEditor),
+    [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
     public CalibrationPattern PatternA
     {
       get { return _patternA; }
-      set { _patternA = value; }
+      set 
+      { 
+        _patternA = value;
+        this.ObjectPoints = _patternA.ObjectPoints;
+      }
     }
 
-    [Editor(typeof(Parsley.Core.BuildingBlocks.PatternTypeEditor),
+    [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
     public CalibrationPattern PatternB
     {
@@ -127,19 +136,78 @@ namespace Parsley.Core.BuildingBlocks
 
     public override bool FindPattern(Emgu.CV.Image<Emgu.CV.Structure.Gray, byte> img, out System.Drawing.PointF[] image_points)
     {
-      if (_patternA != null && _patternB != null)
+      if (this.IntrinsicParameters != null && _patternA != null && _patternB != null)
       {
-        bool foundA, foundB;
-
-        foundB = _patternB.FindPattern(img, out image_points);
-        foundA = _patternA.FindPattern(img, out image_points);
+        bool foundA = false;
+        System.Drawing.PointF[] currentImagePointsA;
+        System.Drawing.PointF[] currentImagePointsB;
 
         this.ObjectPoints = _patternA.ObjectPoints;
 
-        return (foundA && foundB);
+        foundA = _patternA.FindPattern(img, out currentImagePointsA);
+
+        if (foundA)
+        {
+          image_points = currentImagePointsA;
+          _logger.Info("Pattern found.");
+          return true;
+        }
+        else
+          if (_patternB.FindPattern(img, out currentImagePointsB))
+          {
+            ExtrinsicCalibration ec_B = null;
+            Emgu.CV.ExtrinsicCameraParameters ecp_B = null;
+            Matrix extrinsic_matrix = Matrix.Identity(4, 4);
+            Matrix temp_matrix = null;
+            Emgu.CV.Structure.MCvPoint3D32f[] transformedCornerPoints = new Emgu.CV.Structure.MCvPoint3D32f[_patternA.ObjectPoints.Length];
+
+            try
+            {
+              ec_B = new ExtrinsicCalibration(_patternB.ObjectPoints, this.IntrinsicParameters);
+              ecp_B = ec_B.Calibrate(currentImagePointsB);
+
+              if (ecp_B != null)
+              {
+                temp_matrix = Parsley.Core.Extensions.ConvertToParsley.ToParsley(ecp_B.ExtrinsicMatrix);
+                extrinsic_matrix.SetMatrix(0, temp_matrix.RowCount - 1, 0, temp_matrix.ColumnCount - 1, temp_matrix);
+
+                //transform object points of A into B and from B to the camera system
+                for (int i = 0; i < transformedCornerPoints.Length; i++)
+                {
+                  transformedCornerPoints[i] = (((_transformationBToA.Inverse()).Multiply(_patternA.ObjectPoints[i].ToHomogeneous(1).ToColumnMatrix())).GetColumnVector(0).ToNonHomogeneous()).ToEmguF();
+                }
+
+                //project the points to 2D-Points (image points)
+                image_points = Emgu.CV.CameraCalibration.ProjectPoints(transformedCornerPoints, ecp_B, this.IntrinsicParameters);
+                _logger.Info("Pattern found.");
+                return true;
+              }
+              else
+              {
+                _logger.Warn("Error calculating extrinsic parameters.");
+                image_points = null;
+                return false;
+              }
+            }
+            catch (Exception e)
+            {
+              _logger.Warn("Caught Exception: {0}.", e);
+              image_points = null;
+              return false;
+            }
+
+          }
+          else
+          {
+            _logger.Warn("Error: Pattern not found.");
+            image_points = null;
+            return false;
+          }
+
       }
       else
       {
+        _logger.Warn("Error: Intrinsics are needed to find a Composite Pattern but not available.");
         image_points = null;
         return false;
       }
