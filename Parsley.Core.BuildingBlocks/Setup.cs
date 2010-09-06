@@ -20,8 +20,7 @@ namespace Parsley.Core.BuildingBlocks {
     private BuildingBlocks.Camera _camera;
     private BuildingBlocks.Laser _laser;
     private BuildingBlocks.ReferenceBody _reference_body;
-    //private BuildingBlocks.RotaryPositioner _rotary_positioner;
-    private IPositioner _positioner;
+    private MarkerPositioner _positioner;
     private ScanWorkflow _wf;
 
     /// <summary>
@@ -111,7 +110,7 @@ namespace Parsley.Core.BuildingBlocks {
     [Description("Setup the positioner if available.")]
     [TypeConverter(typeof(Core.Addins.ReflectionTypeConverter))]
     [RefreshProperties(RefreshProperties.All)]
-    public IPositioner Positioner {
+    public MarkerPositioner Positioner {
       get { return _positioner; }
       set { _positioner = value; }
     }

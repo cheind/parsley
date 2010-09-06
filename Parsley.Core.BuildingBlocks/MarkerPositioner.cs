@@ -25,14 +25,13 @@ namespace Parsley.Core.BuildingBlocks
 {
   [Serializable]
   [Parsley.Core.Addins.Addin]
-  public class MarkerPositioner : IPositioner, ISerializable{
+  public class MarkerPositioner : ISerializable{
 
     private Emgu.CV.ExtrinsicCameraParameters _ecp_A;
     private Parsley.Core.CalibrationPatterns.CompositePattern _cpattern;
     private Matrix _extrinsicMatrix_A;
     private Matrix _final;
     private readonly ILog _logger;
-    private double _angle_degrees;
     private bool _firstCallUpdateTransformation;
 
     /// <summary>
@@ -45,23 +44,19 @@ namespace Parsley.Core.BuildingBlocks
       _cpattern = null;
       _extrinsicMatrix_A = Matrix.Identity(4, 4);
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
-      _angle_degrees = 0;
       _firstCallUpdateTransformation = true;
     }
 
     public MarkerPositioner(SerializationInfo info, StreamingContext context)
     {
-      _ecp_A = (Emgu.CV.ExtrinsicCameraParameters)info.GetValue("ecpA",  typeof(Emgu.CV.ExtrinsicCameraParameters));
       _final = Matrix.Create((double[][])info.GetValue("final", typeof(double[][])));
       _cpattern = (Parsley.Core.CalibrationPatterns.CompositePattern)info.GetValue("patternC", typeof(Parsley.Core.CalibrationPattern));
 
       _logger = LogManager.GetLogger(typeof(MarkerPositioner));
-      _extrinsicMatrix_A = ExtractExctrinsicMatrix(_ecp_A);
       _firstCallUpdateTransformation = true;
     }
 
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
-      info.AddValue("ecpA", _ecp_A);
       info.AddValue("final", _final.GetArray());
       info.AddValue("patternC", _cpattern);
     }
@@ -71,11 +66,9 @@ namespace Parsley.Core.BuildingBlocks
     /// The transformation matrix "_final" is calculated in "UpdateTransformation"
     /// </summary>
     /// <param name="points"> List of Vectors, containing the 3d points which should be transformed</param>
-    public void TransformPoints(List<Vector> points)
+    public void TransformPoints(ref List<Vector> points)
     {
-      for (int i = 0; i < points.Count; ++i) {
-        points[i] = _final.Multiply(points[i].ToHomogeneous(1).ToColumnMatrix()).GetColumnVector(0).ToNonHomogeneous();
-      }
+      points = MatrixTransformation.TransformVectorToVector(_final, 1.0, points).ToList<Vector>();
     }
 
     /// <summary>
@@ -210,18 +203,6 @@ namespace Parsley.Core.BuildingBlocks
     }
 
     /// <summary>
-    /// Set, Get the extrinsic parameters using a file dialog.
-    /// If set: extract the new extrinsic matrix for pattern A
-    /// </summary>
-    [Editor(typeof(ExtrinsicTypeEditor),
-            typeof(System.Drawing.Design.UITypeEditor))]
-    public Emgu.CV.ExtrinsicCameraParameters PositionerPoseA
-    {
-      get { return _ecp_A; }
-      set { _ecp_A = value; }
-    }
-
-    /// <summary>
     /// Sets / Gets the used pattern using a file dialog.
     /// Pattern A is used as the main pattern of the positioner.
     /// If this pattern hides behind the scanning object,
@@ -240,16 +221,6 @@ namespace Parsley.Core.BuildingBlocks
         _cpattern = value;
         _firstCallUpdateTransformation = true;
       }
-    }
-
-    /// <summary>
-    /// Set/Get the angular position of the positioner in degrees unit.
-    /// </summary>
-    [Browsable(false)]
-    public double Angle
-    {
-      get { return _angle_degrees; }
-      set {_angle_degrees = value;}
     }
   }
 }
