@@ -10,6 +10,17 @@ using Parsley.Core.Extensions;
 
 namespace Parsley.Core.CalibrationPatterns
 {
+  /// <summary>
+  /// Provides a CalibrationPattern, consisting of two predefined different patterns (e.g. circle, marker, chessboard).
+  /// PatternA is defined as main-pattern. Additionally to both patterns, the coordinate transformation matrix
+  /// describing the relationship of the coordinate systems of patternA and patternB is predefined (pattern editor).
+  /// The function member FindPattern tries to find one of these patterns: if only patternB is found,
+  /// the object points of patternA are transformed (using the defined transformation) to the coordinate system of patternB.
+  /// Finally the image points of the visible patternA are calculated, using the intrinsic calibration matrix with respect to
+  /// patternB, by projecting the transformed object points of patternA into the cameras image coordinate system.
+  /// 
+  /// Please find more explanations, regarding this procedure, in the source code comments below.
+  /// </summary>
   [Serializable]
   [Parsley.Core.Addins.Addin]
   public class CompositePattern : CalibrationPattern, ISerializable
@@ -23,7 +34,9 @@ namespace Parsley.Core.CalibrationPatterns
     Matrix _transformationBToA;
     private readonly ILog _logger;
 
-
+    /// <summary>
+    /// Default Constructor.
+    /// </summary>
     public CompositePattern()
     {
       _patternA = null;
@@ -36,6 +49,11 @@ namespace Parsley.Core.CalibrationPatterns
       _logger = LogManager.GetLogger(typeof(CompositePattern));
     }
 
+    /// <summary>
+    /// Deserialization constructor.
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="context"></param>
     public CompositePattern(SerializationInfo info, StreamingContext context)
     {
       _patternA = (CalibrationPattern)info.GetValue("patternA", typeof(CalibrationPattern));
@@ -49,6 +67,11 @@ namespace Parsley.Core.CalibrationPatterns
       _logger = LogManager.GetLogger(typeof(CompositePattern));
     }
 
+    /// <summary>
+    /// Sets the serialization information, to determine which data should be saved.
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="context"></param>
     public void GetObjectData(SerializationInfo info, StreamingContext context) {
       info.AddValue("patternA", _patternA);
       info.AddValue("patternB", _patternB);
@@ -58,7 +81,9 @@ namespace Parsley.Core.CalibrationPatterns
       info.AddValue("translationZ", _translationZ);
     }
 
-
+    /// <summary>
+    /// Pattern type editor used to set the main pattern A.
+    /// </summary>
     [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
     public CalibrationPattern PatternA
@@ -66,11 +91,15 @@ namespace Parsley.Core.CalibrationPatterns
       get { return _patternA; }
       set 
       { 
+        //object points of the composite pattern are always set to main pattern A
         _patternA = value;
         this.ObjectPoints = _patternA.ObjectPoints;
       }
     }
 
+    /// <summary>
+    /// Pattern type editor used to set the main pattern B.
+    /// </summary>
     [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
     public CalibrationPattern PatternB
@@ -79,6 +108,9 @@ namespace Parsley.Core.CalibrationPatterns
       set { _patternB = value; }
     }
 
+    /// <summary>
+    /// Property: transformation matrix from coordinate system B to coordinate system A
+    /// </summary>
     [Browsable(false)]
     public Matrix TransformationMatrixBA
     {
@@ -86,13 +118,18 @@ namespace Parsley.Core.CalibrationPatterns
     }
 
 
+    /// <summary>
+    /// Sets the angular displacement between coordinate system B to coordinate system A.
+    /// Note that the absolute value is limited to 180 degrees.
+    /// After setting the displacement => update the transformation matrix.
+    /// </summary>
     public double RotationBRelativeA
     {
       get { return _rotation_BRelativeA; }
 
       set
       {
-        if (Math.Abs(value) <= 360)
+        if (Math.Abs(value) <= 180)
           _rotation_BRelativeA = value;
         else
           _rotation_BRelativeA = 0;
@@ -101,6 +138,10 @@ namespace Parsley.Core.CalibrationPatterns
       }
     }
 
+    /// <summary>
+    /// Sets the X-Component of the translation vector.
+    /// The transformation matrix is being updated.
+    /// </summary>
     public double TranslationX
     {
       get { return _translationX; }
@@ -112,6 +153,10 @@ namespace Parsley.Core.CalibrationPatterns
       }
     }
 
+    /// <summary>
+    /// Sets the Y-Component of the translation vector.
+    /// The transformation matrix is being updated.
+    /// </summary>
     public double TranslationY
     {
       get { return _translationY; }
@@ -123,6 +168,10 @@ namespace Parsley.Core.CalibrationPatterns
       }
     }
 
+    /// <summary>
+    /// Sets the Z-Component of the translation vector.
+    /// The transformation matrix is being updated.
+    /// </summary>
     public double TranslationZ
     {
       get { return _translationZ; }
@@ -211,6 +260,10 @@ namespace Parsley.Core.CalibrationPatterns
     }
 
 
+    /// <summary>
+    /// Sets up the current transformation matrix, describing the relation
+    /// between patternB coordinate system and patternA coordinate system.
+    /// </summary>
     private void SetTransformationMatrixBA()
     {
       double angle_rad = _rotation_BRelativeA / 180.0 * Math.PI;
