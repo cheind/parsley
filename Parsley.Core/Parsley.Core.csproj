@@ -97,6 +97,7 @@
     <Compile Include="Extensions\ConvertFromParsley.cs" />
     <Compile Include="Extensions\ConvertToParsley.cs" />
     <Compile Include="Extensions\HomogeneousCoordinates.cs" />
+    <Compile Include="Extensions\MatrixTransformation.cs" />
     <Compile Include="Extensions\PointF.cs" />
     <Compile Include="Extensions\Rectangle.cs" />
     <Compile Include="Extensions\Serialization.cs" />
