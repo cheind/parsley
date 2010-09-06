@@ -149,7 +149,7 @@ namespace Parsley.Core.CalibrationPatterns
         if (foundA)
         {
           image_points = currentImagePointsA;
-          _logger.Info("Pattern found.");
+          //_logger.Info("Pattern found.");
           return true;
         }
         else
@@ -171,15 +171,12 @@ namespace Parsley.Core.CalibrationPatterns
                 temp_matrix = Parsley.Core.Extensions.ConvertToParsley.ToParsley(ecp_B.ExtrinsicMatrix);
                 extrinsic_matrix.SetMatrix(0, temp_matrix.RowCount - 1, 0, temp_matrix.ColumnCount - 1, temp_matrix);
 
-                //transform object points of A into B and from B to the camera system
-                for (int i = 0; i < transformedCornerPoints.Length; i++)
-                {
-                  transformedCornerPoints[i] = (((_transformationBToA.Inverse()).Multiply(_patternA.ObjectPoints[i].ToHomogeneous(1).ToColumnMatrix())).GetColumnVector(0).ToNonHomogeneous()).ToEmguF();
-                }
+                //transform object points of A into B
+                transformedCornerPoints = MatrixTransformation.TransformVectorToEmgu(_transformationBToA.Inverse(), 1.0, _patternA.ObjectPoints).ToArray<Emgu.CV.Structure.MCvPoint3D32f>();
 
-                //project the points to 2D-Points (image points)
+                //project the points to 2D-Points (image points) - transformation B-C and projection
                 image_points = Emgu.CV.CameraCalibration.ProjectPoints(transformedCornerPoints, ecp_B, this.IntrinsicParameters);
-                _logger.Info("Pattern found.");
+                //_logger.Info("Pattern found.");
                 return true;
               }
               else
@@ -199,7 +196,7 @@ namespace Parsley.Core.CalibrationPatterns
           }
           else
           {
-            _logger.Warn("Error: Pattern not found.");
+            //_logger.Warn("Error: Pattern not found.");
             image_points = null;
             return false;
           }
