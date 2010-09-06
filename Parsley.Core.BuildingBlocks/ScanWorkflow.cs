@@ -225,7 +225,7 @@ namespace Parsley.Core.BuildingBlocks {
         }
       }
 
-      s.Positioner.TransformPoints(points);
+      s.Positioner.TransformPoints(ref points);
       return points.Count > 0;
     }
 
