@@ -96,22 +96,15 @@ namespace Parsley.Core.BuildingBlocks
     /// Calculates the transformation matrix, which is used to transform the 3d-object points, which were scanned with reference
     /// to the moved marker coordinate system, back to the initial marker system and henceforth back to the camera system.
     /// The camera object is needed in order to gain the current camera frame. Furthermore, the cameras' intrinsics are needed
-    /// to perform an extrinsic calibration.
+    /// to perform an extrinsic calibration. Note, that every kind of pattern can be used.
     /// 
     /// The transformation matrix is calculated as follows:
-    /// * All scanned points are referenced to the camera coordinate system.
-    /// * The extrinsic matrices _extrinsicMatrix_A and _extrinsicMatrix_B describe the transformations between the 
-    ///   initial detected marker systems (A and B) and camera system.
-    /// * Two maker patterns are used in this implementation. The second marker B is only used, if marker A
-    ///   is hidden due to the position of the scanning object. Dependent on whether marker A or marker B is hidden,
-    ///   the extrinsicMatrix B or A will be used to calculate the transformation matrix, respectively.
-    ///   ==> extrinsicM1 holds the current used extrinsicMatrix of the initial marker position.
-    /// * extrinsicM2 describes the transformation between moved marker system and camera system.
-    /// * Since the position of the scanned object, relative to the marker does not change, all points in the camera system
-    ///   can be represented in a common coordinate system by using the inverse transformation "inv(extrinsicM2)".
-    /// * Because the points should be represented in the camera system, they need to be tranformed back into the camera system
-    ///   using the transformation "extrinsicM1".
-    /// * Therefore the final transformation matrix can be calculated from _final = extrinsicM1 * inv(extrinsicM2)
+    /// * If 'UpdateTransformation' is being called for the first time, an extrinsic calibration is performed in order to find
+    ///   the initial orientation of the used pattern.
+    /// * If the initial orientation has already been found, the extrinsic calibration is performed again. Afterwards
+    ///   the current orientation is available, represented by the extrinsic matrix.
+    /// * Form the extrinsic matrix (4x3) (current position) to a homogeneous 4x4 matrix.
+    /// * The final transformation matrix is calculated as follows: _final = initial * current.Inverse();
     /// </summary>
     public bool UpdateTransformation(Camera the_cam)
     {
@@ -121,16 +114,18 @@ namespace Parsley.Core.BuildingBlocks
       Emgu.CV.Image<Gray, Byte> gray_img = null;
       System.Drawing.PointF[] currentImagePoints;
 
-      //first call: calculate intrinsics for initial position
+      //first call: calculate extrinsics for initial position
       if (_firstCallUpdateTransformation == true && _cpattern != null)
       {
          gray_img = the_cam.Frame().Convert<Gray, Byte>();
+         //set the patterns property: intrinsic parameters
          _cpattern.IntrinsicParameters = the_cam.Intrinsics;
 
          if (_cpattern.FindPattern(gray_img, out currentImagePoints))
          {
            try
            {
+             //extr. calibration (initial position)
              ec_pattern = new ExtrinsicCalibration(_cpattern.ObjectPoints, the_cam.Intrinsics);
              ecp_pattern = ec_pattern.Calibrate(currentImagePoints);
 
@@ -161,6 +156,7 @@ namespace Parsley.Core.BuildingBlocks
          }
       }
 
+      //if initial position and pattern are available - calculate the transformation
       if (_ecp_A != null && _cpattern != null)
       {
         gray_img = the_cam.Frame().Convert<Gray, Byte>();
@@ -168,13 +164,13 @@ namespace Parsley.Core.BuildingBlocks
         //try to find composite pattern
         if (_cpattern.FindPattern(gray_img, out currentImagePoints))
         {
-          // transformation based on pattern A
+          //extrinsic calibration in order to find the current orientation
           ec_pattern = new ExtrinsicCalibration(_cpattern.ObjectPoints, the_cam.Intrinsics);
           ecp_pattern = ec_pattern.Calibrate(currentImagePoints);
 
           if (ecp_pattern != null)
           {
-            //extract current extrinsic matrix and use initial extrinsic matrix A
+            //extract current extrinsic matrix
             extrinsicM1 = ExtractExctrinsicMatrix(ecp_pattern);
             _logger.Info("UpdateTransformation: Transformation found.");
           }
@@ -186,7 +182,6 @@ namespace Parsley.Core.BuildingBlocks
         }
         else
         {
-          // if pattern can't be found: use identity warp matrix
           _logger.Warn("UpdateTransformation: Pattern not found.");
           return false;
         }
@@ -206,8 +201,9 @@ namespace Parsley.Core.BuildingBlocks
     /// Sets / Gets the used pattern using a file dialog.
     /// Pattern A is used as the main pattern of the positioner.
     /// If this pattern hides behind the scanning object,
-    /// pattern B can be used to find the affine transformation.
+    /// pattern B can be used to find the transformation.
     /// </summary>
+    [Description("Set the positioners' Composite Pattern.")]
     [Editor(typeof(Parsley.Core.CalibrationPatterns.PatternTypeEditor),
             typeof(System.Drawing.Design.UITypeEditor))]
     public Parsley.Core.CalibrationPatterns.CompositePattern PositionerCompositePattern
