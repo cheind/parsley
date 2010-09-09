@@ -36,6 +36,10 @@ namespace Parsley {
 
       cli::array<double,1> ^PointCloud::ReturnPointAtIndex(unsigned id);
 
+      void PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray);
+
+      unsigned PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray, unsigned start, unsigned stop);
+      
       unsigned PointCloud::NumberOfPoints();
     private:
       auto_ptr_osg<osg::Geometry> _geometry;

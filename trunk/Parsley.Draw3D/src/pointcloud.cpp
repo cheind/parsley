@@ -111,5 +111,44 @@ namespace Parsley {
     {
       return _vertices->size();
     }
+
+    void PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray)
+    {
+      unsigned size = _vertices->size();
+      unsigned id = 0, id_array = 0;
+
+      while(id < size && id_array < (size * 3))
+      {
+        pointArray[id_array] = (float) _vertices->at(id).x();
+        pointArray[id_array + 1] = (float) _vertices->at(id).y();
+        pointArray[id_array + 2] = (float) _vertices->at(id).z();
+
+        id_array = id_array + 3;
+        id = id + 1;
+      }
+    }
+
+    unsigned PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray, unsigned start, unsigned stop)
+    {
+      unsigned size = _vertices->size();
+      unsigned id = start, id_array = 0;
+      unsigned range_size = 0;
+
+      if(start <= stop && stop < size)
+      {
+        range_size = stop - start + 1;
+        while(id <= stop && id_array < (range_size * 3))
+        {
+          pointArray[id_array] = (float) _vertices->at(id).x();
+          pointArray[id_array + 1] = (float) _vertices->at(id).y();
+          pointArray[id_array + 2] = (float) _vertices->at(id).z();
+
+          id_array = id_array + 3;
+          id = id + 1;
+        }
+        return range_size;
+      }
+      return 0;
+    }
   }
 }
