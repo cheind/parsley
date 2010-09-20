@@ -6,15 +6,13 @@ Here is a list of videos showing Parsley in action. Videos are soreted in chrono
 
 || *Date*     || *Title* || *Content* ||
 || 2010.09.20 || [http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]|| Shows Parsleys pattern designer to create your own calibration patterns.||
-
 || 2010.09.20 || [http://www.youtube.com/watch?v=qE9ac0FVSik Parsley - Intrinsic Calibration]|| Shows instrinsic camera calibration with previously designed patterns.||
-
-|| 2010.09.20 || [http://www.youtube.com/watch?v=m5p2aJcp1CY Parsley - Extrinsic Calibration]||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=1lCWBAVj3-o Parsley - Options]||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=rvzYUtoN3ME Parsley - Laser Setup]||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=-TEoq6cFrvg Parsley - Scan of Magic Cube]||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=SRc7FpXQSgc Parsley - Scan of Totem]||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=1VexaVe9gsc Parsley - Scan of Robot]||
-|| 2010.02.20 || [http://www.youtube.com/watch?v=PtVoEz4lj58 Parsley - Scan of Tube]||
-|| 2010.02.17 || [http://www.youtube.com/watch?v=y7DIufkF0mI Parsley - GUI Prototype]||
-|| 2010.02.08 || [http://www.youtube.com/watch?v=Wyb114NfmGo Parsley - Checkerboard Tracking]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=m5p2aJcp1CY Parsley - Extrinsic Calibration]|| Shows extrinsic camera calibration that tells Parsley about its environment.||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=1lCWBAVj3-o Parsley - Options]|| Shows Parsleys rich option menu and some defaults.||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=rvzYUtoN3ME Parsley - Laser Setup]|| Shows parameterizing for your laser to achieve maximum visibility.||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=-TEoq6cFrvg Parsley - Scan of Magic Cube]||A demo scan of one side of a magic cube.||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=SRc7FpXQSgc Parsley - Scan of Totem]||A demo scan of two sides of an antique totem.||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=1VexaVe9gsc Parsley - Scan of Robot]||A two sided scan of a toy robot.||
+|| 2010.02.20 || [http://www.youtube.com/watch?v=PtVoEz4lj58 Parsley - Scan of Tube]||An early scan of a tube.||
+|| 2010.02.17 || [http://www.youtube.com/watch?v=y7DIufkF0mI Parsley - GUI Prototype]||Design prototype.||
+|| 2010.02.08 || [http://www.youtube.com/watch?v=Wyb114NfmGo Parsley - Checkerboard Tracking]||Algorithm show-off.||
