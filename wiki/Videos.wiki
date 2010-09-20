@@ -2,7 +2,7 @@
 
 Here is a list of videos showing Parsley in action. Videos are soreted in chronological order of their creation date. 
 
-*Note* most videos presented here are produced in high definition (HD) of size 1280x720.
+*Note* Most videos presented here are produced in high definition (HD) of size 1280x720.
 
 || *Date*     || *Title* || *Content* ||
 || 2010.09.20 || [http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]|| Shows Parsleys pattern designer to create your own calibration patterns.||
