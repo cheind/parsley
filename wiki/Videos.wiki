@@ -4,4 +4,4 @@ The following videos show Parsley in action.
 
 = Setup =
 
-<wiki:video url="http://www.youtube.com/watch?v=63-njMWsunU" width="1280"/>
+<wiki:video url="http://www.youtube.com/watch?v=63-njMWsunU"/>
