@@ -1,5 +1,16 @@
 #summary Videos of Parsley
 
-Here is a list of videos showing Parsley in action.
+Here is a list of videos showing Parsley in action in chronological order.
 
-[http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]|*HD*|2010.09.20|
+|| *Date*     || *Title* ||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=qE9ac0FVSik Parsley - Intrinsic Calibration]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=m5p2aJcp1CY Parsley - Extrinsic Calibration]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=1lCWBAVj3-o Parsley - Options]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=rvzYUtoN3ME Parsley - Laser Setup]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=-TEoq6cFrvg Parsley - Scan of Magic Cube]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=SRc7FpXQSgc Parsley - Scan of Totem]||
+|| 2010.09.20 || [http://www.youtube.com/watch?v=1VexaVe9gsc Parsley - Scan of Robot]||
+|| 2010.02.20 || [http://www.youtube.com/watch?v=PtVoEz4lj58 Parsley - Scan of Tube]||
+|| 2010.02.17 || [http://www.youtube.com/watch?v=y7DIufkF0mI Parsley - GUI Prototype]||
+|| 2010.02.08 || [http://www.youtube.com/watch?v=Wyb114NfmGo Parsley - Checkerboard Tracking]||
