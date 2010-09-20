@@ -1,9 +1,11 @@
 #summary Videos of Parsley
 
-Here is a list of videos showing Parsley in action. Videos are soreted in chronological order of their creation date. Note, most videos presented here are produced in high definition (HD) of size 1280x720.
+Here is a list of videos showing Parsley in action. Videos are soreted in chronological order of their creation date. 
 
-|| *Date*     || *Title* ||
-|| 2010.09.20 || [http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]||
+*Note* most videos presented here are produced in high definition (HD) of size 1280x720.
+
+|| *Date*     || *Title* || *Content*
+|| 2010.09.20 || [http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]|| Designing and testing calibration patterns.||
 || 2010.09.20 || [http://www.youtube.com/watch?v=qE9ac0FVSik Parsley - Intrinsic Calibration]||
 || 2010.09.20 || [http://www.youtube.com/watch?v=m5p2aJcp1CY Parsley - Extrinsic Calibration]||
 || 2010.09.20 || [http://www.youtube.com/watch?v=1lCWBAVj3-o Parsley - Options]||
