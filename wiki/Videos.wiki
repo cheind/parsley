@@ -1,7 +1,5 @@
 #summary Videos of Parsley
 
-The following videos show Parsley in action.
+Here is a list of videos showing Parsley in action.
 
-= Setup =
-
-<wiki:video url="http://www.youtube.com/watch?v=63-njMWsunU"/>
+[http://www.youtube.com/watch?v=63-njMWsunU Parsley - Pattern Designer]|*HD*|2010.09.20|
