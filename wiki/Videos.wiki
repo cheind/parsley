@@ -1,4 +1,5 @@
 #summary Videos of Parsley
+#labels Featured
 
 Here is a list of videos showing Parsley in action. Videos are soreted in chronological order of their creation date. 
 
