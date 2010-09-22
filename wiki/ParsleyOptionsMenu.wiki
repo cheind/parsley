@@ -6,7 +6,7 @@ This wiki page deals with the Parsley options which need to be set up before sta
  * _Camera_ includes parameters for the camera configuration. The intrinsic paramters as well as the frame size (resolution) need to be set.
  * _Laser_ allows to define the color of the provided laser.
  * _!ReferenceBody_ consists of the reference planes which are defined by the saved extrinsic camera parameters for each of the planes (left plane, right plane and ground plane).
- * _Positioner_: Choose the desired positioner type out of *Rotary Positioner* and *Marker Positioner*. Both types are defined by, at least one, reference plane (usually the ground plane). Additionally, the _Rotary Positioner_ requires the current rotational angle, relative to the origin position.
+ * _Positioner_: Parsley supports _!MarkerPositioners_ which consist of markers of different pattern types (circle, chessboard or marker patterns).
 
 The paragraphs below describe how to set the Parsley Options, especially for the _!ScanWorkflow_ in order to obtain satisfying scanning results.
 
@@ -15,9 +15,7 @@ The paragraphs below describe how to set the Parsley Options, especially for the
 After performing the Extrinsic Calibration for the reference planes (see [http://code.google.com/p/parsley/wiki/ExtrinsicCalibration ExtrinsicCalibration]) , the _!ReferenceBody_ as well as the _Positioner_ can be set up.
 For configuring the _!ReferenceBody_, assign the corresponding extrinsic camera parameters to the given properties *!LeftPlane*, *!RightPlane* and *!GroundPlane*.
 
-There are two _Positioner_ types which are supported by Parsley:
- * The _!RotaryPositioner_ requires the assignment of one reference plane (usually extrinsics of ground plane) and if the orientation of the positioner has been changed, the property _Angle_ needs to be changed to update the coordinate transformation correctly.
- * The _!MarkerPositioner_ uses marker pattern which are used to detect the orientation of the positioner. If a pattern with two markers (marker _two_ is arranged on the opposite of marker _one_ on the reference plane) is being used, the extrinsic parameters for both markers are needed as well as the two corresponding pattern files.
+Currently, Parsley supports _!MarkerPositioners_, which consist of a predefined _!CompositePattern_ that is used to detect the positioners' orientation.  Setting up the positioner requires the definition of a _!CompositePattern_, containing two markers.
 
 == Adjust the _!ScanWorkflow_ settings ==
 Parameter changes in the settings category _!ScanWorkflow_ affect the quality of the 3D scan directly.
@@ -39,7 +37,7 @@ The parameters which specify the behaviour of the plane algorithm are described 
  * _Constraint_: This property cannot be changed and it is set to _!RejectParallelPlanes_ which means, that detected laser planes which are orientated parallel to reference planes will be rejected.
 
 === _!LaserPlaneFilterAlgorithm_ ===
-Parsley provides one _!LaserPlaneFilter_ which rejects detected laser planes with an included angle, with respect to the camera plane, smaller than the property value _!MinimumAngle_. Hereby the optimum value depends on the position of the camera relative to the reference body. The standard value is set to 30 degrees.
+Parsley provides one _!LaserPlaneFilter_ which rejects detected laser planes with an included angle, with respect to the cameras' *optical axis*, smaller than the property value _!MinimumAngle_. Hereby the optimum value depends on the position of the camera relative to the reference body. The standard value is set to 30 degrees.
 
 === _!PointAccumulator_ ===
 _!PointAccumulators_ are used in Parsley to store 3D point information for every pixel of the 2D camera frame image. Imagine, that one 2D point corresponds to several 3D points (e.g. due to uncertainties) which have been found during a certain scanning period. But which of the scanned 3D points should be set in relation to the single 2D point?
