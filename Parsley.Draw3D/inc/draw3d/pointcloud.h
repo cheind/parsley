@@ -33,13 +33,13 @@ namespace Parsley {
       void ClearPoints();
       // Save pointcloud as six-dimensional CSV
       void SaveAsCSV(System::String ^filename, System::String ^delimiter);
-
+      // Returns point of pointcloud with the given index
       cli::array<double,1> ^PointCloud::ReturnPointAtIndex(unsigned id);
-
+      // The full pointcloud is stored at the array memory location, specified by the pointer (reference)
       void PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray);
-
+      // The pointcloud range, specified by start/stop index is stored at the specified memory location
       unsigned PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray, unsigned start, unsigned stop);
-      
+      // Returns the number of points, stored in the cloud.
       unsigned PointCloud::NumberOfPoints();
     private:
       auto_ptr_osg<osg::Geometry> _geometry;

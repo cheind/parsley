@@ -95,6 +95,9 @@ namespace Parsley {
       f_target.close();
     }
 
+    /*
+    * Returns point at given pointcloud index in a 3x1 array (x,y,z)
+    */
     cli::array<double,1> ^PointCloud::ReturnPointAtIndex(unsigned id)
     {
       cli::array<double,1> ^point_data = gcnew array<double, 1>(3);
@@ -112,37 +115,54 @@ namespace Parsley {
       return _vertices->size();
     }
 
+    /*
+    * Stores the points of the pointcloud in the given memory space (parameter pointArray).
+    * The coordinate values x,y,z of one point are stored consecutively in the array memory.
+    */
     void PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray)
     {
       unsigned size = _vertices->size();
       unsigned id = 0, id_array = 0;
 
+      //iterate the pointcloud _vertices
       while(id < size && id_array < (size * 3))
       {
         pointArray[id_array] = (float) _vertices->at(id).x();
         pointArray[id_array + 1] = (float) _vertices->at(id).y();
         pointArray[id_array + 2] = (float) _vertices->at(id).z();
 
+        //array index for pointArray must be incremented by 3 since 3 float values (x,y,z) will be copied per point
         id_array = id_array + 3;
         id = id + 1;
       }
     }
 
+    /*
+    * Stores the range of points of the pointcloud (given by the indices start and stop) in the given memory space (parameter pointArray).
+    * The coordinate values x,y,z of one point are stored consecutively in the array memory.
+    * The number of copied points is returned.
+    */
     unsigned PointCloud::PointCloudToArray(cli::array<float,1> ^ %pointArray, unsigned start, unsigned stop)
     {
+      //set _vertices index to start index value
       unsigned size = _vertices->size();
       unsigned id = start, id_array = 0;
       unsigned range_size = 0;
 
+      // if the range indices refer to a valid range..
       if(start <= stop && stop < size)
       {
+        //calculate range size
         range_size = stop - start + 1;
+        //iterate pointcloud...
         while(id <= stop && id_array < (range_size * 3))
         {
           pointArray[id_array] = (float) _vertices->at(id).x();
           pointArray[id_array + 1] = (float) _vertices->at(id).y();
           pointArray[id_array + 2] = (float) _vertices->at(id).z();
 
+          //array index for pointArray must be incremented by 3 since 3 float values (x,y,z) will be copied per point
+          // range_size * 3 -1 therefore is the maximum allowed index
           id_array = id_array + 3;
           id = id + 1;
         }
