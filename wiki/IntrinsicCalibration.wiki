@@ -45,7 +45,7 @@ Setting up a marker based pattern requires parameters as follows.
 
 For the intrinsic calibration, we recommend to use either chessboard patterns or circle patterns, since marker based patterns only permit *one* marker printed on the calibration plane.  
 
-Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 20mm, Size = 2;2, CenterDistanceX = 130, CenterDistanceY = 100), are:
+Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 40mm, Size = 5;4, CenterDistanceX = 55, CenterDistanceY = 50), are:
 || *Parameter* || *Value* || *Unit* || *Description*||
 || !BinaryThreshold || 30 - 100 || color value || depends very much on the lighting conditions ||
 || !MinimumContourCount || 40 || number of points || the more the angle between camera vision range and the pattern becomes sharp, the more decreases the number of contour points (perspective distortion) ||
