@@ -1,4 +1,5 @@
 #summary Coordinate systems found in Parsley
+#labels Phase-Deploy
 
 = Introduction =
 Parsley and it's third-party libraries need to operate on different coordinate frames. Therefore, coordination and mapping between those coordinate frames is crucial. The following components in Parsley manipulate coordinate frames
@@ -52,4 +53,17 @@ Using a perspective transformation (EmguCV algorithm), the pixels, located insid
 Finally, the warped image can be matched with the marker image, considering four different orientation possibilities (0°, 90°, 180°, 270°) of the markers' interior shape.
 If a best fitting position can be found, which means that the normed sum of squared pixel intensity differences is less than a given error value, the corner points of the marker can be ordered according to the found orientation.
 
-The advantage of marker detection is, that only one marker is needed in order to find the orientation of the pattern. Especially for object tracking, like it is needed to find the current orientation of a marker bases positioner, using these patterns has turned out to be very useful.
+The advantage of marker detection is, that only one marker is needed in order to find the orientation of the pattern. Especially for object tracking, like it is needed to find the current orientation of a marker based positioner, using these patterns has turned out to be very useful.
+
+= Composite Pattern Coordinate System =
+_!CompositePatterns_ currently consist of two *sub patterns*, which have been defined in advance. This pattern type is mainly used as positioner pattern, because its orientation can also be found if one sub pattern is hidden e.g. behind the scanning object.
+
+Additionally to the sub patterns, the matrix transformation T,,12,, (rotational and translational component) between the two coordinate systems of the sub patterns is known. One of the sub patterns is declared as *main sub pattern*, and its coordinate system (defined as coordinate system 1) is considered as the coordinate system of the _!CompositePattern_. Therefore the _!ObjectPoints_ (e.g. corner points of marker patterns, center points of ellipses - defining the position of the point of origin of the coordinate system) of the _!CompositePattern_ are equal to the _!ObjectPoints_ of the _main sub pattern_. The image below shows the relations.
+
+http://parsley.googlecode.com/svn/trunk/doc/frames/CompositePattern.png
+
+In order to detect the _!CompositePattern_, we first try to find the *main sub pattern* by calling the, to the sub pattern type corresponding, function _findPattern_. If the _main sub pattern_ could be found the algorithm is already finished - _findPattern_ returns the corresponding 2D _!ImagePoints_. 
+If only the second sub pattern can be found, the _!ObjectPoints_ of the _main sub pattern_ will be transformed into the coordinate system 2, using the transformation matrix _Inverse(T,,21,,)_. Finally, by finding the *extrinsic matrix* describing the relation between _camera coordinate system_ and _coordinate system 2_, the _transformed !ObjectPoints_ of the _main sub pattern_ can be projected into the *2D camera image coordinate system* and again the _!ImagePoints_ of the _main sub pattern_ have been found.
+Please find more algorithm details in the source code of different calibration patterns (see [http://code.google.com/p/parsley/source/browse/#svn/trunk/Parsley.Core.CalibrationPatterns CalibrationPatterns]).
+
+Note, that mainly *!MarkerPatterns* are used as sub patterns in _!CompositePatterns_, since markers allow to find out the orientation of a pattern easily, with a single marker. However, e.g. when using _!CirclePatterns_, at least four circles need to be used to find the correct orientation of the pattern with satisfying stability.
