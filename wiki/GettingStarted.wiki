@@ -7,10 +7,12 @@ Subsequent to the installation tutorial, the first steps how to configure Parsle
 
 = Parsley Hardware setup =
 Parsley requires only a low cost hardware setup which consists of the components listed below:
- * Standard webcam (observe, that rising resolution settings might lead to small frame rates).
- * Robust reference body, made of stiff carton materials or even wooden plates.
- * Battery supplied laser with laser ray extension lens (line shaped).
+ * *Standard webcam* (observe, that rising resolution settings might lead to small frame rates).
+ * Robust *reference body*, made of stiff carton materials or even wooden plates.
+ * Battery supplied *laser* with laser ray extension lens (line shaped).
  * Optional, but recommended: A column, belonging to the reference body, where the webcam can be mounted (the cameras' position relative to the reference body must not change after the calibration had been performed).
+
+The reference body should be made up of a ground plane, with two side planes mounted together perpedicular and the side walls should be placed onto the ground plane. Therefore the whole construction is shaped like cube with three faces missing (see example picture []).
 
 = Installation tutorial for Parsley Users =
 This sub paragraph deals with the installation of the Parsley, based on compiled binary files for common users.
