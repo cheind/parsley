@@ -43,6 +43,7 @@ Setting up a marker based pattern requires parameters as follows.
  * _!MarkerLength_ defines the size of the square marker in millimeters (standard value: 50mm).
  * _!MaximumErrorNormed_ sets the maximum allowed error value for the pattern detection (reasonable value: 0.4).
 
+The video [http://www.youtube.com/watch?v=1lCWBAVj3-o PatternDesigner] summarizes how to set up different pattern types.
 For the intrinsic calibration, we recommend to use either chessboard patterns or circle patterns, since marker based patterns only permit *one* marker printed on the calibration plane.  
 
 Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 40mm, Size = 5;4, CenterDistanceX = 55, CenterDistanceY = 50), are:
@@ -59,7 +60,7 @@ Finally, after setting the configuration parameters, the intrinsic calibration c
 
 In order to gain satisfying calibration results, several pictures of the choosen calibration pattern, taken from different viewing angles, are needed. Additionally it's recommended that the patten fits the major part of the cameras vision range, to include the border areas (where camera lens distortions are mainly visible) in the calibration process (e.g. use a circle pattern with 5x4 circles printed onto the calibration plane).
 
-After taking about ten pictures from different viewing angles (either using the *Auto take image* functionality or taking the pictures manually), the intrinsic calibration can be performed by hitting the button _Calibrate_. If the calibration has been performed successfully, save the calibration data.
+After taking about ten pictures from different viewing angles (either using the *Auto take image* functionality or taking the pictures manually), the intrinsic calibration can be performed by hitting the button _Calibrate_. If the calibration has been performed successfully, save the calibration data (watch the video [http://www.youtube.com/watch?v=qE9ac0FVSik IntrinsicCalibration]).
 
 Now the intrinsic calibration can be finished by setting the camera intrinsics property, using the _Parsley Options_ in the _Setup_ menu.
 == Troubleshooting and hints regarding the Intrinsic Calibration Process ==
