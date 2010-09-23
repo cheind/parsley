@@ -43,7 +43,7 @@ Setting up a marker based pattern requires parameters as follows.
  * _!MarkerLength_ defines the size of the square marker in millimeters (standard value: 50mm).
  * _!MaximumErrorNormed_ sets the maximum allowed error value for the pattern detection (reasonable value: 0.4).
 
-The video [http://www.youtube.com/watch?v=1lCWBAVj3-o PatternDesigner] summarizes how to set up different pattern types.
+The video [http://www.youtube.com/watch?v=63-njMWsunU PatternDesigner] summarizes how to set up different pattern types.
 For the intrinsic calibration, we recommend to use either chessboard patterns or circle patterns, since marker based patterns only permit *one* marker printed on the calibration plane.  
 
 Reasonable values for the given parameters, which were found out during several calibration test (circle pattern: Diameter = 40mm, Size = 5;4, CenterDistanceX = 55, CenterDistanceY = 50), are:
