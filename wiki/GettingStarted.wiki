@@ -49,5 +49,8 @@ Due to existing sub project *dependencies* try to build Parsley according to the
 _Visual Studio_ provides a *project dependencies* menu in where you can specify the building sequence, so that you do not need to build the sub projects one by one, any longer. If you use other development environments, consider that building C# and C++ sub projects together in one *project solution*, might not be possible. In that case you need to create a separate *C++ solution* in order to build the _Draw3D_ sub project.
 
 = Setup Parsley for the first 3D Object Scan =
-When the Parsley application has been started for the first time, no Parsley configuration is available and an empty configuration file _!CurrentParsley.cfg_ is being created in the folder, where the Parsley executable is located.
-Before a 3D scan with satisfying results can be performed, the camera needs to be calibrated and a set of Parsley parameters need to be adjusted.
+When the Parsley application is started for the first time, no Parsley configuration is available and an empty configuration file _!CurrentParsley.cfg_ is being created in the folder, where the Parsley executable is located.
+Before a 3D scan with satisfying results can be performed, the camera needs to be calibrated and a set of Parsley parameters need to be adjusted. 
+
+A set of *wiki pages* will help you to perform these parameter settings. Furthermore, the page [Videos] contains a list of videos, presenting the most important steps in configuring Parsley. The list below represents a summary how to set up Parsley step by step:
+ * 
