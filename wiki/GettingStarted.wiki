@@ -25,4 +25,15 @@ If your Parsley installation has been successful, the Parsley _Welcome Window_ s
 Parsley users who intend making source code changes and to further the development of Parsley, shall find information, how to build Parsley using the _Microsoft Visual Studio 2008_ development environment, below.
 
 Firstly, make sure that _Microsoft Visual Studio 2008_, supporting C# and C++, is installed on your computer system.
-Secondly, use a subversion client to check out the source code into a specified folder. Please find more information about the source check out and the repository address on page [Source].
+Secondly, use a subversion client to check out the source code into a specified folder (e.g. C:\!ProgramFiles\Parsley). Please find more information regarding the source check out and the repository address on page [http://code.google.com/p/parsley/source/checkout Source].
+
+Thirdly, after checking out the source code, you need to download the *!ThirdPartyLibraries* from the Parsley [http://code.google.com/p/parsley/downloads/list Download] page and include them into the Parsley project:
+ * Create a folder named _!ThirdParty_ in the Parsley project directory, where you have already checked out the source code into.
+ * Download the *!ThirdPartyLibraries* ZIP file and extract the contents into the folder _!ThirdParty_.
+ * Open the folder and run the script file. Now the needed library files will be copied into the corresponding project folders.
+
+As you can see, the Parsley project folder already contains _Visual Studio Solution_- and _Project_ files. By double-clicking the solution file, the Parsley project will be imported automatically into the development environment.
+Observe, that Parsley consists of several C# sub projects and one C++ sub project, named *Draw3D*. Before you try to build Parsley firstly, make sure that you have chosen the *Solution Platform* _X86_. You can also enclose *debug information* by changing the *Solution Configuration* to _Debug_. For more detailed information open the _!ConfigurationManager_.
+
+Due to existing sub project *dependencies* try to build Parsley according to the building sequence below:
+ 
