@@ -8,7 +8,7 @@ This wiki page deals with the Parsley options which need to be set up before sta
  * _!ReferenceBody_ consists of the reference planes which are defined by the saved extrinsic camera parameters for each of the planes (left plane, right plane and ground plane).
  * _Positioner_: Parsley supports _!MarkerPositioners_ which consist of markers of different pattern types (circle, chessboard or marker patterns).
 
-The paragraphs below describe how to set the Parsley Options, especially for the _!ScanWorkflow_ in order to obtain satisfying scanning results.
+The paragraphs below describe how to set the Parsley Options, especially for the _!ScanWorkflow_ in order to obtain satisfying scanning results (watch reference video [http://www.youtube.com/watch?v=1lCWBAVj3-o ParsleyOptions]).
 
 = How to configure Parsley for the 3D Object Scan =
 == Set up the _!ReferenceBody_ and the _Positioner_ ==
