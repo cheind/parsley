@@ -40,7 +40,7 @@ namespace Parsley {
       // Addin
       Core.Addins.AddinStore.Discover();
       Core.Addins.AddinStore.Discover(Environment.CurrentDirectory);
-      Core.Addins.AddinStore.Discover(Environment.CurrentDirectory + @"\plugins");
+      //Core.Addins.AddinStore.Discover(Path.Combine(Environment.CurrentDirectory, "plugins"));
 
       InitializeComponent();
 
