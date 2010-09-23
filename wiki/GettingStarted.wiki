@@ -1,0 +1,10 @@
+#summary How to install and setup Parsley - For users and developers
+#labels Featured,Phase-Deploy
+= Introduction =
+Welcome to Parsley! This wiki page provides information how to install and setup Parsley on a PC - for users and developers. If Parsley is new to you, we recommend to work through the _Getting Started Tutorial_ below. 
+
+Subsequent to the installation tutorial, the first steps how to configure Parsley, in order to obtain satisfying scanning results, are explained on this page.
+
+= Installation tutorial for Parsley Users =
+
+= Installation tutorial for Parsley Developers =
