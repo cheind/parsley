@@ -36,4 +36,15 @@ As you can see, the Parsley project folder already contains _Visual Studio Solut
 Observe, that Parsley consists of several C# sub projects and one C++ sub project, named *Draw3D*. Before you try to build Parsley firstly, make sure that you have chosen the *Solution Platform* _X86_. You can also enclose *debug information* by changing the *Solution Configuration* to _Debug_. For more detailed information open the _!ConfigurationManager_.
 
 Due to existing sub project *dependencies* try to build Parsley according to the building sequence below:
- 
+ # Parsley.Draw3D
+ # Parsley.Core
+ # Parsley.Core.!CalibrationPatterns
+ # Parsley.Core.!LaserLineAlgorithms
+ # Parsley.Core.!LaserPlaneAlgorithms
+ # Parsley.Core.!BuildingBlocks
+ # Parsley.UI
+ # Parsley.Core.Tests
+ # Parsley.Tester
+ # Playground
+ # !SlickInterface
+ # Parsley
