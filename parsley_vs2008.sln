@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+# Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core", "Parsley.Core\Parsley.Core.csproj", "{40FFE772-05B1-4D6A-B3D6-52FACD51BB03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.UI", "Parsley.UI\Parsley.UI.csproj", "{E9C7A311-C58B-4C9F-9D26-5E4DF73D9341}"
@@ -13,10 +13,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley", "Parsley\Parsley.csproj", "{4C98E003-741C-4C11-9030-3CCAAB7CAA66}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickInterface", "SlickInterface\SlickInterface.csproj", "{9708F1BC-959D-4539-82DB-0FB96B879AD4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.Tests", "Parsley.Core.Tests\Parsley.Core.Tests.csproj", "{71064BE5-80B2-4E95-AF9B-E09FF7403B50}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParsleyTester", "ParsleyTester\ParsleyTester.csproj", "{AADCE85C-8492-41F4-80DC-977C3EDE1347}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsley.Core.BuildingBlocks", "Parsley.Core.BuildingBlocks\Parsley.Core.BuildingBlocks.csproj", "{65C11622-0F30-4E58-A81F-E47F750933EE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -113,34 +109,6 @@ Global
 		{9708F1BC-959D-4539-82DB-0FB96B879AD4}.Release|Win32.ActiveCfg = Release|Any CPU
 		{9708F1BC-959D-4539-82DB-0FB96B879AD4}.Release|x86.ActiveCfg = Release|Any CPU
 		{9708F1BC-959D-4539-82DB-0FB96B879AD4}.Release|x86.Build.0 = Release|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|x86.ActiveCfg = Debug|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Debug|x86.Build.0 = Debug|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Mixed Platforms.Build.0 = Release|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|Win32.ActiveCfg = Release|Any CPU
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|x86.ActiveCfg = Release|x86
-		{71064BE5-80B2-4E95-AF9B-E09FF7403B50}.Release|x86.Build.0 = Release|x86
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|x86.ActiveCfg = Debug|x86
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Debug|x86.Build.0 = Debug|x86
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|Win32.ActiveCfg = Release|Any CPU
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|x86.ActiveCfg = Release|x86
-		{AADCE85C-8492-41F4-80DC-977C3EDE1347}.Release|x86.Build.0 = Release|x86
 		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C11622-0F30-4E58-A81F-E47F750933EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
