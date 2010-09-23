@@ -5,6 +5,15 @@ Welcome to Parsley! This wiki page provides information how to install and setup
 
 Subsequent to the installation tutorial, the first steps how to configure Parsley, in order to obtain satisfying scanning results, are explained on this page.
 
-= Installation tutorial for Parsley Users =
+= Parsley Hardware setup =
 
+
+= Installation tutorial for Parsley Users =
+This sub paragraph deals with the installation of the Parsley, based on compiled binary files for common users.
+Before installing Parsley, make sure that your computer system fulfills the following requirements:
+ * Parsley is designed for Windows operating systems.
+ * Install the _Microsoft .Net Framework 3.5 Service Pack 1_ - download from the [http://www.microsoft.com/downloads/en/default.aspx MicrosoftDownloadCenter].
+ * Install the _Microsoft 2008 Redistributable Package (x86) Service Pack 1_ - available at [http://www.microsoft.com/downloads/en/default.aspx MicrosoftDownloadCenter].
+
+After installing these software packages successfully, 
 = Installation tutorial for Parsley Developers =
