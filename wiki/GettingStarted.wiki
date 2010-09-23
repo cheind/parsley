@@ -15,5 +15,9 @@ Before installing Parsley, make sure that your computer system fulfills the foll
  * Install the _Microsoft .Net Framework 3.5 Service Pack 1_ - download from the [http://www.microsoft.com/downloads/en/default.aspx MicrosoftDownloadCenter].
  * Install the _Microsoft 2008 Redistributable Package (x86) Service Pack 1_ - available at [http://www.microsoft.com/downloads/en/default.aspx MicrosoftDownloadCenter].
 
-After installing these software packages successfully, 
+After installing these software packages successfully, download the Parsley 0.2 binaries, which are available as ZIP file, from the Parsley [Downloads] page.
+Now, create a folder on the Windows partition (e.g. C:\Programs\Parsley\) and extract the contents of the ZIP file into the folder.
+Your newly created Parsley folder should now contain several *dll* files, the *Parsley executable* (Parsley.exe) and a folder called *Patterns*, containing _Marker Images_ and different pdf files with *!CalibrationPatterns* ready for printing.
+
+If your Parsley installation has been successful, the Parsley _Welcome Window_ should appear soon after the executable file has been started.
 = Installation tutorial for Parsley Developers =
