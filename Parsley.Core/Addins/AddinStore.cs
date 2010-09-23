@@ -37,9 +37,12 @@ namespace Parsley.Core.Addins {
     /// <param name="directory_path">Directory path</param>
     /// <param name="recursive"></param>
     public static void Discover(string directory_path) {
-      List<string> warnings = new List<string>();
-      foreach (string file in Directory.GetFiles(directory_path, "*.dll")) {
-        DiscoverTypes(file);
+      if (Directory.Exists(directory_path))
+      {
+        foreach (string file in Directory.GetFiles(directory_path, "*.dll"))
+        {
+          DiscoverTypes(file);
+        }
       }
     }
 
