@@ -25,3 +25,4 @@ If your Parsley installation has been successful, the Parsley _Welcome Window_ s
 Parsley users who intend making source code changes and to further the development of Parsley, shall find information, how to build Parsley using the _Microsoft Visual Studio 2008_ development environment, below.
 
 Firstly, make sure that _Microsoft Visual Studio 2008_, supporting C# and C++, is installed on your computer system.
+Secondly, use a subversion client to check out the source code into a specified folder. Please find more information about the source check out and the repository address on page [Source].
