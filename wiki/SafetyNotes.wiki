@@ -3,7 +3,7 @@
 *WARNING* The following notes are for your own safety. Read the carefully and make sure you understand them. No matter what, please take every precaution and remember that you are using Parsley at your own risk.
 
 = Laser Safety = 
-Lasers are classified to describe the capabilities of a laser system to produce injury to people. This classification rates from 'Class I' lasers to 'Class IV' lasers. See [Laser Saftey](http://ehs.uky.edu/radiation/laser_fs.html) for details. 
+Lasers are classified to describe the capabilities of a laser system to produce injury to people. This classification rates from 'Class I' lasers to 'Class IV' lasers. Read the [http://ehs.uky.edu/radiation/laser_fs.html laser safety guide] for details. 
 
 Since Parsley makes use of low-powered lasers you must make sure that you follow the laser safety guidelines. Lasers, even the low-powered once, are dangerous - they can cause a permanent damage to vision if pointed towards people's faces or eyes. Additionally careful attention needs to be payed to mirrored surfaces, lenses and other optical apparatus that can send laser light off in unexpected directions or increase its power to a damaging degree.
 
