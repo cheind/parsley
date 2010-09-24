@@ -64,5 +64,5 @@ After taking about ten pictures from different viewing angles (either using the 
 
 Now the intrinsic calibration can be finished by setting the camera intrinsics property, using the _Parsley Options_ in the _Setup_ menu.
 == Troubleshooting and hints regarding the Intrinsic Calibration Process ==
- * Before starting with the intrinsic calibration make sure, that any _auto focusing_ and _auto exposure_ functionalities are deactivated (use [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap]). Otherwise, if the camera changes its focusing settings, after the intrinsic calibration has been performed, you need to repeat the calibration.
+ * Before starting with the intrinsic calibration make sure, that any _auto focusing_ and _auto exposure_ functionalities are deactivated (use [http://www.noeld.com/programs.asp?cat=video#AMCap AMCap]). Otherwise, if the camera changes its focusing settings, after the intrinsic calibration has been performed, you need to repeat the calibration.
  * If the chosen calibration pattern cannot be found during the calibration image taking process, try to change the pattern settings (using the _!PatternEditor_). This problem might occur due to changing lighting conditions.
