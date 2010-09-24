@@ -12,7 +12,10 @@ Parsley requires only a low cost hardware setup which consists of the components
  * Battery supplied *laser* with laser ray extension lens (line shaped).
  * Optional, but recommended: A kind of tripod, belonging to the reference body, where the webcam can be mounted (the cameras' position relative to the reference body must not change after the calibration had been performed).
 
-The reference body should be made up of a ground plane, with two side planes mounted together perpendicular and the side walls should be placed onto the ground plane. Therefore the whole construction is shaped like cube with three faces missing (see example picture [http://code.google.com/p/parsley/downloads/detail?name=HardwareSetupForParsley.JPG&can=2&q= HardwareSetup]).
+The reference body should be made up of a ground plane, with two side planes mounted together perpendicular and the side walls should be placed onto the ground plane. Therefore the whole construction is shaped like cube with three faces missing.
+http://code.google.com/p/parsley/source/browse/trunk/doc/ParsleyHardwareSetup.png
+
+
 
 = Installation tutorial for Parsley Users =
 This sub paragraph deals with the installation of the Parsley, based on compiled binary files for common users.
