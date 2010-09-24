@@ -16,7 +16,7 @@ These parameters are independent of the camera position and orientation relative
 
 == Camera setup ==
 
-In order to avoid the activation of the auto focusing functionality of the camera permanently, e.g. during changes of the lighting conditions or changes of the distance to the object of interest, use the [http://code.google.com/p/parsley/wiki/CameraFrameRate AMCap] software to deactivate _auto focusing_ and _auto exposure time_ functionalities.
+In order to avoid the activation of the auto focusing functionality of the camera permanently, e.g. during changes of the lighting conditions or changes of the distance to the object of interest, use the [http://www.noeld.com/programs.asp?cat=video#AMCap AMCap] software to deactivate _auto focusing_ and _auto exposure time_ functionalities.
 Furthermore, make sure that the camera provides a frame rate of at least *15 fps*. If necessary, reduce the camera resolution to improve the frame rate.
 
 == Intrinsic calibration settings in Parsley ==
