@@ -3,13 +3,15 @@
 = Introduction =
 Welcome to Parsley! This wiki page provides information how to install and setup Parsley on a PC - for users and developers. If Parsley is new to you, we recommend to work through the _Getting Started Tutorial_ below. 
 
+Make sure that you've read the [SafetyNotes] before continuing with this tutorial.
+
 Subsequent to the installation tutorial, the first steps how to configure Parsley, in order to obtain satisfying scanning results, are explained on this page.
 
 = Parsley Hardware setup =
 Parsley requires only a low cost hardware setup which consists of the components listed below:
  * *Standard webcam* (observe, that rising resolution settings might lead to small frame rates).
  * Robust *reference body*, made of stiff carton materials or even wooden plates.
- * Battery supplied *laser* with laser ray extension lens (line shaped).
+ * Battery supplied *laser* with laser ray extension lens (line shaped). Make sure to read the [SafteyNotes].
  * Optional, but recommended: A kind of tripod, belonging to the reference body, where the webcam can be mounted (the cameras' position relative to the reference body must not change after the calibration had been performed).
 
 The reference body should be made up of a ground plane, with two side planes mounted together perpendicular and the side walls should be placed onto the ground plane. Therefore the whole construction is shaped like cube with three faces missing.
@@ -18,7 +20,7 @@ http://parsley.googlecode.com/svn/trunk/doc/ParsleyHardwareSetup.png
 
 The _Calibration Patterns_ (pdf documents, containing the printouts are available), needed for the camera calibration should be glued onto the side walls. However, we recommend to use *removeable calibration plates*, made of e.g. stiff plastic material, where to glue the patterns on.
 
-= Installation tutorial for Parsley Users =
+= Parsley Users =
 This sub paragraph deals with the installation of the Parsley, based on compiled binary files for common users.
 Before installing Parsley, make sure that your computer system fulfills the following requirements:
  * Parsley is designed for Windows operating systems.
@@ -31,7 +33,7 @@ Your newly created Parsley folder should now contain several *dll* files, the *P
 
 If your Parsley installation has been successful, the Parsley _Welcome Window_ should appear soon after the executable file has been started.
 
-= Installation tutorial for Parsley Developers =
+= Parsley Developers =
 Parsley users who intend making source code changes and to further the development of Parsley, shall find information, how to build Parsley using the _Microsoft Visual Studio 2008_ development environment, below.
 
 Firstly, make sure that _Microsoft Visual Studio 2008_, supporting C# and C++, is installed on your computer system.
