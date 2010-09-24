@@ -13,9 +13,10 @@ Parsley requires only a low cost hardware setup which consists of the components
  * Optional, but recommended: A kind of tripod, belonging to the reference body, where the webcam can be mounted (the cameras' position relative to the reference body must not change after the calibration had been performed).
 
 The reference body should be made up of a ground plane, with two side planes mounted together perpendicular and the side walls should be placed onto the ground plane. Therefore the whole construction is shaped like cube with three faces missing.
-http://code.google.com/p/parsley/source/browse/trunk/doc/ParsleyHardwareSetup.png
 
+http://parsley.googlecode.com/svn/trunk/doc/ParsleyHardwareSetup.png
 
+The _Calibration Patterns_ (pdf documents, containing the printouts are available), needed for the camera calibration should be glued onto the side walls. However, we recommend to use *removeable calibration plates*, made of e.g. stiff plastic material, where to glue the patterns on.
 
 = Installation tutorial for Parsley Users =
 This sub paragraph deals with the installation of the Parsley, based on compiled binary files for common users.
