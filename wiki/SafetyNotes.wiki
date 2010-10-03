@@ -2,7 +2,7 @@
 
 =Warning=  
 
-The following notes are for your own safety. Read the carefully and make sure you understand them. No matter what, please take every precaution and remember that you are using Parsley at your own risk.
+The following notes are for your own safety. Read them carefully and make sure you understand them before using Parsley. No matter what, please take every precaution and remember that you are using Parsley at your own risk.
 
 == Laser Safety ==
 Lasers are classified to describe the capabilities of a laser system to produce injury to people. This classification rates from 'Class I' lasers to 'Class IV' lasers. Read the [http://ehs.uky.edu/radiation/laser_fs.html laser safety guide] for details. 
