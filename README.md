@@ -4,7 +4,7 @@ Parsley is an open source initiative to build a low-cost 3D scanner. With Parsle
 
 <a href='http://www.youtube.com/watch?feature=player_embedded&v=Nmu-038qYmo' target='_blank'><img src='http://img.youtube.com/vi/Nmu-038qYmo/0.jpg' width='425' height=344 /></a>
 <a href='http://www.youtube.com/watch?feature=player_embedded&v=-TEoq6cFrvg' target='_blank'><img src='http://img.youtube.com/vi/-TEoq6cFrvg/0.jpg' width='425' height=344 /></a>
-More videos can be found on the [Videos](wiki/Videos) page.
+More videos can be found on the [Videos](https://github.com/cheind/parsley/wiki/Videos) page.
 
 ## Requirements ##
 Parsley requires hardware to work. Usually this hardware makes 3D scanning expensive. Parsley has been designed with low-cost budgets in mind. As a result you need a standard webcam, a line based laser, and some cartons to glue your printed patterns on. All available for under one hundred Euro.
@@ -12,7 +12,7 @@ Parsley requires hardware to work. Usually this hardware makes 3D scanning expen
 The software itself is free for use, free for modification and free for commercial applications. Check the license terms at the bottom of the page.
 
 ## Getting Started ##
-Head over to the [GettingStarted](wiki/GettingStarted) guide for an introduction on installing and using Parsley. Make sure you read the [SafetyNotes](wiki/SafetyNotes) before using Parsley.
+Head over to the [GettingStarted](https://github.com/cheind/parsley/wiki/GettingStarted) guide for an introduction on installing and using Parsley. Make sure you read the [SafetyNotes](https://github.com/cheind/parsley/wiki/SafetyNotes) before using Parsley.
 
 ## Design and Implementation ##
 From a users perspective Parsley is an application that allows acquisition of 3D point and texture data.
