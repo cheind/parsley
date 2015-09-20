@@ -2,8 +2,10 @@
 
 Parsley is an open source initiative to build a low-cost 3D scanner. With Parsley you can create your own 3D models easily by scanning them from your desktop.
 
-<a href='http://www.youtube.com/watch?feature=player_embedded&v=Nmu-038qYmo' target='_blank'><img src='http://img.youtube.com/vi/Nmu-038qYmo/0.jpg' width='425' height=344 /></a>
-<a href='http://www.youtube.com/watch?feature=player_embedded&v=-TEoq6cFrvg' target='_blank'><img src='http://img.youtube.com/vi/-TEoq6cFrvg/0.jpg' width='425' height=344 /></a>
+Watch the videos
+http://www.youtube.com/watch?v=Nmu-038qYmo
+http://www.youtube.com/watch?v=-TEoq6cFrvg
+
 More videos can be found on the [Videos](https://github.com/cheind/parsley/wiki/Videos) page.
 
 ## Requirements ##
